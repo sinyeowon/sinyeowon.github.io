@@ -3,7 +3,9 @@ layout: page
 # All the Tags of posts.
 ---
 
-<div id="tags" class="d-flex flex-wrap mx-xl-2">
+{% include lang.html %}
+
+<div id="tags" class="tag-list">
   {% assign tags = '' | split: '' %}
   {% for t in site.tags %}
     {% assign tags = tags | push: t[0] %}
@@ -12,10 +14,22 @@ layout: page
   {% assign sorted_tags = tags | sort_natural %}
 
   {% for t in sorted_tags %}
-    <div>
-      <a class="tag" href="{{ t | slugify | url_encode | prepend: '/tags/' | append: '/' | relative_url }}">
-        {{ t -}}
-        <span class="text-muted">{{ site.tags[t].size }}</span>
+    <div class="card categories">
+      <a
+        class="card-header d-flex justify-content-between text-decoration-none"
+        href="{{ t | slugify | url_encode | prepend: '/tags/' | append: '/' | relative_url }}"
+      >
+        <span class="ms-2">
+          <i class="fa fa-tag fa-fw"></i>
+          <span class="mx-2">{{ t }}</span>
+          <span class="text-muted small font-weight-light">
+            {{ site.tags[t].size }}
+            {{ site.data.locales[lang].categories.post_measure }}
+          </span>
+        </span>
+        <span class="category-trigger">
+          <i class="fas fa-fw fa-angle-right"></i>
+        </span>
       </a>
     </div>
   {% endfor %}

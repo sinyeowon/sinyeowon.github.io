@@ -17,7 +17,11 @@
 }
 
 #tags {
+  .categories {
+    width: 100%;
+  }
+
   @include bp.lt(bp.get(lg)) {
-    justify-content: center !important;
+    justify-content: stretch !important;
   }
 }
