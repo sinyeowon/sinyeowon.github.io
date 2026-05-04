@@ -28,13 +28,23 @@
   }
 
   > a.card-header {
-    color: inherit;
+    color: var(--text-color) !important;
 
     &:hover {
       background-color: var(--categories-hover-bg);
       border-bottom: 0 !important;
-      color: inherit !important;
+      color: var(--text-color) !important;
       margin-bottom: 0 !important;
+    }
+  }
+
+  .card-header {
+    .mx-2 {
+      color: var(--text-color);
+    }
+
+    .text-muted {
+      color: var(--text-muted-color) !important;
     }
   }
 

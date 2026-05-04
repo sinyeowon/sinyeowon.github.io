@@ -31,5 +31,9 @@
   data-bs-placement="bottom"
   title="{{ words }} {{ site.data.locales[include.lang].post.words }}"
 >
-  <em>{{ read_time_text | strip }}</em>{% if include.prompt %} {{ read_prompt | strip }}{% endif %}
+  {% if include.prompt and include.lang == 'ko-KR' -%}
+    {{ read_prompt | strip }} <em>{{ read_time_text | strip }}</em>
+  {%- else -%}
+    <em>{{ read_time_text | strip }}</em>{% if include.prompt %} {{ read_prompt | strip }}{% endif %}
+  {%- endif %}
 </span>
