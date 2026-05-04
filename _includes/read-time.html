@@ -26,12 +26,13 @@
 >
   <em>
     {{- read_time -}}
-    {{ ' ' }}
+    {%- unless include.lang == 'ko-KR' -%}
+      {{ ' ' }}
+    {%- endunless -%}
     {{- site.data.locales[include.lang].post.read_time.unit -}}
   </em>
   {%- if include.prompt -%}
-    {%- assign _prompt_words = read_prompt | number_of_words: 'auto' -%}
-    {%- unless _prompt_words > 1 -%}{{ ' ' }}{%- endunless -%}
+    {{ ' ' }}
     {{ read_prompt }}
   {%- endif -%}
 </span>
