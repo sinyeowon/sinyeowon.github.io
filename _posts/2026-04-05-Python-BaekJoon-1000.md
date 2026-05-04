@@ -3,7 +3,7 @@ title: '[Python] 백준 1000번 - A+B'
 date: 2026-04-05 15:05:12 +0900
 last_modified_at: 2026-04-23 00:17:55 +0900
 categories: ['BaekJoon']
-tags: ['baekjoon', 'python']
+tags: ['baekjoon', 'Python']
 description: 'Python에서 입력 문자열을 정수로 변환해 두 수를 더하는 기본 입출력 풀이를 정리했습니다.'
 ---
 [BaekJoon 1000](https://www.acmicpc.net/problem/1000)

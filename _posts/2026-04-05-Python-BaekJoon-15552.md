@@ -3,7 +3,7 @@ title: '[Python] 백준 15552번 - 빠른 A+B'
 date: 2026-04-05 16:14:22 +0900
 last_modified_at: 2026-05-04 02:07:34 +0900
 categories: ['BaekJoon']
-tags: ['baekjoon', 'python']
+tags: ['baekjoon', 'Python']
 description: 'Python에서 sys.stdin.readline()으로 빠르게 여러 줄 입력을 처리하는 풀이를 정리했습니다.'
 ---
 [BaekJoon 15552](https://www.acmicpc.net/problem/15552)
