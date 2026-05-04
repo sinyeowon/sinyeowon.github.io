@@ -3,6 +3,7 @@ title: 첫 번째 글
 date: 2026-05-04 01:40:00 +0900
 categories: [소개]
 tags: [소개, 개발자]
+description: 자기소개 글입니다.
 ---
 
 # 신여원 블로그
