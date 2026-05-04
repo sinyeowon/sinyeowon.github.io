@@ -114,6 +114,34 @@
 
   <script src="{{ '/assets/js/dist/theme.min.js' | relative_url }}"></script>
 
+  {% unless site.pwa.enabled %}
+    <script>
+      (() => {
+        const clearedKey = 'chirpy-cache-cleared-v1';
+        const tasks = [];
+
+        if ('serviceWorker' in navigator) {
+          tasks.push(
+            navigator.serviceWorker
+              .getRegistrations()
+              .then((registrations) => Promise.all(registrations.map((registration) => registration.unregister())))
+          );
+        }
+
+        if ('caches' in window) {
+          tasks.push(caches.keys().then((keys) => Promise.all(keys.map((key) => caches.delete(key)))));
+        }
+
+        Promise.all(tasks).then(() => {
+          if ('serviceWorker' in navigator && navigator.serviceWorker.controller && !sessionStorage.getItem(clearedKey)) {
+            sessionStorage.setItem(clearedKey, 'true');
+            window.location.reload();
+          }
+        });
+      })();
+    </script>
+  {% endunless %}
+
   {% include js-selector.html lang=lang %}
 
   {% if jekyll.environment == 'production' %}
