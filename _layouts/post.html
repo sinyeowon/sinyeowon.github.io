@@ -97,6 +97,13 @@ script_includes:
     </div>
   </header>
 
+  {% assign english_post_url = page.en_url | default: page.english_url %}
+  {% if english_post_url %}
+    <blockquote class="prompt-info post-language-notice">
+      For the English version of this post, see <a href="{{ english_post_url }}">here</a>.
+    </blockquote>
+  {% endif %}
+
   {% if enable_toc %}
     <div id="toc-bar" class="d-flex align-items-center justify-content-between invisible">
       <span class="label text-truncate">{{ page.title }}</span>

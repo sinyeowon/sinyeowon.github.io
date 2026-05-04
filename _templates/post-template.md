@@ -4,6 +4,7 @@ date: YYYY-MM-DD HH:MM:SS +0900
 categories: [카테고리]
 tags: [태그1, 태그2]
 description: 검색 결과와 미리보기에 보일 짧은 설명
+# english_url: 영어 버전 글 주소
 ---
 
 # 글 제목

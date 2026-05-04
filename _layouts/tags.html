@@ -5,6 +5,9 @@ layout: page
 
 {% include lang.html %}
 
+{% assign HEAD_PREFIX = 'h_tag_' %}
+{% assign LIST_PREFIX = 'l_tag_' %}
+
 <div id="tags" class="tag-list">
   {% assign tags = '' | split: '' %}
   {% for t in site.tags %}
@@ -14,23 +17,46 @@ layout: page
   {% assign sorted_tags = tags | sort_natural %}
 
   {% for t in sorted_tags %}
+    {% assign posts = site.tags[t] | sort: 'date' | reverse %}
+    {% capture tag_url %}/tags/{{ t | slugify | url_encode }}/{% endcapture %}
+
     <div class="card categories">
-      <a
-        class="card-header d-flex justify-content-between text-decoration-none"
-        href="{{ t | slugify | url_encode | prepend: '/tags/' | append: '/' | relative_url }}"
+      <div
+        id="{{ HEAD_PREFIX }}{{ forloop.index0 }}"
+        class="card-header d-flex justify-content-between"
       >
         <span class="ms-2">
           <i class="fa fa-tag fa-fw"></i>
-          <span class="mx-2">{{ t }}</span>
+          <a href="{{ tag_url | relative_url }}" class="mx-2">{{ t }}</a>
           <span class="text-muted small font-weight-light">
-            {{ site.tags[t].size }}
+            {{ posts | size }}
             {{ site.data.locales[lang].categories.post_measure }}
           </span>
         </span>
-        <span class="category-trigger">
-          <i class="fas fa-fw fa-angle-right"></i>
-        </span>
-      </a>
+
+        <a
+          href="#{{ LIST_PREFIX }}{{ forloop.index0 }}"
+          data-bs-toggle="collapse"
+          aria-expanded="false"
+          aria-label="{{ HEAD_PREFIX }}{{ forloop.index0 }}-trigger"
+          class="category-trigger"
+        >
+          <i class="fas fa-fw fa-angle-down rotate"></i>
+        </a>
+      </div>
+
+      <div id="{{ LIST_PREFIX }}{{ forloop.index0 }}" class="collapse">
+        <ul class="list-group">
+          {% for post in posts %}
+            <li class="list-group-item post-list-item">
+              <a href="{{ post.url | relative_url }}" class="post-list-title">{{ post.title }}</a>
+              <span class="post-list-date text-muted small font-weight-light">
+                {% include datetime.html date=post.date lang=lang %}
+              </span>
+            </li>
+          {% endfor %}
+        </ul>
+      </div>
     </div>
   {% endfor %}
 </div>
