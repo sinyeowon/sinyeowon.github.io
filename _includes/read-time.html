@@ -17,6 +17,13 @@
   {{- site.data.locales[include.lang].post.read_time.prompt -}}
 {% endcapture %}
 
+{% assign read_unit = site.data.locales[include.lang].post.read_time.unit %}
+{% if include.lang == 'ko-KR' %}
+  {% capture read_time_text %}{{ read_time }}{{ read_unit }}{% endcapture %}
+{% else %}
+  {% capture read_time_text %}{{ read_time }} {{ read_unit }}{% endcapture %}
+{% endif %}
+
 <!-- return element -->
 <span
   class="readtime"
@@ -24,15 +31,5 @@
   data-bs-placement="bottom"
   title="{{ words }} {{ site.data.locales[include.lang].post.words }}"
 >
-  <em>
-    {{- read_time -}}
-    {%- unless include.lang == 'ko-KR' -%}
-      {{ ' ' }}
-    {%- endunless -%}
-    {{- site.data.locales[include.lang].post.read_time.unit -}}
-  </em>
-  {%- if include.prompt -%}
-    {{ ' ' }}
-    {{ read_prompt }}
-  {%- endif -%}
+  <em>{{ read_time_text | strip }}</em>{% if include.prompt %} {{ read_prompt | strip }}{% endif %}
 </span>

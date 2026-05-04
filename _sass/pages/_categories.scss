@@ -27,6 +27,14 @@
     }
   }
 
+  > a.card-header {
+    color: inherit;
+
+    &:hover {
+      background-color: var(--categories-hover-bg);
+    }
+  }
+
   i {
     @extend %-category-icon-color;
 
