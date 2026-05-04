@@ -4,7 +4,7 @@ date: 2026-04-05 20:00:02 +0900
 last_modified_at: 2026-04-23 00:31:51 +0900
 categories: ['BaekJoon']
 tags: ['baekjoon', 'python']
-description: 'BaekJoon 10951for line in sys.stdin:전체 입력을 반복하고, line에 그 전체 입력이 저장됨입력 개수가 정해져있지 않을 때 사용 가능a, b = map(int, line.split()) -> 받아온 전체 입력을 공백 기준으로 나누고, int'
+description: '입력 개수가 정해지지 않은 A+B 문제를 sys.stdin 반복으로 처리하는 방법을 정리했습니다.'
 ---
 [BaekJoon 10951](https://www.acmicpc.net/problem/10951)
 

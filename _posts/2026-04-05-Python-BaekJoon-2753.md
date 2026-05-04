@@ -4,7 +4,7 @@ date: 2026-04-05 15:44:08 +0900
 last_modified_at: 2026-04-30 15:30:23 +0900
 categories: ['BaekJoon']
 tags: ['baekjoon', 'python']
-description: 'BaekJoon 2753Python에서는 Java나 C와 달리, ||나 && 연산자를 or과 and로 사용해야한다.'
+description: 'Python의 and/or 조건식을 사용해 윤년 판별 조건을 구현한 풀이를 정리했습니다.'
 ---
 [BaekJoon 2753](https://www.acmicpc.net/problem/2753)
 

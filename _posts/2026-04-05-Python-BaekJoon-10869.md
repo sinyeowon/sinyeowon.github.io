@@ -4,7 +4,7 @@ date: 2026-04-05 15:20:39 +0900
 last_modified_at: 2026-04-23 00:17:21 +0900
 categories: ['BaekJoon']
 tags: ['baekjoon', 'python']
-description: 'BaekJoon 10869"문자열" % (값들): 문자열 안의 %d, %f 같은 자리 표시자에 뒤에 있는 값들이 순서대로 들어감'
+description: 'Python의 산술 연산과 문자열 포맷팅으로 사칙연산 결과를 출력하는 풀이를 정리했습니다.'
 ---
 [BaekJoon 10869](https://www.acmicpc.net/problem/10869)
 

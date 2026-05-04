@@ -4,7 +4,7 @@ date: 2026-04-05 15:05:12 +0900
 last_modified_at: 2026-04-23 00:17:55 +0900
 categories: ['BaekJoon']
 tags: ['baekjoon', 'python']
-description: 'BaekJoon 1000input()으로 입력받게 될 경우 문자열로 저장됨으로 바로 int로 받을 수 있음'
+description: 'Python에서 입력 문자열을 정수로 변환해 두 수를 더하는 기본 입출력 풀이를 정리했습니다.'
 ---
 [BaekJoon 1000](https://www.acmicpc.net/problem/1000)
 

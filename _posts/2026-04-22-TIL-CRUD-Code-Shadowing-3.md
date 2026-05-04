@@ -4,7 +4,7 @@ date: 2026-04-22 10:16:15 +0900
 last_modified_at: 2026-04-29 18:14:42 +0900
 categories: ['Spring 단기 심화']
 tags: ['Java', 'Spring', 'TIL', '과제', '내일배움캠프']
-description: 'get 종류 메서드의 경우에는 @Transactional(readOnly = true)를 사용하여 Transaction은 그대로 생성되지만, JPA에게 수정은 하지 않을 것이라고 힌트를 줌(변경 감지(dirty checking)을 하지 않음)Controller에서 Or'
+description: 'Controller의 비즈니스 로직을 Service로 분리하고 트랜잭션을 적용하는 과정을 정리한 글입니다.'
 ---
 # Controller에서 비즈니스 로직 분리하기
 ## OrderService

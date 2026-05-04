@@ -4,7 +4,7 @@ date: 2026-04-05 15:48:16 +0900
 last_modified_at: 2026-05-03 16:23:24 +0900
 categories: ['BaekJoon']
 tags: ['baekjoon', 'python']
-description: 'BaekJoon 2480최댓값을 구할 때 사용반복문을 사용하지 않고 구할 수 있음'
+description: 'Python 조건문과 max()를 활용해 주사위 세 개의 상금을 계산하는 풀이를 정리했습니다.'
 ---
 [BaekJoon 2480](https://www.acmicpc.net/problem/2480)
 
