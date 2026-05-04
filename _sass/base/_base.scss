@@ -147,7 +147,7 @@ main {
       cursor: zoom-in;
     }
 
-    &:not(.img-link) {
+    &:not(.img-link, .card-header, .post-preview) {
       @extend %link-underline;
 
       &:hover {

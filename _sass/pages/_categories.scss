@@ -32,6 +32,9 @@
 
     &:hover {
       background-color: var(--categories-hover-bg);
+      border-bottom: 0 !important;
+      color: inherit !important;
+      margin-bottom: 0 !important;
     }
   }
 

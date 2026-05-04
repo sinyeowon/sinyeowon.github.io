@@ -1,0 +1,30 @@
+<!-- https://cusdis.com/ -->
+{% if site.comments.cusdis.app_id %}
+  <script>
+    (function () {
+      const wrapper = document.createElement('section');
+      wrapper.id = 'cusdis-wrapper';
+      wrapper.className = 'mt-5';
+
+      const thread = document.createElement('div');
+      thread.id = 'cusdis_thread';
+      thread.dataset.host = '{{ site.comments.cusdis.host | default: "https://cusdis.com" }}';
+      thread.dataset.appId = '{{ site.comments.cusdis.app_id }}';
+      thread.dataset.pageId = '{{ page.url }}';
+      thread.dataset.pageUrl = '{{ page.url | absolute_url }}';
+      thread.dataset.pageTitle = '{{ page.title | xml_escape }}';
+
+      wrapper.appendChild(thread);
+
+      const footer = document.querySelector('footer');
+      footer.insertAdjacentElement('beforebegin', wrapper);
+
+      const script = document.createElement('script');
+      script.src = '{{ site.comments.cusdis.host | default: "https://cusdis.com" }}/js/cusdis.es.js';
+      script.async = true;
+      script.defer = true;
+
+      document.body.appendChild(script);
+    })();
+  </script>
+{% endif %}
