@@ -98,11 +98,16 @@ script_includes:
   </header>
 
   {% assign english_post_url = page.en_url | default: page.english_url %}
-  {% if english_post_url %}
-    <blockquote class="prompt-info post-language-notice">
-      For the English version of this post, see <a href="{{ english_post_url }}">here</a>.
-    </blockquote>
-  {% endif %}
+  {% unless english_post_url %}
+    {% capture current_post_url %}{{ page.url | absolute_url }}{% endcapture %}
+    {% assign encoded_post_url = current_post_url | url_encode %}
+    {% capture english_post_url %}https://translate.google.com/translate?sl=ko&tl=en&u={{ encoded_post_url }}{% endcapture %}
+  {% endunless %}
+
+  <blockquote class="prompt-info post-language-notice">
+    For the English version of this post, see
+    <a href="{{ english_post_url }}" target="_blank" rel="noopener">here</a>.
+  </blockquote>
 
   {% if enable_toc %}
     <div id="toc-bar" class="d-flex align-items-center justify-content-between invisible">
