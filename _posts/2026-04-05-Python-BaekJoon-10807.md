@@ -5,6 +5,7 @@ last_modified_at: 2026-04-25 23:38:20 +0900
 categories: ['BaekJoon']
 tags: ['baekjoon', 'Python']
 description: 'Python에서 리스트와 map을 활용해 특정 값의 개수를 세는 풀이를 정리했습니다.'
+english_url: "/en/posts/Python-BaekJoon-10807/"
 ---
 [BaekJoon 10807](https://www.acmicpc.net/problem/10807)
 

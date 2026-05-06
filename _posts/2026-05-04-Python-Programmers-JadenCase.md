@@ -5,6 +5,7 @@ last_modified_at: 2026-05-05 01:30:40 +0900
 categories: ['Programmers']
 tags: ['programmers', 'Python']
 description: 'Python에서 split(" ")과 join()으로 연속 공백을 보존하며 JadenCase 문자열을 만드는 풀이를 정리했습니다.'
+english_url: "/en/posts/Python-Programmers-JadenCase/"
 ---
 [Programmers JadenCase 문자열 만들기](https://school.programmers.co.kr/learn/courses/30/lessons/12951?language=python3)
 

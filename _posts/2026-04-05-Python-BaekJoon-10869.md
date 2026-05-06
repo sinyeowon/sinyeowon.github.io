@@ -5,6 +5,7 @@ last_modified_at: 2026-04-23 00:17:21 +0900
 categories: ['BaekJoon']
 tags: ['baekjoon', 'Python']
 description: 'Python의 산술 연산과 문자열 포맷팅으로 사칙연산 결과를 출력하는 풀이를 정리했습니다.'
+english_url: "/en/posts/Python-BaekJoon-10869/"
 ---
 [BaekJoon 10869](https://www.acmicpc.net/problem/10869)
 

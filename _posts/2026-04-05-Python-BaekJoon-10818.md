@@ -5,6 +5,7 @@ last_modified_at: 2026-04-23 01:15:24 +0900
 categories: ['BaekJoon']
 tags: ['baekjoon', 'Python']
 description: 'Python에서 반복문과 초기값 설정으로 리스트의 최솟값과 최댓값을 구하는 풀이를 정리했습니다.'
+english_url: "/en/posts/Python-BaekJoon-10818/"
 ---
 [BaekJoon 10818](https://www.acmicpc.net/problem/10818)
 

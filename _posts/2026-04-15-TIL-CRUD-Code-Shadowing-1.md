@@ -5,6 +5,7 @@ last_modified_at: 2026-05-03 05:34:06 +0900
 categories: ['Spring 단기 심화']
 tags: ['Java', 'Spring', 'TIL', '과제', '내일배움캠프']
 description: 'JPA Entity, Lombok, Repository를 사용해 도메인 모델을 구성하는 과정을 정리한 글입니다.'
+english_url: "/en/posts/TIL-CRUD-Code-Shadowing-1/"
 ---
 ## Entity
 
