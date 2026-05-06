@@ -1,11 +1,11 @@
 ---
 layout: "post"
-title: "[TIL] Special lecture on Git & PR + CI/CD"
+title: "[TIL] Git & PR + CI/CD Special Lecture"
 date: 2026-05-06 09:00:00 +0900
-last_modified_at: 2026-05-06 12:24:00 +0900
+last_modified_at: 2026-05-06 12:33:00 +0900
 categories: ["Spring 단기 심화"]
 tags: ["Git", "CI/CD"]
-description: "What we studied Git Flow branch strategy If there is no branch strategy, accidents may occur such as your work overwriting a colleague's work / mixing in unfinished code just before deployment / wanting to roll back but not having a reference point → Branch strategy = accident prevention device 5 branches of Git Flow | branch | station"
+description: "This article summarizes what I studied after attending a special lecture on Git & PR + CI/CD."
 lang: "en"
 ui_lang: "ko-KR"
 permalink: "/en/posts/TIL-Git-PR-CI-CD/"
@@ -15,47 +15,52 @@ notion_lang: "en"
 ---
 ## What I studied
 
-- **Git Flow branch strategy**
-Without a branching strategy, accidents can occur such as your work overwriting your colleague's work, unfinished code mixed in when you're about to deploy, or you wanting to roll back but having no reference point.
+### **Git Flow branching strategy**
 
-→ 브랜치 전략 = 사고 방지 장치
+If you do not have a branching strategy, accidents may occur such as your work overwriting your colleague's work, unfinished code mixed in when you are about to deploy, or wanting to roll back but having no reference point.
 
-  - 5 branches of Git Flow
-| branch | role | branch | Merge target | Lifespan |
-| --- | --- | --- | --- | --- |
-| `main` | Production code. 항상 배포 가능 상태 | — | — | permanent |
-| `develop` | Next release integration branch. Where all features gather | First time in main | — | permanent |
-| `feature/*` | New feature development | develop | develop | Temporary |
-| `release/*` | Ready for launch. Allow bug fixes only | develop | main + develop | Temporary |
-| `hotfix/*` | Emergency fix for operational bugs | main | main + develop | Temporary |
+→ Branch strategy = accident prevention device
+
+- 5 branches of Git Flow
+
+      | branch | Role | branch | Merge target | Lifespan |
+      | --- | --- | --- | --- | --- |
+      | `main` | Production code. Always available for deployment | — | — | permanent |
+      | `develop` | Next release integration branch. Where all features gather | First time in main | — | permanent |
+      | `feature/*` | New feature development | develop | develop | Temporary |
+      | `release/*` | Ready for launch. Allow bug fixes only | develop | main + develop | Temporary |
+      | `hotfix/*` | Emergency fix for operational bugs | main | main + develop | Temporary |
 
 ![image](/assets/img/notion/TIL-Git-PR-CI-CD/01-a9615f8ef8.png)
 
-  - Github Flow and Git Flow
-| Category | Git Flow | Github Flow |
-| --- | --- | --- |
-| Branch Structure | Strict management with 5 branches | `main` • Use only `feature` (simple) |
-| suitable situation | Regular releases, version control | Web services, SaaS, CD where rapid deployment is important |
-| Well-suited domain | Mobile apps, package libraries | web service |
-| Disadvantages | complicacy. May be overkill for small teams | Difficult to operate multiple versions simultaneously |
-| Compatibility with distribution | Not compatible with rapid distribution (CD) | PR Merge = Immediate Deployment |
-| Prerequisites | — | Automated testing is an essential premise |
+- Github Flow and Git Flow
+
+  | Category | Git Flow | Github Flow |
+  | --- | --- | --- |
+  | Branch Structure | Strict management with 5 branches | `main` • Use only `feature` (simple) |
+  | suitable situation | Regular releases, version control | Web services, SaaS, CD where rapid deployment is important |
+  | Well-suited domain | Mobile apps, package libraries | web service |
+  | Disadvantages | complicacy. May be overkill for small teams | Difficult to operate multiple versions simultaneously |
+  | Compatibility with distribution | Not compatible with rapid distribution (CD) | PR Merge = Immediate Deployment |
+  | Prerequisites | — | Automated testing is an essential premise |
 
 > Most startups/web services start with Github Flow and expand to Git Flow as they grow.
 
-- **PR Workflow and Code Review**
-  - Pull Request (PR): A formal request to merge my branch work into main (or develop)
+### **PR Workflow and Code Review**
 
-  - 3 things PR does
-| role | Description |
-| --- | --- |
-| 👀 **Code review chapter** | A space for colleagues to view changes and leave feedback |
-| 🧪 **Automatic Verification Trigger** | Run CI pipeline (automatically perform build/test) |
-| 📜 **Record change history** | Permanently preserve why/what/when you changed |
+- Pull Request (PR): A formal request to merge my branch work into main (or develop)
 
-    - PR is a trigger that starts a code review and a change diary that I will read in the future.
+- 3 things PR does
 
-  - PR life cycle
+  | Role | Description |
+  | --- | --- |
+  | 👀 **Code review chapter** | A space for colleagues to view changes and leave feedback |
+  | 🧪 **Automatic Verification Trigger** | Run CI pipeline (automatically perform build/test) |
+  | 📜 **Record change history** | Permanently preserve why/what/when you changed |
+
+  - PR is a trigger that starts a code review and a change diary that I will read in the future.
+
+- PR life cycle
 ```bash
 1. Branch → feature/login 같은 작업 브랜치 생성
 2. Commit & Push → 작업 내용을 원격에 푸시
@@ -64,7 +69,7 @@ Without a branching strategy, accidents can occur such as your work overwriting 
 5. Approve & Merge → 승인 후 머지, 브랜치 삭제
 ```
 
-  - Actual command flow
+- Actual command flow
 ```bash
 # 1. 브랜치 생성
 git checkout -b feature/login
@@ -79,12 +84,12 @@ git push origin feature/login
 # 4~5. 여기서부터는 GitHub/GitLab 웹 UI에서 진행
 ```
 
-  - How to write a good PR
-    - 작게 쪼개기 - 200~400줄 / 단일 목적
+- How to write a good PR
+  - Break it down into small pieces - 200 to 400 lines / single purpose
 
-    - Title should be clear in one line - ex) `[FIX] 로그인 토큰 만료 시 자동 리프레시 처리`
+  - Title should be clear in one line - ex) `[FIX] 로그인 토큰 만료 시 자동 리프레시 처리`
 
-    - Include context in the text
+  - Include context in the text
 ```bash
 ## What
 - AccessToken 만료 시 자동으로 RefreshToken으로 재발급
@@ -102,82 +107,85 @@ git push origin feature/login
 - [ ] 부하 테스트는 별도 PR
 ```
 
-    - Self-review first - Re-read self-PR immediately after push
+  - Self-review first - Re-read self-PR immediately after push
 
-  - Code review is not censorship
-    - As a reviewer,
-      - Criticize the code, but not the people
+- Code review is not censorship
+  - As a reviewer,
+    - Criticize the code, but not the people
 
-      - Ask questions first, no assumptions
+    - Ask questions first, no assumptions
 
-      - Praise the things you did well
+    - Praise the things you did well
 
-    - As an author,
-      - Explain your intentions without being defensive.
+  - As an author,
+    - Explain your intentions without being defensive.
 
-      - If you agree, reflect, if you disagree, discuss based on the evidence.
+    - If you agree, reflect, if you disagree, discuss based on the evidence.
 
-      - Reviews will be responded to within 24 hours
+    - Reviews will be responded to within 24 hours
 
-      - Thank you
+    - Thank you
 
-- **Merge and Rebase**
-  - Merge: Merge commit to combine two histories
+### **Merge and Rebase**
+
+- Merge: Merge commit to combine two histories
 ![image](/assets/img/notion/TIL-Git-PR-CI-CD/02-ac94822e48.png)
 
-    - Preservation of history - who worked on which branch remains intact
+  - Preservation of history - who worked on which branch remains intact
 
-    - Safe - existing commits are never changed
+  - Safe - existing commits are never changed
 
-    - History becomes complicated - As merge commits accumulate, git log becomes complicated.
+  - History becomes complicated - As merge commits accumulate, git log becomes complicated.
 
-  - Rebase: Paste my commit at the end of main
+- Rebase: Paste my commit at the end of main
 ![image](/assets/img/notion/TIL-Git-PR-CI-CD/03-e678a100d5.png)
 
-    - History is clean - git log is in one straight line
+  - History is clean - git log is in one straight line
 
-    - No merge commits - remove noise
+  - No merge commits - remove noise
 
-    - Existing commits are replaced by new commits - Collaboration is destroyed if done on a shared branch
+  - Existing commits are replaced with new commits - Collaboration is destroyed if done on a shared branch.
 
-  - When to use what (Merge & Rebase)
-| standards | Merge | Rebase |
-| --- | --- | --- |
-| History | Preserve as is | Organize in one line |
-| commit hash | unchanged | Newly created |
-| Conflict handling | at once | per commit |
-| Recommended Situation | **Shared branch integration** | **Clean up my local branch** |
+- When to use what (Merge & Rebase)
+
+  | standards | Merge | Rebase |
+  | --- | --- | --- |
+  | History | Preserve as is | Organize in one line |
+  | commit hash | unchanged | Newly created |
+  | Conflict handling | at once | per commit |
+  | Recommended Situation | **Shared branch integration** | **Clean up my local branch** |
 
 **→ You should never rebase a public branch that has already been pushed**
 
-  - What you should never do
-    - `git push -- force` on the shared branch → completely destroys the colleague's commit
+- What you should never do
+  - `git push -- force` on the shared branch → completely destroys the colleague's commit
 
-    - Force push가 안전한 곳
-      - 내 로컬 feature 브랜치
+  - Where force push is safe
+    - My local feature branch
 
-      - 푸시해지만 나만 쓰는 브랜치
+    - I push it, but only I use the branch.
 
-      - PR 머지 직전 커밋 정리
+    - Clean up commits just before PR merge
 
-      - After reflecting the review, squash
+    - After reflecting the review, squash
 
-    - Absolutely prohibited.
-      - `main` / `develop`
+  - Absolutely prohibited.
+    - `main` / `develop`
 
-      - Branch pushed by multiple people
+    - Branch pushed by multiple people
 
-      - Merged PR branch
+    - Merged PR branch
 
-      - 릴리즈 태그가 있는 브랜치
+    - Branch with release tag
 
 > Using `git push --force-with-lease` causes it to fail when the remote is not what I expected
 → If force push is required, always use `--force-with-lease`
 
-- **충돌(Conflict) 해결**
+### **Conflict resolution**
+
 Conflicts occur when two branches modify the same line in the same file differently.
 
-  - Git이 파일에 남기는 충돌 마커
+- Conflict markers that Git leaves in files
 ```bash
 <<<<<<< HEAD
   private final int TIMEOUT = 3000;       // 내 변경 (현재 브랜치)
@@ -188,66 +196,69 @@ Conflicts occur when two branches modify the same line in the same file differen
 
 → Conflicts are not errors, but Git is requesting my judgment.
 
-  - 5 steps to conflict resolution
-    1. Check current status - `git status`
+- 5 steps to conflict resolution
+  1. Check current status - `git status`
 
-    1. Open the file and find the marker
+  1. Open the file and find the marker
 Check the location of `<<<<<<<` / `=======` / `>>>>>>>` → Decide which code to use
 
-    1. 원하는 형태로 수정
+  1. Modify to desired form
 
-    1. Staging + Commit
+  1. Staging + Commit
 ```bash
 git add .
 git commit
 # 머지 진행 중 상태가 종료됨
 ```
 
-    1. Test + Push
+  1. Test + Push
 ```bash
 npm test       # 충돌 해결로 깨진 곳이 없는지 반드시 확인
 git push
 ```
 
-    -If it's still a mess
+  -If it's still a mess
 ```bash
 git merge --abort   # 머지 시작 전으로 되돌림
 git rebase --abort  # rebase 중이면
-```- **Introduction to CI/CD Pipeline**
-  - Difference between manual deployment and automation
+```
+
+### **CI/CD Pipeline Introduction**- Difference between manual deployment and automation
 ![image](/assets/img/notion/TIL-Git-PR-CI-CD/04-8f8d92b96d.png)
 
-    - After introducing CI/CD
-      - Test runs automatically when PR is raised
+  - After introducing CI/CD
+    - Test runs automatically when PR is raised
 
-      - main merge = automatic deployment
+    - main merge = automatic deployment
 
-      - Immediate Slack notification in case of failure
+    - Immediate Slack notification in case of failure
 
-      - No room for human error
+    - No room for human error
 
-      - Number of distributions ↑ / Accidents ↓
+    - Number of distributions ↑ / Accidents ↓
 
-  - CI/CD pipeline flow
+- CI/CD pipeline flow
+
 ![image](/assets/img/notion/TIL-Git-PR-CI-CD/05-b54ee9d439.png)
 
-| steps | What to do |
-| --- | --- |
-| **Source** | Triggered by PR/Push event |
-| **Build** | Compilation / Packaging / Docker image creation |
-| **Test** | Unit Testing + Integration Testing + Lint |
-| **Deploy** | Stage environment deployment → Prod deployment |
+  | steps | What to do |
+  | --- | --- |
+  | **Source** | Triggered by PR/Push event |
+  | **Build** | Compilation / Packaging / Docker image creation |
+  | **Test** | Unit Testing + Integration Testing + Lint |
+  | **Deploy** | Stage environment deployment → Prod deployment |
 
 → If even one step fails, it stops immediately + notification / broken builds never advance to the next step
 
 > **CI/CD Terminology**
-| Abbreviation | Full name | Meaning |
-| --- | --- | --- |
-| CI | Continuous **Integration** | Frequent code integration and automatic verification |
-| CD | Continuous **Delivery** | Stay deployable at any time (manual approval) |
-| CD | Continuous **Deployment** | If passed, automatically distributed to operation |
 
-  - Get started in 30 lines with Github Actions
+  | Abbreviation | Full name | meaning |
+  | --- | --- | --- |
+  | CI | Continuous **Integration** | Frequent code integration and automatic verification |
+  | CD | Continuous **Delivery** | Stay deployable at any time (manual approval) |
+  | CD | Continuous **Deployment** | If passed, automatically distributed to operation |
+
+- Get started in 30 lines with Github Actions
 ### `.github/workflows/ci.yml`
 
 ```yaml
@@ -292,16 +303,16 @@ jobs:
           path: build/reports/tests/test
 ```
 
-    - What happens the moment it moves
-      1. When you upload a PR, GitHub automatically executes the above sequence.
+  - What happens the moment it moves
+    1. When you post a PR, GitHub automatically executes the above sequence.
 
-      1. If even one step fails, mark x in PR
+    1. If even one step fails, mark x in PR
 
-      1. Merge button is automatically disabled (when Branch Protection is set)
+    1. Merge button is automatically disabled (when Branch Protection is set)
 
-      1. Merge is possible only if all checks pass.
+    1. Merge is possible only if all checks pass.
 
-    - One step further to CD
+  - One step further to CD
 ```yaml
 deploy:
   needs: build-and-test     # 위 job이 성공해야만 실행
@@ -325,17 +336,17 @@ deploy:
         AWS_KEY: ${{ secrets.AWS_KEY }}
 ```
 
-      - `needs: test` — If the test fails, it will not be distributed
+    - `needs: test` — If the test fails, it will not be distributed
 
-      - `if: github.ref == 'refs/heads/main'` — only during main merge
+    - `if: github.ref == 'refs/heads/main'` — only during main merge
 
-      - `secrets.*` — Sensitive information is stored in GitHub Secrets
+    - `secrets.*` — Sensitive information is stored in GitHub Secrets
 
 ## Problems & Errors
 
 Q. Should I use Squash merge / Rebase merge / Merge commit?
 
-> There is no correct answer. **The answer is to set a team convention and go consistently**
+> There is no right answer. **The answer is to set a team convention and go consistently**
   - **Squash merge**: Compress PR into 1 commit / Cleanest history (most used)
 
   - **Rebase merge**: Attach PR commits to main in a row / Enable track of commit units
