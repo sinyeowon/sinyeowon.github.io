@@ -7,6 +7,7 @@ categories: ['Spring 단기 심화']
 tags: ['Java', 'Spring', 'TIL', '과제', '내일배움캠프']
 description: "This article maps the many-to-one relationship between orders and products with JPA @ManyToOne and summarizes lazy loading."
 lang: "en"
+ui_lang: "ko-KR"
 permalink: "/en/posts/TIL-CRUD-Code-Shadowing-2/"
 original_url: "/posts/TIL-CRUD-Code-Shadowing-2/"
 source_post: "_posts/2026-04-20-TIL-CRUD-Code-Shadowing-2.md"

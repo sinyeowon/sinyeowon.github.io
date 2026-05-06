@@ -7,6 +7,7 @@ categories: ['BaekJoon']
 tags: ['baekjoon', 'Python']
 description: "We have summarized the solution for calculating the prize money of three dice using Python conditional statements and max()."
 lang: "en"
+ui_lang: "ko-KR"
 permalink: "/en/posts/Python-BaekJoon-2480/"
 original_url: "/posts/Python-BaekJoon-2480/"
 source_post: "_posts/2026-04-05-Python-BaekJoon-2480.md"

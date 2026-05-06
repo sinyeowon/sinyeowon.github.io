@@ -7,6 +7,7 @@ categories: ['Spring 단기 심화']
 tags: ['Spring', 'TIL', '내일배움캠프']
 description: "This TIL summarizes the role of DTO and the reason for exchanging data through DTO instead of Entity."
 lang: "en"
+ui_lang: "ko-KR"
 permalink: "/en/posts/TIL-스프링입문-260410/"
 original_url: "/posts/TIL-스프링입문-260410/"
 source_post: "_posts/2026-04-10-TIL-스프링입문-260410.md"

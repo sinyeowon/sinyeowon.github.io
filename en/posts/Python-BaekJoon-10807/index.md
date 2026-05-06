@@ -7,6 +7,7 @@ categories: ['BaekJoon']
 tags: ['baekjoon', 'Python']
 description: "We have summarized the solution for counting specific values ​​using lists and maps in Python."
 lang: "en"
+ui_lang: "ko-KR"
 permalink: "/en/posts/Python-BaekJoon-10807/"
 original_url: "/posts/Python-BaekJoon-10807/"
 source_post: "_posts/2026-04-05-Python-BaekJoon-10807.md"

@@ -7,6 +7,7 @@ categories: ['BaekJoon']
 tags: ['Java', 'baekjoon']
 description: "We summarized how to solve the A/B problem in Java using integer division and real number conversion."
 lang: "en"
+ui_lang: "ko-KR"
 permalink: "/en/posts/Java-BaekJoon-1008/"
 original_url: "/posts/Java-BaekJoon-1008/"
 source_post: "_posts/2026-04-05-Java-BaekJoon-1008.md"

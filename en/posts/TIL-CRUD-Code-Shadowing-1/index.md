@@ -7,6 +7,7 @@ categories: ['Spring 단기 심화']
 tags: ['Java', 'Spring', 'TIL', '과제', '내일배움캠프']
 description: "This article summarizes the process of configuring a domain model using JPA Entity, Lombok, and Repository."
 lang: "en"
+ui_lang: "ko-KR"
 permalink: "/en/posts/TIL-CRUD-Code-Shadowing-1/"
 original_url: "/posts/TIL-CRUD-Code-Shadowing-1/"
 source_post: "_posts/2026-04-15-TIL-CRUD-Code-Shadowing-1.md"

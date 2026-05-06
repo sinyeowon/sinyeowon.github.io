@@ -7,6 +7,7 @@ categories: ['Spring 단기 심화']
 tags: ['Java', 'Spring', 'TIL', '과제', '내일배움캠프']
 description: "This article summarizes the process of separating the controller's business logic into services and applying transactions."
 lang: "en"
+ui_lang: "ko-KR"
 permalink: "/en/posts/TIL-CRUD-Code-Shadowing-3/"
 original_url: "/posts/TIL-CRUD-Code-Shadowing-3/"
 source_post: "_posts/2026-04-22-TIL-CRUD-Code-Shadowing-3.md"

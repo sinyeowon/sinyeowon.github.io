@@ -7,6 +7,7 @@ categories: ['BaekJoon']
 tags: ['baekjoon', 'Python']
 description: "We have summarized the basic input/output solution for adding two numbers by converting the input string to an integer in Python."
 lang: "en"
+ui_lang: "ko-KR"
 permalink: "/en/posts/Python-BaekJoon-1000/"
 original_url: "/posts/Python-BaekJoon-1000/"
 source_post: "_posts/2026-04-05-Python-BaekJoon-1000.md"

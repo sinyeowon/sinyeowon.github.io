@@ -7,6 +7,7 @@ categories: ['Spring 단기 심화']
 tags: ['Spring', 'TIL', '내일배움캠프']
 description: "This is a TIL that summarizes how to receive request data using Path Variable and Request Param from Spring."
 lang: "en"
+ui_lang: "ko-KR"
 permalink: "/en/posts/TIL-스프링입문-260409/"
 original_url: "/posts/TIL-스프링입문-260409/"
 source_post: "_posts/2026-04-09-TIL-스프링입문-260409.md"

@@ -7,6 +7,7 @@ categories: ['Spring 단기 심화']
 tags: ['Spring', 'TIL', '내일배움캠프']
 description: "This is a TIL that summarizes how to automatically manage the creation and modification dates of entities using JPA Auditing."
 lang: "en"
+ui_lang: "ko-KR"
 permalink: "/en/posts/TIL-스프링입문-260412/"
 original_url: "/posts/TIL-스프링입문-260412/"
 source_post: "_posts/2026-04-13-TIL-스프링입문-260412.md"

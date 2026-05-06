@@ -7,6 +7,7 @@ categories: ['BaekJoon']
 tags: ['Java', 'baekjoon']
 description: "We have summarized how to receive string input in Java and output characters that match the conditions."
 lang: "en"
+ui_lang: "ko-KR"
 permalink: "/en/posts/Java-BaekJoon-10926/"
 original_url: "/posts/Java-BaekJoon-10926/"
 source_post: "_posts/2026-04-05-Java-BaekJoon-10926.md"

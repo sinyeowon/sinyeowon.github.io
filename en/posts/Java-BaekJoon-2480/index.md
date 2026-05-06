@@ -7,6 +7,7 @@ categories: ['BaekJoon']
 tags: ['Java', 'baekjoon']
 description: "We have summarized the solution for calculating the prize money of three dice using Java conditional statements and Math.max."
 lang: "en"
+ui_lang: "ko-KR"
 permalink: "/en/posts/Java-BaekJoon-2480/"
 original_url: "/posts/Java-BaekJoon-2480/"
 source_post: "_posts/2026-04-05-Java-BaekJoon-2480.md"

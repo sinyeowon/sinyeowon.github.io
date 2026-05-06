@@ -7,6 +7,7 @@ categories: ['BaekJoon']
 tags: ['Java', 'baekjoon']
 description: "This article solves arithmetic problems using Java's basic arithmetic operations and output format."
 lang: "en"
+ui_lang: "ko-KR"
 permalink: "/en/posts/Java-BaekJoon-10869/"
 original_url: "/posts/Java-BaekJoon-10869/"
 source_post: "_posts/2026-04-05-Java-BaekJoon-10869.md"

@@ -7,6 +7,7 @@ categories: ['BaekJoon']
 tags: ['Java', 'baekjoon']
 description: "We have summarized how to handle the A+B problem with an undetermined number of inputs using Java's hasNext()."
 lang: "en"
+ui_lang: "ko-KR"
 permalink: "/en/posts/Java-BaekJoon-10951/"
 original_url: "/posts/Java-BaekJoon-10951/"
 source_post: "_posts/2026-04-05-Java-BaekJoon-10951.md"

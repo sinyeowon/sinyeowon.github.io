@@ -28,6 +28,10 @@ async function main() {
       continue;
     }
 
+    if (frontMatterValue(parsed.frontMatter, 'notion_id')) {
+      continue;
+    }
+
     const slug = slugFromFile(file);
     const englishUrl = `/en/posts/${slug}/`;
     const originalUrl = `/posts/${slug}/`;
@@ -44,6 +48,7 @@ async function main() {
       parsed.tagsLine ? `tags: ${parsed.tagsLine}` : 'tags: []',
       `description: ${yamlString(englishDescription || parsed.description)}`,
       'lang: "en"',
+      'ui_lang: "ko-KR"',
       `permalink: ${yamlString(englishUrl)}`,
       `original_url: ${yamlString(originalUrl)}`,
       `source_post: ${yamlString(`_posts/${file}`)}`,

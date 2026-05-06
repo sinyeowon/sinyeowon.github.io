@@ -7,6 +7,7 @@ categories: ['Programmers']
 tags: ['programmers', 'Python']
 description: "I have summarized the solution for creating a JadenCase string while preserving consecutive spaces using split(\" \") and join() in Python."
 lang: "en"
+ui_lang: "ko-KR"
 permalink: "/en/posts/Python-Programmers-JadenCase/"
 original_url: "/posts/Python-Programmers-JadenCase/"
 source_post: "_posts/2026-05-04-Python-Programmers-JadenCase.md"

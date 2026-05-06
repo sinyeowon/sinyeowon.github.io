@@ -7,6 +7,7 @@ categories: ['BaekJoon']
 tags: ['baekjoon', 'Python']
 description: "We have summarized the solution for outputting the results of four arithmetic operations using Python's arithmetic operations and string formatting."
 lang: "en"
+ui_lang: "ko-KR"
 permalink: "/en/posts/Python-BaekJoon-10869/"
 original_url: "/posts/Python-BaekJoon-10869/"
 source_post: "_posts/2026-04-05-Python-BaekJoon-10869.md"

@@ -7,6 +7,7 @@ categories: ['Spring 단기 심화']
 tags: ['Spring', 'TIL', '내일배움캠프']
 description: "This is a TIL that summarizes the concept of JWT, reasons for use, and authentication flow from a Spring learning perspective."
 lang: "en"
+ui_lang: "ko-KR"
 permalink: "/en/posts/TIL-스프링숙련-260414/"
 original_url: "/posts/TIL-스프링숙련-260414/"
 source_post: "_posts/2026-04-14-TIL-스프링숙련-260414.md"

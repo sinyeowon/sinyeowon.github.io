@@ -7,6 +7,7 @@ categories: ['BaekJoon']
 tags: ['Java', 'baekjoon']
 description: "This article summarizes the basic input/output solution for adding two integers received in Java."
 lang: "en"
+ui_lang: "ko-KR"
 permalink: "/en/posts/Java-BaekJoon-1000/"
 original_url: "/posts/Java-BaekJoon-1000/"
 source_post: "_posts/2026-04-05-Java-BaekJoon-1000.md"

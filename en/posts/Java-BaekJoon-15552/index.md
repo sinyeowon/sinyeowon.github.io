@@ -7,6 +7,7 @@ categories: ['BaekJoon']
 tags: ['Java', 'baekjoon']
 description: "We have compiled a solution using BufferedReader, StringTokenizer, and BufferedWriter for fast input/output in Java."
 lang: "en"
+ui_lang: "ko-KR"
 permalink: "/en/posts/Java-BaekJoon-15552/"
 original_url: "/posts/Java-BaekJoon-15552/"
 source_post: "_posts/2026-04-05-Java-BaekJoon-15552.md"

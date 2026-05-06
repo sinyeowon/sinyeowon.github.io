@@ -7,6 +7,7 @@ categories: ['Spring 단기 심화']
 tags: ['Spring', 'TIL', '내일배움캠프']
 description: "This is a TIL that summarizes the Gradle build, server execution, and API test flow based on the introductory Spring course content."
 lang: "en"
+ui_lang: "ko-KR"
 permalink: "/en/posts/TIL-스프링-입문-TIL-260406/"
 original_url: "/posts/TIL-스프링-입문-TIL-260406/"
 source_post: "_posts/2026-04-07-TIL-스프링-입문-TIL-260406.md"
