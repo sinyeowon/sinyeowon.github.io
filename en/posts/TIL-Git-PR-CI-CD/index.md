@@ -238,7 +238,9 @@ Check the location of `<<<<<<<` / `=======` / `>>>>>>>` → Decide which code to
 ### **CI/CD Pipeline Introduction**
 
 - Difference between manual deployment and automation
-![image](/assets/img/notion/TIL-Git-PR-CI-CD/04-8f8d92b96d.png)- After introducing CI/CD
+![image](/assets/img/notion/TIL-Git-PR-CI-CD/04-8f8d92b96d.png)
+
+  - After introducing CI/CD
     - Test runs automatically when PR is raised
 
     - main merge = automatic deployment

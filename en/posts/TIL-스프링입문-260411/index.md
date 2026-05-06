@@ -310,7 +310,9 @@ public class Memo {
 `em.remove(memo);`
 - **remove(entity)**: Receives the entity in persistent state that has been searched for deletion as a parameter and switches it to the deletion state.
 
-(.find(): If it is not in the cache storage, the DB search result is immediately put into the primary cache, and taken out from the cache from next time)### JPA in SpringBoot
+(.find(): If it is not in the cache storage, the DB search result is immediately put into the primary cache, and taken out from the cache from next time)
+
+### JPA in SpringBoot
 -build.gradle
 ``` groovy
 // JPA 설정

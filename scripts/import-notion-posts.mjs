@@ -431,12 +431,52 @@ function blockquoteMarkdown(markdown) {
 }
 
 function normalizeMarkdown(markdown) {
-  return unwrapMarkdownTableFences(normalizeFenceLines(markdown))
+  return splitJoinedMarkdownBlocks(unwrapMarkdownTableFences(normalizeFenceLines(markdown)))
     .replace(/^([ \t]*)-([^\s-].*)$/gm, '$1- $2')
     .replace(/^ {4,}(\|.+\|[ \t]*)$/gm, '  $1')
     .replace(/^([ \t]*(?:[-*+]|\d+\.)\s+.+)\n([ \t]*```)/gm, '$1\n\n$2')
     .replace(/^([ \t]*(?:[-*+]|\d+\.)\s+.+)\n([ \t]*\|.+\|[ \t]*$)/gm, '$1\n\n$2')
     .trim();
+}
+
+function splitJoinedMarkdownBlocks(markdown) {
+  const lines = String(markdown || '').split('\n');
+  const normalized = [];
+  let inFence = false;
+
+  for (const line of lines) {
+    if (/^\s*```/.test(line)) {
+      inFence = !inFence;
+      normalized.push(line);
+      continue;
+    }
+
+    if (inFence) {
+      normalized.push(line);
+      continue;
+    }
+
+    const imageListMatch = line.match(/^(\s*!\[[^\]]*]\([^)]+\))([-*+]\s+.*)$/);
+    if (imageListMatch) {
+      normalized.push(imageListMatch[1], '');
+
+      let nestedIndent = '';
+      for (let i = normalized.length - 3; i >= 0; i -= 1) {
+        const listMatch = normalized[i]?.match(/^(\s*)(?:[-*+]|\d+\.)\s+/);
+        if (listMatch) {
+          nestedIndent = `${listMatch[1]}  `;
+          break;
+        }
+      }
+
+      normalized.push(`${nestedIndent}${imageListMatch[2]}`);
+      continue;
+    }
+
+    normalized.push(line.replace(/(\))(?=#{1,6}\s+)/g, '$1\n\n'));
+  }
+
+  return normalized.join('\n');
 }
 
 function unwrapMarkdownTableFences(markdown) {

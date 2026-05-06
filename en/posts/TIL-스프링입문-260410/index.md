@@ -287,7 +287,9 @@ class Pizza implements Food{
 	-> At this time, the flow of control was Consumer -> Food.
 - To solve this problem, by changing the way the created food is delivered to the consumer, the consumer can eat any food without additional cooking preparation (code change).
 	-> As a result, the flow of control is reversed from Food -> Consumer.
-	(Because even in the real world, the customer does not make the food, but the prepared food is delivered to the customer)#### Strongly coupled Notepad project
+	(Because even in the real world, the customer does not make the food, but the prepared food is delivered to the customer)
+
+#### Strongly coupled Notepad project
 - Notepad project with strong coupling
 	1. Controller creates and uses a Service object
   ``` java
