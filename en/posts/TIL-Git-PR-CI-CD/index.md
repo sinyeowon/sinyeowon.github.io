@@ -61,15 +61,18 @@ If you do not have a branching strategy, accidents may occur such as your work o
   - PR is a trigger that starts a code review and a change diary that I will read in the future.
 
 - PR life cycle
+
 ```bash
 1. Branch → feature/login 같은 작업 브랜치 생성
 2. Commit & Push → 작업 내용을 원격에 푸시
 3. Open PR → GitHub UI에서 PR 생성, 리뷰어 지정
 4. Review → 코드 리뷰 + CI 검증 → 수정 → 재푸시
 5. Approve & Merge → 승인 후 머지, 브랜치 삭제
+
 ```
 
 - Actual command flow
+
 ```bash
 # 1. 브랜치 생성
 git checkout -b feature/login
@@ -90,6 +93,7 @@ git push origin feature/login
   - Title should be clear in one line - ex) `[FIX] 로그인 토큰 만료 시 자동 리프레시 처리`
 
   - Include context in the text
+
 ```bash
 ## What
 - AccessToken 만료 시 자동으로 RefreshToken으로 재발급
@@ -105,6 +109,7 @@ git push origin feature/login
 - [x] 단위 테스트 추가 (auth.spec.ts)
 - [x] QA 시나리오 통과
 - [ ] 부하 테스트는 별도 PR
+
 ```
 
   - Self-review first - Re-read self-PR immediately after push
@@ -186,6 +191,7 @@ git push origin feature/login
 Conflicts occur when two branches modify the same line in the same file differently.
 
 - Conflict markers that Git leaves in files
+
 ```bash
 <<<<<<< HEAD
   private final int TIMEOUT = 3000;       // 내 변경 (현재 브랜치)
@@ -205,6 +211,7 @@ Check the location of `<<<<<<<` / `=======` / `>>>>>>>` → Decide which code to
   1. Modify to desired form
 
   1. Staging + Commit
+
 ```bash
 git add .
 git commit
@@ -212,12 +219,14 @@ git commit
 ```
 
   1. Test + Push
+
 ```bash
 npm test       # 충돌 해결로 깨진 곳이 없는지 반드시 확인
 git push
 ```
 
-  -If it's still a mess
+  - If it's still a mess
+
 ```bash
 git merge --abort   # 머지 시작 전으로 되돌림
 git rebase --abort  # rebase 중이면
@@ -313,6 +322,7 @@ jobs:
     1. Merge is possible only if all checks pass.
 
   - One step further to CD
+
 ```yaml
 deploy:
   needs: build-and-test     # 위 job이 성공해야만 실행

@@ -57,15 +57,18 @@ notion_lang: "ko"
   - PR은 코드 리뷰를 시작시키는 trigger이자, 미래의 내가 읽을 변경 일기장
 
 - PR 라이프사이클
+
 ```bash
 1. Branch → feature/login 같은 작업 브랜치 생성
 2. Commit & Push → 작업 내용을 원격에 푸시
 3. Open PR → GitHub UI에서 PR 생성, 리뷰어 지정
 4. Review → 코드 리뷰 + CI 검증 → 수정 → 재푸시
 5. Approve & Merge → 승인 후 머지, 브랜치 삭제
+
 ```
 
 - 실제 명령어 흐름
+
 ```bash
 # 1. 브랜치 생성
 git checkout -b feature/login
@@ -86,6 +89,7 @@ git push origin feature/login
   - 제목은 한 줄로 명확히 - ex) `[FIX] 로그인 토큰 만료 시 자동 리프레시 처리`
 
   - 본문에 컨텍스트를 담기
+
 ```bash
 ## What
 - AccessToken 만료 시 자동으로 RefreshToken으로 재발급
@@ -101,6 +105,7 @@ git push origin feature/login
 - [x] 단위 테스트 추가 (auth.spec.ts)
 - [x] QA 시나리오 통과
 - [ ] 부하 테스트는 별도 PR
+
 ```
 
   - 셀프 리뷰가 먼저 - 푸시 직후 자기 PR 한 번 다시 읽기
@@ -182,6 +187,7 @@ git push origin feature/login
 충돌은 두 브랜치가 같은 파일의 같은 줄을 다르게 수정했을 때 발생
 
 - Git이 파일에 남기는 충돌 마커
+
 ```bash
 <<<<<<< HEAD
   private final int TIMEOUT = 3000;       // 내 변경 (현재 브랜치)
@@ -201,6 +207,7 @@ git push origin feature/login
   1. 원하는 형태로 수정
 
   1. 스테이징 + 커밋
+
 ```bash
 git add .
 git commit
@@ -208,12 +215,14 @@ git commit
 ```
 
   1. 테스트 + 푸시
+
 ```bash
 npm test       # 충돌 해결로 깨진 곳이 없는지 반드시 확인
 git push
 ```
 
   - 그래도 꼬였다면
+
 ```bash
 git merge --abort   # 머지 시작 전으로 되돌림
 git rebase --abort  # rebase 중이면
@@ -311,6 +320,7 @@ jobs:
     1. 모든 체크가 통과해야 머지 가능
 
   - CD까지 한 단계 더
+
 ```yaml
 deploy:
   needs: build-and-test     # 위 job이 성공해야만 실행

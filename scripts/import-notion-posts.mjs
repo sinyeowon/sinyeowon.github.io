@@ -408,7 +408,7 @@ async function renderBlock(block, context, depth = 0) {
   if (block.has_children && type !== 'toggle' && type !== 'table') {
     const children = await renderBlocks(await getBlockChildren(block.id), context, depth + 1);
     if (children.trim()) {
-      const separator = containsMarkdownTable(children) ? '\n\n' : '\n';
+      const separator = containsMarkdownBlock(children) ? '\n\n' : '\n';
       output = output ? `${output}${separator}${children}` : children;
     }
   }
@@ -418,6 +418,57 @@ async function renderBlock(block, context, depth = 0) {
 
 function containsMarkdownTable(markdown) {
   return /^\s*\|.*\|\s*$/m.test(markdown);
+}
+
+function containsMarkdownBlock(markdown) {
+  return containsMarkdownTable(markdown) || /^\s*```/m.test(markdown);
+}
+
+function normalizeMarkdown(markdown) {
+  return normalizeFenceLines(markdown)
+    .replace(/^([ \t]*)-([^\s-].*)$/gm, '$1- $2')
+    .replace(/^([ \t]*(?:[-*+]|\d+\.)\s+.+)\n([ \t]*```)/gm, '$1\n\n$2')
+    .replace(/^([ \t]*(?:[-*+]|\d+\.)\s+.+)\n([ \t]*\|.+\|[ \t]*$)/gm, '$1\n\n$2')
+    .trim();
+}
+
+function normalizeFenceLines(markdown) {
+  const lines = String(markdown || '').split('\n');
+  const normalized = [];
+  let inFence = false;
+
+  for (const line of lines) {
+    const fenceIndex = line.indexOf('```');
+
+    if (fenceIndex === -1) {
+      normalized.push(line);
+      continue;
+    }
+
+    if (!inFence) {
+      const before = line.slice(0, fenceIndex).trimEnd();
+      if (before) {
+        normalized.push(before);
+      }
+
+      normalized.push(line.slice(fenceIndex));
+      inFence = true;
+      continue;
+    }
+
+    const closing = line.slice(0, fenceIndex + 3);
+    const after = line.slice(fenceIndex + 3).trimStart();
+    normalized.push(closing);
+
+    if (after) {
+      normalized.push('');
+      normalized.push(after);
+    }
+
+    inFence = false;
+  }
+
+  return normalized.join('\n');
 }
 
 function markdownTableCell(richText = []) {
@@ -539,7 +590,7 @@ async function buildPost(page) {
   const tags = propertyList(findProperty(page, propertyNames.tags)).filter(Boolean);
   const description = propertyText(findProperty(page, propertyNames.description));
   const blocks = await getBlockChildren(page.id);
-  const body = await renderBlocks(blocks, { slug, assetIndex: 0 });
+  const body = normalizeMarkdown(await renderBlocks(blocks, { slug, assetIndex: 0 }));
   const fallbackDescription = description || createDescription(body);
   const date = formatDateForJekyll(dateValue);
   const lastModifiedAt = formatDateForJekyll(page.last_edited_time);
@@ -572,7 +623,7 @@ async function buildPost(page) {
   if (GENERATE_ENGLISH) {
     const englishTitle = await translateText(title);
     const englishDescription = await translateText(fallbackDescription);
-    const englishBody = await translateMarkdown(body);
+    const englishBody = normalizeMarkdown(await translateMarkdown(body));
     const englishMetadata = {
       layout: 'post',
       title: englishTitle || title,
