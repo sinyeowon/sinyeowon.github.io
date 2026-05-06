@@ -19,13 +19,13 @@ notion_lang: "ko"
 
 - Git Flow의 5가지 브랜치
 
-      | 브랜치 | 역할 | 분기 | 머지 대상 | 수명 |
-      | --- | --- | --- | --- | --- |
-      | `main` | 운영(Production) 코드. 항상 배포 가능 상태 | — | — | 영구 |
-      | `develop` | 다음 릴리즈 통합 브랜치. 모든 feature가 모이는 곳 | main에서 최초 1회 | — | 영구 |
-      | `feature/*` | 새 기능 개발 | develop | develop | 임시 |
-      | `release/*` | 출시 준비. 버그 수정만 허용 | develop | main + develop | 임시 |
-      | `hotfix/*` | 운영 버그 긴급 수정 | main | main + develop | 임시 |
+  | 브랜치 | 역할 | 분기 | 머지 대상 | 수명 |
+  | --- | --- | --- | --- | --- |
+  | `main` | 운영(Production) 코드. 항상 배포 가능 상태 | — | — | 영구 |
+  | `develop` | 다음 릴리즈 통합 브랜치. 모든 feature가 모이는 곳 | main에서 최초 1회 | — | 영구 |
+  | `feature/*` | 새 기능 개발 | develop | develop | 임시 |
+  | `release/*` | 출시 준비. 버그 수정만 허용 | develop | main + develop | 임시 |
+  | `hotfix/*` | 운영 버그 긴급 수정 | main | main + develop | 임시 |
 
 ![image](/assets/img/notion/TIL-Git-PR-CI-CD/01-a9615f8ef8.png)
 

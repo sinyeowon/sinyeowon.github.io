@@ -427,6 +427,7 @@ function containsMarkdownBlock(markdown) {
 function normalizeMarkdown(markdown) {
   return normalizeFenceLines(markdown)
     .replace(/^([ \t]*)-([^\s-].*)$/gm, '$1- $2')
+    .replace(/^ {4,}(\|.+\|[ \t]*)$/gm, '  $1')
     .replace(/^([ \t]*(?:[-*+]|\d+\.)\s+.+)\n([ \t]*```)/gm, '$1\n\n$2')
     .replace(/^([ \t]*(?:[-*+]|\d+\.)\s+.+)\n([ \t]*\|.+\|[ \t]*$)/gm, '$1\n\n$2')
     .trim();
@@ -515,7 +516,7 @@ async function renderTable(block, depth = 0) {
     .map((row) => `| ${row.join(' | ')} |`)
     .join('\n');
 
-  return indentMarkdown(table, depth);
+  return indentMarkdown(table, Math.min(depth, 1));
 }
 
 async function renderImage(block, context) {

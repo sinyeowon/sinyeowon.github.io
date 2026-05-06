@@ -23,13 +23,13 @@ If you do not have a branching strategy, accidents may occur such as your work o
 
 - 5 branches of Git Flow
 
-      | branch | Role | branch | Merge target | Lifespan |
-      | --- | --- | --- | --- | --- |
-      | `main` | Production code. Always available for deployment | — | — | permanent |
-      | `develop` | Next release integration branch. Where all features gather | First time in main | — | permanent |
-      | `feature/*` | New feature development | develop | develop | Temporary |
-      | `release/*` | Ready for launch. Allow bug fixes only | develop | main + develop | Temporary |
-      | `hotfix/*` | Emergency fix for operational bugs | main | main + develop | Temporary |
+  | branch | Role | branch | Merge target | Lifespan |
+  | --- | --- | --- | --- | --- |
+  | `main` | Production code. Always available for deployment | — | — | permanent |
+  | `develop` | Next release integration branch. Where all features gather | First time in main | — | permanent |
+  | `feature/*` | New feature development | develop | develop | Temporary |
+  | `release/*` | Ready for launch. Allow bug fixes only | develop | main + develop | Temporary |
+  | `hotfix/*` | Emergency fix for operational bugs | main | main + develop | Temporary |
 
 ![image](/assets/img/notion/TIL-Git-PR-CI-CD/01-a9615f8ef8.png)
 
