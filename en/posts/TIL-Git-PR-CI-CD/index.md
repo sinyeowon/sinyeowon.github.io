@@ -1,6 +1,6 @@
 ---
 layout: "post"
-title: "[TIL] Special lecture on Git & PR + CI/CD"
+title: "[TIL] Git & PR + CI/CD Special Lecture"
 date: 2026-05-06 09:00:00 +0900
 last_modified_at: 2026-05-06 11:26:00 +0900
 categories: ["Spring 단기 심화"]
