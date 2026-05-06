@@ -88,6 +88,7 @@ git push origin feature/login
 ```
 
 - How to write a good PR
+
   - Break it down into small pieces - 200 to 400 lines / single purpose
 
   - Title should be clear in one line - ex) `[FIX] 로그인 토큰 만료 시 자동 리프레시 처리`
@@ -203,6 +204,7 @@ Conflicts occur when two branches modify the same line in the same file differen
 → Conflicts are not errors, but Git is requesting my judgment.
 
 - 5 steps to conflict resolution
+
   1. Check current status - `git status`
 
   1. Open the file and find the marker
@@ -268,6 +270,7 @@ git rebase --abort  # rebase 중이면
   | CD | Continuous **Deployment** | If passed, automatically distributed to operation |
 
 - Get started in 30 lines with Github Actions
+
 ### `.github/workflows/ci.yml`
 
 ```yaml

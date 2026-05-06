@@ -84,6 +84,7 @@ git push origin feature/login
 ```
 
 - 좋은 PR 작성법
+
   - 작게 쪼개기 - 200~400줄 / 단일 목적
 
   - 제목은 한 줄로 명확히 - ex) `[FIX] 로그인 토큰 만료 시 자동 리프레시 처리`
@@ -199,6 +200,7 @@ git push origin feature/login
 → 충돌은 에러가 아니라, Git이 내 판단을 요청하는 것
 
 - 충돌 해결 5단계
+
   1. 현재 상태 확인 - `git status`
 
   1. 파일 열어서 마커 찾기
@@ -266,6 +268,7 @@ git rebase --abort  # rebase 중이면
   | CD | Continuous **Deployment** | 통과하면 자동으로 운영까지 배포 |
 
 - Github Actions로 30줄 안에 시작하기
+
 ### `.github/workflows/ci.yml`
 
 ```yaml
