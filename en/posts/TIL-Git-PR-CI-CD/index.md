@@ -2,9 +2,9 @@
 layout: "post"
 title: "[TIL] Special lecture on Git & PR + CI/CD"
 date: 2026-05-06 09:00:00 +0900
-last_modified_at: 2026-05-06 11:04:00 +0900
-categories: ["내일배움캠프"]
-tags: ["Git"]
+last_modified_at: 2026-05-06 11:26:00 +0900
+categories: ["Spring 단기 심화"]
+tags: ["Git", "CI/CD"]
 description: ""
 lang: "en"
 permalink: "/en/posts/TIL-Git-PR-CI-CD/"
