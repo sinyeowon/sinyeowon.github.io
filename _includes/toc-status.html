@@ -4,7 +4,20 @@
 
 {% assign enable_toc = false %}
 {% if site.toc and page.toc %}
-  {% if page.content contains '<h2' or page.content contains '<h3' %}
+  {% assign toc_source = content | default: page.content %}
+  {% assign has_toc_heading = false %}
+
+  {% if toc_source contains '<h2' or toc_source contains '<h3' %}
+    {% assign has_toc_heading = true %}
+  {% endif %}
+
+  {% unless has_toc_heading %}
+    {% if page.content contains '## ' or page.content contains '### ' %}
+      {% assign has_toc_heading = true %}
+    {% endif %}
+  {% endunless %}
+
+  {% if has_toc_heading %}
     {% assign enable_toc = true %}
   {% endif %}
 {% endif %}
