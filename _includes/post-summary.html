@@ -6,12 +6,14 @@
     max_length: The maximum length of the returned content. Default is 200.
 {%- endcomment -%}
 
-{%- if post.description and include.full_text != true -%}
-  {{- post.description -}}
+{%- assign target_post = include.post | default: post -%}
+
+{%- if target_post.description and include.full_text != true -%}
+  {{- target_post.description -}}
 {%- else -%}
   {%- comment -%} Remove the line numbers from the code snippet. {%- endcomment -%}
 
-  {%- assign content = post.content -%}
+  {%- assign content = target_post.content -%}
 
   {%- if content contains '<td class="rouge-gutter gl"><pre class="lineno">' -%}
     {%- assign content = content

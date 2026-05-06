@@ -10,6 +10,10 @@
 {% assign CATEGORY_SCORE = 0.5 %}
 
 {% assign SEPARATOR = ':' %}
+{% assign related_lang = include.lang %}
+{% if page.lang and site.data.locales[page.lang] %}
+  {% assign related_lang = page.lang %}
+{% endif %}
 
 {% assign match_posts = '' | split: '' %}
 
@@ -28,7 +32,7 @@
 {% for i in (0..last_index) %}
   {% assign post = match_posts[i] %}
 
-  {% if post.url == page.url %}
+  {% if post.url == page.url or post.url == page.original_url %}
     {% continue %}
   {% endif %}
 
@@ -72,17 +76,35 @@
 {% if relate_posts.size > 0 %}
   <aside id="related-posts" aria-labelledby="related-label">
     <h3 class="mb-4" id="related-label">
-      {{- site.data.locales[include.lang].post.relate_posts -}}
+      {{- site.data.locales[related_lang].post.relate_posts -}}
     </h3>
     <nav class="row row-cols-1 row-cols-md-2 row-cols-xl-3 g-4 mb-4">
       {% for post in relate_posts %}
+        {% assign display_post = post %}
+
+        {% if page.lang == 'en' %}
+          {% assign has_english_post = false %}
+
+          {% for english_page in site.pages %}
+            {% if english_page.lang == 'en' and english_page.original_url == post.url %}
+              {% assign display_post = english_page %}
+              {% assign has_english_post = true %}
+              {% break %}
+            {% endif %}
+          {% endfor %}
+
+          {% unless has_english_post %}
+            {% continue %}
+          {% endunless %}
+        {% endif %}
+
         <article class="col">
-          <a href="{{ post.url | relative_url }}" class="post-preview card h-100">
+          <a href="{{ display_post.url | relative_url }}" class="post-preview card h-100">
             <div class="card-body">
-              {% include datetime.html date=post.date lang=include.lang %}
-              <h4 class="pt-0 my-2">{{ post.title }}</h4>
+              {% include datetime.html date=display_post.date lang=related_lang %}
+              <h4 class="pt-0 my-2">{{ display_post.title }}</h4>
               <div class="text-muted">
-                <p>{% include post-summary.html %}</p>
+                <p>{% include post-summary.html post=display_post %}</p>
               </div>
             </div>
           </a>

@@ -11,6 +11,11 @@ script_includes:
 
 {% include lang.html %}
 
+{% assign post_lang = lang %}
+{% if page.lang and site.data.locales[page.lang] %}
+  {% assign post_lang = page.lang %}
+{% endif %}
+
 {% include toc-status.html %}
 
 <article class="px-1" data-toc="{{ enable_toc }}">
@@ -23,15 +28,15 @@ script_includes:
     <div class="post-meta text-muted">
       <!-- published date -->
       <span>
-        {{ site.data.locales[lang].post.posted }}
-        {% include datetime.html date=page.date tooltip=true lang=lang %}
+        {{ site.data.locales[post_lang].post.posted }}
+        {% include datetime.html date=page.date tooltip=true lang=post_lang %}
       </span>
 
       <!-- lastmod date -->
       {% if page.last_modified_at and page.last_modified_at != page.date %}
         <span>
-          {{ site.data.locales[lang].post.updated }}
-          {% include datetime.html date=page.last_modified_at tooltip=true lang=lang %}
+          {{ site.data.locales[post_lang].post.updated }}
+          {% include datetime.html date=page.last_modified_at tooltip=true lang=post_lang %}
         </span>
       {% endif %}
 
@@ -61,7 +66,7 @@ script_includes:
             {% assign authors = page.authors %}
           {% endif %}
 
-          {{ site.data.locales[lang].post.written_by }}
+          {{ site.data.locales[post_lang].post.written_by }}
 
           <em>
             {% if authors %}
@@ -86,12 +91,12 @@ script_includes:
               <em id="pageviews">
                 <i class="fas fa-spinner fa-spin small"></i>
               </em>
-              {{ site.data.locales[lang].post.pageview_measure }}
+              {{ site.data.locales[post_lang].post.pageview_measure }}
             </span>
           {% endif %}
 
           <!-- read time -->
-          {% include read-time.html content=content prompt=true lang=lang %}
+          {% include read-time.html content=content prompt=true lang=post_lang %}
         </div>
       </div>
     </div>
@@ -99,8 +104,8 @@ script_includes:
 
   {% if page.lang == 'en' and page.original_url %}
     <blockquote class="prompt-info post-language-notice">
-      한국어 원문은
-      <a href="{{ page.original_url | relative_url }}">여기</a>에서 볼 수 있습니다.
+      For the Korean original version of this post, see
+      <a href="{{ page.original_url | relative_url }}">here</a>.
     </blockquote>
   {% elsif page.layout == 'post' %}
     {% assign english_post_url = page.en_url | default: page.english_url %}
