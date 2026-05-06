@@ -37,7 +37,8 @@ async function main() {
     const originalUrl = `/posts/${slug}/`;
     const englishTitle = await translateText(parsed.title);
     const englishDescription = await translateText(parsed.description || createDescription(parsed.body));
-    const englishBody = await translateMarkdown(parsed.body);
+    const normalizedBody = normalizeMarkdown(parsed.body);
+    const englishBody = normalizeMarkdown(await translateMarkdown(normalizedBody));
     const englishFrontMatter = [
       '---',
       'layout: "post"',
@@ -229,6 +230,36 @@ async function translateMarkdown(markdown) {
   }
 
   return translated;
+}
+
+function normalizeMarkdown(markdown) {
+  return unwrapMarkdownTableFences(markdown).trim();
+}
+
+function unwrapMarkdownTableFences(markdown) {
+  return String(markdown || '').replace(/```([^\n]*)\n([\s\S]*?)\n```/g, (match, lang, body) => {
+    const normalizedLang = lang.trim().toLowerCase();
+    const canUnwrap = !normalizedLang || ['plain', 'plaintext', 'text'].includes(normalizedLang);
+
+    if (!canUnwrap) {
+      return match;
+    }
+
+    const lines = body
+      .split('\n')
+      .map((line) => line.trim())
+      .filter(Boolean);
+
+    return isMarkdownTable(lines) ? lines.join('\n') : match;
+  });
+}
+
+function isMarkdownTable(lines) {
+  return (
+    lines.length >= 2 &&
+    lines.every((line) => /^\|.*\|$/.test(line)) &&
+    lines.some((line) => /^\|\s*:?-{3,}:?\s*(\|\s*:?-{3,}:?\s*)+\|$/.test(line))
+  );
 }
 
 function splitTranslationChunks(text, maxLength = 3500) {

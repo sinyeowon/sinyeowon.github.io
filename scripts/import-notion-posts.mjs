@@ -429,12 +429,38 @@ function blockquoteMarkdown(markdown) {
 }
 
 function normalizeMarkdown(markdown) {
-  return normalizeFenceLines(markdown)
+  return unwrapMarkdownTableFences(normalizeFenceLines(markdown))
     .replace(/^([ \t]*)-([^\s-].*)$/gm, '$1- $2')
     .replace(/^ {4,}(\|.+\|[ \t]*)$/gm, '  $1')
     .replace(/^([ \t]*(?:[-*+]|\d+\.)\s+.+)\n([ \t]*```)/gm, '$1\n\n$2')
     .replace(/^([ \t]*(?:[-*+]|\d+\.)\s+.+)\n([ \t]*\|.+\|[ \t]*$)/gm, '$1\n\n$2')
     .trim();
+}
+
+function unwrapMarkdownTableFences(markdown) {
+  return String(markdown || '').replace(/```([^\n]*)\n([\s\S]*?)\n```/g, (match, lang, body) => {
+    const normalizedLang = lang.trim().toLowerCase();
+    const canUnwrap = !normalizedLang || ['plain', 'plaintext', 'text'].includes(normalizedLang);
+
+    if (!canUnwrap) {
+      return match;
+    }
+
+    const lines = body
+      .split('\n')
+      .map((line) => line.trim())
+      .filter(Boolean);
+
+    return isMarkdownTable(lines) ? lines.join('\n') : match;
+  });
+}
+
+function isMarkdownTable(lines) {
+  return (
+    lines.length >= 2 &&
+    lines.every((line) => /^\|.*\|$/.test(line)) &&
+    lines.some((line) => /^\|\s*:?-{3,}:?\s*(\|\s*:?-{3,}:?\s*)+\|$/.test(line))
+  );
 }
 
 function normalizeFenceLines(markdown) {
