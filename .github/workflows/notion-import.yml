@@ -35,6 +35,9 @@ jobs:
           git config user.name "github-actions[bot]"
           git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
           git add _posts
+          if [ -d en/posts ] || git ls-files --error-unmatch 'en/posts/*' >/dev/null 2>&1; then
+            git add -A en/posts
+          fi
           if [ -d assets/img/notion ]; then
             git add assets/img/notion
           fi

@@ -5,7 +5,9 @@ import path from 'node:path';
 const NOTION_VERSION = process.env.NOTION_VERSION || '2022-06-28';
 const ROOT = process.cwd();
 const POSTS_DIR = path.join(ROOT, '_posts');
+const EN_POSTS_DIR = path.join(ROOT, 'en', 'posts');
 const ASSETS_DIR = path.join(ROOT, 'assets', 'img', 'notion');
+const GENERATE_ENGLISH = process.env.NOTION_GENERATE_ENGLISH !== 'false';
 
 const token = process.env.NOTION_TOKEN;
 const databaseId = process.env.DATABASE_ID || process.env.NOTION_DATABASE_ID;
@@ -248,18 +250,26 @@ function yamlArray(values) {
 }
 
 function frontMatter(metadata) {
-  return [
+  const lines = [
     '---',
+    ...(metadata.layout ? [`layout: ${yamlString(metadata.layout)}`] : []),
     `title: ${yamlString(metadata.title)}`,
     `date: ${metadata.date}`,
     `last_modified_at: ${metadata.lastModifiedAt}`,
     `categories: ${yamlArray(metadata.categories)}`,
     `tags: ${yamlArray(metadata.tags)}`,
     `description: ${yamlString(metadata.description)}`,
+    ...(metadata.lang ? [`lang: ${yamlString(metadata.lang)}`] : []),
+    ...(metadata.permalink ? [`permalink: ${yamlString(metadata.permalink)}`] : []),
+    ...(metadata.originalUrl ? [`original_url: ${yamlString(metadata.originalUrl)}`] : []),
+    ...(metadata.englishUrl ? [`english_url: ${yamlString(metadata.englishUrl)}`] : []),
     `notion_id: ${yamlString(metadata.notionId)}`,
+    `notion_lang: ${yamlString(metadata.notionLang || 'ko')}`,
     '---',
     ''
-  ].join('\n');
+  ];
+
+  return lines.join('\n');
 }
 
 function markdownInline(richText = []) {
@@ -504,25 +514,146 @@ async function buildPost(page) {
   const blocks = await getBlockChildren(page.id);
   const body = await renderBlocks(blocks, { slug, assetIndex: 0 });
   const fallbackDescription = description || createDescription(body);
+  const date = formatDateForJekyll(dateValue);
+  const lastModifiedAt = formatDateForJekyll(page.last_edited_time);
+  const koreanUrl = `/posts/${slug}/`;
+  const englishUrl = `/en/posts/${slug}/`;
 
   const metadata = {
     title,
-    date: formatDateForJekyll(dateValue),
-    lastModifiedAt: formatDateForJekyll(page.last_edited_time),
+    date,
+    lastModifiedAt,
     categories: categories.length ? categories : ['Notion'],
     tags,
     description: fallbackDescription,
-    notionId: page.id
+    englishUrl,
+    notionId: page.id,
+    notionLang: 'ko'
   };
 
   const fileName = `${datePrefix(dateValue)}-${slug}.md`;
   const filePath = path.join(POSTS_DIR, fileName);
+  const posts = [
+    {
+      notionId: page.id,
+      notionLang: 'ko',
+      filePath,
+      content: `${frontMatter(metadata)}${body.trim()}\n`
+    }
+  ];
 
-  return {
-    notionId: page.id,
-    filePath,
-    content: `${frontMatter(metadata)}${body.trim()}\n`
-  };
+  if (GENERATE_ENGLISH) {
+    const englishTitle = await translateText(title);
+    const englishDescription = await translateText(fallbackDescription);
+    const englishBody = await translateMarkdown(body);
+    const englishMetadata = {
+      layout: 'post',
+      title: englishTitle || title,
+      date,
+      lastModifiedAt,
+      categories: metadata.categories,
+      tags,
+      description: englishDescription || fallbackDescription,
+      lang: 'en',
+      permalink: englishUrl,
+      originalUrl: koreanUrl,
+      notionId: page.id,
+      notionLang: 'en'
+    };
+
+    posts.push({
+      notionId: page.id,
+      notionLang: 'en',
+      filePath: path.join(EN_POSTS_DIR, slug, 'index.md'),
+      content: `${frontMatter(englishMetadata)}${englishBody.trim()}\n`
+    });
+  }
+
+  return posts;
+}
+
+const translationCache = new Map();
+
+async function translateText(text, targetLanguage = 'en') {
+  const value = String(text || '');
+
+  if (!value.trim()) {
+    return value;
+  }
+
+  const cacheKey = `${targetLanguage}:${value}`;
+  if (translationCache.has(cacheKey)) {
+    return translationCache.get(cacheKey);
+  }
+
+  const params = new URLSearchParams({
+    client: 'gtx',
+    sl: 'ko',
+    tl: targetLanguage,
+    dt: 't',
+    q: value
+  });
+
+  const response = await fetch(`https://translate.googleapis.com/translate_a/single?${params}`);
+  if (!response.ok) {
+    throw new Error(`Translate API ${response.status} ${response.statusText}`);
+  }
+
+  const data = await response.json();
+  const translated = (data[0] || []).map((part) => part[0]).join('');
+  translationCache.set(cacheKey, translated);
+  return translated;
+}
+
+async function translateMarkdown(markdown) {
+  const protectedSegments = [];
+  const protectedMarkdown = markdown.replace(
+    /```[\s\S]*?```|`[^`\n]+`|!\[[^\]]*]\([^)]*\)|\[[^\]]+]\([^)]*\)/g,
+    (match) => {
+      const token = `ZXCVBNOTIONSEGMENT${protectedSegments.length}TOKEN`;
+      protectedSegments.push({ token, value: match });
+      return token;
+    }
+  );
+
+  const chunks = splitTranslationChunks(protectedMarkdown);
+  const translatedChunks = [];
+
+  for (const chunk of chunks) {
+    translatedChunks.push(await translateText(chunk));
+  }
+
+  let translated = translatedChunks.join('');
+  for (const segment of protectedSegments) {
+    translated = translated.replaceAll(segment.token, segment.value);
+  }
+
+  return translated;
+}
+
+function splitTranslationChunks(text, maxLength = 3500) {
+  const paragraphs = text.split(/(\n{2,})/);
+  const chunks = [];
+  let current = '';
+
+  for (const paragraph of paragraphs) {
+    if (current.length + paragraph.length > maxLength && current) {
+      chunks.push(current);
+      current = '';
+    }
+
+    if (paragraph.length > maxLength) {
+      chunks.push(paragraph);
+    } else {
+      current += paragraph;
+    }
+  }
+
+  if (current) {
+    chunks.push(current);
+  }
+
+  return chunks;
 }
 
 function createDescription(markdown) {
@@ -537,15 +668,15 @@ function createDescription(markdown) {
 }
 
 async function removeStaleGeneratedPosts(currentPosts) {
-  const currentByNotionId = new Map(currentPosts.map((post) => [post.notionId, post.filePath]));
-  const files = await readdir(POSTS_DIR);
+  const currentByNotionKey = new Map(
+    currentPosts.map((post) => [notionKey(post.notionId, post.notionLang), post.filePath])
+  );
+  const files = [
+    ...(await generatedMarkdownFiles(POSTS_DIR)),
+    ...(await generatedMarkdownFiles(EN_POSTS_DIR))
+  ];
 
-  for (const file of files) {
-    if (!file.endsWith('.md')) {
-      continue;
-    }
-
-    const filePath = path.join(POSTS_DIR, file);
+  for (const filePath of files) {
     const content = await readFile(filePath, 'utf8');
     const match = content.match(/^notion_id:\s*["']?([^"'\n]+)["']?/m);
 
@@ -554,12 +685,42 @@ async function removeStaleGeneratedPosts(currentPosts) {
     }
 
     const notionId = match[1];
-    const nextPath = currentByNotionId.get(notionId);
+    const langMatch = content.match(/^notion_lang:\s*["']?([^"'\n]+)["']?/m);
+    const notionLang = langMatch?.[1] || 'ko';
+    const nextPath = currentByNotionKey.get(notionKey(notionId, notionLang));
     if (!nextPath || nextPath !== filePath) {
       await rm(filePath);
       console.log(`Removed stale Notion post: ${path.relative(ROOT, filePath)}`);
     }
   }
+}
+
+async function generatedMarkdownFiles(directory) {
+  try {
+    const entries = await readdir(directory, { withFileTypes: true });
+    const files = [];
+
+    for (const entry of entries) {
+      const filePath = path.join(directory, entry.name);
+      if (entry.isDirectory()) {
+        files.push(...(await generatedMarkdownFiles(filePath)));
+      } else if (entry.isFile() && entry.name.endsWith('.md')) {
+        files.push(filePath);
+      }
+    }
+
+    return files;
+  } catch (error) {
+    if (error.code === 'ENOENT') {
+      return [];
+    }
+
+    throw error;
+  }
+}
+
+function notionKey(notionId, notionLang) {
+  return `${notionId}:${notionLang || 'ko'}`;
 }
 
 async function main() {
@@ -577,8 +738,8 @@ async function main() {
 
   const posts = [];
   for (const page of publishedPages) {
-    const post = await buildPost(page);
-    posts.push(post);
+    const pagePosts = await buildPost(page);
+    posts.push(...pagePosts);
   }
 
   await removeStaleGeneratedPosts(posts);
