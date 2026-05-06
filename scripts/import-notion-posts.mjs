@@ -383,7 +383,7 @@ async function renderBlock(block, context, depth = 0) {
       output = `$$\n${value.expression}\n$$`;
       break;
     case 'table':
-      output = await renderTable(block);
+      output = await renderTable(block, depth);
       break;
     case 'toggle': {
       const summary = markdownInline(value.rich_text) || '상세 내용';
@@ -408,18 +408,42 @@ async function renderBlock(block, context, depth = 0) {
   if (block.has_children && type !== 'toggle' && type !== 'table') {
     const children = await renderBlocks(await getBlockChildren(block.id), context, depth + 1);
     if (children.trim()) {
-      output = output ? `${output}\n${children}` : children;
+      const separator = containsMarkdownTable(children) ? '\n\n' : '\n';
+      output = output ? `${output}${separator}${children}` : children;
     }
   }
 
   return output;
 }
 
-async function renderTable(block) {
+function containsMarkdownTable(markdown) {
+  return /^\s*\|.*\|\s*$/m.test(markdown);
+}
+
+function markdownTableCell(richText = []) {
+  return markdownInline(richText)
+    .replace(/\r?\n/g, '<br>')
+    .replace(/\|/g, '\\|')
+    .trim();
+}
+
+function indentMarkdown(markdown, depth = 0) {
+  const prefix = '  '.repeat(depth);
+  if (!prefix) {
+    return markdown;
+  }
+
+  return markdown
+    .split('\n')
+    .map((line) => (line ? `${prefix}${line}` : line))
+    .join('\n');
+}
+
+async function renderTable(block, depth = 0) {
   const rows = await getBlockChildren(block.id);
   const cells = rows
     .filter((row) => row.type === 'table_row')
-    .map((row) => row.table_row.cells.map((cell) => markdownInline(cell)));
+    .map((row) => row.table_row.cells.map((cell) => markdownTableCell(cell)));
 
   if (!cells.length) {
     return '';
@@ -436,9 +460,11 @@ async function renderTable(block) {
 
   const [header, ...body] = normalizedRows;
   const separator = Array.from({ length: width }, () => '---');
-  return [header, separator, ...body]
+  const table = [header, separator, ...body]
     .map((row) => `| ${row.join(' | ')} |`)
     .join('\n');
+
+  return indentMarkdown(table, depth);
 }
 
 async function renderImage(block, context) {
