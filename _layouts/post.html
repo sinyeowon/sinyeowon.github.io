@@ -99,16 +99,16 @@ script_includes:
 
   {% if page.lang == 'en' and page.original_url %}
     <blockquote class="prompt-info post-language-notice">
-      For the Korean original version of this post, see
-      <a href="{{ page.original_url | relative_url }}">here</a>.
+      한국어 원문은
+      <a href="{{ page.original_url | relative_url }}">여기</a>에서 볼 수 있습니다.
     </blockquote>
   {% elsif page.layout == 'post' %}
     {% assign english_post_url = page.en_url | default: page.english_url %}
 
     {% if english_post_url %}
       <blockquote class="prompt-info post-language-notice">
-        For the English version of this post, see
-        <a href="{{ english_post_url | relative_url }}">here</a>.
+        영어 버전은
+        <a href="{{ english_post_url | relative_url }}">여기</a>에서 볼 수 있습니다.
       </blockquote>
     {% endif %}
   {% endif %}
