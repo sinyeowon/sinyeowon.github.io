@@ -8,6 +8,7 @@ tags: ["project"]
 description: "0 to Product This is an article written about TIL in the process of creating a plan for Article 4."
 lang: "en"
 ui_lang: "ko-KR"
+toc: true
 permalink: "/en/posts/TIL-소비-기록-서비스를-SNS형으로-발전시키기-260504/"
 original_url: "/posts/TIL-소비-기록-서비스를-SNS형으로-발전시키기-260504/"
 notion_id: "3587788a-fc66-80fd-985d-eefcbe2ec170"

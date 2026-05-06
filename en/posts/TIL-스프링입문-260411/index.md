@@ -8,6 +8,7 @@ tags: ['Spring', 'TIL', '내일배움캠프']
 description: "This is a TIL that summarizes the basic concepts of Spring IoC containers, beans, and dependency injection."
 lang: "en"
 ui_lang: "ko-KR"
+toc: true
 permalink: "/en/posts/TIL-스프링입문-260411/"
 original_url: "/posts/TIL-스프링입문-260411/"
 source_post: "_posts/2026-04-12-TIL-스프링입문-260411.md"

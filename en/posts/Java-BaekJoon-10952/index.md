@@ -8,6 +8,7 @@ tags: ['Java', 'baekjoon']
 description: "0 We have summarized the Java while(true) solution and termination condition that repeats until 0 is entered."
 lang: "en"
 ui_lang: "ko-KR"
+toc: true
 permalink: "/en/posts/Java-BaekJoon-10952/"
 original_url: "/posts/Java-BaekJoon-10952/"
 source_post: "_posts/2026-04-05-Java-BaekJoon-10952.md"

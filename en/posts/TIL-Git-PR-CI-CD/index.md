@@ -8,6 +8,7 @@ tags: ["Git", "CI/CD"]
 description: "This article summarizes what I studied after attending a special lecture on Git & PR + CI/CD."
 lang: "en"
 ui_lang: "ko-KR"
+toc: true
 permalink: "/en/posts/TIL-Git-PR-CI-CD/"
 original_url: "/posts/TIL-Git-PR-CI-CD/"
 notion_id: "3587788a-fc66-8089-892a-dad32b993e3a"

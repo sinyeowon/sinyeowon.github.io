@@ -8,6 +8,7 @@ tags: ['baekjoon', 'Python']
 description: "We have compiled a solution for quickly handling multi-line input using sys.stdin.readline() in Python."
 lang: "en"
 ui_lang: "ko-KR"
+toc: true
 permalink: "/en/posts/Python-BaekJoon-15552/"
 original_url: "/posts/Python-BaekJoon-15552/"
 source_post: "_posts/2026-04-05-Python-BaekJoon-15552.md"

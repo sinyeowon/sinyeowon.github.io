@@ -8,6 +8,7 @@ tags: ['Java', 'baekjoon']
 description: "I've outlined how to output multiple test cases in a formatted manner using BufferedReader and StringTokenizer in Java."
 lang: "en"
 ui_lang: "ko-KR"
+toc: true
 permalink: "/en/posts/Java-BaekJoon-11021/"
 original_url: "/posts/Java-BaekJoon-11021/"
 source_post: "_posts/2026-04-05-Java-BaekJoon-11021.md"

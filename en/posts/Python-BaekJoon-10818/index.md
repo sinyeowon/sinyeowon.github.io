@@ -8,6 +8,7 @@ tags: ['baekjoon', 'Python']
 description: "We have summarized the solution to finding the minimum and maximum values ​​of a list using loop statements and initial value settings in Python."
 lang: "en"
 ui_lang: "ko-KR"
+toc: true
 permalink: "/en/posts/Python-BaekJoon-10818/"
 original_url: "/posts/Python-BaekJoon-10818/"
 source_post: "_posts/2026-04-05-Python-BaekJoon-10818.md"

@@ -8,6 +8,7 @@ tags: ['baekjoon', 'Python']
 description: "We have organized a solution in Python that separates each digit and outputs the intermediate multiplication result and final value."
 lang: "en"
 ui_lang: "ko-KR"
+toc: true
 permalink: "/en/posts/Python-BaekJoon-2588/"
 original_url: "/posts/Python-BaekJoon-2588/"
 source_post: "_posts/2026-04-05-Python-BaekJoon-2588.md"

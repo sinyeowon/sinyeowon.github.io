@@ -8,6 +8,7 @@ tags: ['Java', 'baekjoon']
 description: "We have summarized the basic structure of a Java program and the solution for printing Hello World through the main method."
 lang: "en"
 ui_lang: "ko-KR"
+toc: true
 permalink: "/en/posts/Java-BaekJoon-2557/"
 original_url: "/posts/Java-BaekJoon-2557/"
 source_post: "_posts/2026-04-05-Java-BaekJoon-2557.md"

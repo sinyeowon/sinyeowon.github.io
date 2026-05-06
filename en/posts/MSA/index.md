@@ -8,6 +8,7 @@ tags: ['MSA', '아키텍처']
 description: "This is a summary note prepared to organize the MSA lecture contents by week."
 lang: "en"
 ui_lang: "ko-KR"
+toc: true
 permalink: "/en/posts/MSA/"
 original_url: "/posts/MSA/"
 source_post: "_posts/2026-04-15-MSA.md"

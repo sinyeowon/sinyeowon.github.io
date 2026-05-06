@@ -8,6 +8,7 @@ tags: ['baekjoon', 'Python']
 description: "We have summarized how to handle the A+B problem with an undetermined number of inputs by repeating sys.stdin."
 lang: "en"
 ui_lang: "ko-KR"
+toc: true
 permalink: "/en/posts/Python-BaekJoon-10951/"
 original_url: "/posts/Python-BaekJoon-10951/"
 source_post: "_posts/2026-04-05-Python-BaekJoon-10951.md"

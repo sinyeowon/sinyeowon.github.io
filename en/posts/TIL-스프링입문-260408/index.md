@@ -8,6 +8,7 @@ tags: ['Spring', 'TIL', '내일배움캠프']
 description: "This is a TIL that summarizes how to use Controller and HTTP method mapping in Spring MVC."
 lang: "en"
 ui_lang: "ko-KR"
+toc: true
 permalink: "/en/posts/TIL-스프링입문-260408/"
 original_url: "/posts/TIL-스프링입문-260408/"
 source_post: "_posts/2026-04-08-TIL-스프링입문-260408.md"

@@ -49,6 +49,7 @@ async function main() {
       `description: ${yamlString(englishDescription || parsed.description)}`,
       'lang: "en"',
       'ui_lang: "ko-KR"',
+      'toc: true',
       `permalink: ${yamlString(englishUrl)}`,
       `original_url: ${yamlString(originalUrl)}`,
       `source_post: ${yamlString(`_posts/${file}`)}`,
