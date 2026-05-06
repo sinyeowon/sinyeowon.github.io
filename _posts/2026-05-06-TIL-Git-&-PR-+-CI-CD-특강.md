@@ -1,11 +1,11 @@
 ---
 title: "[TIL] Git & PR + CI/CD 특강"
 date: 2026-05-06 09:00:00 +0900
-last_modified_at: 2026-05-06 12:33:00 +0900
+last_modified_at: 2026-05-06 15:09:00 +0900
 categories: ["Spring 단기 심화"]
 tags: ["Git", "CI/CD"]
 description: "Git & PR + CI/CD 관련 특강을 듣고 공부한 내용을 정리한 글입니다."
-english_url: "/en/posts/TIL-Git-PR-CI-CD/"
+english_url: "/en/posts/TIL-Git-&-PR-+-CI-CD-특강/"
 notion_id: "3587788a-fc66-8089-892a-dad32b993e3a"
 notion_lang: "ko"
 ---
@@ -27,7 +27,7 @@ notion_lang: "ko"
   | `release/*` | 출시 준비. 버그 수정만 허용 | develop | main + develop | 임시 |
   | `hotfix/*` | 운영 버그 긴급 수정 | main | main + develop | 임시 |
 
-![image](/assets/img/notion/TIL-Git-PR-CI-CD/01-a9615f8ef8.png)
+![image](/assets/img/notion/TIL-Git-&-PR-+-CI-CD-특강/01-a9615f8ef8.png)
 
 - Github Flow와 Git Flow
 
@@ -131,7 +131,7 @@ notion_lang: "ko"
 ### **Merge와 Rebase**
 
 - Merge: 두 히스토리를 합치는 머지 커밋
-![image](/assets/img/notion/TIL-Git-PR-CI-CD/02-ac94822e48.png)
+![image](/assets/img/notion/TIL-Git-&-PR-+-CI-CD-특강/02-ac94822e48.png)
 
   - 히스토리 보존 - 누가 어느 브랜치에서 작업했는지 그대로 남음
 
@@ -140,7 +140,7 @@ notion_lang: "ko"
   - 히스토리가 복잡해짐 - 머지 커밋이 쌓이면 git log가 복잡해짐
 
 - Rebase: 내 커밋을 main 끝에 옯겨 붙이기
-![image](/assets/img/notion/TIL-Git-PR-CI-CD/03-e678a100d5.png)
+![image](/assets/img/notion/TIL-Git-&-PR-+-CI-CD-특강/03-e678a100d5.png)
 
   - 히스토리가 깔끔함 - git log가 한 줄로 직선
 
@@ -233,7 +233,7 @@ notion_lang: "ko"
 ### **CI/CD 파이프라인 입문**
 
 - 수동 배포와 자동화의 차이
-![image](/assets/img/notion/TIL-Git-PR-CI-CD/04-8f8d92b96d.png)
+![image](/assets/img/notion/TIL-Git-&-PR-+-CI-CD-특강/04-8f8d92b96d.png)
 
   - CI/CD 도입 후
     - PR 올리면 테스트 자동 실행
@@ -248,7 +248,7 @@ notion_lang: "ko"
 
 - CI/CD 파이프라인 흐름
 
-![image](/assets/img/notion/TIL-Git-PR-CI-CD/05-b54ee9d439.png)
+![image](/assets/img/notion/TIL-Git-&-PR-+-CI-CD-특강/05-b54ee9d439.png)
 
   | 단계 | 무엇을 하나 |
   | --- | --- |
@@ -366,9 +366,9 @@ Q. Squash merge / Rebase merge / Merge commit 중 뭘 써야 하나요?
 
 Q. Merge & Rebase
 
-> ![image](/assets/img/notion/TIL-Git-PR-CI-CD/06-dae5302fb1.png)
+> ![image](/assets/img/notion/TIL-Git-&-PR-+-CI-CD-특강/06-dae5302fb1.png)
 
-![image](/assets/img/notion/TIL-Git-PR-CI-CD/07-c13ae95793.png)
+![image](/assets/img/notion/TIL-Git-&-PR-+-CI-CD-특강/07-c13ae95793.png)
 
 Q. CI/CD 처음인데 어디서부터 시작하나요?
 

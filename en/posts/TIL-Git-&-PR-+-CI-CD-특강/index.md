@@ -1,16 +1,16 @@
 ---
 layout: "post"
-title: "[TIL] Special lecture on Git & PR + CI/CD"
+title: "[TIL] Git & PR + CI/CD Special Lecture"
 date: 2026-05-06 09:00:00 +0900
-last_modified_at: 2026-05-06 12:33:00 +0900
+last_modified_at: 2026-05-06 15:09:00 +0900
 categories: ["Spring 단기 심화"]
 tags: ["Git", "CI/CD"]
 description: "This article summarizes what I studied after attending a special lecture on Git & PR + CI/CD."
 lang: "en"
 ui_lang: "ko-KR"
 toc: true
-permalink: "/en/posts/TIL-Git-PR-CI-CD/"
-original_url: "/posts/TIL-Git-PR-CI-CD/"
+permalink: "/en/posts/TIL-Git-&-PR-+-CI-CD-특강/"
+original_url: "/posts/TIL-Git-&-PR-+-CI-CD-특강/"
 notion_id: "3587788a-fc66-8089-892a-dad32b993e3a"
 notion_lang: "en"
 ---
@@ -18,7 +18,7 @@ notion_lang: "en"
 
 ### **Git Flow branching strategy**
 
-Without a branching strategy, accidents can occur such as your work overwriting your colleague's work, unfinished code mixed in when you're about to deploy, or you wanting to roll back but having no reference point.
+Without a branching strategy, accidents can occur, such as your work overwriting a colleague's work, unfinished code mixed in when you're about to deploy, or you wanting to roll back but having no reference point.
 
 → Branch strategy = accident prevention device
 
@@ -32,7 +32,7 @@ Without a branching strategy, accidents can occur such as your work overwriting 
   | `release/*` | Ready for launch. Allow bug fixes only | develop | main + develop | Temporary |
   | `hotfix/*` | Emergency fix for operational bugs | main | main + develop | Temporary |
 
-![image](/assets/img/notion/TIL-Git-PR-CI-CD/01-a9615f8ef8.png)
+![image](/assets/img/notion/TIL-Git-&-PR-+-CI-CD-특강/01-a9615f8ef8.png)
 
 - Github Flow and Git Flow
 
@@ -136,7 +136,7 @@ Without a branching strategy, accidents can occur such as your work overwriting 
 ### **Merge and Rebase**
 
 - Merge: Merge commit to combine two histories
-![image](/assets/img/notion/TIL-Git-PR-CI-CD/02-ac94822e48.png)
+![image](/assets/img/notion/TIL-Git-&-PR-+-CI-CD-특강/02-ac94822e48.png)
 
   - Preservation of history - who worked on which branch remains intact
 
@@ -145,13 +145,13 @@ Without a branching strategy, accidents can occur such as your work overwriting 
   - History becomes complicated - As merge commits accumulate, git log becomes complicated.
 
 - Rebase: Paste my commit at the end of main
-![image](/assets/img/notion/TIL-Git-PR-CI-CD/03-e678a100d5.png)
+![image](/assets/img/notion/TIL-Git-&-PR-+-CI-CD-특강/03-e678a100d5.png)
 
   - History is clean - git log is in one straight line
 
   - No merge commits - remove noise
 
-  - Existing commits are replaced by new commits - Collaboration is destroyed if done on a shared branch
+  - Existing commits are replaced with new commits - Collaboration is destroyed if done on a shared branch.
 
 - When to use what (Merge & Rebase)
 
@@ -236,7 +236,7 @@ Check the location of `<<<<<<<` / `=======` / `>>>>>>>` → Decide which code to
     ```
 
 ### **CI/CD Pipeline Introduction**- Difference between manual deployment and automation
-![image](/assets/img/notion/TIL-Git-PR-CI-CD/04-8f8d92b96d.png)
+![image](/assets/img/notion/TIL-Git-&-PR-+-CI-CD-특강/04-8f8d92b96d.png)
 
   - After introducing CI/CD
     - Test runs automatically when PR is raised
@@ -251,7 +251,7 @@ Check the location of `<<<<<<<` / `=======` / `>>>>>>>` → Decide which code to
 
 - CI/CD pipeline flow
 
-![image](/assets/img/notion/TIL-Git-PR-CI-CD/05-b54ee9d439.png)
+![image](/assets/img/notion/TIL-Git-&-PR-+-CI-CD-특강/05-b54ee9d439.png)
 
   | steps | What to do |
   | --- | --- |
@@ -264,7 +264,7 @@ Check the location of `<<<<<<<` / `=======` / `>>>>>>>` → Decide which code to
 
 > **CI/CD Terminology**
 >
-> | Abbreviation | Full name | Meaning |
+> | Abbreviation | Full name | meaning |
 > | --- | --- | --- |
 > | CI | Continuous **Integration** | Frequent code integration and automatic verification |
 > | CD | Continuous **Delivery** | Stay deployable at any time (manual approval) |
@@ -361,17 +361,17 @@ Check the location of `<<<<<<<` / `=======` / `>>>>>>>` → Decide which code to
 Q. Should I use Squash merge / Rebase merge / Merge commit?
 
 > There is no correct answer. **The answer is to set a team convention and go consistently**
-> - **Squash merge**: Compress PR into 1 commit / Cleanest history (most used)
+> - **Squash merge**: compresses PR into 1 commit / cleanest history (most used)
 >
-> - **Rebase merge**: Attach PR commits to main in a row / Enable track of commit units
+> - **Rebase merge**: Attach PR commits in a row to main / Enable track of commit units
 >
 > - **Merge commit**: Merge commit creation / PR units are clearly distinguished
 
 Q. Merge & Rebase
 
->![image](/assets/img/notion/TIL-Git-PR-CI-CD/06-dae5302fb1.png)
+>![image](/assets/img/notion/TIL-Git-&-PR-+-CI-CD-특강/06-dae5302fb1.png)
 
-![image](/assets/img/notion/TIL-Git-PR-CI-CD/07-c13ae95793.png)
+![image](/assets/img/notion/TIL-Git-&-PR-+-CI-CD-특강/07-c13ae95793.png)
 
 Q. This is my first time with CI/CD. Where do I start?
 
