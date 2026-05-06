@@ -350,16 +350,8 @@ async function renderBlock(block, context, depth = 0) {
       output = `${indent}- [${value.checked ? 'x' : ' '}] ${markdownInline(value.rich_text)}`;
       break;
     case 'quote':
-      output = markdownInline(value.rich_text)
-        .split('\n')
-        .map((line) => `> ${line}`)
-        .join('\n');
-      break;
     case 'callout':
-      output = markdownInline(value.rich_text)
-        .split('\n')
-        .map((line) => `> ${line}`)
-        .join('\n');
+      output = markdownInline(value.rich_text);
       break;
     case 'code':
       output = [
@@ -413,6 +405,10 @@ async function renderBlock(block, context, depth = 0) {
     }
   }
 
+  if ((type === 'quote' || type === 'callout') && output.trim()) {
+    return blockquoteMarkdown(output);
+  }
+
   return output;
 }
 
@@ -422,6 +418,13 @@ function containsMarkdownTable(markdown) {
 
 function containsMarkdownBlock(markdown) {
   return containsMarkdownTable(markdown) || /^\s*```/m.test(markdown);
+}
+
+function blockquoteMarkdown(markdown) {
+  return String(markdown)
+    .split('\n')
+    .map((line) => (line.trim() ? `> ${line}` : '>'))
+    .join('\n');
 }
 
 function normalizeMarkdown(markdown) {

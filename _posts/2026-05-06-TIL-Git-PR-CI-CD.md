@@ -358,25 +358,27 @@ deploy:
 Q. Squash merge / Rebase merge / Merge commit 중 뭘 써야 하나요?
 
 > 정답은 없습니다. **팀 컨벤션을 정하고 일관되게** 가는 게 정답
-  - **Squash merge**: PR을 1개 커밋으로 압축 / 히스토리 가장 깔끔 (가장 많이 사용)
-
-  - **Rebase merge**: PR 커밋들을 일렬로 main에 붙임 / 커밋 단위 추적 가능
-
-  - **Merge commit**: 머지 커밋 생성 / PR 단위가 명확히 구분됨
+>
+>   - **Squash merge**: PR을 1개 커밋으로 압축 / 히스토리 가장 깔끔 (가장 많이 사용)
+>
+>   - **Rebase merge**: PR 커밋들을 일렬로 main에 붙임 / 커밋 단위 추적 가능
+>
+>   - **Merge commit**: 머지 커밋 생성 / PR 단위가 명확히 구분됨
 
 Q. Merge & Rebase
 
-> 
-![image](/assets/img/notion/TIL-Git-PR-CI-CD/06-dae5302fb1.png)
-
-![image](/assets/img/notion/TIL-Git-PR-CI-CD/07-c13ae95793.png)
+> ![image](/assets/img/notion/TIL-Git-PR-CI-CD/06-dae5302fb1.png)
+>
+> ![image](/assets/img/notion/TIL-Git-PR-CI-CD/07-c13ae95793.png)
 
 Q. CI/CD 처음인데 어디서부터 시작하나요?
 
 > **GitHub Actions의 가장 단순한 워크플로우 한 개**부터 시작하세요.
-  1. `npm test` 자동 실행만 먼저
-
-  1. 익숙해지면 빌드 추가
-
-  1. 그 다음 배포
-"한 번에 다 자동화"하려다 포기하는 경우가 가장 많습니다.
+>
+>   1. `npm test` 자동 실행만 먼저
+>
+>   1. 익숙해지면 빌드 추가
+>
+>   1. 그 다음 배포
+>
+> "한 번에 다 자동화"하려다 포기하는 경우가 가장 많습니다.

@@ -360,25 +360,27 @@ deploy:
 Q. Should I use Squash merge / Rebase merge / Merge commit?
 
 > There is no correct answer. **The answer is to set a team convention and go consistently**
-  - **Squash merge**: Compress PR into 1 commit / Cleanest history (most used)
-
-  - **Rebase merge**: Attach PR commits to main in a row / Enable track of commit units
-
-  - **Merge commit**: Merge commit creation / PR units are clearly distinguished
+>
+>   - **Squash merge**: Compress PR into 1 commit / Cleanest history (most used)
+>
+>   - **Rebase merge**: Attach PR commits to main in a row / Enable track of commit units
+>
+>   - **Merge commit**: Merge commit creation / PR units are clearly distinguished
 
 Q. Merge & Rebase
 
-> 
-![image](/assets/img/notion/TIL-Git-PR-CI-CD/06-dae5302fb1.png)
-
-![image](/assets/img/notion/TIL-Git-PR-CI-CD/07-c13ae95793.png)
+> ![image](/assets/img/notion/TIL-Git-PR-CI-CD/06-dae5302fb1.png)
+>
+> ![image](/assets/img/notion/TIL-Git-PR-CI-CD/07-c13ae95793.png)
 
 Q. This is my first time with CI/CD. Where do I start?
 
 > Start with **one of the simplest workflows in GitHub Actions**.
-  1. `npm test` auto-run first
-
-  1. Add builds when you get used to it
-
-  1. Then deploy
-Most people give up trying to “automate everything at once.”
+>
+>   1. `npm test` auto-run first
+>
+>   1. Add builds when you get used to it
+>
+>   1. Then deploy
+>
+> Most people give up trying to “automate everything at once.”
