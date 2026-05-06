@@ -63,30 +63,30 @@ Without a branching strategy, accidents can occur, such as your work overwriting
 
 - PR life cycle
 
-```bash
-1. Branch → feature/login 같은 작업 브랜치 생성
-2. Commit & Push → 작업 내용을 원격에 푸시
-3. Open PR → GitHub UI에서 PR 생성, 리뷰어 지정
-4. Review → 코드 리뷰 + CI 검증 → 수정 → 재푸시
-5. Approve & Merge → 승인 후 머지, 브랜치 삭제
+  ```bash
+  1. Branch → feature/login 같은 작업 브랜치 생성
+  2. Commit & Push → 작업 내용을 원격에 푸시
+  3. Open PR → GitHub UI에서 PR 생성, 리뷰어 지정
+  4. Review → 코드 리뷰 + CI 검증 → 수정 → 재푸시
+  5. Approve & Merge → 승인 후 머지, 브랜치 삭제
 
-```
+  ```
 
 - Actual command flow
 
-```bash
-# 1. 브랜치 생성
-git checkout -b feature/login
+  ```bash
+  # 1. 브랜치 생성
+  git checkout -b feature/login
 
-# 2. 커밋
-git add .
-git commit -m "feat(auth): 로그인 토큰 검증 로직 추가"
+  # 2. 커밋
+  git add .
+  git commit -m "feat(auth): 로그인 토큰 검증 로직 추가"
 
-# 3. 푸시
-git push origin feature/login
+  # 3. 푸시
+  git push origin feature/login
 
-# 4~5. 여기서부터는 GitHub/GitLab 웹 UI에서 진행
-```
+  # 4~5. 여기서부터는 GitHub/GitLab 웹 UI에서 진행
+  ```
 
 - How to write a good PR
 
@@ -96,23 +96,23 @@ git push origin feature/login
 
   - Include context in the text
 
-```bash
-## What
-- AccessToken 만료 시 자동으로 RefreshToken으로 재발급
+    ```bash
+    ## What
+    - AccessToken 만료 시 자동으로 RefreshToken으로 재발급
 
-## Why
-- 사용자가 30분 후 갑자기 로그아웃되는 이슈 (#142)
+    ## Why
+    - 사용자가 30분 후 갑자기 로그아웃되는 이슈 (#142)
 
-## How
-- AxiosInterceptor에 401 응답 시 재발급 로직 추가
-- 동시 요청 race condition은 Promise 큐로 직렬화
+    ## How
+    - AxiosInterceptor에 401 응답 시 재발급 로직 추가
+    - 동시 요청 race condition은 Promise 큐로 직렬화
 
-## Test
-- [x] 단위 테스트 추가 (auth.spec.ts)
-- [x] QA 시나리오 통과
-- [ ] 부하 테스트는 별도 PR
+    ## Test
+    - [x] 단위 테스트 추가 (auth.spec.ts)
+    - [x] QA 시나리오 통과
+    - [ ] 부하 테스트는 별도 PR
 
-```
+    ```
 
   - Self-review first - Re-read self-PR immediately after push
 
@@ -194,13 +194,13 @@ Conflicts occur when two branches modify the same line in the same file differen
 
 - Conflict markers that Git leaves in files
 
-```bash
-<<<<<<< HEAD
-  private final int TIMEOUT = 3000;       // 내 변경 (현재 브랜치)
-=======
-  private final int TIMEOUT = 5000;       // 들어오는 변경 (다른 브랜치)
->>>>>>> feature/api
-```
+  ```bash
+  <<<<<<< HEAD
+    private final int TIMEOUT = 3000;       // 내 변경 (현재 브랜치)
+  =======
+    private final int TIMEOUT = 5000;       // 들어오는 변경 (다른 브랜치)
+  >>>>>>> feature/api
+  ```
 
 → Conflicts are not errors, but Git is requesting my judgment.
 
@@ -215,25 +215,25 @@ Check the location of `<<<<<<<` / `=======` / `>>>>>>>` → Decide which code to
 
   1. Staging + Commit
 
-```bash
-git add .
-git commit
-# 머지 진행 중 상태가 종료됨
-```
+    ```bash
+    git add .
+    git commit
+    # 머지 진행 중 상태가 종료됨
+    ```
 
   1. Test + Push
 
-```bash
-npm test       # 충돌 해결로 깨진 곳이 없는지 반드시 확인
-git push
-```
+    ```bash
+    npm test       # 충돌 해결로 깨진 곳이 없는지 반드시 확인
+    git push
+    ```
 
   - If it's still a mess
 
-```bash
-git merge --abort   # 머지 시작 전으로 되돌림
-git rebase --abort  # rebase 중이면
-```
+    ```bash
+    git merge --abort   # 머지 시작 전으로 되돌림
+    git rebase --abort  # rebase 중이면
+    ```
 
 ### **CI/CD Pipeline Introduction**
 
@@ -327,28 +327,28 @@ jobs:
 
   - One step further to CD
 
-```yaml
-deploy:
-  needs: build-and-test     # 위 job이 성공해야만 실행
-  if: github.ref == 'refs/heads/main'
-  runs-on: ubuntu-latest
-  steps:
-    - uses: actions/checkout@v4
+    ```yaml
+    deploy:
+      needs: build-and-test     # 위 job이 성공해야만 실행
+      if: github.ref == 'refs/heads/main'
+      runs-on: ubuntu-latest
+      steps:
+        - uses: actions/checkout@v4
 
-    - name: JDK 17 설정
-      uses: actions/setup-java@v4
-      with:
-        distribution: 'temurin'
-        java-version: '17'
+        - name: JDK 17 설정
+          uses: actions/setup-java@v4
+          with:
+            distribution: 'temurin'
+            java-version: '17'
 
-    - name: JAR 빌드
-      run: ./gradlew bootJar -x test
+        - name: JAR 빌드
+          run: ./gradlew bootJar -x test
 
-    - name: AWS EC2로 배포
-      run: ./scripts/deploy.sh build/libs/app.jar
-      env:
-        AWS_KEY: ${{ secrets.AWS_KEY }}
-```
+        - name: AWS EC2로 배포
+          run: ./scripts/deploy.sh build/libs/app.jar
+          env:
+            AWS_KEY: ${{ secrets.AWS_KEY }}
+    ```
 
     - `needs: test` — If the test fails, it will not be distributed
 

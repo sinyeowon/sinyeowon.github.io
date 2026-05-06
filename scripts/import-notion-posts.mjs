@@ -354,13 +354,15 @@ async function renderBlock(block, context, depth = 0) {
     case 'callout':
       output = markdownInline(value.rich_text);
       break;
-    case 'code':
-      output = [
+    case 'code': {
+      const code = [
         `\`\`\`${value.language || ''}`,
         richTextPlain(value.rich_text),
         '```'
       ].join('\n');
+      output = depth > 0 ? indentMarkdown(code, depth) : code;
       break;
+    }
     case 'divider':
       output = '---';
       break;
@@ -478,11 +480,14 @@ function normalizeFenceLines(markdown) {
 
     if (!inFence) {
       const before = line.slice(0, fenceIndex).trimEnd();
-      if (before) {
+
+      if (before.trim()) {
         normalized.push(before);
+        normalized.push(line.slice(fenceIndex));
+      } else {
+        normalized.push(line);
       }
 
-      normalized.push(line.slice(fenceIndex));
       inFence = true;
       continue;
     }
