@@ -2,7 +2,7 @@
 layout: "post"
 title: "[TIL] Developing consumption record service into SNS type - 260504"
 date: 2026-05-04 09:00:00 +0900
-last_modified_at: 2026-05-06 12:55:00 +0900
+last_modified_at: 2026-05-06 14:57:00 +0900
 categories: ["GDGoC KNU"]
 tags: ["project"]
 description: "0 to Product This is an article written about TIL in the process of creating a plan for Article 4."
@@ -49,11 +49,11 @@ notion_lang: "en"
 
 ## Lessons learned
 
-- Rather than simply adding a lot of features, I feel that it is important to review whether the scope can actually be implemented.
+- Rather than simply adding a lot of functions, I felt that the process of reviewing whether it was within the range that could actually be implemented was more important.
 
-- Automatic collection of financial data had more limitations than expected due to security/OS limitations, so the direction was changed to an OCR-based upload method.
+- Automatic collection of financial data had more limitations than expected due to security/OS limitations, so we changed direction to an OCR-based upload method.
 
-- Also, an SNS-type consumption service that can be shared with friends could be a more differentiating point than a simple household account book.
+- Also, I liked the idea that an SNS-type consumption service that can be shared with friends could be a more differentiating point than a simple household account book.
 
 ## What to do next
 

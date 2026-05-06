@@ -18,13 +18,13 @@ notion_lang: "en"
 
 ### **Git Flow branching strategy**
 
-Without a branching strategy, accidents can occur, such as your work overwriting a colleague's work, unfinished code mixed in when you're about to deploy, or you wanting to roll back but having no reference point.
+If you do not have a branching strategy, accidents may occur such as your work overwriting your colleague's work, unfinished code mixed in when you are about to deploy, or wanting to roll back but having no reference point.
 
 → Branch strategy = accident prevention device
 
 - 5 branches of Git Flow
 
-  | branch | role | branch | Merge target | Lifespan |
+  | branch | Role | branch | Merge target | Lifespan |
   | --- | --- | --- | --- | --- |
   | `main` | Production code. Always available for deployment | — | — | permanent |
   | `develop` | Next release integration branch. Where all features gather | First time in main | — | permanent |
@@ -53,7 +53,7 @@ Without a branching strategy, accidents can occur, such as your work overwriting
 
 - 3 things PR does
 
-  | role | Description |
+  | Role | Description |
   | --- | --- |
   | 👀 **Code review chapter** | A space for colleagues to view changes and leave feedback |
   | 🧪 **Automatic Verification Trigger** | Run CI pipeline (automatically perform build/test) |
@@ -186,7 +186,7 @@ Without a branching strategy, accidents can occur, such as your work overwriting
     - Branch with release tag
 
 > Using `git push --force-with-lease` causes it to fail when the remote is not what I expected
-→ If force push is required, always use `--force-with-lease`
+> → If force push is required, always use `--force-with-lease`
 
 ### **Conflict resolution**
 
@@ -235,9 +235,7 @@ Check the location of `<<<<<<<` / `=======` / `>>>>>>>` → Decide which code to
     git rebase --abort  # rebase 중이면
     ```
 
-### **CI/CD Pipeline Introduction**
-
-- Difference between manual deployment and automation
+### **CI/CD Pipeline Introduction**- Difference between manual deployment and automation
 ![image](/assets/img/notion/TIL-Git-PR-CI-CD/04-8f8d92b96d.png)
 
   - After introducing CI/CD
@@ -265,61 +263,61 @@ Check the location of `<<<<<<<` / `=======` / `>>>>>>>` → Decide which code to
 → If even one step fails, it stops immediately + notification / broken builds never advance to the next step
 
 > **CI/CD Terminology**
-
-  | Abbreviation | Full name | meaning |
-  | --- | --- | --- |
-  | CI | Continuous **Integration** | Frequent code integration and automatic verification |
-  | CD | Continuous **Delivery** | Stay deployable at any time (manual approval) |
-  | CD | Continuous **Deployment** | If passed, automatically distributed to operation |
+>
+> | Abbreviation | Full name | meaning |
+> | --- | --- | --- |
+> | CI | Continuous **Integration** | Frequent code integration and automatic verification |
+> | CD | Continuous **Delivery** | Stay deployable at any time (manual approval) |
+> | CD | Continuous **Deployment** | If passed, automatically distributed to operation |
 
 - Get started in 30 lines with Github Actions
 
 ### `.github/workflows/ci.yml`
 
-```yaml
-name: CI
+  ```yaml
+  name: CI
 
-on:
-  push:
-    branches: [main, develop]
-  pull_request:
-    branches: [main, develop]
+  on:
+    push:
+      branches: [main, develop]
+    pull_request:
+      branches: [main, develop]
 
-jobs:
-  build-and-test:
-    runs-on: ubuntu-latest
-    steps:
-      - name: 코드 체크아웃
-        uses: actions/checkout@v4
+  jobs:
+    build-and-test:
+      runs-on: ubuntu-latest
+      steps:
+        - name: 코드 체크아웃
+          uses: actions/checkout@v4
 
-      - name: JDK 17 설정
-        uses: actions/setup-java@v4
-        with:
-          distribution: 'temurin'
-          java-version: '17'
+        - name: JDK 17 설정
+          uses: actions/setup-java@v4
+          with:
+            distribution: 'temurin'
+            java-version: '17'
 
-      - name: Gradle Wrapper 캐시
-        uses: gradle/actions/setup-gradle@v3
+        - name: Gradle Wrapper 캐시
+          uses: gradle/actions/setup-gradle@v3
 
-      - name: gradlew 실행 권한 부여
-        run: chmod +x ./gradlew
+        - name: gradlew 실행 권한 부여
+          run: chmod +x ./gradlew
 
-      - name: 테스트 실행
-        run: ./gradlew test
+        - name: 테스트 실행
+          run: ./gradlew test
 
-      - name: 빌드
-        run: ./gradlew build -x test
+        - name: 빌드
+          run: ./gradlew build -x test
 
-      - name: 테스트 결과 리포트
-        if: always()    # 테스트가 실패해도 리포트는 업로드
-        uses: actions/upload-artifact@v4
-        with:
-          name: test-reports
-          path: build/reports/tests/test
-```
+        - name: 테스트 결과 리포트
+          if: always()    # 테스트가 실패해도 리포트는 업로드
+          uses: actions/upload-artifact@v4
+          with:
+            name: test-reports
+            path: build/reports/tests/test
+  ```
 
   - What happens the moment it moves
-    1. When you upload a PR, GitHub automatically executes the above sequence.
+    1. When you post a PR, GitHub automatically executes the above sequence.
 
     1. If even one step fails, mark x in PR
 
@@ -362,28 +360,25 @@ jobs:
 
 Q. Should I use Squash merge / Rebase merge / Merge commit?
 
-> There is no correct answer. **The answer is to set a team convention and go consistently**
+> There is no right answer. **The answer is to set a team convention and go consistently**
+> - **Squash merge**: Compress PR into 1 commit / Cleanest history (most used)
 >
->   - **Squash merge**: Compress PR into 1 commit / Cleanest history (most used)
+> - **Rebase merge**: Attach PR commits to main in a row / Enable track of commit units
 >
->   - **Rebase merge**: Attach PR commits to main in a row / Enable track of commit units
->
->   - **Merge commit**: Merge commit creation / PR units are clearly distinguished
+> - **Merge commit**: Merge commit creation / PR units are clearly distinguished
 
 Q. Merge & Rebase
 
-> ![image](/assets/img/notion/TIL-Git-PR-CI-CD/06-dae5302fb1.png)
->
-> ![image](/assets/img/notion/TIL-Git-PR-CI-CD/07-c13ae95793.png)
+>![image](/assets/img/notion/TIL-Git-PR-CI-CD/06-dae5302fb1.png)
+
+![image](/assets/img/notion/TIL-Git-PR-CI-CD/07-c13ae95793.png)
 
 Q. This is my first time with CI/CD. Where do I start?
 
 > Start with **one of the simplest workflows in GitHub Actions**.
+> 1. Just run `npm test` automatically first.
 >
->   1. `npm test` auto-run first
+> 1. Add builds when you get used to it
 >
->   1. Add builds when you get used to it
->
->   1. Then deploy
->
-> Most people give up trying to “automate everything at once.”
+> 1. Then deploy
+> Most people give up trying to “automate everything at once”.

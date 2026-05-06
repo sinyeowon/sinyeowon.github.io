@@ -181,7 +181,7 @@ notion_lang: "ko"
     - 릴리즈 태그가 있는 브랜치
 
 > `git push --force-with-lease` 를 사용하면 원격이 내 예상과 다를 때 실패시킴
-→ Force push가 필요하면 무조건 `--force-with-lease`
+> → Force push가 필요하면 무조건 `--force-with-lease`
 
 ### **충돌(Conflict) 해결**
 
@@ -260,58 +260,58 @@ notion_lang: "ko"
 → 한 단계라도 실패하면 즉시 중단 + 알림 / 깨진 빌드는 절대 다음 단계로 넘어가지 않음
 
 > **CI/CD 용어 정리**
-
-  | 약자 | 풀네임 | 의미 |
-  | --- | --- | --- |
-  | CI | Continuous **Integration** | 코드를 자주 통합하고 자동 검증 |
-  | CD | Continuous **Delivery** | 언제든 배포 가능한 상태 유지 (수동 승인) |
-  | CD | Continuous **Deployment** | 통과하면 자동으로 운영까지 배포 |
+>
+>   | 약자 | 풀네임 | 의미 |
+>   | --- | --- | --- |
+>   | CI | Continuous **Integration** | 코드를 자주 통합하고 자동 검증 |
+>   | CD | Continuous **Delivery** | 언제든 배포 가능한 상태 유지 (수동 승인) |
+>   | CD | Continuous **Deployment** | 통과하면 자동으로 운영까지 배포 |
 
 - Github Actions로 30줄 안에 시작하기
 
 ### `.github/workflows/ci.yml`
 
-```yaml
-name: CI
+  ```yaml
+  name: CI
 
-on:
-  push:
-    branches: [main, develop]
-  pull_request:
-    branches: [main, develop]
+  on:
+    push:
+      branches: [main, develop]
+    pull_request:
+      branches: [main, develop]
 
-jobs:
-  build-and-test:
-    runs-on: ubuntu-latest
-    steps:
-      - name: 코드 체크아웃
-        uses: actions/checkout@v4
+  jobs:
+    build-and-test:
+      runs-on: ubuntu-latest
+      steps:
+        - name: 코드 체크아웃
+          uses: actions/checkout@v4
 
-      - name: JDK 17 설정
-        uses: actions/setup-java@v4
-        with:
-          distribution: 'temurin'
-          java-version: '17'
+        - name: JDK 17 설정
+          uses: actions/setup-java@v4
+          with:
+            distribution: 'temurin'
+            java-version: '17'
 
-      - name: Gradle Wrapper 캐시
-        uses: gradle/actions/setup-gradle@v3
+        - name: Gradle Wrapper 캐시
+          uses: gradle/actions/setup-gradle@v3
 
-      - name: gradlew 실행 권한 부여
-        run: chmod +x ./gradlew
+        - name: gradlew 실행 권한 부여
+          run: chmod +x ./gradlew
 
-      - name: 테스트 실행
-        run: ./gradlew test
+        - name: 테스트 실행
+          run: ./gradlew test
 
-      - name: 빌드
-        run: ./gradlew build -x test
+        - name: 빌드
+          run: ./gradlew build -x test
 
-      - name: 테스트 결과 리포트
-        if: always()    # 테스트가 실패해도 리포트는 업로드
-        uses: actions/upload-artifact@v4
-        with:
-          name: test-reports
-          path: build/reports/tests/test
-```
+        - name: 테스트 결과 리포트
+          if: always()    # 테스트가 실패해도 리포트는 업로드
+          uses: actions/upload-artifact@v4
+          with:
+            name: test-reports
+            path: build/reports/tests/test
+  ```
 
   - 동작하는 순간 일어나는 일
     1. PR 올리면 자동으로 GitHub이 위 순서를 실행
@@ -358,7 +358,6 @@ jobs:
 Q. Squash merge / Rebase merge / Merge commit 중 뭘 써야 하나요?
 
 > 정답은 없습니다. **팀 컨벤션을 정하고 일관되게** 가는 게 정답
->
 >   - **Squash merge**: PR을 1개 커밋으로 압축 / 히스토리 가장 깔끔 (가장 많이 사용)
 >
 >   - **Rebase merge**: PR 커밋들을 일렬로 main에 붙임 / 커밋 단위 추적 가능
@@ -368,17 +367,15 @@ Q. Squash merge / Rebase merge / Merge commit 중 뭘 써야 하나요?
 Q. Merge & Rebase
 
 > ![image](/assets/img/notion/TIL-Git-PR-CI-CD/06-dae5302fb1.png)
->
-> ![image](/assets/img/notion/TIL-Git-PR-CI-CD/07-c13ae95793.png)
+
+![image](/assets/img/notion/TIL-Git-PR-CI-CD/07-c13ae95793.png)
 
 Q. CI/CD 처음인데 어디서부터 시작하나요?
 
 > **GitHub Actions의 가장 단순한 워크플로우 한 개**부터 시작하세요.
->
 >   1. `npm test` 자동 실행만 먼저
 >
 >   1. 익숙해지면 빌드 추가
 >
 >   1. 그 다음 배포
->
 > "한 번에 다 자동화"하려다 포기하는 경우가 가장 많습니다.
