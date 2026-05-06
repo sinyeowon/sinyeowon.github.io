@@ -1,6 +1,6 @@
 ---
 layout: "post"
-title: "[TIL] Git & PR + CI/CD Special Lecture"
+title: "[TIL] Special lecture on Git & PR + CI/CD"
 date: 2026-05-06 09:00:00 +0900
 last_modified_at: 2026-05-06 12:33:00 +0900
 categories: ["Spring 단기 심화"]
@@ -18,13 +18,13 @@ notion_lang: "en"
 
 ### **Git Flow branching strategy**
 
-If you do not have a branching strategy, accidents may occur such as your work overwriting your colleague's work, unfinished code mixed in when you are about to deploy, or wanting to roll back but having no reference point.
+Without a branching strategy, accidents can occur such as your work overwriting your colleague's work, unfinished code mixed in when you're about to deploy, or you wanting to roll back but having no reference point.
 
 → Branch strategy = accident prevention device
 
 - 5 branches of Git Flow
 
-  | branch | Role | branch | Merge target | Lifespan |
+  | branch | role | branch | Merge target | Lifespan |
   | --- | --- | --- | --- | --- |
   | `main` | Production code. Always available for deployment | — | — | permanent |
   | `develop` | Next release integration branch. Where all features gather | First time in main | — | permanent |
@@ -53,7 +53,7 @@ If you do not have a branching strategy, accidents may occur such as your work o
 
 - 3 things PR does
 
-  | Role | Description |
+  | role | Description |
   | --- | --- |
   | 👀 **Code review chapter** | A space for colleagues to view changes and leave feedback |
   | 🧪 **Automatic Verification Trigger** | Run CI pipeline (automatically perform build/test) |
@@ -151,7 +151,7 @@ If you do not have a branching strategy, accidents may occur such as your work o
 
   - No merge commits - remove noise
 
-  - Existing commits are replaced with new commits - Collaboration is destroyed if done on a shared branch.
+  - Existing commits are replaced by new commits - Collaboration is destroyed if done on a shared branch
 
 - When to use what (Merge & Rebase)
 
@@ -264,7 +264,7 @@ Check the location of `<<<<<<<` / `=======` / `>>>>>>>` → Decide which code to
 
 > **CI/CD Terminology**
 >
-> | Abbreviation | Full name | meaning |
+> | Abbreviation | Full name | Meaning |
 > | --- | --- | --- |
 > | CI | Continuous **Integration** | Frequent code integration and automatic verification |
 > | CD | Continuous **Delivery** | Stay deployable at any time (manual approval) |
@@ -317,7 +317,7 @@ Check the location of `<<<<<<<` / `=======` / `>>>>>>>` → Decide which code to
   ```
 
   - What happens the moment it moves
-    1. When you post a PR, GitHub automatically executes the above sequence.
+    1. When you upload a PR, GitHub automatically executes the above sequence.
 
     1. If even one step fails, mark x in PR
 
@@ -360,7 +360,7 @@ Check the location of `<<<<<<<` / `=======` / `>>>>>>>` → Decide which code to
 
 Q. Should I use Squash merge / Rebase merge / Merge commit?
 
-> There is no right answer. **The answer is to set a team convention and go consistently**
+> There is no correct answer. **The answer is to set a team convention and go consistently**
 > - **Squash merge**: Compress PR into 1 commit / Cleanest history (most used)
 >
 > - **Rebase merge**: Attach PR commits to main in a row / Enable track of commit units

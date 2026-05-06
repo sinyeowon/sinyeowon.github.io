@@ -1,16 +1,16 @@
 ---
 layout: "post"
-title: "[TIL] Planning BE meeting - 260505"
+title: "[TIL] ERD design considering scalability and MVP - 260505"
 date: 2026-05-05 09:00:00 +0900
-last_modified_at: 2026-05-06 15:04:00 +0900
+last_modified_at: 2026-05-06 15:08:00 +0900
 categories: ["GDGoC KNU"]
 tags: ["project"]
 description: "This is an article written about TIL during the 0 to Product BE meeting process."
 lang: "en"
 ui_lang: "ko-KR"
 toc: true
-permalink: "/en/posts/TIL-기획안-BE-회의-260505/"
-original_url: "/posts/TIL-기획안-BE-회의-260505/"
+permalink: "/en/posts/TIL-확장성과-MVP-사이에서-고민한-ERD-설계-260505/"
+original_url: "/posts/TIL-확장성과-MVP-사이에서-고민한-ERD-설계-260505/"
 notion_id: "3587788a-fc66-80df-ba2f-fb19c3d70c30"
 notion_lang: "en"
 ---
@@ -33,7 +33,7 @@ notion_lang: "en"
 
 ## Meeting
 
-- Drafting with AI
+- ERD drafting through AI
 
 - Compare the draft with the service features of the PRD plan
 
@@ -119,7 +119,7 @@ notion_lang: "en"
       - In particular, the `AI_PROMPT_TEMPLATE` table was designed to take into account prompt modification, prompt version management, experimentation with various styles, and word changes during operation.
 
 - Final ERD Draft
-![image](/assets/img/notion/TIL-기획안-BE-회의-260505/01-506d96c2bc.png)
+![image](/assets/img/notion/TIL-확장성과-MVP-사이에서-고민한-ERD-설계-260505/01-506d96c2bc.png)
 
 - Needs modification compared to front wireframe
 
@@ -129,7 +129,7 @@ notion_lang: "en"
 
 - The biggest thing I felt through this meeting was that a good design is not necessarily a complicated design.
 
-- At first, we thought about maximizing scalability, such as separating categories into separate tables, adding AI prompt tables, and managing booleans for notes or not, but as we discussed it, we felt that it was more important to make decisions based on `“지금 실제로 필요한 기능인가?”` at the MVP stage.
+- At first, we thought about maximizing scalability by separating categories into separate tables, adding AI prompt tables, and managing booleans for notes or not, but as we discussed it, we felt that it was more important to make decisions based on `“지금 실제로 필요한 기능인가?”` at the MVP stage.
 
 - I also learned that we need to think not only about functional implementation, but also about data duplication, separation of responsibilities, roles of front and back end, and balance between scalability and current complexity.
 
