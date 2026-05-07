@@ -41,7 +41,7 @@ Technology that helps multiple computers and devices connect to each other to ex
 - In order to exchange information with each other, information such as IP address, subnet mask, gateway, etc. is set and communication is performed using network protocols.
 
 ![Velog image](https://velog.velcdn.com/images/sinyeowon/post/ce1a95d0-00e6-4e65-b21e-144cc280bc18/image.png)
-- **User** uses the browser to request information from **Server** and receive a response.
+- **User** uses the browser to request information from** Server** and receive a response.
 
 > IP address
 Information provided to enable the user's request to accurately reach the server
@@ -69,7 +69,7 @@ Software architecture that imposes conditions on how the API behaves
 
 - Two roles of Web Server
 	1. **Static content**, which delivers already completed HTML-like documents to the browser.
-    2. When a **dynamic request** such as ‘Log in and request MyPage’ comes from the browser, it is difficult for the web server itself to process it, so the request is **passed to WAS**.
+    2. When a **dynamic request** such as ‘Log in and request MyPage’ comes from the browser, it is difficult for the web server itself to process it, so the request is** passed to WAS**.
 > **WAS (Wep Application Server)** ex) Apache, Nginx
 - Operates based on HTTP, just like a web server
 - Using WAS, you can run programs that perform various logic ex) Tomcat, JBoss
@@ -103,7 +103,7 @@ One of the **"communication protocols"** that define the format for sending and 
 Communication protocol: A promise made when exchanging data between computers.
 
 ![Velog image](https://velog.velcdn.com/images/sinyeowon/post/85fec345-03ab-435c-94b0-1fbb420d7e99/image.png)
-- In HTTP, the concepts of **Request** and **Response** always exist.
+- In HTTP, the concepts of **Request** and** Response** always exist.
 1. The browser requests the server for the page it wants (information such as URL).
 2. The server checks whether there is a page that the browser wants, and if so, responds with data for that page. If not, it returns data for the page that does not exist.
 3. The browser draws on the browser based on the data received from the server.

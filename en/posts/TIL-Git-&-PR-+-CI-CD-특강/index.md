@@ -157,9 +157,7 @@ Without a branching strategy, accidents can occur such as your work overwriting 
   | History | Preserve as is | Organize in one line |
   | commit hash | unchanged | Newly created |
   | Conflict handling | at once | per commit |
-  | Recommended Situation | **Shared branch integration** | **Clean up my local branch** |
-
-  **→ You should never rebase a public branch that has already been pushed**
+  | Recommended Situation | **Shared branch integration** |** Clean up my local branch** |** → You should never rebase a public branch that has already been pushed**
 
 - What you should never do
   - `git push -- force` on the shared branch → completely destroys the colleague's commit

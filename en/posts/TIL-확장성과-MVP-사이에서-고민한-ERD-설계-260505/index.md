@@ -180,11 +180,11 @@ notion_lang: "en"
         In other words, it was judged that “designing and experiencing the back-end structure directly” was more important than rapid development.
 
       - Solved: 
-        Finally decided on the following combination- **Backend: **Spring Boot 3.x, Java 17, Gradle
-          - **Spring Boot: **Most familiar to team members / Easy to apply layered architecture / Able to utilize JPA / Experience in designing maintenance structures
+        Finally decided on the following combination- **Backend:** Spring Boot 3.x, Java 17, Gradle
+          - **Spring Boot:** Most familiar to team members / Easy to apply layered architecture / Able to utilize JPA / Experience in designing maintenance structures
 
-        - **DB: **MySQL, Spring Data JPA
-          - **MySQL: **Stable integration with Spring/JPA / Suitable for relational data modeling / Well suited to ERD-based design
+        - **DB:** MySQL, Spring Data JPA
+          - **MySQL:** Stable integration with Spring/JPA / Suitable for relational data modeling / Well suited to ERD-based design
 
 ## Lessons learned
 

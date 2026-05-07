@@ -287,29 +287,50 @@ function markdownInline(richText = []) {
       }
 
       if (item.href) {
-        text = `[${text}](${item.href})`;
+        text = wrapMarkdownLink(text, item.href);
       }
 
       const annotations = item.annotations || {};
       if (annotations.code) {
-        text = `\`${text}\``;
+        text = wrapMarkdownInline(text, '`');
       }
       if (annotations.bold) {
-        text = `**${text}**`;
+        text = wrapMarkdownInline(text, '**');
       }
       if (annotations.italic) {
-        text = `*${text}*`;
+        text = wrapMarkdownInline(text, '*');
       }
       if (annotations.strikethrough) {
-        text = `~~${text}~~`;
+        text = wrapMarkdownInline(text, '~~');
       }
       if (annotations.underline) {
-        text = `<u>${text}</u>`;
+        text = wrapMarkdownInline(text, '<u>', '</u>');
       }
 
       return text;
     })
     .join('');
+}
+
+function splitInlineWhitespace(text) {
+  const value = String(text || '');
+  const match = value.match(/^(\s*)([\s\S]*?)(\s*)$/);
+
+  return {
+    leading: match?.[1] || '',
+    body: match?.[2] || '',
+    trailing: match?.[3] || ''
+  };
+}
+
+function wrapMarkdownInline(text, opening, closing = opening) {
+  const { leading, body, trailing } = splitInlineWhitespace(text);
+  return body ? `${leading}${opening}${body}${closing}${trailing}` : text;
+}
+
+function wrapMarkdownLink(text, href) {
+  const { leading, body, trailing } = splitInlineWhitespace(text);
+  return body ? `${leading}[${body}](${href})${trailing}` : text;
 }
 
 async function renderBlocks(blocks, context, depth = 0) {

@@ -91,7 +91,7 @@ public class HelloController {
 `/resources/templates/파일이름.html`
   - The simplest method is to directly call the html file in the static folder.
   - If you want to prevent direct access from an external browser or want to control it through a controller in a specific situation,
-  - This can be processed by adding the corresponding static html file to the **templates folder** and returning the **"file name" string**, which is the name of the html file (**`.html` can be omitted!**)
+  - This can be processed by adding the corresponding static html file to the **templates folder** and returning the** "file name" string**, which is the name of the html file (**`.html` can be omitted!**)
   
   - Dynamic page processing process
   	1. Process client request from Controller to Model
