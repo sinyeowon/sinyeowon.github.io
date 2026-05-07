@@ -157,6 +157,68 @@ function propertyText(property) {
   }
 }
 
+async function existingPostDescription(filePath) {
+  try {
+    const content = await readFile(filePath, 'utf8');
+    const description = frontMatterValue(content, 'description');
+    return isUsableDescription(description) ? description : '';
+  } catch (error) {
+    if (error.code === 'ENOENT') {
+      return '';
+    }
+
+    throw error;
+  }
+}
+
+function frontMatterValue(content, key) {
+  const frontMatter = String(content || '').match(/^---\n([\s\S]*?)\n---/);
+  if (!frontMatter) {
+    return '';
+  }
+
+  const prefix = `${key}:`;
+  const line = frontMatter[1].split('\n').find((item) => item.startsWith(prefix));
+  if (!line) {
+    return '';
+  }
+
+  return parseYamlScalar(line.slice(prefix.length).trim());
+}
+
+function parseYamlScalar(value) {
+  const raw = String(value || '').trim();
+
+  if (!raw) {
+    return '';
+  }
+
+  if (raw.startsWith('"') && raw.endsWith('"')) {
+    try {
+      return JSON.parse(raw);
+    } catch {
+      return raw.slice(1, -1);
+    }
+  }
+
+  if (raw.startsWith("'") && raw.endsWith("'")) {
+    return raw.slice(1, -1).replace(/''/g, "'");
+  }
+
+  return raw;
+}
+
+function isUsableDescription(description) {
+  const value = String(description || '').trim();
+  return (
+    value.length >= 20 &&
+    !/^https?:\/\//i.test(value) &&
+    !/0 to Product/i.test(value) &&
+    !/작성한 글입니다/.test(value) &&
+    !/This is an article written about/i.test(value)
+  );
+}
+
 function propertyList(property) {
   if (!property) {
     return [];
@@ -705,13 +767,17 @@ async function buildPost(page) {
   const dateValue = propertyText(dateProperty) || page.created_time;
   const slugProperty = findProperty(page, propertyNames.slug);
   const slug = slugify(propertyText(slugProperty) || title);
+  const date = formatDateForJekyll(dateValue);
+  const fileName = `${datePrefix(dateValue)}-${slug}.md`;
+  const filePath = path.join(POSTS_DIR, fileName);
+  const englishPath = path.join(EN_POSTS_DIR, slug, 'index.md');
   const categories = propertyList(findProperty(page, propertyNames.categories)).filter(Boolean);
   const tags = propertyList(findProperty(page, propertyNames.tags)).filter(Boolean);
   const description = propertyText(findProperty(page, propertyNames.description));
   const blocks = await getBlockChildren(page.id);
   const body = normalizeMarkdown(await renderBlocks(blocks, { slug, assetIndex: 0 }));
-  const fallbackDescription = description || createDescription(body, title);
-  const date = formatDateForJekyll(dateValue);
+  const existingDescription = description ? '' : await existingPostDescription(filePath);
+  const fallbackDescription = description || existingDescription || createDescription(body, title);
   const lastModifiedAt = formatDateForJekyll(page.last_edited_time);
   const koreanUrl = `/posts/${slug}/`;
   const englishUrl = `/en/posts/${slug}/`;
@@ -728,8 +794,6 @@ async function buildPost(page) {
     notionLang: 'ko'
   };
 
-  const fileName = `${datePrefix(dateValue)}-${slug}.md`;
-  const filePath = path.join(POSTS_DIR, fileName);
   const posts = [
     {
       notionId: page.id,
@@ -741,7 +805,8 @@ async function buildPost(page) {
 
   if (GENERATE_ENGLISH) {
     const englishTitle = await translateText(title);
-    const englishDescription = await translateText(fallbackDescription);
+    const existingEnglishDescription = description ? '' : await existingPostDescription(englishPath);
+    const englishDescription = existingEnglishDescription || await translateText(fallbackDescription);
     const englishBody = normalizeMarkdown(await translateMarkdown(body));
     const englishMetadata = {
       layout: 'post',
@@ -763,7 +828,7 @@ async function buildPost(page) {
     posts.push({
       notionId: page.id,
       notionLang: 'en',
-      filePath: path.join(EN_POSTS_DIR, slug, 'index.md'),
+      filePath: englishPath,
       content: `${frontMatter(englishMetadata)}${englishBody.trim()}\n`
     });
   }
