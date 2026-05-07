@@ -689,7 +689,7 @@ async function buildPost(page) {
   const description = propertyText(findProperty(page, propertyNames.description));
   const blocks = await getBlockChildren(page.id);
   const body = normalizeMarkdown(await renderBlocks(blocks, { slug, assetIndex: 0 }));
-  const fallbackDescription = description || createDescription(body);
+  const fallbackDescription = description || createDescription(body, title);
   const date = formatDateForJekyll(dateValue);
   const lastModifiedAt = formatDateForJekyll(page.last_edited_time);
   const koreanUrl = `/posts/${slug}/`;
@@ -915,15 +915,127 @@ function splitLongText(text, maxLength = TRANSLATE_CHUNK_SIZE) {
   return chunks;
 }
 
-function createDescription(markdown) {
-  return markdown
-    .replace(/```[\s\S]*?```/g, ' ')
-    .replace(/!\[[^\]]*]\([^)]*\)/g, ' ')
+function createDescription(markdown, title = '') {
+  const candidates = descriptionCandidates(markdown, title);
+  const selected = [];
+
+  for (const candidate of candidates) {
+    const next = [...selected, candidate].join(' ');
+    if (next.length > 150 && selected.length) {
+      break;
+    }
+
+    selected.push(candidate);
+
+    if (next.length >= 80 || selected.length >= 2) {
+      break;
+    }
+  }
+
+  return trimDescription(selected.join(' ') || title);
+}
+
+function descriptionCandidates(markdown, title = '') {
+  const titleText = cleanDescriptionLine(title);
+  const seen = new Set();
+  const candidates = [];
+  const withoutCode = String(markdown || '')
+    .replace(/```[\s\S]*?```/g, '\n')
+    .replace(/!\[[^\]]*]\([^)]*\)/g, '\n');
+
+  for (const rawLine of withoutCode.split('\n')) {
+    if (isSkippableDescriptionLine(rawLine)) {
+      continue;
+    }
+
+    const line = cleanDescriptionLine(rawLine);
+    if (!line || line.length < 8 || isGenericDescriptionHeading(line)) {
+      continue;
+    }
+
+    if (titleText && (line === titleText || titleText.includes(line))) {
+      continue;
+    }
+
+    const key = line.toLowerCase();
+    if (seen.has(key)) {
+      continue;
+    }
+
+    seen.add(key);
+    candidates.push(line);
+  }
+
+  return candidates;
+}
+
+function isSkippableDescriptionLine(line) {
+  const value = String(line || '').trim();
+  return (
+    !value ||
+    /^\|.*\|$/.test(value) ||
+    /^:?-{3,}:?$/.test(value) ||
+    /^---+$/.test(value) ||
+    /^https?:\/\//.test(value) ||
+    /^<[^>]+>$/.test(value)
+  );
+}
+
+function cleanDescriptionLine(line) {
+  return String(line || '')
     .replace(/\[[^\]]+]\([^)]*\)/g, (match) => match.replace(/^\[|\]\([^)]*\)$/g, ''))
-    .replace(/[#>*_`~\-[\]()]/g, ' ')
+    .replace(/`([^`]+)`/g, '$1')
+    .replace(/<[^>]+>/g, ' ')
+    .replace(/^>+\s*/, '')
+    .replace(/^#{1,6}\s*/, '')
+    .replace(/^[\s>*-]*(?:[-*+]|\d+\.)\s+/, '')
+    .replace(/^#{1,6}\s*/, '')
+    .replace(/^\[[ xX]]\s+/, '')
+    .replace(/[*_~]/g, '')
     .replace(/\s+/g, ' ')
-    .trim()
-    .slice(0, 160);
+    .trim();
+}
+
+function isGenericDescriptionHeading(line) {
+  return [
+    '공부한 내용',
+    '오늘 할 일',
+    '내일 할 일',
+    '문제',
+    '오류',
+    '문제와 오류',
+    '해결',
+    '회고',
+    '정리',
+    '개요',
+    '목차',
+    '참고',
+    '느낀 점'
+  ].includes(line);
+}
+
+function trimDescription(text, maxLength = 150) {
+  const value = String(text || '').replace(/\s+/g, ' ').trim();
+
+  if (value.length <= maxLength) {
+    return value;
+  }
+
+  const trimmed = value.slice(0, maxLength + 1);
+  const breakpoint = Math.max(
+    trimmed.lastIndexOf('.'),
+    trimmed.lastIndexOf('!'),
+    trimmed.lastIndexOf('?'),
+    trimmed.lastIndexOf('다'),
+    trimmed.lastIndexOf('요'),
+    trimmed.lastIndexOf(',')
+  );
+
+  if (breakpoint >= 60) {
+    return trimmed.slice(0, breakpoint + 1).trim();
+  }
+
+  return `${value.slice(0, maxLength - 1).trim()}…`;
 }
 
 async function removeStaleGeneratedPosts(currentPosts) {
