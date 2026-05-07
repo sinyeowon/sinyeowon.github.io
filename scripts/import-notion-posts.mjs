@@ -45,6 +45,9 @@ const publishedValues = new Set([
   '완료'
 ]);
 
+const layoutBlockTypes = new Set(['column_list', 'column']);
+const listBlockTypes = new Set(['bulleted_list_item', 'numbered_list_item', 'to_do']);
+
 async function notion(pathname, options = {}) {
   const response = await fetch(`https://api.notion.com/v1${pathname}`, {
     ...options,
@@ -404,8 +407,13 @@ async function renderBlock(block, context, depth = 0) {
       console.warn(`Unsupported Notion block type: ${type}`);
   }
 
+  if (shouldIndentNestedBlock(type, depth) && output.trim()) {
+    output = indentMarkdown(output, depth);
+  }
+
   if (block.has_children && type !== 'toggle' && type !== 'table') {
-    const children = await renderBlocks(await getBlockChildren(block.id), context, depth + 1);
+    const childDepth = layoutBlockTypes.has(type) ? depth : depth + 1;
+    const children = await renderBlocks(await getBlockChildren(block.id), context, childDepth);
     if (children.trim()) {
       const separator = containsMarkdownBlock(children) ? '\n\n' : '\n';
       output = output ? `${output}${separator}${children}` : children;
@@ -413,10 +421,20 @@ async function renderBlock(block, context, depth = 0) {
   }
 
   if ((type === 'quote' || type === 'callout') && output.trim()) {
-    return blockquoteMarkdown(output);
+    const quoted = blockquoteMarkdown(output);
+    return depth > 0 ? indentMarkdown(quoted, depth) : quoted;
   }
 
   return output;
+}
+
+function shouldIndentNestedBlock(type, depth) {
+  return (
+    depth > 0 &&
+    !layoutBlockTypes.has(type) &&
+    !listBlockTypes.has(type) &&
+    !['code', 'table', 'quote', 'callout'].includes(type)
+  );
 }
 
 function containsMarkdownTable(markdown) {
