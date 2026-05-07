@@ -2,10 +2,10 @@
 layout: "post"
 title: "[TIL] Developing consumption record service into SNS type - 260504"
 date: 2026-05-04 09:00:00 +0900
-last_modified_at: 2026-05-06 14:57:00 +0900
+last_modified_at: 2026-05-07 11:33:00 +0900
 categories: ["GDGoC KNU"]
 tags: ["project"]
-description: "0 to Product This is an article written about TIL in the process of creating a plan for Article 4."
+description: "0 to Product This is an article written about TIL in the process of writing the Article 4 plan."
 lang: "en"
 ui_lang: "ko-KR"
 toc: true

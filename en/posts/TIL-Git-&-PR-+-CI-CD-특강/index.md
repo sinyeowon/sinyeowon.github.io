@@ -1,6 +1,6 @@
 ---
 layout: "post"
-title: "[TIL] Git & PR + CI/CD Special Lecture"
+title: "[TIL] Special lecture on Git & PR + CI/CD"
 date: 2026-05-06 09:00:00 +0900
 last_modified_at: 2026-05-06 15:09:00 +0900
 categories: ["Spring 단기 심화"]
@@ -18,7 +18,7 @@ notion_lang: "en"
 
 ### **Git Flow branching strategy**
 
-Without a branching strategy, accidents can occur, such as your work overwriting a colleague's work, unfinished code mixed in when you're about to deploy, or you wanting to roll back but having no reference point.
+Without a branching strategy, accidents can occur such as your work overwriting your colleague's work, unfinished code mixed in when you're about to deploy, or you wanting to roll back but having no reference point.
 
 → Branch strategy = accident prevention device
 
@@ -47,9 +47,7 @@ Without a branching strategy, accidents can occur, such as your work overwriting
 
 > Most startups/web services start with Github Flow and expand to Git Flow as they grow.
 
-### **PR Workflow and Code Review**
-
-- Pull Request (PR): A formal request to merge my branch work into main (or develop)
+### **PR Workflow and Code Review**- Pull Request (PR): A formal request to merge my branch work into main (or develop)
 
 - 3 things PR does
 
@@ -151,11 +149,10 @@ Without a branching strategy, accidents can occur, such as your work overwriting
 
   - No merge commits - remove noise
 
-  - Existing commits are replaced with new commits - Collaboration is destroyed if done on a shared branch.
+  - Existing commits are replaced by new commits - Collaboration is destroyed if done on a shared branch
 
-- When to use what (Merge & Rebase)
+- When to use what (Merge & Rebase)| standards | Merge | Rebase |
 
-  | standards | Merge | Rebase |
   | --- | --- | --- |
   | History | Preserve as is | Organize in one line |
   | commit hash | unchanged | Newly created |
@@ -264,7 +261,7 @@ Check the location of `<<<<<<<` / `=======` / `>>>>>>>` → Decide which code to
 
 > **CI/CD Terminology**
 >
-> | Abbreviation | Full name | meaning |
+> | Abbreviation | Full name | Meaning |
 > | --- | --- | --- |
 > | CI | Continuous **Integration** | Frequent code integration and automatic verification |
 > | CD | Continuous **Delivery** | Stay deployable at any time (manual approval) |
@@ -356,14 +353,12 @@ Check the location of `<<<<<<<` / `=======` / `>>>>>>>` → Decide which code to
 
     - `secrets.*` — Sensitive information is stored in GitHub Secrets
 
-## Problems & Errors
-
-Q. Should I use Squash merge / Rebase merge / Merge commit?
+## Problems & ErrorsQ. Should I use Squash merge / Rebase merge / Merge commit?
 
 > There is no correct answer. **The answer is to set a team convention and go consistently**
-> - **Squash merge**: compresses PR into 1 commit / cleanest history (most used)
+> - **Squash merge**: Compress PR into 1 commit / Cleanest history (most used)
 >
-> - **Rebase merge**: Attach PR commits in a row to main / Enable track of commit units
+> - **Rebase merge**: Attach PR commits to main in a row / Enable track of commit units
 >
 > - **Merge commit**: Merge commit creation / PR units are clearly distinguished
 

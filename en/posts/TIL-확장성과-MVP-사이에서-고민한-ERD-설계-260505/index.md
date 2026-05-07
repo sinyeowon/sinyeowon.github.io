@@ -2,7 +2,7 @@
 layout: "post"
 title: "[TIL] ERD design considering scalability and MVP - 260505"
 date: 2026-05-05 09:00:00 +0900
-last_modified_at: 2026-05-06 15:08:00 +0900
+last_modified_at: 2026-05-07 11:32:00 +0900
 categories: ["GDGoC KNU"]
 tags: ["project"]
 description: "This is an article written about TIL during the 0 to Product BE meeting process."
@@ -26,10 +26,12 @@ notion_lang: "en"
 
 - Create BE repo
 
+- Request ERD feedback
+
+- Determine your technology stack
+
 - Project basic settings
   - Folder structure
-
-- Request ERD feedback
 
 ## Meeting
 
@@ -100,9 +102,7 @@ notion_lang: "en"
   - What is a template?
     - The word “template” keeps appearing during AI function design.
 
-    - Initially, it was for storing vitriolic phrases? A collection of random sentences? AI prompt? The role was not clear, etc.
-
-    - solved
+    - Initially, it was for storing vitriolic phrases? A collection of random sentences? AI prompt? The role was not clear, etc.- solved
       - During the meeting, it was summarized that what is needed in the current service is the ability for AI to generate opinion-style results.
 
       - In other words, the key is “save the sentence template” rather than the `AI 입력 → 결과 생성 흐름` itself
@@ -124,6 +124,67 @@ notion_lang: "en"
 - Needs modification compared to front wireframe
 
 - Need to reflect feedback
+
+- Determination of technology stack and project basic settings
+Rather than simply choosing a “popular technology,” it was a process of considering which technology would be most appropriate based on the current project size, team skill level, and MVP scope.
+
+  - **Determination of OCR method**
+    - One of the core functions of the service is the ability to extract consumption data through OCR analysis after uploading consumption history images.
+
+    - Initially, we also considered analyzing the image itself by using GPT (OpenAI API) to extract the amount/affiliate/category by sending the receipt image to GPT.
+
+    - problem
+      - Unnecessary increase in token usage: GPT-based image analysis uses significantly more tokens than regular OCR.
+
+      - The separation of roles is ambiguous: the purpose of OCR is accurate text extraction, while GPT is stronger at inference and generation.
+        - OCR → Text Recognition
+
+        - GPT → Generative AI role
+
+It was judged more appropriate to separate the roles into
+
+    - Resolution: In the end, it was decided to use an external OCR service such as Google OCR API for OCR.- **Image storage method and whether to use S3**
+    - When a user uploads a consumption history image, the image needs to be temporarily saved or forwarded for OCR processing.
+
+    - However, in our service, we believe that the original image itself does not need to remain as core data after the OCR analysis is completed.
+
+    - The data actually needed by the service is not images, but consumption information extracted through OCR.
+
+    - Resolution: The image will not be stored permanently, but will only be used temporarily during OCR processing.
+      - Only the following data is stored in the DB, not the original image.
+        - OCR result text / consumption amount confirmed by user / affiliated store / category / memo / consumption time
+
+This reduces unnecessary image storage space and eliminates the need to store receipt images that may contain personal information for a long time.
+
+      - Currently, MVP has decided not to introduce external image storage such as S3 first.
+        - Images are not required after OCR processing
+
+        - No need for large image storage
+
+        - Increased infrastructure complexity due to S3 integration
+
+        - Reduces the burden of storing images that may contain personal information
+
+In other words, we decided to use images only as “input values for OCR processing” rather than as “data that needs to be stored.”
+
+  - Selection of DB and backend technology
+    - **Why we also considered Supabase**
+      - Fast MVP development possible / Convenient integration with front-end / Many cases of combination with Flutter / Advantages such as provision of authentication/DB functions
+
+      - problem
+        - However, the backend team members had more Spring Boot + JPA experience.
+
+        - Also, this project is not just about creating services:
+          - It was also an important goal to directly implement and experience backend structure design / API design / ERD design / service hierarchy / JPA relationship, etc.
+
+In other words, it was judged that “designing and experiencing the back-end structure directly” was more important than rapid development.
+
+      - Solved: 
+Finally decided on the following combination- **Backend: **Spring Boot 3.x, Java 17, Gradle
+          - **Spring Boot: **Most familiar to team members / Easy to apply layered architecture / Able to utilize JPA / Experience in designing maintenance structures
+
+        - **DB: **MySQL, Spring Data JPA
+          - **MySQL: **Stable integration with Spring/JPA / Suitable for relational data modeling / Well suited to ERD-based design
 
 ## Lessons learned
 

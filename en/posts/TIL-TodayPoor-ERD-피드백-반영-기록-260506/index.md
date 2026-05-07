@@ -34,7 +34,7 @@ In the initial design, we focused on quickly reflecting the functionality, but t
       - The original OCR text may be long, and there is a possibility that OCR accuracy or analysis results may be managed separately in the future.
 
     - Solved: So separate table `OCR_RESULT`
-      - With this separation, `EXPENSE` focuses on confirmed consumption data, and `OCR_RESULT` is responsible for analysis results, making their roles clearer.
+      - With this separation, `EXPENSE` focuses on confirmed consumption data, and `OCR_RESULT` is responsible for analysis results, making the role clearer.
 
   - Remove AI prompt table
     - Initially, the `AI_PROMPT_TEMPLATE` table was added considering AI functions.
@@ -58,9 +58,7 @@ In other words, the reason for managing prompts in DB is not yet clear.
       - Ultimately, the `AI_PROMPT_TEMPLATE` table is removed and only `AI_RESULT` is kept.
 
   - Remove title_text from RANKING_RESULT
-    - Initially, the field `title_text` is placed in `RANKING_RESULT`.
-
-    - problem
+    - Initially, the field `title_text` is placed in `RANKING_RESULT`.- problem
       - However, `RANKING_RESULT` already references `POOR_TITLE` through `title_id`, so the title name can be imported as `POOR_TITLE.name`.
 
       - If `title_text` is saved separately, the same title information is saved in two places.
