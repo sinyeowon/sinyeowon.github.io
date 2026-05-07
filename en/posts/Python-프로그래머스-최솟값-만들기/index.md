@@ -5,7 +5,7 @@ date: 2026-05-07 09:00:00 +0900
 last_modified_at: 2026-05-07 12:02:00 +0900
 categories: ["Programmers"]
 tags: ["Python", "programmers"]
-description: "https://school.programmers.co.kr/learn/courses/30/lessons/12941 Solution At first, I wrote it as follows, but it did not pass the efficiency test. In Python, bubble sort is not used separately, and sorting is possible simply through the sort function. sort lease"
+description: "https://school.programmers.co.kr/learn/courses/30/lessons/12941 I wrote it like this, but it doesn't pass the efficiency test:"
 lang: "en"
 ui_lang: "ko-KR"
 toc: true
