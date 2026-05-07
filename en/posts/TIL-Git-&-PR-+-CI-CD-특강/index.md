@@ -1,6 +1,6 @@
 ---
 layout: "post"
-title: "[TIL] Special lecture on Git & PR + CI/CD"
+title: "[TIL] Git & PR + CI/CD Special Lecture"
 date: 2026-05-06 09:00:00 +0900
 last_modified_at: 2026-05-06 15:09:00 +0900
 categories: ["Spring 단기 심화"]
@@ -18,7 +18,7 @@ notion_lang: "en"
 
 ### **Git Flow branching strategy**
 
-Without a branching strategy, accidents can occur such as your work overwriting your colleague's work, unfinished code mixed in when you're about to deploy, or you wanting to roll back but having no reference point.
+Without a branching strategy, accidents can occur, such as your work overwriting a colleague's work, unfinished code mixed in when you're about to deploy, or you wanting to roll back but having no reference point.
 
 → Branch strategy = accident prevention device
 
@@ -149,7 +149,7 @@ Without a branching strategy, accidents can occur such as your work overwriting 
 
   - No merge commits - remove noise
 
-  - Existing commits are replaced by new commits - Collaboration is destroyed if done on a shared branch
+  - Existing commits are replaced with new commits - Collaboration is destroyed if done on a shared branch.
 
 - When to use what (Merge & Rebase)| standards | Merge | Rebase |
 
@@ -261,7 +261,7 @@ Check the location of `<<<<<<<` / `=======` / `>>>>>>>` → Decide which code to
 
 > **CI/CD Terminology**
 >
-> | Abbreviation | Full name | Meaning |
+> | Abbreviation | Full name | meaning |
 > | --- | --- | --- |
 > | CI | Continuous **Integration** | Frequent code integration and automatic verification |
 > | CD | Continuous **Delivery** | Stay deployable at any time (manual approval) |
@@ -356,9 +356,9 @@ Check the location of `<<<<<<<` / `=======` / `>>>>>>>` → Decide which code to
 ## Problems & ErrorsQ. Should I use Squash merge / Rebase merge / Merge commit?
 
 > There is no correct answer. **The answer is to set a team convention and go consistently**
-> - **Squash merge**: Compress PR into 1 commit / Cleanest history (most used)
+> - **Squash merge**: compresses PR into 1 commit / cleanest history (most used)
 >
-> - **Rebase merge**: Attach PR commits to main in a row / Enable track of commit units
+> - **Rebase merge**: Attach PR commits in a row to main / Enable track of commit units
 >
 > - **Merge commit**: Merge commit creation / PR units are clearly distinguished
 
