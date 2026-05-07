@@ -27,7 +27,7 @@ notion_lang: "ko"
   | `release/*` | 출시 준비. 버그 수정만 허용 | develop | main + develop | 임시 |
   | `hotfix/*` | 운영 버그 긴급 수정 | main | main + develop | 임시 |
 
-![image](/assets/img/notion/TIL-Git-&-PR-+-CI-CD-특강/01-a9615f8ef8.png)
+  ![image](/assets/img/notion/TIL-Git-&-PR-+-CI-CD-특강/01-a9615f8ef8.png)
 
 - Github Flow와 Git Flow
 
@@ -40,7 +40,7 @@ notion_lang: "ko"
   | 배포와의 궁합 | 빠른 배포(CD)와 궁합이 안 맞음 | PR 머지 = 즉시 배포 |
   | 전제 조건 | — | 자동화 테스트가 필수 전제 |
 
-> 대부분의 스타트업/웹 서비스는 Github Flow로 시작하고, 규모가 커지면 Git Flow로 확장함
+  > 대부분의 스타트업/웹 서비스는 Github Flow로 시작하고, 규모가 커지면 Git Flow로 확장함
 
 ### **PR 워크플로우와 코드 리뷰**
 
@@ -131,7 +131,7 @@ notion_lang: "ko"
 ### **Merge와 Rebase**
 
 - Merge: 두 히스토리를 합치는 머지 커밋
-![image](/assets/img/notion/TIL-Git-&-PR-+-CI-CD-특강/02-ac94822e48.png)
+  ![image](/assets/img/notion/TIL-Git-&-PR-+-CI-CD-특강/02-ac94822e48.png)
 
   - 히스토리 보존 - 누가 어느 브랜치에서 작업했는지 그대로 남음
 
@@ -140,7 +140,7 @@ notion_lang: "ko"
   - 히스토리가 복잡해짐 - 머지 커밋이 쌓이면 git log가 복잡해짐
 
 - Rebase: 내 커밋을 main 끝에 옯겨 붙이기
-![image](/assets/img/notion/TIL-Git-&-PR-+-CI-CD-특강/03-e678a100d5.png)
+  ![image](/assets/img/notion/TIL-Git-&-PR-+-CI-CD-특강/03-e678a100d5.png)
 
   - 히스토리가 깔끔함 - git log가 한 줄로 직선
 
@@ -157,7 +157,7 @@ notion_lang: "ko"
   | 충돌 처리 | 한 번에 | 커밋마다 |
   | 권장 상황 | **공유 브랜치 통합** | **내 로컬 브랜치 정리** |
 
-**→ 이미 푸시된 공용 브랜치를 절대 rebase 하면 안됨**
+  **→ 이미 푸시된 공용 브랜치를 절대 rebase 하면 안됨**
 
 - 절대 하지 말아야 할 것
   - 공유된 브랜치에 `git push -- force` → 동료의 커밋을 통째로 날려버림
@@ -181,7 +181,7 @@ notion_lang: "ko"
     - 릴리즈 태그가 있는 브랜치
 
 > `git push --force-with-lease` 를 사용하면 원격이 내 예상과 다를 때 실패시킴
-> → Force push가 필요하면 무조건 `--force-with-lease`
+>   → Force push가 필요하면 무조건 `--force-with-lease`
 
 ### **충돌(Conflict) 해결**
 
@@ -197,14 +197,14 @@ notion_lang: "ko"
   >>>>>>> feature/api
   ```
 
-→ 충돌은 에러가 아니라, Git이 내 판단을 요청하는 것
+  → 충돌은 에러가 아니라, Git이 내 판단을 요청하는 것
 
 - 충돌 해결 5단계
 
   1. 현재 상태 확인 - `git status`
 
   1. 파일 열어서 마커 찾기
-`<<<<<<<` / `=======` / `>>>>>>>` 위치 확인 → 어느 쪽 코드를 살릴지 결정
+    `<<<<<<<` / `=======` / `>>>>>>>` 위치 확인 → 어느 쪽 코드를 살릴지 결정
 
   1. 원하는 형태로 수정
 
@@ -233,7 +233,7 @@ notion_lang: "ko"
 ### **CI/CD 파이프라인 입문**
 
 - 수동 배포와 자동화의 차이
-![image](/assets/img/notion/TIL-Git-&-PR-+-CI-CD-특강/04-8f8d92b96d.png)
+  ![image](/assets/img/notion/TIL-Git-&-PR-+-CI-CD-특강/04-8f8d92b96d.png)
 
   - CI/CD 도입 후
     - PR 올리면 테스트 자동 실행
@@ -248,7 +248,7 @@ notion_lang: "ko"
 
 - CI/CD 파이프라인 흐름
 
-![image](/assets/img/notion/TIL-Git-&-PR-+-CI-CD-특강/05-b54ee9d439.png)
+  ![image](/assets/img/notion/TIL-Git-&-PR-+-CI-CD-특강/05-b54ee9d439.png)
 
   | 단계 | 무엇을 하나 |
   | --- | --- |
@@ -257,7 +257,7 @@ notion_lang: "ko"
   | **Test** | 단위 테스트 + 통합 테스트 + 린트 |
   | **Deploy** | Stage 환경 배포 → Prod 배포 |
 
-→ 한 단계라도 실패하면 즉시 중단 + 알림 / 깨진 빌드는 절대 다음 단계로 넘어가지 않음
+  → 한 단계라도 실패하면 즉시 중단 + 알림 / 깨진 빌드는 절대 다음 단계로 넘어가지 않음
 
 > **CI/CD 용어 정리**
 >
@@ -269,7 +269,7 @@ notion_lang: "ko"
 
 - Github Actions로 30줄 안에 시작하기
 
-### `.github/workflows/ci.yml`
+  ### `.github/workflows/ci.yml`
 
   ```yaml
   name: CI
@@ -366,7 +366,7 @@ Q. Squash merge / Rebase merge / Merge commit 중 뭘 써야 하나요?
 
 Q. Merge & Rebase
 
-> ![image](/assets/img/notion/TIL-Git-&-PR-+-CI-CD-특강/06-dae5302fb1.png)
+>   ![image](/assets/img/notion/TIL-Git-&-PR-+-CI-CD-특강/06-dae5302fb1.png)
 
 ![image](/assets/img/notion/TIL-Git-&-PR-+-CI-CD-특강/07-c13ae95793.png)
 

@@ -37,7 +37,7 @@ notion_lang: "ko"
     - 프롬프트 타입, 시스템 프롬프트, 유저 프롬프트 템플릿 등을 DB에서 관리하는 구조였음
 
     - 문제
-하지만 다시 검토해보니 현재 MVP에서는 다음 기능이 없음
+      하지만 다시 검토해보니 현재 MVP에서는 다음 기능이 없음
 
       - 관리자 페이지에서 프롬프트 수정
 
@@ -47,7 +47,7 @@ notion_lang: "ko"
 
       - 운영 중 배포 없이 프롬프트 변경
 
-즉, 프롬프트를 DB로 관리할 이유가 아직 명확하지 않음
+      즉, 프롬프트를 DB로 관리할 이유가 아직 명확하지 않음
 
     - 해결: 프롬프트는 백엔드 코드 내부에서 관리하고, AI가 생성한 결과만 DB에 저장하기로 함
       - 최종적으로는 `AI_PROMPT_TEMPLATE` 테이블을 제거하고, `AI_RESULT`만 유지
@@ -191,7 +191,7 @@ notion_lang: "ko"
 
 </details>
 
-![image](/assets/img/notion/TIL-TodayPoor-ERD-피드백-반영-기록-260506/01-f55d32293b.png)
+  ![image](/assets/img/notion/TIL-TodayPoor-ERD-피드백-반영-기록-260506/01-f55d32293b.png)
 
 ## 다음 할 일
 

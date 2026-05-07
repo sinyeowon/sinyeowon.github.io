@@ -119,14 +119,14 @@ notion_lang: "en"
       - In particular, the `AI_PROMPT_TEMPLATE` table was designed to take into account prompt modification, prompt version management, experimentation with various styles, and word changes during operation.
 
 - Final ERD Draft
-![image](/assets/img/notion/TIL-확장성과-MVP-사이에서-고민한-ERD-설계-260505/01-506d96c2bc.png)
+  ![image](/assets/img/notion/TIL-확장성과-MVP-사이에서-고민한-ERD-설계-260505/01-506d96c2bc.png)
 
 - Needs modification compared to front wireframe
 
 - Need to reflect feedback
 
 - Determination of technology stack and project basic settings
-Rather than simply choosing a “popular technology,” it was a process of considering which technology would be most appropriate based on the current project size, team skill level, and MVP scope.
+  Rather than simply choosing a “popular technology,” it was a process of considering which technology would be most appropriate based on the current project size, team skill level, and MVP scope.
 
   - **Determination of OCR method**
     - One of the core functions of the service is the ability to extract consumption data through OCR analysis after uploading consumption history images.
@@ -141,7 +141,7 @@ Rather than simply choosing a “popular technology,” it was a process of cons
 
         - GPT → Generative AI role
 
-It was judged more appropriate to separate the roles into
+        It was judged more appropriate to separate the roles into
 
     - Resolution: In the end, it was decided to use an external OCR service such as Google OCR API for OCR.- **Image storage method and whether to use S3**
     - When a user uploads a consumption history image, the image needs to be temporarily saved or forwarded for OCR processing.
@@ -154,7 +154,7 @@ It was judged more appropriate to separate the roles into
       - Only the following data is stored in the DB, not the original image.
         - OCR result text / consumption amount confirmed by user / affiliated store / category / memo / consumption time
 
-This reduces unnecessary image storage space and eliminates the need to store receipt images that may contain personal information for a long time.
+        This reduces unnecessary image storage space and eliminates the need to store receipt images that may contain personal information for a long time.
 
       - Currently, MVP has decided not to introduce external image storage such as S3 first.
         - Images are not required after OCR processing
@@ -165,7 +165,7 @@ This reduces unnecessary image storage space and eliminates the need to store re
 
         - Reduces the burden of storing images that may contain personal information
 
-In other words, we decided to use images only as “input values for OCR processing” rather than as “data that needs to be stored.”
+        In other words, we decided to use images only as “input values for OCR processing” rather than as “data that needs to be stored.”
 
   - Selection of DB and backend technology
     - **Why we also considered Supabase**
@@ -177,10 +177,10 @@ In other words, we decided to use images only as “input values for OCR process
         - Also, this project is not just about creating services:
           - It was also an important goal to directly implement and experience backend structure design / API design / ERD design / service hierarchy / JPA relationship, etc.
 
-In other words, it was judged that “designing and experiencing the back-end structure directly” was more important than rapid development.
+        In other words, it was judged that “designing and experiencing the back-end structure directly” was more important than rapid development.
 
       - Solved: 
-Finally decided on the following combination- **Backend: **Spring Boot 3.x, Java 17, Gradle
+        Finally decided on the following combination- **Backend: **Spring Boot 3.x, Java 17, Gradle
           - **Spring Boot: **Most familiar to team members / Easy to apply layered architecture / Able to utilize JPA / Experience in designing maintenance structures
 
         - **DB: **MySQL, Spring Data JPA
