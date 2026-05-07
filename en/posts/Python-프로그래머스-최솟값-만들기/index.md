@@ -62,7 +62,7 @@ def solution(A,B):
 
 I wrote the following, but it doesn't pass the efficiency test:
 
-- In Python, you can simply sort through the `sort()` function without using bubble sort separately.
+- In Python, bubble sort is not used separately, but can be sorted simply through the `sort()` function.
 
 `sort()`
 
