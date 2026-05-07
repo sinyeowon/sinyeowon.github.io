@@ -3,7 +3,7 @@ layout: "post"
 title: "[Python] Baekjun number 2753 - leap year"
 date: 2026-04-05 15:44:08 +0900
 last_modified_at: 2026-04-30 15:30:23 +0900
-categories: ['BaekJoon']
+categories: ["백준", "Python"]
 tags: ['baekjoon', 'Python']
 description: "We have summarized the solution that implements the leap year determination condition using Python's and/or conditional expression."
 lang: "en"

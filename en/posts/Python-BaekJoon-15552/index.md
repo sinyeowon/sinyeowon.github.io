@@ -3,7 +3,7 @@ layout: "post"
 title: "[Python] Baekjun No. 15552 - Fast A+B"
 date: 2026-04-05 16:14:22 +0900
 last_modified_at: 2026-05-04 02:07:34 +0900
-categories: ['BaekJoon']
+categories: ["백준", "Python"]
 tags: ['baekjoon', 'Python']
 description: "We have compiled a solution for quickly handling multi-line input using sys.stdin.readline() in Python."
 lang: "en"

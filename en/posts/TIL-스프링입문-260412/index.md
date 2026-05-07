@@ -3,7 +3,7 @@ layout: "post"
 title: "[TIL] Introduction to Spring TIL - 26/04/12"
 date: 2026-04-13 10:10:15 +0900
 last_modified_at: 2026-04-26 00:22:28 +0900
-categories: ['Spring 단기 심화']
+categories: ["Spring 단기 심화", "Spring 강의"]
 tags: ['Spring', 'TIL', '내일배움캠프']
 description: "This is a TIL that summarizes how to automatically manage the creation and modification dates of entities using JPA Auditing."
 lang: "en"

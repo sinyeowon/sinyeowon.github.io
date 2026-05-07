@@ -3,7 +3,7 @@ layout: "post"
 title: "[Java] Baekjun #2588 - Multiplication"
 date: 2026-04-05 15:41:03 +0900
 last_modified_at: 2026-04-25 02:59:38 +0900
-categories: ['BaekJoon']
+categories: ["백준", "Java"]
 tags: ['Java', 'baekjoon']
 description: "We have summarized the solution that separates the multiplication process into division and remainder operations in Java."
 lang: "en"

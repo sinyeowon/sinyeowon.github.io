@@ -3,7 +3,7 @@ layout: "post"
 title: "[Python] Baekjun 1000 times - A+B"
 date: 2026-04-05 15:05:12 +0900
 last_modified_at: 2026-04-23 00:17:55 +0900
-categories: ['BaekJoon']
+categories: ["백준", "Python"]
 tags: ['baekjoon', 'Python']
 description: "We have summarized the basic input/output solution for adding two numbers by converting the input string to an integer in Python."
 lang: "en"

@@ -3,7 +3,7 @@ layout: "post"
 title: "[Python] Baekjun 10807 - Counting"
 date: 2026-04-05 20:28:46 +0900
 last_modified_at: 2026-04-25 23:38:20 +0900
-categories: ['BaekJoon']
+categories: ["백준", "Python"]
 tags: ['baekjoon', 'Python']
 description: "We have summarized the solution for counting specific values ​​using lists and maps in Python."
 lang: "en"

@@ -3,7 +3,7 @@ layout: "post"
 title: "[TIL] Introduction to Spring TIL - 26/04/13"
 date: 2026-04-13 12:09:01 +0900
 last_modified_at: 2026-04-29 12:51:58 +0900
-categories: ['Spring 단기 심화']
+categories: ["Spring 단기 심화", "Spring 강의"]
 tags: ['Spring', 'TIL', '내일배움캠프']
 description: "This is a TIL that summarizes Spring Data JPA's Query Methods and method name-based query creation method."
 lang: "en"

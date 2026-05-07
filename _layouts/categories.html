@@ -16,6 +16,15 @@ layout: page
 
   {% if category_name == first_post.categories[0] %}
     {% capture category_url %}/categories/{{ category_name | slugify | url_encode }}/{% endcapture %}
+    {% assign child_categories = '' | split: '' %}
+
+    {% for post in posts_of_category %}
+      {% if post.categories[0] == category_name and post.categories.size > 1 %}
+        {% assign child_categories = child_categories | push: post.categories[1] %}
+      {% endif %}
+    {% endfor %}
+
+    {% assign child_categories = child_categories | uniq | sort_natural %}
 
     <div class="card categories">
       <div
@@ -26,6 +35,11 @@ layout: page
           <i class="far fa-folder fa-fw"></i>
           <a href="{{ category_url | relative_url }}" class="mx-2">{{ category_name }}</a>
           <span class="text-muted small font-weight-light">
+            {% if child_categories.size > 0 %}
+              {{ child_categories | size }}
+              {{ site.data.locales[lang].category }}
+              ·
+            {% endif %}
             {{ posts_of_category | size }}
             {{ site.data.locales[lang].categories.post_measure }}
           </span>
@@ -43,16 +57,72 @@ layout: page
       </div>
 
       <div id="{{ LIST_PREFIX }}{{ forloop.index0 }}" class="collapse">
-        <ul class="list-group">
-          {% for post in posts_of_category %}
-            <li class="list-group-item post-list-item">
-              <a href="{{ post.url | relative_url }}" class="post-list-title">{{ post.title }}</a>
-              <span class="post-list-date text-muted small font-weight-light">
-                {% include datetime.html date=post.date lang=lang %}
-              </span>
-            </li>
-          {% endfor %}
-        </ul>
+        {% if child_categories.size > 0 %}
+          {% assign parent_loop_index = forloop.index0 %}
+
+          <ul class="list-group">
+            {% for child_category in child_categories %}
+              {% assign child_posts_count = 0 %}
+
+              {% for post in posts_of_category %}
+                {% if post.categories[0] == category_name and post.categories[1] == child_category %}
+                  {% assign child_posts_count = child_posts_count | plus: 1 %}
+                {% endif %}
+              {% endfor %}
+
+              {% assign child_list_id = LIST_PREFIX | append: parent_loop_index | append: '_' | append: forloop.index0 %}
+
+              <li class="list-group-item p-0">
+                <div class="post-list-item d-flex justify-content-between align-items-center">
+                  <span>
+                    <i class="far fa-folder fa-fw"></i>
+                    <span class="mx-2">{{ child_category }}</span>
+                    <span class="text-muted small font-weight-light">
+                      {{ child_posts_count }}
+                      {{ site.data.locales[lang].categories.post_measure }}
+                    </span>
+                  </span>
+
+                  <a
+                    href="#{{ child_list_id }}"
+                    data-bs-toggle="collapse"
+                    aria-expanded="false"
+                    aria-label="{{ child_list_id }}-trigger"
+                    class="category-trigger"
+                  >
+                    <i class="fas fa-fw fa-angle-down rotate"></i>
+                  </a>
+                </div>
+
+                <div id="{{ child_list_id }}" class="collapse">
+                  <ul class="list-group">
+                    {% for post in posts_of_category %}
+                      {% if post.categories[0] == category_name and post.categories[1] == child_category %}
+                        <li class="list-group-item post-list-item ps-5">
+                          <a href="{{ post.url | relative_url }}" class="post-list-title">{{ post.title }}</a>
+                          <span class="post-list-date text-muted small font-weight-light">
+                            {% include datetime.html date=post.date lang=lang %}
+                          </span>
+                        </li>
+                      {% endif %}
+                    {% endfor %}
+                  </ul>
+                </div>
+              </li>
+            {% endfor %}
+          </ul>
+        {% else %}
+          <ul class="list-group">
+            {% for post in posts_of_category %}
+              <li class="list-group-item post-list-item">
+                <a href="{{ post.url | relative_url }}" class="post-list-title">{{ post.title }}</a>
+                <span class="post-list-date text-muted small font-weight-light">
+                  {% include datetime.html date=post.date lang=lang %}
+                </span>
+              </li>
+            {% endfor %}
+          </ul>
+        {% endif %}
       </div>
     </div>
   {% endif %}

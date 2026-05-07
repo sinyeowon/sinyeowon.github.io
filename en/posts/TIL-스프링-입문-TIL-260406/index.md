@@ -3,7 +3,7 @@ layout: "post"
 title: "[TIL] Introduction to Spring TIL - 26/04/06"
 date: 2026-04-07 12:11:14 +0900
 last_modified_at: 2026-04-25 03:01:53 +0900
-categories: ['Spring 단기 심화']
+categories: ["Spring 단기 심화", "Spring 강의"]
 tags: ['Spring', 'TIL', '내일배움캠프']
 description: "This is a TIL that summarizes the Gradle build, server execution, and API test flow based on the introductory Spring course content."
 lang: "en"

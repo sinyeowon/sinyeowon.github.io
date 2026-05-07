@@ -247,6 +247,21 @@ function splitList(value) {
     .filter(Boolean);
 }
 
+function normalizeCategories(values) {
+  const categories = [];
+
+  for (const value of values) {
+    for (const part of String(value || '').split('/')) {
+      const category = part.trim();
+      if (category && !categories.includes(category)) {
+        categories.push(category);
+      }
+    }
+  }
+
+  return categories;
+}
+
 function isPublished(page) {
   const property = findProperty(page, propertyNames.published);
 
@@ -339,7 +354,7 @@ function frontMatter(metadata) {
   return lines.join('\n');
 }
 
-function markdownInline(richText = []) {
+function markdownInline(richText = [], context = {}) {
   return richText
     .map((item) => {
       let text = item.plain_text || '';
@@ -349,7 +364,7 @@ function markdownInline(richText = []) {
       }
 
       if (item.href) {
-        text = wrapMarkdownLink(text, item.href);
+        text = wrapMarkdownLink(linkLabel(text, item.href, context), item.href);
       }
 
       const annotations = item.annotations || {};
@@ -372,6 +387,29 @@ function markdownInline(richText = []) {
       return text;
     })
     .join('');
+}
+
+function linkLabel(text, href, context = {}) {
+  const label = String(text || '');
+  const url = String(href || '');
+
+  if (label.trim() !== url.trim()) {
+    return label;
+  }
+
+  if (/^https:\/\/school\.programmers\.co\.kr\/learn\/courses\/\d+\/lessons\/\d+/i.test(url)) {
+    return `Programmers ${problemTitleFromPostTitle(context.title) || '문제'}`;
+  }
+
+  return label;
+}
+
+function problemTitleFromPostTitle(title = '') {
+  return String(title || '')
+    .replace(/^\[[^\]]+]\s*/, '')
+    .replace(/^(?:프로그래머스|Programmers)\s*-+\s*/i, '')
+    .replace(/\s+/g, ' ')
+    .trim();
 }
 
 function splitInlineWhitespace(text) {
@@ -416,29 +454,29 @@ async function renderBlock(block, context, depth = 0) {
 
   switch (type) {
     case 'paragraph':
-      output = markdownInline(value.rich_text);
+      output = markdownInline(value.rich_text, context);
       break;
     case 'heading_1':
-      output = `# ${markdownInline(value.rich_text)}`;
+      output = `# ${markdownInline(value.rich_text, context)}`;
       break;
     case 'heading_2':
-      output = `## ${markdownInline(value.rich_text)}`;
+      output = `## ${markdownInline(value.rich_text, context)}`;
       break;
     case 'heading_3':
-      output = `### ${markdownInline(value.rich_text)}`;
+      output = `### ${markdownInline(value.rich_text, context)}`;
       break;
     case 'bulleted_list_item':
-      output = `${indent}- ${markdownInline(value.rich_text)}`;
+      output = `${indent}- ${markdownInline(value.rich_text, context)}`;
       break;
     case 'numbered_list_item':
-      output = `${indent}1. ${markdownInline(value.rich_text)}`;
+      output = `${indent}1. ${markdownInline(value.rich_text, context)}`;
       break;
     case 'to_do':
-      output = `${indent}- [${value.checked ? 'x' : ' '}] ${markdownInline(value.rich_text)}`;
+      output = `${indent}- [${value.checked ? 'x' : ' '}] ${markdownInline(value.rich_text, context)}`;
       break;
     case 'quote':
     case 'callout':
-      output = markdownInline(value.rich_text);
+      output = markdownInline(value.rich_text, context);
       break;
     case 'code': {
       const code = [
@@ -464,10 +502,10 @@ async function renderBlock(block, context, depth = 0) {
       output = `$$\n${value.expression}\n$$`;
       break;
     case 'table':
-      output = await renderTable(block, depth);
+      output = await renderTable(block, depth, context);
       break;
     case 'toggle': {
-      const summary = markdownInline(value.rich_text) || '상세 내용';
+      const summary = markdownInline(value.rich_text, context) || '상세 내용';
       const children = block.has_children
         ? await renderBlocks(await getBlockChildren(block.id), context, depth + 1)
         : '';
@@ -652,8 +690,8 @@ function normalizeFenceLines(markdown) {
   return normalized.join('\n');
 }
 
-function markdownTableCell(richText = []) {
-  return markdownInline(richText)
+function markdownTableCell(richText = [], context = {}) {
+  return markdownInline(richText, context)
     .replace(/\r?\n/g, '<br>')
     .replace(/\|/g, '\\|')
     .trim();
@@ -671,11 +709,11 @@ function indentMarkdown(markdown, depth = 0) {
     .join('\n');
 }
 
-async function renderTable(block, depth = 0) {
+async function renderTable(block, depth = 0, context = {}) {
   const rows = await getBlockChildren(block.id);
   const cells = rows
     .filter((row) => row.type === 'table_row')
-    .map((row) => row.table_row.cells.map((cell) => markdownTableCell(cell)));
+    .map((row) => row.table_row.cells.map((cell) => markdownTableCell(cell, context)));
 
   if (!cells.length) {
     return '';
@@ -701,7 +739,7 @@ async function renderTable(block, depth = 0) {
 
 async function renderImage(block, context) {
   const image = block.image;
-  const caption = markdownInline(image.caption);
+  const caption = markdownInline(image.caption, context);
   const source = image.type === 'external' ? image.external.url : image.file?.url;
 
   if (!source) {
@@ -771,11 +809,11 @@ async function buildPost(page) {
   const fileName = `${datePrefix(dateValue)}-${slug}.md`;
   const filePath = path.join(POSTS_DIR, fileName);
   const englishPath = path.join(EN_POSTS_DIR, slug, 'index.md');
-  const categories = propertyList(findProperty(page, propertyNames.categories)).filter(Boolean);
+  const categories = normalizeCategories(propertyList(findProperty(page, propertyNames.categories)));
   const tags = propertyList(findProperty(page, propertyNames.tags)).filter(Boolean);
   const description = propertyText(findProperty(page, propertyNames.description));
   const blocks = await getBlockChildren(page.id);
-  const body = normalizeMarkdown(await renderBlocks(blocks, { slug, assetIndex: 0 }));
+  const body = normalizeMarkdown(await renderBlocks(blocks, { slug, assetIndex: 0, title }));
   const existingDescription = description ? '' : await existingPostDescription(filePath);
   const fallbackDescription = description || existingDescription || createDescription(body, title);
   const lastModifiedAt = formatDateForJekyll(page.last_edited_time);

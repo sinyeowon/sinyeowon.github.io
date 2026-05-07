@@ -3,7 +3,7 @@ layout: "post"
 title: "[TIL] CRUD Code Shadowing 3rd session"
 date: 2026-04-22 10:16:15 +0900
 last_modified_at: 2026-04-29 18:14:42 +0900
-categories: ['Spring 단기 심화']
+categories: ["Spring 단기 심화", "과제"]
 tags: ['Java', 'Spring', 'TIL', '과제', '내일배움캠프']
 description: "This article summarizes the process of separating the controller's business logic into services and applying transactions."
 lang: "en"

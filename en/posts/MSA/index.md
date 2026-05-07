@@ -3,7 +3,7 @@ layout: "post"
 title: "[MSA]"
 date: 2026-04-15 15:05:43 +0900
 last_modified_at: 2026-04-30 11:56:54 +0900
-categories: ['Spring 단기 심화']
+categories: ["Spring 단기 심화", "아키텍처"]
 tags: ['MSA', '아키텍처']
 description: "This is a summary note prepared to organize the MSA lecture contents by week."
 lang: "en"

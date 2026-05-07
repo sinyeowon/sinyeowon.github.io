@@ -3,7 +3,7 @@ layout: "post"
 title: "[Python] Baekjun No. 10869 - Four arithmetic operations"
 date: 2026-04-05 15:20:39 +0900
 last_modified_at: 2026-04-23 00:17:21 +0900
-categories: ['BaekJoon']
+categories: ["백준", "Python"]
 tags: ['baekjoon', 'Python']
 description: "We have summarized the solution for outputting the results of four arithmetic operations using Python's arithmetic operations and string formatting."
 lang: "en"

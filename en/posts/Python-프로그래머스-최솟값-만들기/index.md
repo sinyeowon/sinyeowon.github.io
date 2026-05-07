@@ -3,7 +3,7 @@ layout: "post"
 title: "[Python] Programmers - Creating minimum value"
 date: 2026-05-07 09:00:00 +0900
 last_modified_at: 2026-05-07 12:02:00 +0900
-categories: ["Programmers"]
+categories: ["Programmers", "Python"]
 tags: ["Python", "programmers"]
 description: "This post solves the minimum value problem by sorting two arrays in opposite directions and replacing bubble sort with Python sort()."
 lang: "en"
@@ -14,7 +14,7 @@ original_url: "/posts/Python-프로그래머스-최솟값-만들기/"
 notion_id: "3597788a-fc66-8021-b2bb-e883d8047388"
 notion_lang: "en"
 ---
-[https://school.programmers.co.kr/learn/courses/30/lessons/12941](https://school.programmers.co.kr/learn/courses/30/lessons/12941)
+[Programmers 최솟값 만들기](https://school.programmers.co.kr/learn/courses/30/lessons/12941)
 
 ## Solution
 

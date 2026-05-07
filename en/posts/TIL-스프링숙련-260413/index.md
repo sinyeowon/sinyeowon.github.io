@@ -3,7 +3,7 @@ layout: "post"
 title: "[TIL] Spring Mastery TIL - 26/04/13"
 date: 2026-04-14 14:36:44 +0900
 last_modified_at: 2026-04-25 09:04:08 +0900
-categories: ['Spring 단기 심화']
+categories: ["Spring 단기 심화", "Spring 강의"]
 tags: ['Spring', 'TIL', '내일배움캠프']
 description: "This TIL summarizes the differences between manual registration of beans in Spring and automatic registration."
 lang: "en"

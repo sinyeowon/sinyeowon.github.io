@@ -3,7 +3,7 @@ layout: "post"
 title: "[Java] Baekjun number 10926 - ??!"
 date: 2026-04-05 15:33:33 +0900
 last_modified_at: 2026-04-25 15:57:56 +0900
-categories: ['BaekJoon']
+categories: ["백준", "Java"]
 tags: ['Java', 'baekjoon']
 description: "We have summarized how to receive string input in Java and output characters that match the conditions."
 lang: "en"

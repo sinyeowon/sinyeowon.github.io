@@ -3,7 +3,7 @@ layout: "post"
 title: "[TIL] CRUD Code Shadowing Round 1"
 date: 2026-04-15 16:11:38 +0900
 last_modified_at: 2026-05-03 05:34:06 +0900
-categories: ['Spring 단기 심화']
+categories: ["Spring 단기 심화", "과제"]
 tags: ['Java', 'Spring', 'TIL', '과제', '내일배움캠프']
 description: "This article summarizes the process of configuring a domain model using JPA Entity, Lombok, and Repository."
 lang: "en"

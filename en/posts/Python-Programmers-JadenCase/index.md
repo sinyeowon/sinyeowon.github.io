@@ -3,7 +3,7 @@ layout: "post"
 title: "[Python] Programmers - Creating a JadenCase string"
 date: 2026-05-04 23:59:00 +0900
 last_modified_at: 2026-05-05 01:30:40 +0900
-categories: ['Programmers']
+categories: ["Programmers", "Python"]
 tags: ['programmers', 'Python']
 description: "I have summarized the solution for creating a JadenCase string while preserving consecutive spaces using split(\" \") and join() in Python."
 lang: "en"

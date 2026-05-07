@@ -2,7 +2,7 @@
 title: "[TIL] TodayPoor ERD 피드백 반영 기록 - 260506"
 date: 2026-05-06 09:00:00 +0900
 last_modified_at: 2026-05-06 15:25:00 +0900
-categories: ["GDGoC KNU"]
+categories: ["GDGoC", "0 to Product"]
 tags: ["project"]
 description: "TodayPoor ERD 피드백을 반영해 OCR_RESULT, AI_RESULT, 초대 코드 만료일 등 테이블 역할과 중복 데이터를 재정리한 TIL입니다."
 english_url: "/en/posts/TIL-TodayPoor-ERD-피드백-반영-기록-260506/"

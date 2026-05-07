@@ -2,7 +2,7 @@
 title: '[TIL] CRUD Code Shadowing 2회차'
 date: 2026-04-20 01:52:37 +0900
 last_modified_at: 2026-04-22 01:21:51 +0900
-categories: ['Spring 단기 심화']
+categories: ["Spring 단기 심화", "과제"]
 tags: ['Java', 'Spring', 'TIL', '과제', '내일배움캠프']
 description: '주문과 상품의 다대일 관계를 JPA @ManyToOne으로 매핑하고 지연 로딩을 정리한 글입니다.'
 english_url: "/en/posts/TIL-CRUD-Code-Shadowing-2/"

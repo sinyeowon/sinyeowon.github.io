@@ -3,7 +3,7 @@ layout: "post"
 title: "[Java] Baekjun No. 10952 - A+B - 5"
 date: 2026-04-05 16:36:35 +0900
 last_modified_at: 2026-04-13 04:50:17 +0900
-categories: ['BaekJoon']
+categories: ["백준", "Java"]
 tags: ['Java', 'baekjoon']
 description: "0 We have summarized the Java while(true) solution and termination condition that repeats until 0 is entered."
 lang: "en"
