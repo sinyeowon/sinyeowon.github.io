@@ -6,6 +6,7 @@ const POSTS_DIR = path.join(ROOT, '_posts');
 const EN_POSTS_DIR = path.join(ROOT, 'en', 'posts');
 
 const translationCache = new Map();
+const TRANSLATE_CHUNK_SIZE = 1200;
 
 function yamlString(value) {
   return JSON.stringify(String(value || ''));
@@ -187,6 +188,45 @@ async function translateText(text, targetLanguage = 'en') {
     return translationCache.get(cacheKey);
   }
 
+  const translatedParts = [];
+  for (const part of splitLongText(value, TRANSLATE_CHUNK_SIZE)) {
+    translatedParts.push(await translateChunk(part, targetLanguage));
+  }
+
+  const translated = translatedParts.join('');
+  translationCache.set(cacheKey, translated);
+  return translated;
+}
+
+async function translateChunk(text, targetLanguage) {
+  const value = String(text || '');
+
+  if (!value.trim()) {
+    return value;
+  }
+
+  try {
+    return await requestTranslation(value, targetLanguage);
+  } catch (error) {
+    if (!String(error.message).includes('Translate API 400') || value.length <= 1) {
+      throw error;
+    }
+
+    const fallbackChunks = splitLongText(value, Math.max(1, Math.floor(value.length / 2)));
+    if (fallbackChunks.length <= 1) {
+      throw error;
+    }
+
+    const translated = [];
+    for (const chunk of fallbackChunks) {
+      translated.push(await translateChunk(chunk, targetLanguage));
+    }
+
+    return translated.join('');
+  }
+}
+
+async function requestTranslation(value, targetLanguage) {
   const params = new URLSearchParams({
     client: 'gtx',
     sl: 'ko',
@@ -197,13 +237,12 @@ async function translateText(text, targetLanguage = 'en') {
 
   const response = await fetch(`https://translate.googleapis.com/translate_a/single?${params}`);
   if (!response.ok) {
-    throw new Error(`Translate API ${response.status} ${response.statusText}`);
+    const detail = await response.text();
+    throw new Error(`Translate API ${response.status} ${response.statusText}: ${detail.slice(0, 200)}`);
   }
 
   const data = await response.json();
-  const translated = (data[0] || []).map((part) => part[0]).join('');
-  translationCache.set(cacheKey, translated);
-  return translated;
+  return (data[0] || []).map((part) => part[0]).join('');
 }
 
 async function translateMarkdown(markdown) {
@@ -302,7 +341,7 @@ function isMarkdownTable(lines) {
   );
 }
 
-function splitTranslationChunks(text, maxLength = 3500) {
+function splitTranslationChunks(text, maxLength = TRANSLATE_CHUNK_SIZE) {
   const paragraphs = text.split(/(\n{2,})/);
   const chunks = [];
   let current = '';
@@ -314,9 +353,51 @@ function splitTranslationChunks(text, maxLength = 3500) {
     }
 
     if (paragraph.length > maxLength) {
-      chunks.push(paragraph);
+      chunks.push(...splitLongText(paragraph, maxLength));
     } else {
       current += paragraph;
+    }
+  }
+
+  if (current) {
+    chunks.push(current);
+  }
+
+  return chunks;
+}
+
+function splitLongText(text, maxLength = TRANSLATE_CHUNK_SIZE) {
+  const value = String(text || '');
+
+  if (value.length <= maxLength) {
+    return [value];
+  }
+
+  const chunks = [];
+  let current = '';
+  const segments = value.split(/(\n{2,}|\n|[.!?。！？]\s+|[,;:]\s+|\s+)/);
+
+  for (const segment of segments) {
+    if (!segment) {
+      continue;
+    }
+
+    if (current && current.length + segment.length > maxLength) {
+      chunks.push(current);
+      current = '';
+    }
+
+    if (segment.length > maxLength) {
+      if (current) {
+        chunks.push(current);
+        current = '';
+      }
+
+      for (let index = 0; index < segment.length; index += maxLength) {
+        chunks.push(segment.slice(index, index + maxLength));
+      }
+    } else {
+      current += segment;
     }
   }
 
