@@ -5,7 +5,7 @@ date: 2026-05-05 09:00:00 +0900
 last_modified_at: 2026-05-07 11:32:00 +0900
 categories: ["GDGoC KNU"]
 tags: ["project"]
-description: "This is an article written about TIL during the 0 to Product BE meeting process."
+description: "This TIL reviews the initial TodayPoor ERD and refines privacy scope, categories, AI results, OCR processing, and the tech stack around the MVP scope."
 lang: "en"
 ui_lang: "ko-KR"
 toc: true

@@ -5,7 +5,7 @@ date: 2026-05-04 09:00:00 +0900
 last_modified_at: 2026-05-07 11:33:00 +0900
 categories: ["GDGoC KNU"]
 tags: ["project"]
-description: "0 to Product This is an article written about TIL in the process of writing the Article 4 plan."
+description: "This TIL refines a consumption-record idea into an SNS-style spending challenge service and explains why the team chose OCR-based uploads over automatic transaction collection."
 lang: "en"
 ui_lang: "ko-KR"
 toc: true
