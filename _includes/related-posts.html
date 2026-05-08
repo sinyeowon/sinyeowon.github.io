@@ -16,8 +16,28 @@
 {% endif %}
 
 {% assign source_page = page %}
-{% if page.lang == 'en' and page.original_url %}
-  {% assign original_post = site.posts | where: 'url', page.original_url | first %}
+{% if page.lang == 'en' %}
+  {% assign original_post = nil %}
+
+  {% if page.original_url %}
+    {% assign original_post = site.posts | where: 'url', page.original_url | first %}
+  {% endif %}
+
+  {% unless original_post %}
+    {% for post in site.posts %}
+      {% if page.original_url and post.url == page.original_url %}
+        {% assign original_post = post %}
+        {% break %}
+      {% elsif page.notion_id and post.notion_id == page.notion_id and post.notion_lang != 'en' %}
+        {% assign original_post = post %}
+        {% break %}
+      {% elsif post.english_url and post.english_url == page.url %}
+        {% assign original_post = post %}
+        {% break %}
+      {% endif %}
+    {% endfor %}
+  {% endunless %}
+
   {% if original_post %}
     {% assign source_page = original_post %}
   {% endif %}
@@ -39,8 +59,21 @@
 
 {% for i in (0..last_index) %}
   {% assign post = match_posts[i] %}
+  {% assign is_current_post = false %}
 
-  {% if post.url == source_page.url or post.url == page.url or post.url == page.original_url %}
+  {% if post.url == source_page.url or post.url == page.url %}
+    {% assign is_current_post = true %}
+  {% endif %}
+
+  {% if page.original_url and post.url == page.original_url %}
+    {% assign is_current_post = true %}
+  {% endif %}
+
+  {% if post.english_url and post.english_url == page.url %}
+    {% assign is_current_post = true %}
+  {% endif %}
+
+  {% if is_current_post %}
     {% continue %}
   {% endif %}
 
@@ -97,6 +130,18 @@
               {% break %}
             {% endif %}
           {% endfor %}
+        {% endif %}
+
+        {% if display_post.url == page.url %}
+          {% continue %}
+        {% endif %}
+
+        {% if page.original_url and display_post.url == page.original_url %}
+          {% continue %}
+        {% endif %}
+
+        {% if page.original_url and display_post.original_url == page.original_url %}
+          {% continue %}
         {% endif %}
 
         <article class="col">
