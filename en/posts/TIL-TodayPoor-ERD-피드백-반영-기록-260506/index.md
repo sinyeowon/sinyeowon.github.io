@@ -34,14 +34,14 @@ In the initial design, we focused on quickly reflecting the functionality, but t
       - The original OCR text may be long, and there is a possibility that OCR accuracy or analysis results may be managed separately in the future.
 
     - Solved: So separate table `OCR_RESULT`
-      - With this separation, `EXPENSE` focuses on confirmed consumption data, and `OCR_RESULT` is responsible for analysis results, making their roles clearer.
+      - With this separation, `EXPENSE` focuses on confirmed consumption data, and `OCR_RESULT` is responsible for analysis results, making the role clearer.
 
   - Remove AI prompt table
     - Initially, the `AI_PROMPT_TEMPLATE` table was added considering AI functions.
 
     - Prompt type, system prompt, user prompt template, etc. were managed in the DB.
 
-    - problem
+    - Problem<br>
       However, after reviewing it again, we found that the following features are not available in the current MVP.
 
       - Modify prompt in admin page

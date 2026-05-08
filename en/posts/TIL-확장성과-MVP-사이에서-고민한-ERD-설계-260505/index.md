@@ -102,7 +102,7 @@ notion_lang: "en"
   - What is a template?
     - The word “template” keeps appearing during AI function design.
 
-    - Initially, it was for storing vitriolic phrases? A collection of random sentences? AI prompt? The role was not clear, etc.- solved
+    - Initially, it was for storing vitriolic phrases? A collection of random sentences? AI prompt? The role was not clear, etc.- Solved
       - During the meeting, it was summarized that what is needed in the current service is the ability for AI to generate opinion-style results.
 
       - In other words, the key is “save the sentence template” rather than the `AI 입력 → 결과 생성 흐름` itself
@@ -179,9 +179,9 @@ notion_lang: "en"
 
         In other words, it was judged that “designing and experiencing the back-end structure directly” was more important than rapid development.
 
-      - Solved: 
+      - Solved: <br>
         Finally decided on the following combination- **Backend:** Spring Boot 3.x, Java 17, Gradle
-          - **Spring Boot:** Most familiar to team members / Easy to apply layered architecture / Ability to utilize JPA / Experience in designing maintenance structures
+          - **Spring Boot:** Most familiar to team members / Easy to apply layered architecture / Able to utilize JPA / Experience in designing maintenance structures
 
         - **DB:** MySQL, Spring Data JPA
           - **MySQL:** Stable integration with Spring/JPA / Suitable for relational data modeling / Well suited to ERD-based design

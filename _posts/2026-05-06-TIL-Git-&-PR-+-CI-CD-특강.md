@@ -203,7 +203,7 @@ notion_lang: "ko"
 
   1. 현재 상태 확인 - `git status`
 
-  1. 파일 열어서 마커 찾기
+  1. 파일 열어서 마커 찾기<br>
     `<<<<<<<` / `=======` / `>>>>>>>` 위치 확인 → 어느 쪽 코드를 살릴지 결정
 
   1. 원하는 형태로 수정
@@ -267,8 +267,7 @@ notion_lang: "ko"
 >   | CD | Continuous **Delivery** | 언제든 배포 가능한 상태 유지 (수동 승인) |
 >   | CD | Continuous **Deployment** | 통과하면 자동으로 운영까지 배포 |
 
-- Github Actions로 30줄 안에 시작하기
-
+- Github Actions로 30줄 안에 시작하기<br>
   ### `.github/workflows/ci.yml`
 
   ```yaml

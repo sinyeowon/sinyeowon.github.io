@@ -18,13 +18,13 @@ notion_lang: "en"
 
 ### **Git Flow branching strategy**
 
-Without a branching strategy, accidents can occur, such as your work overwriting a colleague's work, unfinished code mixed in when you're about to deploy, or you wanting to roll back but having no reference point.
+Without a branching strategy, accidents can occur such as your work overwriting your colleague's work, unfinished code mixed in when you're about to deploy, or you wanting to roll back but having no reference point.
 
 → Branch strategy = accident prevention device
 
 - 5 branches of Git Flow
 
-  | branch | role | branch | Merge target | Lifespan |
+  | branch | Role | branch | Merge target | Lifespan |
   | --- | --- | --- | --- | --- |
   | `main` | Production code. Always available for deployment | — | — | permanent |
   | `develop` | Next release integration branch. Where all features gather | First time in main | — | permanent |
@@ -51,7 +51,7 @@ Without a branching strategy, accidents can occur, such as your work overwriting
 
 - 3 things PR does
 
-  | role | Description |
+  | Role | Description |
   | --- | --- |
   | 👀 **Code review chapter** | A space for colleagues to view changes and leave feedback |
   | 🧪 **Automatic Verification Trigger** | Run CI pipeline (automatically perform build/test) |
@@ -205,7 +205,7 @@ Conflicts occur when two branches modify the same line in the same file differen
 
   1. Check current status - `git status`
 
-  1. Open the file and find the marker
+  1. Open the file and find the marker<br>
     Check the location of `<<<<<<<` / `=======` / `>>>>>>>` → Decide which code to use
 
   1. Modify to desired form
@@ -261,14 +261,13 @@ Conflicts occur when two branches modify the same line in the same file differen
 
 > **CI/CD Terminology**
 >
-> | Abbreviation | Full name | meaning |
+> | Abbreviation | Full name | Meaning |
 > | --- | --- | --- |
 > | CI | Continuous **Integration** | Frequent code integration and automatic verification |
 > | CD | Continuous **Delivery** | Stay deployable at any time (manual approval) |
 > | CD | Continuous **Deployment** | If passed, automatically distributed to operation |
 
-- Get started in 30 lines with Github Actions
-
+- Get started in 30 lines with Github Actions<br>
   ### `.github/workflows/ci.yml`
 
   ```yaml
@@ -355,7 +354,7 @@ Conflicts occur when two branches modify the same line in the same file differen
 
 ## Problems & ErrorsQ. Should I use Squash merge / Rebase merge / Merge commit?
 
-> There is no correct answer. **The answer is to set a team convention and go consistently**
+> There is no right answer. **The answer is to set a team convention and go consistently**
 > - **Squash merge**: compresses PR into 1 commit / cleanest history (most used)
 >
 > - **Rebase merge**: Attach PR commits in a row to main / Enable track of commit units
