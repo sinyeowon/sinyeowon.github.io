@@ -5,7 +5,8 @@ date: 2026-05-05 09:00:00 +0900
 last_modified_at: 2026-05-07 11:32:00 +0900
 categories: ["GDGoC KNU", "0 to Product"]
 tags: ["project"]
-description: "This is an article written about TIL during the 0 to Product BE meeting process."
+description: "This post summarizes ERD decisions for TodayPoor while balancing scalability and MVP scope, including title separation, privacy visibility, and category handling."
+description_source: "manual"
 lang: "en"
 ui_lang: "ko-KR"
 toc: true

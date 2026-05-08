@@ -5,7 +5,8 @@ date: 2026-05-08 09:00:00 +0900
 last_modified_at: 2026-05-08 15:20:00 +0900
 categories: ["Programmers", "Python"]
 tags: ["Python", "programmers"]
-description: "Programmers Repeating binary conversion At first, the while statement in the binary conversion part within the while statement was written as while num//2 != 0:, but then when only 1 remained at the end, 1 was not included and the loop ended due to a condition."
+description: "This post explains how to count removed zeros and binary conversion steps in Python, including a simpler solution using bin()."
+description_source: "manual"
 lang: "en"
 ui_lang: "ko-KR"
 toc: true

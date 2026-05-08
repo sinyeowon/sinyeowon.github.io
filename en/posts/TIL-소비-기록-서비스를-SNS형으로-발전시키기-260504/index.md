@@ -5,7 +5,8 @@ date: 2026-05-04 09:00:00 +0900
 last_modified_at: 2026-05-07 11:33:00 +0900
 categories: ["GDGoC KNU", "0 to Product"]
 tags: ["project"]
-description: "0 to Product This is an article written about TIL in the process of writing the Article 4 plan."
+description: "This post summarizes how the consumption record idea evolved into a social service and why OCR-based receipt uploads were chosen over automatic transaction imports."
+description_source: "manual"
 lang: "en"
 ui_lang: "ko-KR"
 toc: true

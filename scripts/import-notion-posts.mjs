@@ -157,14 +157,23 @@ function propertyText(property) {
   }
 }
 
-async function existingPostDescription(filePath) {
+async function existingPostDescriptionState(filePath) {
   try {
     const content = await readFile(filePath, 'utf8');
     const description = frontMatterValue(content, 'description');
-    return isUsableDescription(description) ? description : '';
+    const source = normalizeDescriptionSource(frontMatterValue(content, 'description_source'));
+
+    if (!isUsableDescription(description)) {
+      return { description: '', source: '' };
+    }
+
+    return {
+      description,
+      source
+    };
   } catch (error) {
     if (error.code === 'ENOENT') {
-      return '';
+      return { description: '', source: '' };
     }
 
     throw error;
@@ -254,6 +263,11 @@ function isUsableDescription(description) {
     !/작성한 글입니다/.test(value) &&
     !/This is an article written about/i.test(value)
   );
+}
+
+function normalizeDescriptionSource(source) {
+  const value = String(source || '').trim().toLowerCase();
+  return ['notion', 'manual', 'excerpt'].includes(value) ? value : '';
 }
 
 function propertyList(property) {
@@ -392,6 +406,7 @@ function frontMatter(metadata) {
     `categories: ${yamlArray(metadata.categories)}`,
     `tags: ${yamlArray(metadata.tags)}`,
     `description: ${yamlString(metadata.description)}`,
+    ...(metadata.descriptionSource ? [`description_source: ${yamlString(metadata.descriptionSource)}`] : []),
     ...(metadata.lang ? [`lang: ${yamlString(metadata.lang)}`] : []),
     ...(metadata.uiLang ? [`ui_lang: ${yamlString(metadata.uiLang)}`] : []),
     ...(metadata.toc !== undefined ? [`toc: ${metadata.toc ? 'true' : 'false'}`] : []),
@@ -887,8 +902,19 @@ async function buildPost(page) {
   const description = propertyText(findProperty(page, propertyNames.description));
   const blocks = await getBlockChildren(page.id);
   const body = normalizeMarkdown(await renderBlocks(blocks, { slug, assetIndex: 0, title }));
-  const existingDescription = description ? '' : await existingPostDescription(filePath);
-  const fallbackDescription = description || existingDescription || createDescription(body, title);
+  const generatedDescription = createDescription(body, title);
+  const existingDescriptionState = description
+    ? { description: '', source: '' }
+    : await existingPostDescriptionState(filePath);
+  const existingDescriptionIsGenerated =
+    existingDescriptionState.description && existingDescriptionState.description === generatedDescription;
+  const existingDescription = existingDescriptionState.description;
+  const fallbackDescription = description || existingDescription || generatedDescription;
+  const descriptionSource = description
+    ? 'notion'
+    : existingDescription
+      ? existingDescriptionState.source || (existingDescriptionIsGenerated ? 'excerpt' : 'manual')
+      : 'excerpt';
   const lastModifiedAt = formatDateForJekyll(page.last_edited_time);
   const koreanUrl = `/posts/${slug}/`;
   const englishUrl = `/en/posts/${slug}/`;
@@ -900,6 +926,7 @@ async function buildPost(page) {
     categories: categories.length ? categories : ['Notion'],
     tags,
     description: fallbackDescription,
+    descriptionSource,
     englishUrl,
     notionId: page.id,
     notionLang: 'ko'
@@ -916,8 +943,15 @@ async function buildPost(page) {
 
   if (GENERATE_ENGLISH) {
     const englishTitle = await translateText(title);
-    const existingEnglishDescription = description ? '' : await existingPostDescription(englishPath);
-    const englishDescription = existingEnglishDescription || await translateText(fallbackDescription);
+    const existingEnglishDescriptionState = description
+      ? { description: '', source: '' }
+      : await existingPostDescriptionState(englishPath);
+    const englishDescription = existingEnglishDescriptionState.description || await translateText(fallbackDescription);
+    const englishDescriptionSource = description
+      ? 'notion'
+      : existingEnglishDescriptionState.description
+        ? existingEnglishDescriptionState.source || descriptionSource
+        : descriptionSource;
     const englishBody = normalizeMarkdown(await translateMarkdown(body));
     const englishMetadata = {
       layout: 'post',
@@ -927,6 +961,7 @@ async function buildPost(page) {
       categories: metadata.categories,
       tags,
       description: englishDescription || fallbackDescription,
+      descriptionSource: englishDescriptionSource,
       lang: 'en',
       uiLang: 'ko-KR',
       toc: true,
