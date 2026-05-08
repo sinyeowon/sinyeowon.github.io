@@ -3,7 +3,7 @@ layout: "post"
 title: "[TIL] Git & PR + CI/CD Special Lecture"
 date: 2026-05-06 09:00:00 +0900
 last_modified_at: 2026-05-06 15:09:00 +0900
-categories: ["Spring 단기 심화"]
+categories: ["Spring 단기 심화", "특강"]
 tags: ["Git", "CI/CD"]
 description: "This article summarizes what I studied after attending a special lecture on Git & PR + CI/CD."
 lang: "en"

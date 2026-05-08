@@ -3,7 +3,7 @@ layout: "post"
 title: "[Python] Programmers - Creating minimum value"
 date: 2026-05-07 09:00:00 +0900
 last_modified_at: 2026-05-07 12:02:00 +0900
-categories: ["Programmers"]
+categories: ["Programmers", "Python"]
 tags: ["Python", "programmers"]
 description: "This post solves the minimum value problem by sorting two arrays in opposite directions and replacing bubble sort with Python sort()."
 lang: "en"

@@ -3,7 +3,7 @@ layout: "post"
 title: "[TIL] ERD design considering scalability and MVP - 260505"
 date: 2026-05-05 09:00:00 +0900
 last_modified_at: 2026-05-07 11:32:00 +0900
-categories: ["GDGoC KNU"]
+categories: ["GDGoC KNU", "0 to Product"]
 tags: ["project"]
 description: "This is an article written about TIL during the 0 to Product BE meeting process."
 lang: "en"

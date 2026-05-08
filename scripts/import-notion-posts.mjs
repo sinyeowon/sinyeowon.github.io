@@ -171,7 +171,23 @@ async function existingPostDescription(filePath) {
   }
 }
 
+async function existingPostCategories(filePath) {
+  try {
+    return frontMatterArray(await readFile(filePath, 'utf8'), 'categories');
+  } catch (error) {
+    if (error.code === 'ENOENT') {
+      return [];
+    }
+
+    throw error;
+  }
+}
+
 function frontMatterValue(content, key) {
+  return parseYamlScalar(frontMatterRawValue(content, key));
+}
+
+function frontMatterRawValue(content, key) {
   const frontMatter = String(content || '').match(/^---\n([\s\S]*?)\n---/);
   if (!frontMatter) {
     return '';
@@ -183,7 +199,28 @@ function frontMatterValue(content, key) {
     return '';
   }
 
-  return parseYamlScalar(line.slice(prefix.length).trim());
+  return line.slice(prefix.length).trim();
+}
+
+function frontMatterArray(content, key) {
+  const raw = frontMatterRawValue(content, key);
+  if (!raw) {
+    return [];
+  }
+
+  const quotedValues = [...raw.matchAll(/(['"])((?:\\.|(?!\1).)*?)\1/g)].map((match) =>
+    parseYamlScalar(`${match[1]}${match[2]}${match[1]}`)
+  );
+
+  if (quotedValues.length) {
+    return quotedValues;
+  }
+
+  return raw
+    .replace(/^\[|\]$/g, '')
+    .split(',')
+    .map((item) => item.trim())
+    .filter(Boolean);
 }
 
 function parseYamlScalar(value) {
@@ -201,8 +238,8 @@ function parseYamlScalar(value) {
     }
   }
 
-  if (raw.startsWith("'") && raw.endsWith("'")) {
-    return raw.slice(1, -1).replace(/''/g, "'");
+  if (raw.startsWith('\'') && raw.endsWith('\'')) {
+    return raw.slice(1, -1).replace(/''/g, '\'');
   }
 
   return raw;
@@ -260,6 +297,22 @@ function normalizeCategories(values) {
   }
 
   return categories;
+}
+
+function resolvePostCategories(notionCategories, existingCategories) {
+  if (!notionCategories.length && existingCategories.length) {
+    return existingCategories;
+  }
+
+  if (
+    notionCategories.length === 1 &&
+    existingCategories.length > 1 &&
+    notionCategories[0] === existingCategories[0]
+  ) {
+    return existingCategories;
+  }
+
+  return notionCategories;
 }
 
 function isPublished(page) {
@@ -450,7 +503,7 @@ async function renderBlock(block, context, depth = 0) {
   const type = block.type;
   const value = block[type];
   const indent = '  '.repeat(depth);
-  let output = '';
+  let output;
 
   switch (type) {
     case 'paragraph':
@@ -809,7 +862,9 @@ async function buildPost(page) {
   const fileName = `${datePrefix(dateValue)}-${slug}.md`;
   const filePath = path.join(POSTS_DIR, fileName);
   const englishPath = path.join(EN_POSTS_DIR, slug, 'index.md');
-  const categories = normalizeCategories(propertyList(findProperty(page, propertyNames.categories)));
+  const notionCategories = normalizeCategories(propertyList(findProperty(page, propertyNames.categories)));
+  const existingCategories = await existingPostCategories(filePath);
+  const categories = resolvePostCategories(notionCategories, existingCategories);
   const tags = propertyList(findProperty(page, propertyNames.tags)).filter(Boolean);
   const description = propertyText(findProperty(page, propertyNames.description));
   const blocks = await getBlockChildren(page.id);
