@@ -38,6 +38,21 @@
   {% if page.lang == 'en' %}
     {% if previous_post.url %}
       {% assign english_previous = site.pages | where: 'lang', 'en' | where: 'original_url', previous_post.url | first %}
+
+      {% unless english_previous %}
+        {% for english_page in site.pages %}
+          {% if english_page.lang == 'en' %}
+            {% if english_page.original_url == previous_post.url or previous_post.english_url == english_page.url %}
+              {% assign english_previous = english_page %}
+              {% break %}
+            {% elsif previous_post.notion_id and english_page.notion_id == previous_post.notion_id %}
+              {% assign english_previous = english_page %}
+              {% break %}
+            {% endif %}
+          {% endif %}
+        {% endfor %}
+      {% endunless %}
+
       {% if english_previous %}
         {% assign previous_post = english_previous %}
       {% endif %}
@@ -45,6 +60,21 @@
 
     {% if next_post.url %}
       {% assign english_next = site.pages | where: 'lang', 'en' | where: 'original_url', next_post.url | first %}
+
+      {% unless english_next %}
+        {% for english_page in site.pages %}
+          {% if english_page.lang == 'en' %}
+            {% if english_page.original_url == next_post.url or next_post.english_url == english_page.url %}
+              {% assign english_next = english_page %}
+              {% break %}
+            {% elsif next_post.notion_id and english_page.notion_id == next_post.notion_id %}
+              {% assign english_next = english_page %}
+              {% break %}
+            {% endif %}
+          {% endif %}
+        {% endfor %}
+      {% endunless %}
+
       {% if english_next %}
         {% assign next_post = english_next %}
       {% endif %}

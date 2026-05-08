@@ -125,9 +125,14 @@
 
         {% if page.lang == 'en' %}
           {% for english_page in site.pages %}
-            {% if english_page.lang == 'en' and english_page.original_url == post.url %}
-              {% assign display_post = english_page %}
-              {% break %}
+            {% if english_page.lang == 'en' %}
+              {% if english_page.original_url == post.url or post.english_url == english_page.url %}
+                {% assign display_post = english_page %}
+                {% break %}
+              {% elsif post.notion_id and english_page.notion_id == post.notion_id %}
+                {% assign display_post = english_page %}
+                {% break %}
+              {% endif %}
             {% endif %}
           {% endfor %}
         {% endif %}
