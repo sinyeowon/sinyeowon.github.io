@@ -57,6 +57,10 @@ function displayCount(element, count) {
   element.textContent = new Intl.NumberFormat('ko-KR').format(count);
 }
 
+function displayUnavailable(element) {
+  element.textContent = '-';
+}
+
 async function initViewStats() {
   if (!$viewStats || !$totalViews || !$todayViews) {
     return;
@@ -78,7 +82,7 @@ async function initViewStats() {
     displayCount($totalViews, totalCount);
     displayCount($todayViews, todayCount);
   } catch {
-    displayCount($totalViews, 0);
-    displayCount($todayViews, 0);
+    displayUnavailable($totalViews);
+    displayUnavailable($todayViews);
   }
 }
