@@ -24,7 +24,7 @@ Without a branching strategy, accidents can occur such as your work overwriting 
 
 - 5 branches of Git Flow
 
-  | branch | Role | branch | Merge target | Lifespan |
+  | branch | role | branch | Merge target | Lifespan |
   | --- | --- | --- | --- | --- |
   | `main` | Production code. Always available for deployment | — | — | permanent |
   | `develop` | Next release integration branch. Where all features gather | First time in main | — | permanent |
@@ -51,7 +51,7 @@ Without a branching strategy, accidents can occur such as your work overwriting 
 
 - 3 things PR does
 
-  | Role | Description |
+  | role | Description |
   | --- | --- |
   | 👀 **Code review chapter** | A space for colleagues to view changes and leave feedback |
   | 🧪 **Automatic Verification Trigger** | Run CI pipeline (automatically perform build/test) |
@@ -261,7 +261,7 @@ Conflicts occur when two branches modify the same line in the same file differen
 
 > **CI/CD Terminology**
 >
-> | Abbreviation | Full name | Meaning |
+> | Abbreviation | Full name | meaning |
 > | --- | --- | --- |
 > | CI | Continuous **Integration** | Frequent code integration and automatic verification |
 > | CD | Continuous **Delivery** | Stay deployable at any time (manual approval) |
