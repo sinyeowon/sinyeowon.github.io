@@ -18,12 +18,16 @@
   {% if page.lang == 'en' %}
     {% if previous_post.url %}
       {% assign english_previous = site.pages | where: 'lang', 'en' | where: 'original_url', previous_post.url | first %}
-      {% assign previous_post = english_previous %}
+      {% if english_previous %}
+        {% assign previous_post = english_previous %}
+      {% endif %}
     {% endif %}
 
     {% if next_post.url %}
       {% assign english_next = site.pages | where: 'lang', 'en' | where: 'original_url', next_post.url | first %}
-      {% assign next_post = english_next %}
+      {% if english_next %}
+        {% assign next_post = english_next %}
+      {% endif %}
     {% endif %}
   {% endif %}
 

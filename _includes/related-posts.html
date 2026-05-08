@@ -91,19 +91,12 @@
         {% assign display_post = post %}
 
         {% if page.lang == 'en' %}
-          {% assign has_english_post = false %}
-
           {% for english_page in site.pages %}
             {% if english_page.lang == 'en' and english_page.original_url == post.url %}
               {% assign display_post = english_page %}
-              {% assign has_english_post = true %}
               {% break %}
             {% endif %}
           {% endfor %}
-
-          {% unless has_english_post %}
-            {% continue %}
-          {% endunless %}
         {% endif %}
 
         <article class="col">
