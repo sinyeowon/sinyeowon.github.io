@@ -19,6 +19,14 @@
 
     <a class="site-title d-block" href="{{ '/' | relative_url }}">{{ site.title }}</a>
     <p class="site-subtitle fst-italic mb-0">{{ site.tagline }}</p>
+
+    {% if site.analytics.goatcounter.id and site.analytics.goatcounter.id != empty %}
+      <p class="site-view-stats mb-0" data-goatcounter-site="{{ site.analytics.goatcounter.id }}">
+        <span>전체 조회수 <span data-view-total>0</span></span>
+        <span class="view-stats-separator">/</span>
+        <span>하루 조회수 <span data-view-today>0</span></span>
+      </p>
+    {% endif %}
   </header>
   <!-- .profile-wrapper -->
 

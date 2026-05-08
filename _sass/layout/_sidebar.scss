@@ -124,6 +124,21 @@ $sidebar-display: 'sidebar-display'; /* the attribute for sidebar display */
     user-select: none;
   }
 
+  .site-view-stats {
+    margin-top: 0.45rem;
+    color: var(--sidebar-muted-color);
+    font-size: 78%;
+    font-weight: 400;
+    letter-spacing: 0.2px;
+    line-height: 1.45;
+    user-select: none;
+
+    .view-stats-separator {
+      margin: 0 0.25rem;
+      opacity: 0.65;
+    }
+  }
+
   ul {
     margin-bottom: 2rem;
 
