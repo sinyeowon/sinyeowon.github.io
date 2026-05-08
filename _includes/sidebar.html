@@ -93,7 +93,7 @@
       {% if url %}
         <a
           href="{{ url }}"
-          aria-label="{{ entry.type }}"
+          aria-label="{{ entry.label | default: entry.type }}"
           {% assign link_types = '' %}
 
           {% unless entry.noblank %}

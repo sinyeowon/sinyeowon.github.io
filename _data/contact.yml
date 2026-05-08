@@ -6,6 +6,11 @@
 - type: instagram
   icon: "fab fa-instagram"
   url: "https://www.instagram.com/sinyeowon/"
+
+- type: naver-blog
+  icon: "naver-blog-icon"
+  label: "Naver Blog"
+  url: "https://blog.naver.com/11lyfee"
 # Uncomment and complete the url below to enable more contact options
 #
 # - type: mastodon

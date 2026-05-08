@@ -245,6 +245,18 @@ $sidebar-display: 'sidebar-display'; /* the attribute for sidebar display */
       line-height: $btn-size;
     }
 
+    .naver-blog-icon {
+      font-size: 0.72rem;
+      font-style: normal;
+      font-weight: 800;
+      letter-spacing: 0;
+      line-height: $btn-size;
+
+      &::before {
+        content: 'N';
+      }
+    }
+
     #mode-toggle {
       @extend %button;
       @extend %sidebar-links;
