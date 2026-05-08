@@ -9,58 +9,61 @@ layout: page
 {% assign LIST_PREFIX = 'l_category_' %}
 {% assign sort_categories = site.categories | sort %}
 
-{% for category in sort_categories %}
-  {% assign category_name = category | first %}
-  {% assign posts_of_category = category | last | sort: 'date' | reverse %}
-  {% assign first_post = posts_of_category | first %}
+<div class="taxonomy-list">
+  {% for category in sort_categories %}
+    {% assign category_name = category | first %}
+    {% assign posts_of_category = category | last | sort: 'date' | reverse %}
+    {% assign first_post = posts_of_category | first %}
 
-  {% if category_name == first_post.categories[0] %}
-    {% capture category_url %}/categories/{{ category_name | slugify | url_encode }}/{% endcapture %}
-    {% assign child_categories = '' | split: '' %}
+    {% if category_name == first_post.categories[0] %}
+      {% capture category_url %}/categories/{{ category_name | slugify | url_encode }}/{% endcapture %}
+      {% assign child_categories = '' | split: '' %}
 
-    {% for post in posts_of_category %}
-      {% if post.categories[0] == category_name and post.categories.size > 1 %}
-        {% assign child_categories = child_categories | push: post.categories[1] %}
-      {% endif %}
-    {% endfor %}
+      {% for post in posts_of_category %}
+        {% if post.categories[0] == category_name and post.categories.size > 1 %}
+          {% assign child_categories = child_categories | push: post.categories[1] %}
+        {% endif %}
+      {% endfor %}
 
-    {% assign child_categories = child_categories | uniq | sort_natural %}
+      {% assign child_categories = child_categories | uniq | sort_natural %}
+      {% assign group_id = LIST_PREFIX | append: forloop.index0 %}
 
-    <div class="card categories">
-      <div
-        id="{{ HEAD_PREFIX }}{{ forloop.index0 }}"
-        class="card-header d-flex justify-content-between"
-      >
-        <span class="ms-2">
-          <i class="far fa-folder fa-fw"></i>
-          <a href="{{ category_url | relative_url }}" class="mx-2">{{ category_name }}</a>
-          <span class="text-muted small font-weight-light">
+      <section class="taxonomy-group">
+        <div class="taxonomy-row taxonomy-group-header">
+          <a href="{{ category_url | relative_url }}" class="taxonomy-main">
+            <i class="far fa-folder fa-fw"></i>
+            <span class="taxonomy-title">{{ category_name }}</span>
+          </a>
+
+          <span class="taxonomy-count">
             {% if child_categories.size > 0 %}
-              {{ child_categories | size }}
-              {{ site.data.locales[lang].category }}
-              ·
+              {{ child_categories | size }} 폴더 ·
             {% endif %}
             {{ posts_of_category | size }}
             {{ site.data.locales[lang].categories.post_measure }}
           </span>
-        </span>
 
-        <a
-          href="#{{ LIST_PREFIX }}{{ forloop.index0 }}"
-          data-bs-toggle="collapse"
-          aria-expanded="false"
-          aria-label="{{ HEAD_PREFIX }}{{ forloop.index0 }}-trigger"
-          class="category-trigger"
-        >
-          <i class="fas fa-fw fa-angle-down rotate"></i>
-        </a>
-      </div>
+          {% if child_categories.size > 0 %}
+            <a
+              href="#{{ group_id }}"
+              data-bs-toggle="collapse"
+              aria-expanded="false"
+              aria-label="{{ HEAD_PREFIX }}{{ forloop.index0 }}-trigger"
+              class="taxonomy-trigger"
+            >
+              <i class="fas fa-fw fa-angle-down rotate"></i>
+            </a>
+          {% else %}
+            <a href="{{ category_url | relative_url }}" class="taxonomy-trigger">
+              <i class="fas fa-fw fa-angle-right"></i>
+            </a>
+          {% endif %}
+        </div>
 
-      <div id="{{ LIST_PREFIX }}{{ forloop.index0 }}" class="collapse">
         {% if child_categories.size > 0 %}
           {% assign parent_loop_index = forloop.index0 %}
 
-          <ul class="list-group">
+          <div id="{{ group_id }}" class="collapse taxonomy-children">
             {% for child_category in child_categories %}
               {% assign child_posts_count = 0 %}
 
@@ -72,15 +75,16 @@ layout: page
 
               {% assign child_list_id = LIST_PREFIX | append: parent_loop_index | append: '_' | append: forloop.index0 %}
 
-              <li class="list-group-item p-0">
-                <div class="post-list-item d-flex justify-content-between align-items-center">
-                  <span>
+              <div class="taxonomy-child">
+                <div class="taxonomy-row taxonomy-child-header">
+                  <span class="taxonomy-main">
                     <i class="far fa-folder fa-fw"></i>
-                    <span class="mx-2">{{ child_category }}</span>
-                    <span class="text-muted small font-weight-light">
-                      {{ child_posts_count }}
-                      {{ site.data.locales[lang].categories.post_measure }}
-                    </span>
+                    <span class="taxonomy-title">{{ child_category }}</span>
+                  </span>
+
+                  <span class="taxonomy-count">
+                    {{ child_posts_count }}
+                    {{ site.data.locales[lang].categories.post_measure }}
                   </span>
 
                   <a
@@ -88,42 +92,29 @@ layout: page
                     data-bs-toggle="collapse"
                     aria-expanded="false"
                     aria-label="{{ child_list_id }}-trigger"
-                    class="category-trigger"
+                    class="taxonomy-trigger"
                   >
                     <i class="fas fa-fw fa-angle-down rotate"></i>
                   </a>
                 </div>
 
-                <div id="{{ child_list_id }}" class="collapse">
-                  <ul class="list-group">
-                    {% for post in posts_of_category %}
-                      {% if post.categories[0] == category_name and post.categories[1] == child_category %}
-                        <li class="list-group-item post-list-item ps-5">
-                          <a href="{{ post.url | relative_url }}" class="post-list-title">{{ post.title }}</a>
-                          <span class="post-list-date text-muted small font-weight-light">
-                            {% include datetime.html date=post.date lang=lang %}
-                          </span>
-                        </li>
-                      {% endif %}
-                    {% endfor %}
-                  </ul>
+                <div id="{{ child_list_id }}" class="collapse taxonomy-posts">
+                  {% for post in posts_of_category %}
+                    {% if post.categories[0] == category_name and post.categories[1] == child_category %}
+                      <a href="{{ post.url | relative_url }}" class="taxonomy-post">
+                        <span class="taxonomy-post-title">{{ post.title }}</span>
+                        <span class="taxonomy-post-date">
+                          {% include datetime.html date=post.date lang=lang %}
+                        </span>
+                      </a>
+                    {% endif %}
+                  {% endfor %}
                 </div>
-              </li>
+              </div>
             {% endfor %}
-          </ul>
-        {% else %}
-          <ul class="list-group">
-            {% for post in posts_of_category %}
-              <li class="list-group-item post-list-item">
-                <a href="{{ post.url | relative_url }}" class="post-list-title">{{ post.title }}</a>
-                <span class="post-list-date text-muted small font-weight-light">
-                  {% include datetime.html date=post.date lang=lang %}
-                </span>
-              </li>
-            {% endfor %}
-          </ul>
+          </div>
         {% endif %}
-      </div>
-    </div>
-  {% endif %}
-{% endfor %}
+      </section>
+    {% endif %}
+  {% endfor %}
+</div>

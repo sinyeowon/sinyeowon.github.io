@@ -8,7 +8,7 @@ layout: page
 {% assign HEAD_PREFIX = 'h_tag_' %}
 {% assign LIST_PREFIX = 'l_tag_' %}
 
-<div id="tags" class="tag-list">
+<div id="tags" class="tag-list taxonomy-list">
   {% assign tags = '' | split: '' %}
   {% for t in site.tags %}
     {% assign tags = tags | push: t[0] %}
@@ -19,44 +19,41 @@ layout: page
   {% for t in sorted_tags %}
     {% assign posts = site.tags[t] | sort: 'date' | reverse %}
     {% capture tag_url %}/tags/{{ t | slugify | url_encode }}/{% endcapture %}
+    {% assign tag_list_id = LIST_PREFIX | append: forloop.index0 %}
 
-    <div class="card categories">
-      <div
-        id="{{ HEAD_PREFIX }}{{ forloop.index0 }}"
-        class="card-header d-flex justify-content-between"
-      >
-        <span class="ms-2">
+    <section class="taxonomy-group">
+      <div class="taxonomy-row taxonomy-group-header">
+        <a href="{{ tag_url | relative_url }}" class="taxonomy-main">
           <i class="fa fa-tag fa-fw"></i>
-          <a href="{{ tag_url | relative_url }}" class="mx-2">{{ t }}</a>
-          <span class="text-muted small font-weight-light">
-            {{ posts | size }}
-            {{ site.data.locales[lang].categories.post_measure }}
-          </span>
+          <span class="taxonomy-title">{{ t }}</span>
+        </a>
+
+        <span class="taxonomy-count">
+          {{ posts | size }}
+          {{ site.data.locales[lang].categories.post_measure }}
         </span>
 
         <a
-          href="#{{ LIST_PREFIX }}{{ forloop.index0 }}"
+          href="#{{ tag_list_id }}"
           data-bs-toggle="collapse"
           aria-expanded="false"
           aria-label="{{ HEAD_PREFIX }}{{ forloop.index0 }}-trigger"
-          class="category-trigger"
+          class="taxonomy-trigger"
         >
           <i class="fas fa-fw fa-angle-down rotate"></i>
         </a>
       </div>
 
-      <div id="{{ LIST_PREFIX }}{{ forloop.index0 }}" class="collapse">
-        <ul class="list-group">
-          {% for post in posts %}
-            <li class="list-group-item post-list-item">
-              <a href="{{ post.url | relative_url }}" class="post-list-title">{{ post.title }}</a>
-              <span class="post-list-date text-muted small font-weight-light">
-                {% include datetime.html date=post.date lang=lang %}
-              </span>
-            </li>
-          {% endfor %}
-        </ul>
+      <div id="{{ tag_list_id }}" class="collapse taxonomy-posts">
+        {% for post in posts %}
+          <a href="{{ post.url | relative_url }}" class="taxonomy-post">
+            <span class="taxonomy-post-title">{{ post.title }}</span>
+            <span class="taxonomy-post-date">
+              {% include datetime.html date=post.date lang=lang %}
+            </span>
+          </a>
+        {% endfor %}
       </div>
-    </div>
+    </section>
   {% endfor %}
 </div>
