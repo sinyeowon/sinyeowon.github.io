@@ -3,9 +3,9 @@ layout: "post"
 title: "[TIL] TodayPoor ERD feedback reflection record - 260506"
 date: 2026-05-06 09:00:00 +0900
 last_modified_at: 2026-05-06 15:25:00 +0900
-categories: ["GDGoC", "0 to Product"]
+categories: ["GDGoC KNU"]
 tags: ["project"]
-description: "This TIL applies feedback to the TodayPoor ERD by separating OCR_RESULT and AI_RESULT, adding invite-code expiration, and reducing duplicated data."
+description: "This is an article written about TIL during the 0 to Product BE meeting process."
 lang: "en"
 ui_lang: "ko-KR"
 toc: true

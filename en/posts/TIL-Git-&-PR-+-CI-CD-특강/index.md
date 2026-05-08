@@ -3,7 +3,7 @@ layout: "post"
 title: "[TIL] Git & PR + CI/CD Special Lecture"
 date: 2026-05-06 09:00:00 +0900
 last_modified_at: 2026-05-06 15:09:00 +0900
-categories: ["Spring 단기 심화", "특강"]
+categories: ["Spring 단기 심화"]
 tags: ["Git", "CI/CD"]
 description: "This article summarizes what I studied after attending a special lecture on Git & PR + CI/CD."
 lang: "en"
@@ -18,13 +18,13 @@ notion_lang: "en"
 
 ### **Git Flow branching strategy**
 
-If you do not have a branching strategy, accidents may occur such as your work overwriting your colleague's work, unfinished code mixed in when you are about to deploy, or wanting to roll back but having no reference point.
+Without a branching strategy, accidents can occur, such as your work overwriting a colleague's work, unfinished code mixed in when you're about to deploy, or you wanting to roll back but having no reference point.
 
 → Branch strategy = accident prevention device
 
 - 5 branches of Git Flow
 
-  | branch | Role | branch | Merge target | Lifespan |
+  | branch | role | branch | Merge target | Lifespan |
   | --- | --- | --- | --- | --- |
   | `main` | Production code. Always available for deployment | — | — | permanent |
   | `develop` | Next release integration branch. Where all features gather | First time in main | — | permanent |
@@ -51,7 +51,7 @@ If you do not have a branching strategy, accidents may occur such as your work o
 
 - 3 things PR does
 
-  | Role | Description |
+  | role | Description |
   | --- | --- |
   | 👀 **Code review chapter** | A space for colleagues to view changes and leave feedback |
   | 🧪 **Automatic Verification Trigger** | Run CI pipeline (automatically perform build/test) |
@@ -261,7 +261,7 @@ Conflicts occur when two branches modify the same line in the same file differen
 
 > **CI/CD Terminology**
 >
-> | Abbreviation | Full name | Meaning |
+> | Abbreviation | Full name | meaning |
 > | --- | --- | --- |
 > | CI | Continuous **Integration** | Frequent code integration and automatic verification |
 > | CD | Continuous **Delivery** | Stay deployable at any time (manual approval) |
@@ -314,7 +314,7 @@ Conflicts occur when two branches modify the same line in the same file differen
   ```
 
   - What happens the moment it moves
-    1. When you post a PR, GitHub automatically executes the above sequence.
+    1. When you upload a PR, GitHub automatically executes the above sequence.
 
     1. If even one step fails, mark x in PR
 
@@ -355,10 +355,10 @@ Conflicts occur when two branches modify the same line in the same file differen
 
 ## Problems & ErrorsQ. Should I use Squash merge / Rebase merge / Merge commit?
 
-> There is no right answer. **The answer is to set a team convention and go consistently**
-> - **Squash merge**: Compress PR into 1 commit / Cleanest history (most used)
+> There is no correct answer. **The answer is to set a team convention and go consistently**
+> - **Squash merge**: compresses PR into 1 commit / cleanest history (most used)
 >
-> - **Rebase merge**: Attach PR commits to main in a row / Enable track of commit units
+> - **Rebase merge**: Attach PR commits in a row to main / Enable track of commit units
 >
 > - **Merge commit**: Merge commit creation / PR units are clearly distinguished
 

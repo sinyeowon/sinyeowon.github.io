@@ -3,7 +3,7 @@ layout: "post"
 title: "[Python] Programmers - Creating minimum value"
 date: 2026-05-07 09:00:00 +0900
 last_modified_at: 2026-05-07 12:02:00 +0900
-categories: ["Programmers", "Python"]
+categories: ["Programmers"]
 tags: ["Python", "programmers"]
 description: "This post solves the minimum value problem by sorting two arrays in opposite directions and replacing bubble sort with Python sort()."
 lang: "en"
@@ -62,7 +62,7 @@ def solution(A,B):
 
 I wrote the following, but it doesn't pass the efficiency test:
 
-- In Python, bubble sort is not used separately, but can be sorted simply through the `sort()` function.
+- In Python, you can simply sort through the `sort()` function without using bubble sort separately.
 
 `sort()`
 

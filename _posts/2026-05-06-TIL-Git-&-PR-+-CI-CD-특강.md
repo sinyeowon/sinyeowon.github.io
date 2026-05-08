@@ -2,7 +2,7 @@
 title: "[TIL] Git & PR + CI/CD 특강"
 date: 2026-05-06 09:00:00 +0900
 last_modified_at: 2026-05-06 15:09:00 +0900
-categories: ["Spring 단기 심화", "특강"]
+categories: ["Spring 단기 심화"]
 tags: ["Git", "CI/CD"]
 description: "Git & PR + CI/CD 관련 특강을 듣고 공부한 내용을 정리한 글입니다."
 english_url: "/en/posts/TIL-Git-&-PR-+-CI-CD-특강/"

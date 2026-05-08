@@ -3,9 +3,9 @@ layout: "post"
 title: "[TIL] ERD design considering scalability and MVP - 260505"
 date: 2026-05-05 09:00:00 +0900
 last_modified_at: 2026-05-07 11:32:00 +0900
-categories: ["GDGoC", "0 to Product"]
+categories: ["GDGoC KNU"]
 tags: ["project"]
-description: "This TIL reviews the initial TodayPoor ERD and refines privacy scope, categories, AI results, OCR processing, and the tech stack around the MVP scope."
+description: "This is an article written about TIL during the 0 to Product BE meeting process."
 lang: "en"
 ui_lang: "ko-KR"
 toc: true
@@ -174,7 +174,7 @@ notion_lang: "en"
       - problem
         - However, the backend team members had more Spring Boot + JPA experience.
 
-        - Additionally, this project is not just about creating services:
+        - Also, this project is not just about creating services:
           - It was also an important goal to directly implement and experience backend structure design / API design / ERD design / service hierarchy / JPA relationship, etc.
 
         In other words, it was judged that “designing and experiencing the back-end structure directly” was more important than rapid development.
@@ -190,7 +190,7 @@ notion_lang: "en"
 
 - The biggest thing I felt through this meeting was that a good design is not necessarily a complicated design.
 
-- At first, we thought about maximizing scalability, such as separating categories into separate tables, adding AI prompt tables, and managing booleans for notes or not, but as we discussed it, we felt that it was more important to make decisions based on `“지금 실제로 필요한 기능인가?”` at the MVP stage.
+- At first, we thought about maximizing scalability by separating categories into separate tables, adding AI prompt tables, and managing booleans for notes or not, but as we discussed it, we felt that it was more important to make decisions based on `“지금 실제로 필요한 기능인가?”` at the MVP stage.
 
 - I also learned that we need to think not only about functional implementation, but also about data duplication, separation of responsibilities, roles of front and back end, and balance between scalability and current complexity.
 
