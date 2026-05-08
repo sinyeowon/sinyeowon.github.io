@@ -15,13 +15,21 @@
   {% assign related_lang = page.lang %}
 {% endif %}
 
+{% assign source_page = page %}
+{% if page.lang == 'en' and page.original_url %}
+  {% assign original_post = site.posts | where: 'url', page.original_url | first %}
+  {% if original_post %}
+    {% assign source_page = original_post %}
+  {% endif %}
+{% endif %}
+
 {% assign match_posts = '' | split: '' %}
 
-{% for category in page.categories %}
+{% for category in source_page.categories %}
   {% assign match_posts = match_posts | push: site.categories[category] | uniq %}
 {% endfor %}
 
-{% for tag in page.tags %}
+{% for tag in source_page.tags %}
   {% assign match_posts = match_posts | push: site.tags[tag] | uniq %}
 {% endfor %}
 
@@ -32,20 +40,20 @@
 {% for i in (0..last_index) %}
   {% assign post = match_posts[i] %}
 
-  {% if post.url == page.url or post.url == page.original_url %}
+  {% if post.url == source_page.url or post.url == page.url or post.url == page.original_url %}
     {% continue %}
   {% endif %}
 
   {% assign score = 0 %}
 
   {% for tag in post.tags %}
-    {% if page.tags contains tag %}
+    {% if source_page.tags contains tag %}
       {% assign score = score | plus: TAG_SCORE %}
     {% endif %}
   {% endfor %}
 
   {% for category in post.categories %}
-    {% if page.categories contains category %}
+    {% if source_page.categories contains category %}
       {% assign score = score | plus: CATEGORY_SCORE %}
     {% endif %}
   {% endfor %}

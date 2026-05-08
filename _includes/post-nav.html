@@ -4,13 +4,36 @@
   {% assign previous = site.data.locales[include.lang].post.button.previous %}
   {% assign next = site.data.locales[include.lang].post.button.next %}
 
-  {% if page.previous.url %}
+  {% assign source_page = page %}
+  {% if page.lang == 'en' and page.original_url %}
+    {% assign original_post = site.posts | where: 'url', page.original_url | first %}
+    {% if original_post %}
+      {% assign source_page = original_post %}
+    {% endif %}
+  {% endif %}
+
+  {% assign previous_post = source_page.previous %}
+  {% assign next_post = source_page.next %}
+
+  {% if page.lang == 'en' %}
+    {% if previous_post.url %}
+      {% assign english_previous = site.pages | where: 'lang', 'en' | where: 'original_url', previous_post.url | first %}
+      {% assign previous_post = english_previous %}
+    {% endif %}
+
+    {% if next_post.url %}
+      {% assign english_next = site.pages | where: 'lang', 'en' | where: 'original_url', next_post.url | first %}
+      {% assign next_post = english_next %}
+    {% endif %}
+  {% endif %}
+
+  {% if previous_post.url %}
     <a
-      href="{{ site.baseurl }}{{ page.previous.url }}"
+      href="{{ site.baseurl }}{{ previous_post.url }}"
       class="btn btn-outline-primary"
       aria-label="{{ previous }}"
     >
-      <p>{{ page.previous.title }}</p>
+      <p>{{ previous_post.title }}</p>
     </a>
   {% else %}
     <div class="btn btn-outline-primary disabled" aria-label="{{ previous }}">
@@ -18,13 +41,13 @@
     </div>
   {% endif %}
 
-  {% if page.next.url %}
+  {% if next_post.url %}
     <a
-      href="{{ site.baseurl }}{{page.next.url}}"
+      href="{{ site.baseurl }}{{ next_post.url }}"
       class="btn btn-outline-primary"
       aria-label="{{ next }}"
     >
-      <p>{{ page.next.title }}</p>
+      <p>{{ next_post.title }}</p>
     </a>
   {% else %}
     <div class="btn btn-outline-primary disabled" aria-label="{{ next }}">
