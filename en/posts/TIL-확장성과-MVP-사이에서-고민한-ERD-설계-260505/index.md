@@ -125,7 +125,7 @@ notion_lang: "en"
 
 - Need to reflect feedback
 
-- Determination of technology stack and project basic settings
+- Determination of technology stack and project basic settings<br>
   Rather than simply choosing a “popular technology,” it was a process of considering which technology would be most appropriate based on the current project size, team skill level, and MVP scope.
 
   - **Determination of OCR method**

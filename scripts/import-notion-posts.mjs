@@ -589,7 +589,11 @@ async function renderBlock(block, context, depth = 0) {
     const childDepth = layoutBlockTypes.has(type) ? depth : depth + 1;
     const children = await renderBlocks(await getBlockChildren(block.id), context, childDepth);
     if (children.trim()) {
-      const separator = containsMarkdownBlock(children) ? '\n\n' : '\n';
+      const separator = listBlockTypes.has(type) && startsWithContinuationParagraph(children)
+        ? '<br>\n'
+        : containsMarkdownBlock(children)
+          ? '\n\n'
+          : '\n';
       output = output ? `${output}${separator}${children}` : children;
     }
   }
@@ -617,6 +621,20 @@ function containsMarkdownTable(markdown) {
 
 function containsMarkdownBlock(markdown) {
   return containsMarkdownTable(markdown) || /^\s*```/m.test(markdown);
+}
+
+function startsWithContinuationParagraph(markdown) {
+  const firstLine = String(markdown || '')
+    .split('\n')
+    .find((line) => line.trim());
+
+  if (!firstLine || !/^\s+/.test(firstLine)) {
+    return false;
+  }
+
+  const trimmed = firstLine.trimStart();
+  return !/^(?:[-*+]|\d+\.|\[[ xX]\])\s+/.test(trimmed) &&
+    !/^(```|\|+|!\[[^\]]*])/.test(trimmed);
 }
 
 function blockquoteMarkdown(markdown) {
