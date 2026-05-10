@@ -322,12 +322,22 @@ function splitList(value) {
     .filter(Boolean);
 }
 
+function normalizeCategoryName(value) {
+  const category = String(value || '').trim();
+  const aliases = {
+    baekjoon: 'BaekJoon',
+    백준: 'BaekJoon'
+  };
+
+  return aliases[category.toLowerCase()] || aliases[category] || category;
+}
+
 function normalizeCategories(values) {
   const categories = [];
 
   for (const value of values) {
     for (const part of String(value || '').split('/')) {
-      const category = part.trim();
+      const category = normalizeCategoryName(part);
       if (category && !categories.includes(category)) {
         categories.push(category);
       }

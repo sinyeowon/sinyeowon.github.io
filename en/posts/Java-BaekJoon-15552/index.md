@@ -3,7 +3,7 @@ layout: "post"
 title: "[Java] Baekjun No. 15552 - Fast A+B"
 date: 2026-04-05 16:09:50 +0900
 last_modified_at: 2026-04-22 08:31:14 +0900
-categories: ["백준", "Java"]
+categories: ["BaekJoon", "Java"]
 tags: ['Java', 'baekjoon']
 description: "We have compiled a solution using BufferedReader, StringTokenizer, and BufferedWriter for fast input/output in Java."
 lang: "en"

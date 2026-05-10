@@ -2,7 +2,7 @@
 title: '[Python] 백준 10951번 - A+B - 4'
 date: 2026-04-05 20:00:02 +0900
 last_modified_at: 2026-04-23 00:31:51 +0900
-categories: ["백준", "Python"]
+categories: ["BaekJoon", "Python"]
 tags: ['baekjoon', 'Python']
 description: '입력 개수가 정해지지 않은 A+B 문제를 sys.stdin 반복으로 처리하는 방법을 정리했습니다.'
 english_url: "/en/posts/Python-BaekJoon-10951/"

@@ -2,7 +2,7 @@
 title: '[Python] 백준 2753번 - 윤년'
 date: 2026-04-05 15:44:08 +0900
 last_modified_at: 2026-04-30 15:30:23 +0900
-categories: ["백준", "Python"]
+categories: ["BaekJoon", "Python"]
 tags: ['baekjoon', 'Python']
 description: 'Python의 and/or 조건식을 사용해 윤년 판별 조건을 구현한 풀이를 정리했습니다.'
 english_url: "/en/posts/Python-BaekJoon-2753/"

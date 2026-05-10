@@ -3,7 +3,7 @@ layout: "post"
 title: "[Java] Baekjun No. 1008 - A/B"
 date: 2026-04-05 15:16:38 +0900
 last_modified_at: 2026-04-22 15:08:07 +0900
-categories: ["백준", "Java"]
+categories: ["BaekJoon", "Java"]
 tags: ['Java', 'baekjoon']
 description: "We summarized how to solve the A/B problem in Java using integer division and real number conversion."
 lang: "en"

@@ -3,7 +3,7 @@ layout: "post"
 title: "[Python] Baekjun number 10818 - minimum, maximum"
 date: 2026-04-05 20:41:45 +0900
 last_modified_at: 2026-04-23 01:15:24 +0900
-categories: ["백준", "Python"]
+categories: ["BaekJoon", "Python"]
 tags: ['baekjoon', 'Python']
 description: "We have summarized the solution to finding the minimum and maximum values ​​of a list using loop statements and initial value settings in Python."
 lang: "en"

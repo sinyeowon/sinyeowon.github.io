@@ -2,7 +2,7 @@
 title: '[Python] 백준 2588번 - 곱셈'
 date: 2026-04-05 15:38:27 +0900
 last_modified_at: 2026-04-23 13:23:48 +0900
-categories: ["백준", "Python"]
+categories: ["BaekJoon", "Python"]
 tags: ['baekjoon', 'Python']
 description: 'Python에서 각 자리수를 분리해 곱셈 중간 결과와 최종 값을 출력하는 풀이를 정리했습니다.'
 english_url: "/en/posts/Python-BaekJoon-2588/"

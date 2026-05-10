@@ -3,7 +3,7 @@ layout: "post"
 title: "[Python] Baekjun No. 10951 - A+B - 4"
 date: 2026-04-05 20:00:02 +0900
 last_modified_at: 2026-04-23 00:31:51 +0900
-categories: ["백준", "Python"]
+categories: ["BaekJoon", "Python"]
 tags: ['baekjoon', 'Python']
 description: "We have summarized how to handle the A+B problem with an undetermined number of inputs by repeating sys.stdin."
 lang: "en"

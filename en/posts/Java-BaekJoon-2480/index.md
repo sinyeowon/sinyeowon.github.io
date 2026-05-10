@@ -3,7 +3,7 @@ layout: "post"
 title: "[Java] Baekjun number 2480 - three dice"
 date: 2026-04-05 15:53:10 +0900
 last_modified_at: 2026-04-22 08:30:43 +0900
-categories: ["백준", "Java"]
+categories: ["BaekJoon", "Java"]
 tags: ['Java', 'baekjoon']
 description: "We have summarized the solution for calculating the prize money of three dice using Java conditional statements and Math.max."
 lang: "en"

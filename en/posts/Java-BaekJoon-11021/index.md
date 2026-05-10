@@ -3,7 +3,7 @@ layout: "post"
 title: "[Java] Baekjun No. 11021 - A+B - 7"
 date: 2026-04-05 16:27:07 +0900
 last_modified_at: 2026-04-15 12:45:59 +0900
-categories: ["백준", "Java"]
+categories: ["BaekJoon", "Java"]
 tags: ['Java', 'baekjoon']
 description: "I've outlined how to output multiple test cases in a formatted manner using BufferedReader and StringTokenizer in Java."
 lang: "en"

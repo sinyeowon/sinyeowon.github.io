@@ -3,7 +3,7 @@ layout: "post"
 title: "[Python] Baekjun #2588 - Multiplication"
 date: 2026-04-05 15:38:27 +0900
 last_modified_at: 2026-04-23 13:23:48 +0900
-categories: ["백준", "Python"]
+categories: ["BaekJoon", "Python"]
 tags: ['baekjoon', 'Python']
 description: "We have organized a solution in Python that separates each digit and outputs the intermediate multiplication result and final value."
 lang: "en"
