@@ -133,12 +133,12 @@ function parseYamlScalar(value) {
   const trimmed = value.trim();
   if (
     (trimmed.startsWith('"') && trimmed.endsWith('"')) ||
-    (trimmed.startsWith("'") && trimmed.endsWith("'"))
+    (trimmed.startsWith('\'') && trimmed.endsWith('\''))
   ) {
     try {
       return JSON.parse(trimmed);
     } catch {
-      return trimmed.slice(1, -1).replace(/''/g, "'");
+      return trimmed.slice(1, -1).replace(/''/g, '\'');
     }
   }
 
