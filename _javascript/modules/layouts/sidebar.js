@@ -5,6 +5,7 @@ const $mask = document.getElementById('mask');
 const $viewStats = document.querySelector('[data-goatcounter-site]');
 const $totalViews = document.querySelector('[data-view-total]');
 const $todayViews = document.querySelector('[data-view-today]');
+const VIEW_STATS_CACHE_KEY = 'sinyeowon:view-stats';
 
 class SidebarUtil {
   static #isExpanded = false;
@@ -61,6 +62,27 @@ function displayUnavailable(element) {
   element.textContent = '-';
 }
 
+function getCachedViewStats(today) {
+  try {
+    const cache = JSON.parse(localStorage.getItem(VIEW_STATS_CACHE_KEY) || '{}');
+
+    return {
+      total: Number.isFinite(cache.total) ? cache.total : null,
+      today: cache.todayDate === today && Number.isFinite(cache.today) ? cache.today : null
+    };
+  } catch {
+    return { total: null, today: null };
+  }
+}
+
+function setCachedViewStats(stats) {
+  try {
+    localStorage.setItem(VIEW_STATS_CACHE_KEY, JSON.stringify(stats));
+  } catch {
+    // Ignore private-mode or storage permission failures.
+  }
+}
+
 async function initViewStats() {
   if (!$viewStats || !$totalViews || !$todayViews) {
     return;
@@ -72,16 +94,51 @@ async function initViewStats() {
     return;
   }
 
+  const today = getKoreaDateString();
+  const cachedStats = getCachedViewStats(today);
+
+  if (cachedStats.total !== null) {
+    displayCount($totalViews, cachedStats.total);
+  }
+
+  if (cachedStats.today !== null) {
+    displayCount($todayViews, cachedStats.today);
+  }
+
   try {
-    const today = getKoreaDateString();
-    const [totalCount, todayCount] = await Promise.all([
+    const [totalResult, todayResult] = await Promise.allSettled([
       fetchCounter(siteCode),
       fetchCounter(siteCode, `?start=${today}`)
     ]);
 
-    displayCount($totalViews, totalCount);
-    displayCount($todayViews, todayCount);
+    const nextStats = {
+      total: cachedStats.total,
+      today: cachedStats.today,
+      todayDate: today
+    };
+
+    if (totalResult.status === 'fulfilled') {
+      nextStats.total = totalResult.value;
+      displayCount($totalViews, nextStats.total);
+    } else if (cachedStats.total === null) {
+      displayUnavailable($totalViews);
+    }
+
+    if (todayResult.status === 'fulfilled') {
+      nextStats.today = todayResult.value;
+      displayCount($todayViews, nextStats.today);
+    } else if (cachedStats.today === null) {
+      displayUnavailable($todayViews);
+    }
+
+    if (nextStats.total !== null || nextStats.today !== null) {
+      setCachedViewStats(nextStats);
+    }
   } catch {
+    if (cachedStats.total !== null || cachedStats.today !== null) {
+      return;
+    }
+
     displayUnavailable($totalViews);
     displayUnavailable($todayViews);
   }
