@@ -584,9 +584,10 @@ async function renderBlock(block, context, depth = 0, listNumber = 1) {
     case 'toggle': {
       const summary = markdownInline(value.rich_text, context) || '상세 내용';
       const children = block.has_children
-        ? await renderBlocks(await getBlockChildren(block.id), context, depth + 1)
+        ? await renderBlocks(await getBlockChildren(block.id), context, depth)
         : '';
-      return `<details>\n<summary>${summary}</summary>\n\n${children}\n\n</details>`;
+      const details = `<details markdown="1">\n<summary>${summary}</summary>\n\n${children}\n\n</details>`;
+      return depth > 0 ? indentMarkdown(details, depth) : details;
     }
     case 'child_page':
       output = `- ${value.title}`;
