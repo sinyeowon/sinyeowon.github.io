@@ -4,8 +4,8 @@ date: 2026-05-08 09:00:00 +0900
 last_modified_at: 2026-05-10 22:27:00 +0900
 categories: ["Spring 단기 심화", "특강"]
 tags: ["MCP", "GitOps", "Harness Engineering"]
-description: "MCP (Model Context Protocol) LLM은 똑똑하지만, 혼자서는 아무것도 못 함"
-description_source: "excerpt"
+description: "JIRA MCP와 Harness Engineering 특강을 바탕으로 MCP 표준, AI 에이전트 작업 환경, GitOps와 가시성의 중요성을 정리한 글입니다."
+description_source: "manual"
 english_url: "/en/posts/TIL-JIRA-MCP-와-Harness-Engineering-특강/"
 notion_id: "35a7788a-fc66-807c-a149-fbf49dee905e"
 notion_lang: "ko"
@@ -171,60 +171,51 @@ LLM은 똑똑하지만, 혼자서는 아무것도 못 함
 
 </details>
 
-- **세 가지 핵심 기둥**
+**세 가지 핵심 기둥**
 
-  1. Context Engineering - 컨텍스트 설계
+1. Context Engineering - 컨텍스트 설계
 
-    - 에이전트 입장에서 컨텍스트 안에 없는 정보는 존재하지 않는 것과 같음<br>
-      ex) Goolge Docs에 정리해둔 설계 문서? → 에이전트는 못 봄 / Slcak에서 공유한 결정 사항? → 못 봄
+   - 에이전트 입장에서 컨텍스트 안에 없는 정보는 존재하지 않는 것과 같음<br>
+     ex) Google Docs에 정리해둔 설계 문서? → 에이전트는 못 봄 / Slack에서 공유한 결정 사항? → 못 봄
 
-    - **프로젝트의 규칙과 지식을 레포지토리 안에 기계가 읽을 수 있는 형태로 옮겨야 함**
+   - **프로젝트의 규칙과 지식을 레포지토리 안에 기계가 읽을 수 있는 형태로 옮겨야 함**
 
-  | 흩어진 지식 | 레포 안의 형태로 |
-  | --- | --- |
-  | Slack의 빌드 절차 안내 | `AGENTS.md`의 빌드 명령어 섹션 |
-  | 위키의 API 명세 | 코드로 정의된 API 계약 (OpenAPI/Pydantic) |
-  | 머릿속의 스타일 가이드 | 린터 규칙(eslint/checkstyle) |
+   | 흩어진 지식 | 레포 안의 형태로 |
+   | --- | --- |
+   | Slack의 빌드 절차 안내 | `AGENTS.md`의 빌드 명령어 섹션 |
+   | 위키의 API 명세 | 코드로 정의된 API 계약 (OpenAPI/Pydantic) |
+   | 머릿속의 스타일 가이드 | 린터 규칙(eslint/checkstyle) |
 
-  1. Architectural Constraints - 아키텍처 제약
+2. Architectural Constraints - 아키텍처 제약
 
-    - 에이전트에게 자유를 많이 줄수록 결과가 더 안 좋음
+   - 에이전트에게 자유를 많이 줄수록 결과가 더 안 좋음
 
-    - **의존성 레이어를 단방향으로 강제**하면, 에이전트가 탐색할 수 있는 솔루션 공간이 좁아짐
+   - **의존성 레이어를 단방향으로 강제**하면, 에이전트가 탐색할 수 있는 솔루션 공간이 좁아짐
 
-      ```plain text
-      Types → Config → Repo → Service → Runtime → UI
-      └─→ 위쪽으로만 의존, 아래쪽 참조 금지
-      ```
+     ```plaintext
+     Types → Config → Repo → Service → Runtime → UI
+     └─→ 위쪽으로만 의존, 아래쪽 참조 금지
+     ```
 
-    - 선택지가 줄어들기 때문에, 올바른 답을 찾을 확률이 올라감
+   - 선택지가 줄어들기 때문에, 올바른 답을 찾을 확률이 올라감
 
-    - 이런 **규칙은 사람이 검토하지 않고 구조적 테스트나 린터로 기계적으로 검증**
+   - 이런 **규칙은 사람이 검토하지 않고 구조적 테스트나 린터로 기계적으로 검증**
 
-  1. Entropy Management - 엔트로피 관리
-    - 에이전트가 코드를 많이 생성할수록 코드베이스의 무질서도(entropy)가 올라감<br>
-      ex) 문서와 코드가 안 맞거나, 비슷한 기능의 중복 코드가 늘어나고, 안 쓰는 임포트가 쌓임
+3. Entropy Management - 엔트로피 관리
 
-    - 방치하면 에이전트의 다음 작업 품질이 계속 떨어짐 → **별도의 정리 에이전트를 둬야함**
+   - 에이전트가 코드를 많이 생성할수록 코드베이스의 무질서도(entropy)가 올라감<br>
+     ex) 문서와 코드가 안 맞거나, 비슷한 기능의 중복 코드가 늘어나고, 안 쓰는 임포트가 쌓임
 
-    - 정리 에이전트가 하는 일<br>
-      ---
+   - 방치하면 에이전트의 다음 작업 품질이 계속 떨어짐 → **별도의 정리 에이전트를 둬야함**
 
-      문서 ↔ 코드 일관성 검증
+   - 정리 에이전트가 하는 일
 
-      ---
-
-      패턴 위반 스캔
-
-      ---
-
-      순환 의존성 감사
-
-      ---
-
-      사용되지 않는 코드 정리
-
-      ---
+     | 항목 |
+     | --- |
+     | 문서 ↔ 코드 일관성 검증 |
+     | 패턴 위반 스캔 |
+     | 순환 의존성 감사 |
+     | 사용되지 않는 코드 정리 |
 
 - **핵심 원칙: 레포지토리가 유일한 진실의 원천**<br>
   > Harness Engineering의 가장 중요한 한 줄: **“레포지토리가 Single Source of Truth가 되어야 한다.”**
@@ -365,7 +356,7 @@ LLM은 똑똑하지만, 혼자서는 아무것도 못 함
 
 - **GitOps 동작 흐름**
 
-  ```plain text
+  ```plaintext
   ┌──────────────┐                ┌──────────────────┐
   │  개발자       │  git commit    │   Git Repository │
   │              ├───────────────►│   (desired       │

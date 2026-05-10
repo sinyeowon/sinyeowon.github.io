@@ -69,7 +69,7 @@ notion_lang: "en"
 
       - visibility_type
 
-        ```plain text
+        ```plaintext
         PUBLIC
         AMOUNT_ONLY
         CATEGORY_ONLY
@@ -92,7 +92,7 @@ notion_lang: "en"
 
       - category
 
-        ```plain text
+        ```plaintext
         CAFE
         DELIVERY
         SHOPPING

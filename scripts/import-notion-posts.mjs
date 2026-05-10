@@ -503,18 +503,26 @@ function wrapMarkdownLink(text, href) {
 
 async function renderBlocks(blocks, context, depth = 0) {
   const rendered = [];
+  let numberedIndex = 1;
 
   for (const block of blocks) {
-    const markdown = await renderBlock(block, context, depth);
+    const listNumber = block.type === 'numbered_list_item' ? numberedIndex : 1;
+    const markdown = await renderBlock(block, context, depth, listNumber);
     if (markdown.trim()) {
       rendered.push(markdown);
+    }
+
+    if (block.type === 'numbered_list_item') {
+      numberedIndex += 1;
+    } else if (!listBlockTypes.has(block.type)) {
+      numberedIndex = 1;
     }
   }
 
   return rendered.join('\n\n');
 }
 
-async function renderBlock(block, context, depth = 0) {
+async function renderBlock(block, context, depth = 0, listNumber = 1) {
   const type = block.type;
   const value = block[type];
   const indent = '  '.repeat(depth);
@@ -537,7 +545,7 @@ async function renderBlock(block, context, depth = 0) {
       output = `${indent}- ${markdownInline(value.rich_text, context)}`;
       break;
     case 'numbered_list_item':
-      output = `${indent}1. ${markdownInline(value.rich_text, context)}`;
+      output = `${indent}${listNumber}. ${markdownInline(value.rich_text, context)}`;
       break;
     case 'to_do':
       output = `${indent}- [${value.checked ? 'x' : ' '}] ${markdownInline(value.rich_text, context)}`;
@@ -547,8 +555,9 @@ async function renderBlock(block, context, depth = 0) {
       output = markdownInline(value.rich_text, context);
       break;
     case 'code': {
+      const language = markdownCodeLanguage(value.language);
       const code = [
-        `\`\`\`${value.language || ''}`,
+        `\`\`\`${language}`,
         richTextPlain(value.rich_text),
         '```'
       ].join('\n');
@@ -556,7 +565,7 @@ async function renderBlock(block, context, depth = 0) {
       break;
     }
     case 'divider':
-      output = '---';
+      output = '<hr>';
       break;
     case 'image':
       output = await renderImage(block, context);
@@ -630,6 +639,20 @@ function shouldIndentNestedBlock(type, depth) {
   );
 }
 
+function markdownCodeLanguage(language = '') {
+  const trimmed = String(language || '').trim();
+
+  if (!trimmed) {
+    return '';
+  }
+
+  if (/^(?:plain\s*text|plaintext|plain|text)$/i.test(trimmed)) {
+    return 'plaintext';
+  }
+
+  return trimmed.replace(/\s+/g, '-').toLowerCase();
+}
+
 function containsMarkdownTable(markdown) {
   return /^\s*\|.*\|\s*$/m.test(markdown);
 }
@@ -660,12 +683,16 @@ function blockquoteMarkdown(markdown) {
 }
 
 function normalizeMarkdown(markdown) {
-  return splitJoinedMarkdownBlocks(unwrapMarkdownTableFences(normalizeFenceLines(markdown)))
+  return splitJoinedMarkdownBlocks(unwrapMarkdownTableFences(normalizeFenceLines(normalizeCodeFenceLanguages(markdown))))
     .replace(/^([ \t]*)-([^\s-].*)$/gm, '$1- $2')
     .replace(/^ {4,}(\|.+\|[ \t]*)$/gm, '  $1')
     .replace(/^([ \t]*(?:[-*+]|\d+\.)\s+.+)\n([ \t]*```)/gm, '$1\n\n$2')
     .replace(/^([ \t]*(?:[-*+]|\d+\.)\s+.+)\n([ \t]*\|.+\|[ \t]*$)/gm, '$1\n\n$2')
     .trim();
+}
+
+function normalizeCodeFenceLanguages(markdown) {
+  return String(markdown || '').replace(/^([ \t]*```)plain text([ \t]*)$/gim, '$1plaintext$2');
 }
 
 function splitJoinedMarkdownBlocks(markdown) {
@@ -1056,7 +1083,8 @@ async function requestTranslation(value, targetLanguage) {
 
 async function translateMarkdown(markdown) {
   const protectedSegments = [];
-  const protectedMarkdown = markdown.replace(
+  const tableProtectedMarkdown = await protectMarkdownTables(markdown, protectedSegments);
+  const protectedMarkdown = tableProtectedMarkdown.replace(
     /```[\s\S]*?```|`[^`\n]+`|!\[[^\]]*]\([^)]*\)|\[[^\]]+]\([^)]*\)/g,
     (match) => {
       const token = `ZXCVBNOTIONSEGMENT${protectedSegments.length}TOKEN`;
@@ -1078,6 +1106,118 @@ async function translateMarkdown(markdown) {
   }
 
   return translated;
+}
+
+async function protectMarkdownTables(markdown, protectedSegments) {
+  const lines = String(markdown || '').split('\n');
+  const output = [];
+
+  for (let index = 0; index < lines.length; index += 1) {
+    const line = lines[index];
+
+    if (isMarkdownTableLine(line) && isMarkdownTableSeparatorLine(lines[index + 1] || '')) {
+      const tableLines = [line, lines[index + 1]];
+      index += 2;
+
+      while (index < lines.length && isMarkdownTableLine(lines[index])) {
+        tableLines.push(lines[index]);
+        index += 1;
+      }
+
+      index -= 1;
+
+      const token = `ZXCVBNOTIONSEGMENT${protectedSegments.length}TOKEN`;
+      protectedSegments.push({
+        token,
+        value: await translateMarkdownTable(tableLines.join('\n'))
+      });
+      output.push(token);
+      continue;
+    }
+
+    output.push(line);
+  }
+
+  return output.join('\n');
+}
+
+function isMarkdownTableLine(line = '') {
+  return /^\s*\|.*\|\s*$/.test(line);
+}
+
+function isMarkdownTableSeparatorLine(line = '') {
+  return /^\s*\|\s*:?-{3,}:?\s*(\|\s*:?-{3,}:?\s*)+\|\s*$/.test(line);
+}
+
+async function translateMarkdownTable(table) {
+  const translatedLines = [];
+
+  for (const line of table.split('\n')) {
+    if (isMarkdownTableSeparatorLine(line)) {
+      translatedLines.push(line);
+      continue;
+    }
+
+    const match = line.match(/^(\s*)\|(.*)\|\s*$/);
+    if (!match) {
+      translatedLines.push(line);
+      continue;
+    }
+
+    const indent = match[1];
+    const cells = splitMarkdownTableCells(match[2]);
+    const translatedCells = [];
+
+    for (const cell of cells) {
+      translatedCells.push(await translateInlineMarkdown(cell));
+    }
+
+    translatedLines.push(`${indent}| ${translatedCells.join(' | ')} |`);
+  }
+
+  return translatedLines.join('\n');
+}
+
+function splitMarkdownTableCells(row) {
+  const cells = [];
+  let current = '';
+  let escaped = false;
+
+  for (const character of String(row || '')) {
+    if (character === '|' && !escaped) {
+      cells.push(current.trim());
+      current = '';
+      continue;
+    }
+
+    current += character;
+    escaped = character === '\\' && !escaped;
+    if (character !== '\\') {
+      escaped = false;
+    }
+  }
+
+  cells.push(current.trim());
+  return cells;
+}
+
+async function translateInlineMarkdown(markdown) {
+  const protectedSegments = [];
+  const protectedMarkdown = String(markdown || '').replace(
+    /`[^`\n]+`|!\[[^\]]*]\([^)]*\)|\[[^\]]+]\([^)]*\)/g,
+    (match) => {
+      const token = `ZXCVBNOTIONINLINE${protectedSegments.length}TOKEN`;
+      protectedSegments.push({ token, value: match });
+      return token;
+    }
+  );
+
+  let translated = await translateText(protectedMarkdown);
+  for (const segment of protectedSegments) {
+    translated = translated.replaceAll(segment.token, segment.value);
+  }
+
+  return translated.replace(/\|/g, '\\|').trim();
 }
 
 function splitTranslationChunks(text, maxLength = TRANSLATE_CHUNK_SIZE) {

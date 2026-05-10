@@ -5,8 +5,8 @@ date: 2026-05-08 09:00:00 +0900
 last_modified_at: 2026-05-10 22:27:00 +0900
 categories: ["Spring 단기 심화", "특강"]
 tags: ["MCP", "GitOps", "Harness Engineering"]
-description: "MCP (Model Context Protocol) LLM is smart, but it can't do anything alone."
-description_source: "excerpt"
+description: "This post summarizes JIRA MCP, Harness Engineering, GitOps, and visibility based on a special lecture about designing AI-agent-friendly engineering environments."
+description_source: "manual"
 lang: "en"
 ui_lang: "ko-KR"
 toc: true
@@ -92,8 +92,9 @@ Previously, discussions on AI utilization focused on ‘what model to use’ and
 
   > **The most difficult challenge today is to design environments, feedback loops, and control systems that help agents achieve our goal of building and maintaining complex, reliable software at scale**.
 
-- **Elements that make up Harness**| area | Specific example |
+- **Elements that make up Harness**
 
+  | area | Specific example |
   | --- | --- |
   | **Documentation** | Project context files like `AGENTS.md`, `CLAUDE.md` |
   | **Architectural Constraints** | Dependency layering, module boundary rules |
@@ -175,58 +176,51 @@ Previously, discussions on AI utilization focused on ‘what model to use’ and
 
 </details>
 
-- **Three Core Pillars**
+**Three Core Pillars**
 
-  1. Context Engineering - Context Design
+1. Context Engineering - Context Design
 
-    - From the agent's perspective, information that is not in the context is the same as not existing<br>
-      ex) Design documents organized in Google Docs? → The agent cannot see / Decisions shared by Slcak? → I can’t see
+   - From the agent's perspective, information that is not in the context is the same as not existing<br>
+     ex) Design documents organized in Google Docs? → The agent cannot see / Decisions shared in Slack? → The agent cannot see
 
-    - **Project rules and knowledge must be transferred into a machine-readable format in the repository**
+   - **Project rules and knowledge must be transferred into a machine-readable format in the repository**
 
-  | scattered knowledge | In the form inside a repo |
-  | --- | --- |
-  | Slack's build procedure guide | Build command section of `AGENTS.md` |
-  | Wiki's API specification | API contract defined in code (OpenAPI/Pydantic) |
-  | A style guide in your head | Linter rules (eslint/checkstyle) |
+   | Scattered knowledge | Form inside the repository |
+   | --- | --- |
+   | Slack's build procedure guide | Build command section of `AGENTS.md` |
+   | Wiki's API specification | API contract defined in code (OpenAPI/Pydantic) |
+   | A style guide in your head | Linter rules (eslint/checkstyle) |
 
-  1. Architectural Constraints - Architectural Constraints
+2. Architectural Constraints
 
-    - The more freedom you give the agent, the worse the results.
+   - The more freedom you give the agent, the worse the results.
 
-    - **Forcing the dependency layer to be unidirectional** narrows the solution space that the agent can explore.
+   - **Forcing the dependency layer to be unidirectional** narrows the solution space that the agent can explore.
 
-      ```plain text
-      Types → Config → Repo → Service → Runtime → UI
-      └─→ 위쪽으로만 의존, 아래쪽 참조 금지
-      ```
+     ```plaintext
+     Types → Config → Repo → Service → Runtime → UI
+     └─→ 위쪽으로만 의존, 아래쪽 참조 금지
+     ```
 
-    - As the number of choices decreases, the probability of finding the right answer increases.
+   - As the number of choices decreases, the probability of finding the right answer increases.
 
-    - These **rules are not reviewed by humans but are mechanically verified using structural tests or linters**1. Entropy Management - Entropy Management
-    - As the agent generates more code, the entropy of the code base increases.<br>
-      ex) The document and code do not match, duplicate codes with similar functions increase, and unused imports pile up.
+   - These **rules are not reviewed by humans but are mechanically verified using structural tests or linters**
 
-    - If left unattended, the quality of the agent's next work will continue to deteriorate → **Separate cleaning agent must be appointed**
+3. Entropy Management
 
-    - What a clearance agent does<br>
-      ---
+   - As the agent generates more code, the entropy of the codebase increases.<br>
+     ex) Documents and code drift apart, duplicate implementations grow, and unused imports pile up.
 
-      Document ↔ Code consistency verification
+   - If left unattended, the quality of the agent's next work will continue to deteriorate → **A separate cleanup agent is needed**
 
-      ---
+   - What the cleanup agent does
 
-      Pattern Violation Scan
-
-      ---
-
-      Circular dependency auditing
-
-      ---
-
-      Clean up unused code
-
-      ---
+     | Item |
+     | --- |
+     | Document ↔ code consistency verification |
+     | Pattern violation scan |
+     | Circular dependency audit |
+     | Clean up unused code |
 
 - **Core Principle: Repositories are the only source of truth**<br>
   > The most important line from Harness Engineering: **“The repository must be the Single Source of Truth.”**
@@ -365,7 +359,7 @@ All settings in the operating environment must be in Git, and when Git changes, 
 
 - **GitOps Operation Flow**
 
-  ```plain text
+  ```plaintext
   ┌──────────────┐                ┌──────────────────┐
   │  개발자       │  git commit    │   Git Repository │
   │              ├───────────────►│   (desired       │
