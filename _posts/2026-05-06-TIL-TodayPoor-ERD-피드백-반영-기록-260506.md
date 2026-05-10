@@ -1,7 +1,7 @@
 ---
 title: "[TIL] TodayPoor ERD 피드백 반영 기록 - 260506"
 date: 2026-05-06 09:00:00 +0900
-last_modified_at: 2026-05-06 15:25:00 +0900
+last_modified_at: 2026-05-10 22:25:00 +0900
 categories: ["GDGoC KNU", "0 to Product"]
 tags: ["project"]
 description: "0 to Product BE 회의 과정에서의 TIL을 작성한 글입니다."

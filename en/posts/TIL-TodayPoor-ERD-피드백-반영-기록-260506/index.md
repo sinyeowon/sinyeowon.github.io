@@ -2,7 +2,7 @@
 layout: "post"
 title: "[TIL] TodayPoor ERD feedback reflection record - 260506"
 date: 2026-05-06 09:00:00 +0900
-last_modified_at: 2026-05-06 15:25:00 +0900
+last_modified_at: 2026-05-10 22:25:00 +0900
 categories: ["GDGoC KNU", "0 to Product"]
 tags: ["project"]
 description: "This is an article written about TIL during the 0 to Product BE meeting process."

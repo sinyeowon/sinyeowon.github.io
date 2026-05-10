@@ -1,7 +1,7 @@
 ---
 title: "[TIL] JIRA MCP 와 Harness Engineering 특강"
 date: 2026-05-08 09:00:00 +0900
-last_modified_at: 2026-05-10 22:21:00 +0900
+last_modified_at: 2026-05-10 22:27:00 +0900
 categories: ["Spring 단기 심화", "특강"]
 tags: ["MCP", "GitOps", "Harness Engineering"]
 description: "MCP (Model Context Protocol) LLM은 똑똑하지만, 혼자서는 아무것도 못 함"
@@ -187,11 +187,15 @@ LLM은 똑똑하지만, 혼자서는 아무것도 못 함
   | 머릿속의 스타일 가이드 | 린터 규칙(eslint/checkstyle) |
 
   1. Architectural Constraints - 아키텍처 제약
+
     - 에이전트에게 자유를 많이 줄수록 결과가 더 안 좋음
 
-    - **의존성 레이어를 단방향으로 강제**하면, 에이전트가 탐색할 수 있는 솔루션 공간이 좁아짐<br>
+    - **의존성 레이어를 단방향으로 강제**하면, 에이전트가 탐색할 수 있는 솔루션 공간이 좁아짐
+
+      ```plain text
       Types → Config → Repo → Service → Runtime → UI
       └─→ 위쪽으로만 의존, 아래쪽 참조 금지
+      ```
 
     - 선택지가 줄어들기 때문에, 올바른 답을 찾을 확률이 올라감
 

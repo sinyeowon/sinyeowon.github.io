@@ -2,7 +2,7 @@
 layout: "post"
 title: "[TIL] Special lecture on JIRA MCP and Harness Engineering"
 date: 2026-05-08 09:00:00 +0900
-last_modified_at: 2026-05-10 22:21:00 +0900
+last_modified_at: 2026-05-10 22:27:00 +0900
 categories: ["Spring 단기 심화", "특강"]
 tags: ["MCP", "GitOps", "Harness Engineering"]
 description: "MCP (Model Context Protocol) LLM is smart, but it can't do anything alone."
@@ -191,11 +191,15 @@ Previously, discussions on AI utilization focused on ‘what model to use’ and
   | A style guide in your head | Linter rules (eslint/checkstyle) |
 
   1. Architectural Constraints - Architectural Constraints
+
     - The more freedom you give the agent, the worse the results.
 
-    - **Forcing the dependency layer to be unidirectional** narrows the solution space that the agent can explore<br>
+    - **Forcing the dependency layer to be unidirectional** narrows the solution space that the agent can explore.
+
+      ```plain text
       Types → Config → Repo → Service → Runtime → UI
-      └─→ Only rely on upwards, do not refer to downwards
+      └─→ 위쪽으로만 의존, 아래쪽 참조 금지
+      ```
 
     - As the number of choices decreases, the probability of finding the right answer increases.
 
