@@ -1,6 +1,7 @@
 ---
 layout: "post"
-title: "[TIL] Spring Mastery TIL - 26/04/15"
+title: "[TIL] Spring Advanced - Learning Plan"
+title_source: "manual"
 date: 2026-04-15 15:02:25 +0900
 last_modified_at: 2026-05-03 05:33:52 +0900
 categories: ["Spring 단기 심화", "Spring 강의"]

@@ -1,6 +1,7 @@
 ---
 layout: "post"
-title: "[TIL] Introduction to Spring TIL - 26/04/13"
+title: "[TIL] Spring Basics - Query Methods"
+title_source: "manual"
 date: 2026-04-13 12:09:01 +0900
 last_modified_at: 2026-04-29 12:51:58 +0900
 categories: ["Spring 단기 심화", "Spring 강의"]

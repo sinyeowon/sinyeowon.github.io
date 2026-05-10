@@ -1,6 +1,7 @@
 ---
 layout: "post"
-title: "[TIL] Introduction to Spring TIL - 26/04/11"
+title: "[TIL] Spring Basics - JPA and Persistence Context"
+title_source: "manual"
 date: 2026-04-12 16:14:24 +0900
 last_modified_at: 2026-04-30 16:11:57 +0900
 categories: ["Spring 단기 심화", "Spring 강의"]

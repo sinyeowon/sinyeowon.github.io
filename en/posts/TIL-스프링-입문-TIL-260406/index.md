@@ -1,6 +1,7 @@
 ---
 layout: "post"
-title: "[TIL] Introduction to Spring TIL - 26/04/06"
+title: "[TIL] Spring Basics - Gradle and HTTP Basics"
+title_source: "manual"
 date: 2026-04-07 12:11:14 +0900
 last_modified_at: 2026-04-25 03:01:53 +0900
 categories: ["Spring 단기 심화", "Spring 강의"]

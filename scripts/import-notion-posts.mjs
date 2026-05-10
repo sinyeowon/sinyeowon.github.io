@@ -180,6 +180,25 @@ async function existingPostDescriptionState(filePath) {
   }
 }
 
+async function existingPostTitleState(filePath) {
+  try {
+    const content = await readFile(filePath, 'utf8');
+    const title = frontMatterValue(content, 'title');
+    const source = normalizeTitleSource(frontMatterValue(content, 'title_source'));
+
+    return {
+      title,
+      source
+    };
+  } catch (error) {
+    if (error.code === 'ENOENT') {
+      return { title: '', source: '' };
+    }
+
+    throw error;
+  }
+}
+
 async function existingPostCategories(filePath) {
   try {
     return frontMatterArray(await readFile(filePath, 'utf8'), 'categories');
@@ -268,6 +287,11 @@ function isUsableDescription(description) {
 function normalizeDescriptionSource(source) {
   const value = String(source || '').trim().toLowerCase();
   return ['notion', 'manual', 'excerpt'].includes(value) ? value : '';
+}
+
+function normalizeTitleSource(source) {
+  const value = String(source || '').trim().toLowerCase();
+  return ['notion', 'manual'].includes(value) ? value : '';
 }
 
 function propertyList(property) {
@@ -401,6 +425,7 @@ function frontMatter(metadata) {
     '---',
     ...(metadata.layout ? [`layout: ${yamlString(metadata.layout)}`] : []),
     `title: ${yamlString(metadata.title)}`,
+    ...(metadata.titleSource ? [`title_source: ${yamlString(metadata.titleSource)}`] : []),
     `date: ${metadata.date}`,
     `last_modified_at: ${metadata.lastModifiedAt}`,
     `categories: ${yamlArray(metadata.categories)}`,
@@ -910,19 +935,25 @@ function extensionFromUrl(url) {
 }
 
 async function buildPost(page) {
-  const title = propertyText(findProperty(page, propertyNames.title, 'title'));
-  if (!title) {
+  const notionTitle = propertyText(findProperty(page, propertyNames.title, 'title'));
+  if (!notionTitle) {
     throw new Error(`Notion page ${page.id} has no title.`);
   }
 
   const dateProperty = findProperty(page, propertyNames.date, 'date');
   const dateValue = propertyText(dateProperty) || page.created_time;
   const slugProperty = findProperty(page, propertyNames.slug);
-  const slug = slugify(propertyText(slugProperty) || title);
+  const slug = slugify(propertyText(slugProperty) || notionTitle);
   const date = formatDateForJekyll(dateValue);
   const fileName = `${datePrefix(dateValue)}-${slug}.md`;
   const filePath = path.join(POSTS_DIR, fileName);
   const englishPath = path.join(EN_POSTS_DIR, slug, 'index.md');
+  const existingTitleState = await existingPostTitleState(filePath);
+  const title =
+    existingTitleState.source === 'manual' && existingTitleState.title
+      ? existingTitleState.title
+      : notionTitle;
+  const titleSource = existingTitleState.source === 'manual' ? 'manual' : '';
   const notionCategories = normalizeCategories(propertyList(findProperty(page, propertyNames.categories)));
   const existingCategories = await existingPostCategories(filePath);
   const categories = resolvePostCategories(notionCategories, existingCategories);
@@ -957,7 +988,8 @@ async function buildPost(page) {
     descriptionSource,
     englishUrl,
     notionId: page.id,
-    notionLang: 'ko'
+    notionLang: 'ko',
+    titleSource
   };
 
   const posts = [
@@ -970,7 +1002,12 @@ async function buildPost(page) {
   ];
 
   if (GENERATE_ENGLISH) {
-    const englishTitle = await translateText(title);
+    const existingEnglishTitleState = await existingPostTitleState(englishPath);
+    const englishTitle =
+      existingEnglishTitleState.source === 'manual' && existingEnglishTitleState.title
+        ? existingEnglishTitleState.title
+        : await translateText(title);
+    const englishTitleSource = existingEnglishTitleState.source === 'manual' ? 'manual' : titleSource;
     const existingEnglishDescriptionState = description
       ? { description: '', source: '' }
       : await existingPostDescriptionState(englishPath);
@@ -996,7 +1033,8 @@ async function buildPost(page) {
       permalink: englishUrl,
       originalUrl: koreanUrl,
       notionId: page.id,
-      notionLang: 'en'
+      notionLang: 'en',
+      titleSource: englishTitleSource
     };
 
     posts.push({

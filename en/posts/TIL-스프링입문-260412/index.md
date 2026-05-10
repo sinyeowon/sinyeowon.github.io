@@ -1,6 +1,7 @@
 ---
 layout: "post"
-title: "[TIL] Introduction to Spring TIL - 26/04/12"
+title: "[TIL] Spring Basics - Applying JPA Auditing"
+title_source: "manual"
 date: 2026-04-13 10:10:15 +0900
 last_modified_at: 2026-04-26 00:22:28 +0900
 categories: ["Spring 단기 심화", "Spring 강의"]
