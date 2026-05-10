@@ -5,8 +5,8 @@ date: 2026-05-05 09:00:00 +0900
 last_modified_at: 2026-05-07 11:32:00 +0900
 categories: ["GDGoC KNU", "0 to Product"]
 tags: ["project"]
-description: "This post summarizes ERD decisions for TodayPoor while balancing scalability and MVP scope, including title separation, privacy visibility, and category handling."
-description_source: "manual"
+description: "This is an article written about TIL during the 0 to Product BE meeting process."
+description_source: "notion"
 lang: "en"
 ui_lang: "ko-KR"
 toc: true
@@ -182,7 +182,7 @@ notion_lang: "en"
 
       - Solved: <br>
         Finally decided on the following combination- **Backend:** Spring Boot 3.x, Java 17, Gradle
-          - **Spring Boot:** Most familiar to team members / Easy to apply layered architecture / Ability to utilize JPA / Experience in designing maintenance structures
+          - **Spring Boot:** Most familiar to team members / Easy to apply layered architecture / Able to utilize JPA / Experience in designing maintenance structures
 
         - **DB:** MySQL, Spring Data JPA
           - **MySQL:** Stable integration with Spring/JPA / Suitable for relational data modeling / Well suited to ERD-based design

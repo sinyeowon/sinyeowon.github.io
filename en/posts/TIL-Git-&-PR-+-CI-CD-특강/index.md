@@ -6,6 +6,7 @@ last_modified_at: 2026-05-06 15:09:00 +0900
 categories: ["Spring 단기 심화", "특강"]
 tags: ["Git", "CI/CD"]
 description: "This article summarizes what I studied after attending a special lecture on Git & PR + CI/CD."
+description_source: "notion"
 lang: "en"
 ui_lang: "ko-KR"
 toc: true
@@ -18,13 +19,13 @@ notion_lang: "en"
 
 ### **Git Flow branching strategy**
 
-Without a branching strategy, accidents can occur such as your work overwriting your colleague's work, unfinished code mixed in when you're about to deploy, or you wanting to roll back but having no reference point.
+If you do not have a branching strategy, accidents may occur such as your work overwriting your colleague's work, unfinished code mixed in when you are about to deploy, or wanting to roll back but having no reference point.
 
 → Branch strategy = accident prevention device
 
 - 5 branches of Git Flow
 
-  | branch | role | branch | Merge target | Lifespan |
+  | branch | Role | branch | Merge target | Lifespan |
   | --- | --- | --- | --- | --- |
   | `main` | Production code. Always available for deployment | — | — | permanent |
   | `develop` | Next release integration branch. Where all features gather | First time in main | — | permanent |
@@ -51,7 +52,7 @@ Without a branching strategy, accidents can occur such as your work overwriting 
 
 - 3 things PR does
 
-  | role | Description |
+  | Role | Description |
   | --- | --- |
   | 👀 **Code review chapter** | A space for colleagues to view changes and leave feedback |
   | 🧪 **Automatic Verification Trigger** | Run CI pipeline (automatically perform build/test) |

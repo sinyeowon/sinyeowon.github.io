@@ -5,8 +5,8 @@ date: 2026-05-06 09:00:00 +0900
 last_modified_at: 2026-05-06 15:25:00 +0900
 categories: ["GDGoC KNU", "0 to Product"]
 tags: ["project"]
-description: "This post records ERD feedback for TodayPoor, including OCR result separation, AI prompt handling, and ranking result references."
-description_source: "manual"
+description: "This is an article written about TIL during the 0 to Product BE meeting process."
+description_source: "notion"
 lang: "en"
 ui_lang: "ko-KR"
 toc: true

@@ -1,6 +1,6 @@
 ---
 layout: "post"
-title: "[Python] Programmer - Repeating binary conversion"
+title: "[Python] Programmers - Repeating binary conversion"
 date: 2026-05-08 09:00:00 +0900
 last_modified_at: 2026-05-08 15:20:00 +0900
 categories: ["Programmers", "Python"]

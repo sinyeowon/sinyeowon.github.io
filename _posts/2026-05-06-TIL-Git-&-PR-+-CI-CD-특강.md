@@ -5,6 +5,7 @@ last_modified_at: 2026-05-06 15:09:00 +0900
 categories: ["Spring 단기 심화", "특강"]
 tags: ["Git", "CI/CD"]
 description: "Git & PR + CI/CD 관련 특강을 듣고 공부한 내용을 정리한 글입니다."
+description_source: "notion"
 english_url: "/en/posts/TIL-Git-&-PR-+-CI-CD-특강/"
 notion_id: "3587788a-fc66-8089-892a-dad32b993e3a"
 notion_lang: "ko"
