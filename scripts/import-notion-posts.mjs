@@ -1060,6 +1060,8 @@ async function buildPost(page) {
 
 const translationCache = new Map();
 const TRANSLATE_CHUNK_SIZE = 1200;
+const TRANSLATE_RETRY_DELAYS = [500, 1500, 3000];
+const TRANSLATE_RETRY_STATUSES = new Set([408, 425, 429, 500, 502, 503, 504]);
 
 async function translateText(text, targetLanguage = 'en') {
   const value = String(text || '');
@@ -1120,14 +1122,37 @@ async function requestTranslation(value, targetLanguage) {
     q: value
   });
 
-  const response = await fetch(`https://translate.googleapis.com/translate_a/single?${params}`);
-  if (!response.ok) {
+  for (let attempt = 0; attempt <= TRANSLATE_RETRY_DELAYS.length; attempt += 1) {
+    const response = await fetch(`https://translate.googleapis.com/translate_a/single?${params}`);
+    if (response.ok) {
+      const data = await response.json();
+      return (data[0] || []).map((part) => part[0]).join('');
+    }
+
     const detail = await response.text();
-    throw new Error(`Translate API ${response.status} ${response.statusText}: ${detail.slice(0, 200)}`);
+    const message = `Translate API ${response.status} ${response.statusText}: ${detail.slice(0, 200)}`;
+    const shouldRetry = TRANSLATE_RETRY_STATUSES.has(response.status) && attempt < TRANSLATE_RETRY_DELAYS.length;
+
+    if (!shouldRetry) {
+      if (TRANSLATE_RETRY_STATUSES.has(response.status)) {
+        console.warn(`Warning: ${message}`);
+        console.warn('Warning: Keeping the original text because translation is temporarily unavailable.');
+        return value;
+      }
+
+      throw new Error(message);
+    }
+
+    await wait(TRANSLATE_RETRY_DELAYS[attempt]);
   }
 
-  const data = await response.json();
-  return (data[0] || []).map((part) => part[0]).join('');
+  return value;
+}
+
+function wait(milliseconds) {
+  return new Promise((resolve) => {
+    setTimeout(resolve, milliseconds);
+  });
 }
 
 async function translateMarkdown(markdown) {
