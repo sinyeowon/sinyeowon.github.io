@@ -25,37 +25,39 @@ If you do not have a branching strategy, accidents may occur such as your work o
 
 - 5 branches of Git Flow
 
-  | branch | Role | branch | Merge target | Lifespan |
+  | branch | role | branch | Merge target | life |
   | --- | --- | --- | --- | --- |
-  | `main` | Production code. Always available for deployment | — | — | permanent |
-  | `develop` | Next release integration branch. Where all features gather | First time in main | — | permanent |
-  | `feature/*` | New feature development | develop | develop | Temporary |
-  | `release/*` | Ready for launch. Allow bug fixes only | develop | main + develop | Temporary |
-  | `hotfix/*` | Emergency fix for operational bugs | main | main + develop | Temporary |
+  | `main` | Production code. Always deployable | — | — | everlasting |
+  | `develop` | Next release integration branch. Where all features come together | First time in main | — | everlasting |
+  | `feature/*` | Develop new features | develop | develop | temporary |
+  | `release/*` | Ready for launch. Allow bug fixes only | develop | main + develop | temporary |
+  | `hotfix/*` | Emergency fix for operational bugs | main | main + develop | temporary |
 
   ![image](/assets/img/notion/TIL-Git-&-PR-+-CI-CD-특강/01-a9615f8ef8.png)
 
 - Github Flow and Git Flow
 
-  | Category | Git Flow | Github Flow |
+  | division | Git Flow | Github Flow |
   | --- | --- | --- |
-  | Branch Structure | Strict management with 5 branches | `main` • Use only `feature` (simple) |
-  | suitable situation | Regular releases, version control | Web services, SaaS, CD where rapid deployment is important |
-  | Well-suited domain | Mobile apps, package libraries | web service |
-  | Disadvantages | complicacy. May be overkill for small teams | Difficult to operate multiple versions simultaneously |
+  | branch structure | Strictly managed with 5 branches | `main` • Use only `feature` (simple) |
+  | suitable situation | Regular releases, version management | Web services, SaaS, CD where quick deployment is important |
+  | A domain that fits well | Mobile apps, package libraries | web service |
+  | disadvantage | complicacy. May be overkill for small teams | Difficult to operate multiple versions simultaneously |
   | Compatibility with distribution | Not compatible with rapid distribution (CD) | PR Merge = Immediate Deployment |
-  | Prerequisites | — | Automated testing is an essential premise |
+  | prerequisites | — | Automated testing is an essential premise |
 
   > Most startups/web services start with Github Flow and expand to Git Flow as they grow.
 
-### **PR Workflow and Code Review**- Pull Request (PR): A formal request to merge my branch work into main (or develop)
+### **PR Workflow and Code Review**
+
+- Pull Request (PR): A formal request to merge my branch work into main (or develop)
 
 - 3 things PR does
 
-  | Role | Description |
+  | role | explanation |
   | --- | --- |
   | 👀 **Code review chapter** | A space for colleagues to view changes and leave feedback |
-  | 🧪 **Automatic Verification Trigger** | Run CI pipeline (automatically perform build/test) |
+  | 🧪 **Automatic Verification Trigger** | Execute CI pipeline (automatically perform build/test) |
   | 📜 **Record change history** | Permanently preserve why/what/when you changed |
 
   - PR is a trigger that starts a code review and a change diary that I will read in the future.
@@ -141,9 +143,7 @@ If you do not have a branching strategy, accidents may occur such as your work o
 
   - Safe - existing commits are never changed
 
-  - History becomes complicated - As merge commits accumulate, git log becomes complicated.
-
-- Rebase: Paste my commit at the end of main
+  - History becomes complicated - As merge commits accumulate, git log becomes complicated.- Rebase: Paste my commit at the end of main
   ![image](/assets/img/notion/TIL-Git-&-PR-+-CI-CD-특강/03-e678a100d5.png)
 
   - History is clean - git log is in one straight line
@@ -152,10 +152,11 @@ If you do not have a branching strategy, accidents may occur such as your work o
 
   - Existing commits are replaced with new commits - Collaboration is destroyed if done on a shared branch.
 
-- When to use what (Merge & Rebase)| standards | Merge | Rebase |
+- When to use what (Merge & Rebase)
 
+  | standard | Merge | Rebase |
   | --- | --- | --- |
-  | History | Preserve as is | Organize in one line |
+  | history | preserved as is | organized in one line |
   | commit hash | unchanged | Newly created |
   | Conflict handling | at once | per commit |
   | Recommended Situation | **Shared branch integration** | **Clean up my local branch** |
@@ -184,7 +185,7 @@ If you do not have a branching strategy, accidents may occur such as your work o
     - Branch with release tag
 
 > Using `git push --force-with-lease` causes it to fail when the remote is not what I expected
-> → If force push is required, always use `--force-with-lease`
+> → If force push is necessary, definitely `--force-with-lease`
 
 ### **Conflict resolution**
 
@@ -206,12 +207,12 @@ Conflicts occur when two branches modify the same line in the same file differen
 
   1. Check current status - `git status`
 
-  1. Open the file and find the marker<br>
+  2. Open the file and find the marker<br>
     Check the location of `<<<<<<<` / `=======` / `>>>>>>>` → Decide which code to use
 
-  1. Modify to desired form
+  3. Modify to desired form
 
-  1. Staging + Commit
+  4. Staging + Commit
 
     ```bash
     git add .
@@ -219,7 +220,7 @@ Conflicts occur when two branches modify the same line in the same file differen
     # 머지 진행 중 상태가 종료됨
     ```
 
-  1. Test + Push
+  5. Test + Push
 
     ```bash
     npm test       # 충돌 해결로 깨진 곳이 없는지 반드시 확인
@@ -233,7 +234,9 @@ Conflicts occur when two branches modify the same line in the same file differen
     git rebase --abort  # rebase 중이면
     ```
 
-### **CI/CD Pipeline Introduction**- Difference between manual deployment and automation
+### **CI/CD Pipeline Introduction**
+
+- Difference between manual deployment and automation
   ![image](/assets/img/notion/TIL-Git-&-PR-+-CI-CD-특강/04-8f8d92b96d.png)
 
   - After introducing CI/CD
@@ -251,10 +254,10 @@ Conflicts occur when two branches modify the same line in the same file differen
 
   ![image](/assets/img/notion/TIL-Git-&-PR-+-CI-CD-특강/05-b54ee9d439.png)
 
-  | steps | What to do |
+  | step | what to do |
   | --- | --- |
   | **Source** | Triggered by PR/Push event |
-  | **Build** | Compilation / Packaging / Docker image creation |
+  | **Build** | Compilation / packaging / Docker image creation |
   | **Test** | Unit Testing + Integration Testing + Lint |
   | **Deploy** | Stage environment deployment → Prod deployment |
 
@@ -316,11 +319,11 @@ Conflicts occur when two branches modify the same line in the same file differen
   - What happens the moment it moves
     1. When you upload a PR, GitHub automatically executes the above sequence.
 
-    1. If even one step fails, mark x in PR
+    2. If even one step fails, mark x in PR
 
-    1. Merge button is automatically disabled (when Branch Protection is set)
+    3. Merge button is automatically disabled (when Branch Protection is set)
 
-    1. Merge is possible only if all checks pass.
+    4. Merge is possible only if all checks pass.
 
   - One step further to CD
 
@@ -353,9 +356,9 @@ Conflicts occur when two branches modify the same line in the same file differen
 
     - `secrets.*` — Sensitive information is stored in GitHub Secrets
 
-## Problems & ErrorsQ. Should I use Squash merge / Rebase merge / Merge commit?
+## Problems & Errors
 
-> There is no right answer. **The answer is to set a team convention and go consistently**
+Q. Should I use Squash merge / Rebase merge / Merge commit?> There is no right answer. **The answer is to set a team convention and go consistently**
 > - **Squash merge**: compresses PR into 1 commit / cleanest history (most used)
 >
 > - **Rebase merge**: Attach PR commits in a row to main / Enable track of commit units
@@ -371,9 +374,9 @@ Q. Merge & Rebase
 Q. This is my first time with CI/CD. Where do I start?
 
 > Start with **one of the simplest workflows in GitHub Actions**.
-> 1. Just run `npm test` automatically first.
+> 1. `npm test` auto-run first
 >
-> 1. Add builds when you get used to it
+> 2. Add builds as you get used to it
 >
-> 1. Then deploy
+> 3. Then deploy
 > Most people give up trying to “automate everything at once”.

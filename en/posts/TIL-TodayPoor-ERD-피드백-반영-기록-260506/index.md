@@ -81,119 +81,118 @@ In the initial design, we focused on quickly reflecting the functionality, but t
     - Solved: Add invitation code expiration date to `GROUP` table.
       - This field allows you to disable expired invitation codes.
 
-- Final ERD
+- Final ERD<br>
+  <details markdown="1">
+  <summary>ERD Mermaid Code</summary>
 
-<details markdown="1">
-<summary>ERD Mermaid Code</summary>
+    ```mermaid
+    erDiagram
+        USER ||--o{ SOCIAL_ACCOUNT : has
+        USER ||--o{ GROUP_MEMBER : joins
+        GROUP ||--o{ GROUP_MEMBER : has
 
-```mermaid
-erDiagram
-    USER ||--o{ SOCIAL_ACCOUNT : has
-    USER ||--o{ GROUP_MEMBER : joins
-    GROUP ||--o{ GROUP_MEMBER : has
+        USER ||--o{ EXPENSE : uploads
+        GROUP ||--o{ EXPENSE : contains
 
-    USER ||--o{ EXPENSE : uploads
-    GROUP ||--o{ EXPENSE : contains
+        EXPENSE ||--|| OCR_RESULT : has
 
-    EXPENSE ||--|| OCR_RESULT : has
+        GROUP ||--o{ RANKING_RESULT : has
+        USER ||--o{ RANKING_RESULT : ranked
+        POOR_TITLE ||--o{ RANKING_RESULT : assigned
 
-    GROUP ||--o{ RANKING_RESULT : has
-    USER ||--o{ RANKING_RESULT : ranked
-    POOR_TITLE ||--o{ RANKING_RESULT : assigned
+        RANKING_RESULT ||--|| AI_RESULT : has
 
-    RANKING_RESULT ||--|| AI_RESULT : has
+        USER {
+            UUID id PK
+            string nickname
+            string profile_image_url
+            datetime created_at
+            datetime updated_at
+            datetime deleted_at
+        }
 
-    USER {
-        UUID id PK
-        string nickname
-        string profile_image_url
-        datetime created_at
-        datetime updated_at
-        datetime deleted_at
-    }
+        SOCIAL_ACCOUNT {
+            UUID id PK
+            UUID user_id FK
+            enum provider
+            string provider_user_id
+            string email
+            datetime connected_at
+        }
 
-    SOCIAL_ACCOUNT {
-        UUID id PK
-        UUID user_id FK
-        enum provider
-        string provider_user_id
-        string email
-        datetime connected_at
-    }
+        GROUP {
+            UUID id PK
+            string name
+            string invite_code
+            datetime invite_code_expires_at
+            UUID owner_id FK
+            datetime created_at
+            datetime updated_at
+            datetime deleted_at
+        }
 
-    GROUP {
-        UUID id PK
-        string name
-        string invite_code
-        datetime invite_code_expires_at
-        UUID owner_id FK
-        datetime created_at
-        datetime updated_at
-        datetime deleted_at
-    }
+        GROUP_MEMBER {
+            UUID id PK
+            UUID user_id FK
+            UUID group_id FK
+            enum role
+            datetime joined_at
+            datetime deleted_at
+        }
 
-    GROUP_MEMBER {
-        UUID id PK
-        UUID user_id FK
-        UUID group_id FK
-        enum role
-        datetime joined_at
-        datetime deleted_at
-    }
+        EXPENSE {
+            UUID id PK
+            UUID user_id FK
+            UUID group_id FK
+            enum category
+            int amount
+            string merchant
+            string memo
+            string image_url
+            enum visibility
+            datetime spent_at
+            datetime created_at
+            datetime updated_at
+            datetime deleted_at
+        }
 
-    EXPENSE {
-        UUID id PK
-        UUID user_id FK
-        UUID group_id FK
-        enum category
-        int amount
-        string merchant
-        string memo
-        string image_url
-        enum visibility
-        datetime spent_at
-        datetime created_at
-        datetime updated_at
-        datetime deleted_at
-    }
+        OCR_RESULT {
+            UUID id PK
+            UUID expense_id FK
+            text raw_text
+            datetime created_at
+        }
 
-    OCR_RESULT {
-        UUID id PK
-        UUID expense_id FK
-        text raw_text
-        datetime created_at
-    }
+        RANKING_RESULT {
+            UUID id PK
+            UUID group_id FK
+            UUID user_id FK
+            UUID title_id FK
+            UUID ai_result_id FK
+            date ranking_date
+            int total_amount
+            int rank_no
+            datetime created_at
+        }
 
-    RANKING_RESULT {
-        UUID id PK
-        UUID group_id FK
-        UUID user_id FK
-        UUID title_id FK
-        UUID ai_result_id FK
-        date ranking_date
-        int total_amount
-        int rank_no
-        datetime created_at
-    }
+        POOR_TITLE {
+            UUID id PK
+            string name
+            string code
+            enum condition_type
+        }
 
-    POOR_TITLE {
-        UUID id PK
-        string name
-        string code
-        enum condition_type
-    }
+        AI_RESULT {
+            UUID id PK
+            text input_data
+            text output_text
+            string model_name
+            int token_usage
+            datetime created_at
+        }
+    ```
 
-    AI_RESULT {
-        UUID id PK
-        text input_data
-        text output_text
-        string model_name
-        int token_usage
-        datetime created_at
-    }
-```
-
-</details>
+  </details>
 
   ![image](/assets/img/notion/TIL-TodayPoor-ERD-피드백-반영-기록-260506/01-f55d32293b.png)
 
