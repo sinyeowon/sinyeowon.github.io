@@ -232,106 +232,106 @@ We plan to create a class called JwtUtil with JWT-related functions to perform J
 
 1. Create JWT
 
-  ```java
-  // 토큰 생성
-  public String createToken(String username, UserRoleEnum role) {
-      Date date = new Date();
+    ```java
+    // 토큰 생성
+    public String createToken(String username, UserRoleEnum role) {
+        Date date = new Date();
 
-      return BEARER_PREFIX +
-              Jwts.builder()
-                      .setSubject(username) // 사용자 식별자값(ID)
-                      .claim(AUTHORIZATION_KEY, role) // 사용자 권한
-                      .setExpiration(new Date(date.getTime() + TOKEN_TIME)) // 만료 시간
-                      .setIssuedAt(date) // 발급일
-                      .signWith(key, signatureAlgorithm) // 암호화 알고리즘
-                      .compact();
-  }
-  ```
+        return BEARER_PREFIX +
+                Jwts.builder()
+                        .setSubject(username) // 사용자 식별자값(ID)
+                        .claim(AUTHORIZATION_KEY, role) // 사용자 권한
+                        .setExpiration(new Date(date.getTime() + TOKEN_TIME)) // 만료 시간
+                        .setIssuedAt(date) // 발급일
+                        .signWith(key, signatureAlgorithm) // 암호화 알고리즘
+                        .compact();
+    }
+    ```
 
-  - Insert the user's identification value, i.e. ID, into the subject of the JWT.
+    - Insert the user's identification value, i.e. ID, into the subject of the JWT.
 
-  - Insert the user’s authorization information into the JWT. You can check it through the key value in key-value format.
+    - Insert the user’s authorization information into the JWT. You can check it through the key value in key-value format.
 
-  - Enter the token expiration time. It is based on ms.
+    - Enter the token expiration time. It is based on ms.
 
-  - Insert the date of issue into issuedAt.
+    - Insert the date of issue into issuedAt.
 
-  - Enter the key containing the secretKey value and the encryption algorithm in signWith.
-    - Encrypt JWT using ket and encryption algorithm.
+    - Enter the key containing the secretKey value and the encryption algorithm in signWith.
+      - Encrypt JWT using ket and encryption algorithm.
 
 2. Save to JWT Cookie
 
-  ```java
-  // JWT Cookie 에 저장
-  public void addJwtToCookie(String token, HttpServletResponse res) {
-      try {
-          token = URLEncoder.encode(token, "utf-8").replaceAll("\\+", "%20");
-          // Cookie Value 에는 공백이 불가능해서 encoding 진행
+    ```java
+    // JWT Cookie 에 저장
+    public void addJwtToCookie(String token, HttpServletResponse res) {
+        try {
+            token = URLEncoder.encode(token, "utf-8").replaceAll("\\+", "%20");
+            // Cookie Value 에는 공백이 불가능해서 encoding 진행
 
-          Cookie cookie = new Cookie(AUTHORIZATION_HEADER, token); // Name-Value
-          cookie.setPath("/");
+            Cookie cookie = new Cookie(AUTHORIZATION_HEADER, token); // Name-Value
+            cookie.setPath("/");
 
-          // Response 객체에 Cookie 추가
-          res.addCookie(cookie);
-      } catch (UnsupportedEncodingException e) {
-          logger.error(e.getMessage());
-      }
-  }
-  ```
+            // Response 객체에 Cookie 추가
+            res.addCookie(cookie);
+        } catch (UnsupportedEncodingException e) {
+            logger.error(e.getMessage());
+        }
+    }
+    ```
 
 3. JWT token substring, which is the value of the received cookie
 
-  ```java
-  // JWT 토큰 substring
-  public String substringToken(String tokenValue) {
-      if (StringUtils.hasText(tokenValue) && tokenValue.startsWith(BEARER_PREFIX)) {
-          return tokenValue.substring(7);
-      }
-      logger.error("Not Found Token");
-      throw new NullPointerException("Not Found Token");
-  }
-  ```
+    ```java
+    // JWT 토큰 substring
+    public String substringToken(String tokenValue) {
+        if (StringUtils.hasText(tokenValue) && tokenValue.startsWith(BEARER_PREFIX)) {
+            return tokenValue.substring(7);
+        }
+        logger.error("Not Found Token");
+        throw new NullPointerException("Not Found Token");
+    }
+    ```
 
-  - Use StringUtils.hasText to check for blanks and nulls, and startsWith to check if the starting value of the token is Bearer.
+    - Use StringUtils.hasText to check for blanks and nulls, and startsWith to check if the starting value of the token is Bearer.
 
-  - If correct, truncate the Bearer using substring to return a pure JWT.
+    - If correct, truncate the Bearer using substring to return a pure JWT.
 
 4. JWT verification
 
-  ```java
-  // 토큰 검증
-  public boolean validateToken(String token) {
-      try {
-          Jwts.parserBuilder().setSigningKey(key).build().parseClaimsJws(token);
-          return true;
-      } catch (SecurityException | MalformedJwtException | SignatureException e) {
-          logger.error("Invalid JWT signature, 유효하지 않는 JWT 서명 입니다.");
-      } catch (ExpiredJwtException e) {
-          logger.error("Expired JWT token, 만료된 JWT token 입니다.");
-      } catch (UnsupportedJwtException e) {
-          logger.error("Unsupported JWT token, 지원되지 않는 JWT 토큰 입니다.");
-      } catch (IllegalArgumentException e) {
-          logger.error("JWT claims is empty, 잘못된 JWT 토큰 입니다.");
-      }
-      return false;
-  }
-  ```
+    ```java
+    // 토큰 검증
+    public boolean validateToken(String token) {
+        try {
+            Jwts.parserBuilder().setSigningKey(key).build().parseClaimsJws(token);
+            return true;
+        } catch (SecurityException | MalformedJwtException | SignatureException e) {
+            logger.error("Invalid JWT signature, 유효하지 않는 JWT 서명 입니다.");
+        } catch (ExpiredJwtException e) {
+            logger.error("Expired JWT token, 만료된 JWT token 입니다.");
+        } catch (UnsupportedJwtException e) {
+            logger.error("Unsupported JWT token, 지원되지 않는 JWT 토큰 입니다.");
+        } catch (IllegalArgumentException e) {
+            logger.error("JWT claims is empty, 잘못된 JWT 토큰 입니다.");
+        }
+        return false;
+    }
+    ```
 
-  - You can use `Jwts.parserBuilder()` to parse JWT.
+    - You can use `Jwts.parserBuilder()` to parse JWT.
 
-  - Check that the JWT has not been forged or altered by entering the secretKey (key) value.
+    - Check that the JWT has not been forged or altered by entering the secretKey (key) value.
 
 5. Get user information from JWT
 
-  ```java
-  // 토큰에서 사용자 정보 가져오기
-  public Claims getUserInfoFromToken(String token) {
-      return Jwts.parserBuilder().setSigningKey(key).build().parseClaimsJws(token).getBody();
-  }
-  ```
+    ```java
+    // 토큰에서 사용자 정보 가져오기
+    public Claims getUserInfoFromToken(String token) {
+        return Jwts.parserBuilder().setSigningKey(key).build().parseClaimsJws(token).getBody();
+    }
+    ```
 
-  - The **Payload** part of the JWT structure contains information contained in the token. 
+    - The **Payload** part of the JWT structure contains information contained in the token.
 
-  - A ‘piece’ of information contained here is called a claim (**claim**), and it consists of a key-value pair. A token can contain multiple claims.
+    - A ‘piece’ of information contained here is called a claim (**claim**), and it consists of a key-value pair. A token can contain multiple claims.
 
-  - Use `Jwts.parserBuilder()` and secretKey to retrieve JWT Claims and use the user information contained therein.
+    - Use `Jwts.parserBuilder()` and secretKey to retrieve JWT Claims and use the user information contained therein.

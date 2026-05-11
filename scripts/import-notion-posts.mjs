@@ -649,6 +649,8 @@ async function renderBlock(block, context, depth = 0, listNumber = 1) {
     const childDepth =
       layoutBlockTypes.has(type) || type === 'quote' || type === 'callout'
         ? depth
+        : listBlockTypes.has(type)
+          ? depth + 2
         : depth + 1;
     const children = await renderBlocks(await getBlockChildren(block.id), context, childDepth);
     if (children.trim()) {
