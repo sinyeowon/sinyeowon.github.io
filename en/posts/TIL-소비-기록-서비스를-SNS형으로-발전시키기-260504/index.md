@@ -1,12 +1,12 @@
 ---
 layout: "post"
-title: "[TIL] Developing consumption record service into SNS type - 260504"
+title: "[TIL] Developing a consumption record service into an SNS-style service"
 date: 2026-05-04 09:00:00 +0900
 last_modified_at: 2026-05-07 11:33:00 +0900
 categories: ["GDGoC KNU", "0 to Product"]
 tags: ["project"]
-description: "0 to Product This is an article written about TIL in the process of writing the Article 4 plan."
-description_source: "notion"
+description: "This post summarizes how the team reviewed the limits of automatic financial-data collection and shifted the product direction toward OCR-based uploads and SNS-style spending sharing with friends."
+description_source: "manual"
 lang: "en"
 ui_lang: "ko-KR"
 toc: true
@@ -14,6 +14,7 @@ permalink: "/en/posts/TIL-소비-기록-서비스를-SNS형으로-발전시키�
 original_url: "/posts/TIL-소비-기록-서비스를-SNS형으로-발전시키기-260504/"
 notion_id: "3587788a-fc66-80fd-985d-eefcbe2ec170"
 notion_lang: "en"
+title_source: "manual"
 ---
 ## What I did today
 

@@ -4,8 +4,8 @@ date: 2026-05-06 09:00:00 +0900
 last_modified_at: 2026-05-06 15:09:00 +0900
 categories: ["Spring 단기 심화", "특강"]
 tags: ["Git", "CI/CD"]
-description: "Git & PR + CI/CD 관련 특강을 듣고 공부한 내용을 정리한 글입니다."
-description_source: "notion"
+description: "Git Flow와 GitHub Flow, PR 워크플로우, 코드 리뷰, Merge/Rebase, CI/CD 자동화 흐름을 특강 내용을 바탕으로 정리한 글입니다."
+description_source: "manual"
 english_url: "/en/posts/TIL-Git-&-PR-+-CI-CD-특강/"
 notion_id: "3587788a-fc66-8089-892a-dad32b993e3a"
 notion_lang: "ko"

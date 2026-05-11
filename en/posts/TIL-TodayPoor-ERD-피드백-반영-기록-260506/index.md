@@ -1,12 +1,12 @@
 ---
 layout: "post"
-title: "[TIL] TodayPoor ERD feedback reflection record - 260506"
+title: "[TIL] Applying TodayPoor ERD feedback"
 date: 2026-05-06 09:00:00 +0900
 last_modified_at: 2026-05-10 22:25:00 +0900
 categories: ["GDGoC KNU", "0 to Product"]
 tags: ["project"]
-description: "This is an article written about TIL during the 0 to Product BE meeting process."
-description_source: "notion"
+description: "This post summarizes how TodayPoor ERD feedback was reflected by separating OCR results, removing the AI prompt table, and revising the ranking-result relationship structure."
+description_source: "manual"
 lang: "en"
 ui_lang: "ko-KR"
 toc: true
@@ -14,6 +14,7 @@ permalink: "/en/posts/TIL-TodayPoor-ERD-피드백-반영-기록-260506/"
 original_url: "/posts/TIL-TodayPoor-ERD-피드백-반영-기록-260506/"
 notion_id: "3587788a-fc66-80b9-9579-d2a2d632a991"
 notion_lang: "en"
+title_source: "manual"
 ---
 ## What I did today
 

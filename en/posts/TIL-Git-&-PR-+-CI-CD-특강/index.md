@@ -5,8 +5,8 @@ date: 2026-05-06 09:00:00 +0900
 last_modified_at: 2026-05-06 15:09:00 +0900
 categories: ["Spring 단기 심화", "특강"]
 tags: ["Git", "CI/CD"]
-description: "This article summarizes what I studied after attending a special lecture on Git & PR + CI/CD."
-description_source: "notion"
+description: "This post summarizes Git Flow, GitHub Flow, PR workflow, code review, merge/rebase, and CI/CD automation based on a special lecture."
+description_source: "manual"
 lang: "en"
 ui_lang: "ko-KR"
 toc: true

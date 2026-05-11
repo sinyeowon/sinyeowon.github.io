@@ -1,5 +1,5 @@
 ---
-title: "[TIL] JIRA MCP 와 Harness Engineering 특강"
+title: "[TIL] JIRA MCP와 Harness Engineering 특강"
 date: 2026-05-08 09:00:00 +0900
 last_modified_at: 2026-05-10 22:27:00 +0900
 categories: ["Spring 단기 심화", "특강"]
@@ -9,6 +9,7 @@ description_source: "manual"
 english_url: "/en/posts/TIL-JIRA-MCP-와-Harness-Engineering-특강/"
 notion_id: "35a7788a-fc66-807c-a149-fbf49dee905e"
 notion_lang: "ko"
+title_source: "manual"
 ---
 ## 공부한 내용
 

@@ -968,7 +968,8 @@ async function buildPost(page) {
   const existingCategories = await existingPostCategories(filePath);
   const categories = resolvePostCategories(notionCategories, existingCategories);
   const tags = propertyList(findProperty(page, propertyNames.tags)).filter(Boolean);
-  const description = propertyText(findProperty(page, propertyNames.description));
+  const rawDescription = propertyText(findProperty(page, propertyNames.description));
+  const description = isUsableDescription(rawDescription) ? rawDescription : '';
   const blocks = await getBlockChildren(page.id);
   const body = normalizeMarkdown(await renderBlocks(blocks, { slug, assetIndex: 0, title }));
   const generatedDescription = createDescription(body, title);
