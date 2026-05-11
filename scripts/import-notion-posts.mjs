@@ -646,7 +646,10 @@ async function renderBlock(block, context, depth = 0, listNumber = 1) {
   }
 
   if (block.has_children && type !== 'toggle' && type !== 'table') {
-    const childDepth = layoutBlockTypes.has(type) ? depth : depth + 1;
+    const childDepth =
+      layoutBlockTypes.has(type) || type === 'quote' || type === 'callout'
+        ? depth
+        : depth + 1;
     const children = await renderBlocks(await getBlockChildren(block.id), context, childDepth);
     if (children.trim()) {
       const separator = listBlockTypes.has(type) && startsWithContinuationParagraph(children)
@@ -813,7 +816,7 @@ function normalizeFenceLines(markdown) {
     if (!inFence) {
       const before = line.slice(0, fenceIndex).trimEnd();
 
-      if (before.trim()) {
+      if (before.trim() && !/^>+\s*$/.test(before.trim())) {
         normalized.push(before);
         normalized.push(line.slice(fenceIndex));
       } else {

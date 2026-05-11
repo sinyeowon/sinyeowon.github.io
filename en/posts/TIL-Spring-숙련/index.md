@@ -1,12 +1,12 @@
 ---
 layout: "post"
-title: "[TIL] Spring Skilled -"
+title: "[TIL] Spring Advanced - JWT authentication and role management"
 date: 2026-05-10 09:00:00 +0900
 last_modified_at: 2026-05-11 10:25:00 +0900
 categories: ["Spring 단기 심화", "Spring 강의"]
 tags: ["Spring", "TIL", "내일배움캠프"]
-description: "Add JWT dependency Set jwt.secret.key in application.properties"
-description_source: "excerpt"
+description: "This post summarizes adding JWT dependencies, configuring the secret key, building JwtUtil, managing user roles with an enum, and creating tokens."
+description_source: "manual"
 lang: "en"
 ui_lang: "ko-KR"
 toc: true
@@ -14,6 +14,7 @@ permalink: "/en/posts/TIL-Spring-숙련/"
 original_url: "/posts/TIL-Spring-숙련/"
 notion_id: "35c7788a-fc66-805b-b95d-efebac969913"
 notion_lang: "en"
+title_source: "manual"
 ---
 ## What I studied
 
@@ -82,163 +83,154 @@ We plan to create a class called JwtUtil with JWT-related functions to perform J
   - Bearer indicates that a JWT or OAuth token is used.
 
   - Logging means recording project status or operation information in chronological order while the application is running.
-    - We will proceed with logging using the Logback logging framework.> User permission types are managed using Enum.
+    - We will proceed with logging using the Logback logging framework.
+
+> User permission types are managed with an enum.
 >
-> - Used to enter the user's permissions using the user's information when creating a JWT
+> - Used when adding a user's role to the token while creating a JWT.
 >
+> ```java
+> public enum UserRoleEnum {
+>     USER(Authority.USER),  // 사용자 권한
+>     ADMIN(Authority.ADMIN);  // 관리자 권한
 >
-```java
->     public enum UserRoleEnum {
->         USER(Authority.USER),  // 사용자 권한
->         ADMIN(Authority.ADMIN);  // 관리자 권한
+>     private final String authority;
 >
->         private final String authority;
->
->         UserRoleEnum(String authority) {
->             this.authority = authority;
->         }
->
->         public String getAuthority() {
->             return this.authority;
->         }
->
->         public static class Authority {
->             public static final String USER = "ROLE_USER";
->             public static final String ADMIN = "ROLE_ADMIN";
->         }
+>     UserRoleEnum(String authority) {
+>         this.authority = authority;
 >     }
->     ```
+>
+>     public String getAuthority() {
+>         return this.authority;
+>     }
+>
+>     public static class Authority {
+>         public static final String USER = "ROLE_USER";
+>         public static final String ADMIN = "ROLE_ADMIN";
+>     }
+> }
+> ```
 >
 > <details markdown="1">
 > <summary>Code description</summary>
 >
-> - `UserRoleEnum` is a class that manages user permissions (Role) as an enum.
+> - `UserRoleEnum` is a class that manages user roles as an enum.
 >
-> - Using enums prevents typos by not having to write permission values directly as strings.
+>   - Using an enum helps prevent typos because permission values do not need to be written directly as strings.
 >
-> - Currently, there are two permissions defined: `USER` and `ADMIN`.
+>   - The current roles are `USER` and `ADMIN`.
 >
+> ```java
+> USER(Authority.USER),
+> ADMIN(Authority.ADMIN);
+> ```
 >
-```java
->           USER(Authority.USER),
->           ADMIN(Authority.ADMIN);
->           ```
+> - `USER` is a normal user role.
 >
-> - `USER` is a normal user privilege.
+> - `ADMIN` is an administrator role.
 >
-> - `ADMIN` has administrator privileges.
+> - The `authority` field stores the authority string used by Spring Security.
 >
-> - The `authority` field stores the permission string used by the actual Spring Security.
+> ```java
+> private final String authority;
+> ```
 >
+> - Spring Security typically uses authority values with the `ROLE_` prefix.
 >
-```java
->           private final String authority;
->           ```
+> ```plaintext
+> ROLE_USER
+> ROLE_ADMIN
+> ```
 >
-> - Spring Security typically uses permission values with the `ROLE_` prefix.
+> - The enum constructor stores the authority string.
 >
+> ```java
+> UserRoleEnum(String authority) {
+>     this.authority = authority;
+> }
+> ```
 >
-```plaintext
->           ROLE_USER
->           ROLE_ADMIN
->           ```
+> - The authority string passed while creating the enum is stored in the `authority` field.
 >
-> - Stores the permission string via the enum constructor.
+> ```java
+> USER("ROLE_USER")
+> ADMIN("ROLE_ADMIN")
+> ```
 >
+> - The `getAuthority()` method returns the stored authority string.
 >
-```java
->           UserRoleEnum(String authority) {
->               this.authority = authority;
->           }
->           ```
->
-> - The permission string passed when creating an enum is stored in the `authority` field.
->
->
-```java
->           USER("ROLE_USER")
->           ADMIN("ROLE_ADMIN")
->           ```
->
-> - The `getAuthority()` method returns the stored permission string.
->
->
-```java
->           public String getAuthority() {
->               return this.authority;
->           }
->           ```
+> ```java
+> public String getAuthority() {
+>     return this.authority;
+> }
+> ```
 >
 > - Example
 >
+> ```java
+> UserRoleEnum.USER.getAuthority()
+> ```
 >
-```java
->           UserRoleEnum.USER.getAuthority()
->           ```
+> ```plaintext
+> ROLE_USER
+> ```
 >
+> - The `Authority` inner class manages authority string constants.
 >
-```plaintext
->           ROLE_USER
->           ```
+> ```java
+> public static class Authority {
+>     public static final String USER = "ROLE_USER";
+>     public static final String ADMIN = "ROLE_ADMIN";
+> }
+> ```
 >
-> - The `Authority` inner class manages permission string constants.
+> - Managing authority strings as constants removes the need to write raw strings repeatedly.
 >
+> - This prevents typos and improves maintainability.
 >
-```java
->           public static class Authority {
->               public static final String USER = "ROLE_USER";
->               public static final String ADMIN = "ROLE_ADMIN";
->           }
->           ```
+> ```java
+> "ROLE_USRE" // typo-prone
+> ```
 >
-> - If you manage the permission string as a constant, you don't have to write the string yourself.
+> - Overall flow
 >
-> - Prevents typos and improves maintainability.
+>   - Enum name
 >
+> ```java
+> UserRoleEnum.USER
+> ```
 >
-```java
->           "ROLE_USRE" // 오타 발생 가능
->           ```
+> → Role type used in code
 >
-> - full flow
+>   - Actual authority string
 >
-> - enum name
+> ```java
+> UserRoleEnum.USER.getAuthority()
+> ```
 >
+> → Authority value recognized by Spring Security
 >
-```java
->           UserRoleEnum.USER
->           ```
+> ```plaintext
+> ROLE_USER
+> ```
 >
-> → Permission types used in code
+> - Summary
 >
-> - actual permission string
+>   - `UserRoleEnum`
+>     - Manages user role types as an enum.
 >
+>   - `Authority`
+>     - Manages actual authority string constants.
 >
-```java
->           UserRoleEnum.USER.getAuthority()
->           ```
+>   - `getAuthority()`
+>     - Returns the authority string used by Spring Security.
 >
-> → Permission values recognized by Spring Security
+>   - Purpose
+>     - To manage roles safely and consistently.
 >
->
-```plaintext
->           ROLE_USER
->           ```
->
-> - Cleanup
-> - `UserRoleEnum`
-> - Manage user permission types with enum
->
-> - `Authority`
-> - Manage actual permission string constants
->
-> - `getAuthority()`
-> - Returns a permission string to be used by Spring Security
->
-> - Purpose
-> - This is to manage permissions safely and consistently.
->
-> </details>1. Create JWT
+> </details>
+
+1. Create JWT
 
   ```java
   // 토큰 생성
