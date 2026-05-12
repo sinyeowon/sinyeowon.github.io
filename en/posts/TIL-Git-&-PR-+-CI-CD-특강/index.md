@@ -19,7 +19,7 @@ notion_lang: "en"
 
 ### **Git Flow branching strategy**
 
-If you do not have a branching strategy, accidents may occur such as your work overwriting your colleague's work, unfinished code mixed in when you are about to deploy, or wanting to roll back but having no reference point.
+Without a branching strategy, accidents can occur, such as your work overwriting a colleague's work, unfinished code mixed in when you're about to deploy, or you wanting to roll back but having no reference point.
 
 → Branch strategy = accident prevention device
 
@@ -150,7 +150,7 @@ If you do not have a branching strategy, accidents may occur such as your work o
 
     - No merge commits - remove noise
 
-    - Existing commits are replaced with new commits - Collaboration is destroyed if done on a shared branch.
+    - Existing commits are replaced by new commits - Collaboration is destroyed if done on a shared branch
 
 - When to use what (Merge & Rebase)
 
@@ -185,7 +185,7 @@ If you do not have a branching strategy, accidents may occur such as your work o
         - Branch with release tag
 
 > Using `git push --force-with-lease` causes it to fail when the remote is not what I expected
-> → If force push is required, always use `--force-with-lease`
+> → If force push is necessary, definitely `--force-with-lease`
 
 ### **Conflict resolution**
 
@@ -265,7 +265,7 @@ Conflicts occur when two branches modify the same line in the same file differen
 
 > **CI/CD Terminology**
 >
-> | Abbreviation | Full name | meaning |
+> | Abbreviation | Full name | Meaning |
 > | --- | --- | --- |
 > | CI | Continuous **Integration** | Frequent code integration and automatic verification |
 > | CD | Continuous **Delivery** | Stay deployable at any time (manual approval) |
@@ -358,7 +358,7 @@ Conflicts occur when two branches modify the same line in the same file differen
 
 Q. Should I use Squash merge / Rebase merge / Merge commit?
 
-> There is no right answer. **The answer is to set a team convention and go consistently**
+> There is no correct answer. **The answer is to set a team convention and go consistently**
 > - **Squash merge**: compresses PR into 1 commit / cleanest history (most used)
 >
 > - **Rebase merge**: Attach PR commits in a row to main / Enable track of commit units

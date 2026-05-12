@@ -106,7 +106,7 @@ notion_lang: "en"
 
         - Initially, it was for storing vitriolic phrases? A collection of random sentences? AI prompt? The role was not clear, etc.
 
-        - Solved
+        - solved
             - During the meeting, it was summarized that what is needed in the current service is the ability for AI to generate opinion-style results.
 
             - In other words, the key is “save the sentence template” rather than the `AI 입력 → 결과 생성 흐름` itself
