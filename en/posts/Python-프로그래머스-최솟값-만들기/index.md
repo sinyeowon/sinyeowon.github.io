@@ -74,4 +74,4 @@ I wrote the following, but it doesn't pass the efficiency test:
 - You can sort in descending order with list.sort(reverse=True), and the return value is None.
 
 - If you need sorted copies, use the built-in function sorted().
-  - `list.sort()` (modify the original list) Features: Changes the original list itself and does not return a new list (returns None)
+    - `list.sort()` (modify the original list) Features: Changes the original list itself and does not return a new list (returns None)

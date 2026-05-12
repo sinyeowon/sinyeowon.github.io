@@ -1,5 +1,6 @@
 ---
 title: "[TIL] JIRA MCP와 Harness Engineering 특강"
+title_source: "manual"
 date: 2026-05-08 09:00:00 +0900
 last_modified_at: 2026-05-10 22:27:00 +0900
 categories: ["Spring 단기 심화", "특강"]
@@ -9,7 +10,6 @@ description_source: "manual"
 english_url: "/en/posts/TIL-JIRA-MCP-와-Harness-Engineering-특강/"
 notion_id: "35a7788a-fc66-807c-a149-fbf49dee905e"
 notion_lang: "ko"
-title_source: "manual"
 ---
 ## 공부한 내용
 
@@ -19,21 +19,21 @@ LLM은 똑똑하지만, 혼자서는 아무것도 못 함
 → 이 문제를 해결하려면 AI ↔ 외부 도구를 연결해야 하는데, 도구마다 API가 제각각임
 
 - 기존 방식의 한계 - NxM 문제
-  ![image](/assets/img/notion/TIL-JIRA-MCP-와-Harness-Engineering-특강/01-aa032549a0.png)
+    ![image](/assets/img/notion/TIL-JIRA-MCP-와-Harness-Engineering-특강/01-aa032549a0.png)
 
-  - 통합이 제각각이라 표준이 없음
+    - 통합이 제각각이라 표준이 없음
 
-  - 한쪽이 바뀌면 다 깨짐
+    - 한쪽이 바뀌면 다 깨짐
 
-  - 새 도구가 나오면 모든 AI에서 또 만들어야 함
+    - 새 도구가 나오면 모든 AI에서 또 만들어야 함
 
 - **MCP의 해법 - 공통 프로토콜**<br>
-  : Antropic이 2024년 11월에 공개한 개방형 표준 프로토콜로, AI 모델이 외부 시스템과 상호작용하는 공통 언어를 정의함
+    : Antropic이 2024년 11월에 공개한 개방형 표준 프로토콜로, AI 모델이 외부 시스템과 상호작용하는 공통 언어를 정의함
 
-  - N+M
-    ![image](/assets/img/notion/TIL-JIRA-MCP-와-Harness-Engineering-특강/02-9f14964a53.png)
+    - N+M
+        ![image](/assets/img/notion/TIL-JIRA-MCP-와-Harness-Engineering-특강/02-9f14964a53.png)
 
-    - 도구들에 대해 각자의 MCP를 만들어야 했지만, 이제는 AI 도구마다 하나의 MCP만 만들면 됨
+        - 도구들에 대해 각자의 MCP를 만들어야 했지만, 이제는 AI 도구마다 하나의 MCP만 만들면 됨
 
 - **MCP의 동작 구조**
 
@@ -59,9 +59,9 @@ LLM은 똑똑하지만, 혼자서는 아무것도 못 함
 ![image](/assets/img/notion/TIL-JIRA-MCP-와-Harness-Engineering-특강/03-b804d67f9b.png)
 
 - Atlassian Remote MCP Server<br>
-  : Atlassian은 2025년 5월 Remote MCP Server를 공식 발표함 (현재 Rovo MCP Server 명칭으로도 사용)
+    : Atlassian은 2025년 5월 Remote MCP Server를 공식 발표함 (현재 Rovo MCP Server 명칭으로도 사용)
 
-  - 특징
+    - 특징
 
   | 항목 | 내용 |
   | --- | --- |
@@ -71,8 +71,8 @@ LLM은 똑똑하지만, 혼자서는 아무것도 못 함
   | **지원 제품** | Jira, Confluence, Compass (Atlassian Cloud) |
   | **첫 공식 파트너** | Anthropic Claude |
 
-  - 요즘에는 플러그인으로 많이 사용함<br>
-    [https://claude.com/plugins/atlassian](https://claude.com/plugins/atlassian)
+    - 요즘에는 플러그인으로 많이 사용함<br>
+        [https://claude.com/plugins/atlassian](https://claude.com/plugins/atlassian)
 
 ### Harness Engineering - AI 에이전트의 작업 환경 설계
 
@@ -98,88 +98,88 @@ LLM은 똑똑하지만, 혼자서는 아무것도 못 함
   | **생명주기 관리** | CI/CD 파이프라인, PR 검증 자동화 |
   | **관측성** | 로그/메트릭/트레이스에 에이전트가 접근할 수 있는 통로 |
 
-  <details markdown="1">
-  <summary>Andrej Kapathy 스킬</summary>
+    <details markdown="1">
+    <summary>Andrej Kapathy 스킬</summary>
 
-    [https://github.com/forrestchang/andrej-karpathy-skills](https://github.com/forrestchang/andrej-karpathy-skills)
+        [https://github.com/forrestchang/andrej-karpathy-skills](https://github.com/forrestchang/andrej-karpathy-skills)
 
-    ```java
-    LLM의 일반적인 코딩 실수를 줄이기 위한 행동 지침이다. 프로젝트별 지침이 있을 경우 본 가이드라인과 병합하여 사용한다.
+        ```java
+        LLM의 일반적인 코딩 실수를 줄이기 위한 행동 지침이다. 프로젝트별 지침이 있을 경우 본 가이드라인과 병합하여 사용한다.
 
-    트레이드오프: 본 지침은 속도보다 신중함에 우선순위를 둔다. 사소한 작업은 상황에 맞게 판단한다.
+        트레이드오프: 본 지침은 속도보다 신중함에 우선순위를 둔다. 사소한 작업은 상황에 맞게 판단한다.
 
-    ### 1. 구현 전 사고 (Think Before Coding)
-    가정하지 않는다. 모호함을 숨기지 않는다. 트레이드오프를 명확히 밝힌다.
+        ### 1. 구현 전 사고 (Think Before Coding)
+        가정하지 않는다. 모호함을 숨기지 않는다. 트레이드오프를 명확히 밝힌다.
 
-    구현을 시작하기 전 다음을 준수한다:
+        구현을 시작하기 전 다음을 준수한다:
 
-    - 자신의 가정을 명시적으로 기술한다. 불확실한 경우 질문한다.
+        - 자신의 가정을 명시적으로 기술한다. 불확실한 경우 질문한다.
 
-    - 해석의 여지가 여러 가지라면 임의로 선택하지 말고 대안들을 제시한다.
+        - 해석의 여지가 여러 가지라면 임의로 선택하지 말고 대안들을 제시한다.
 
-    - 더 간단한 접근 방식이 있다면 제안한다. 정당한 사유가 있다면 사용자의 요청에 반대 의견을 제시한다.
+        - 더 간단한 접근 방식이 있다면 제안한다. 정당한 사유가 있다면 사용자의 요청에 반대 의견을 제시한다.
 
-    - 불분명한 부분이 있다면 작업을 중단한다. 혼란스러운 부분을 구체적으로 언급하며 질문한다.
+        - 불분명한 부분이 있다면 작업을 중단한다. 혼란스러운 부분을 구체적으로 언급하며 질문한다.
 
-    ### 2. 단순성 우선 (Simplicity First)
-    - 문제를 해결하는 최소한의 코드만 작성한다. 추측에 기반한 코드는 배제한다.
+        ### 2. 단순성 우선 (Simplicity First)
+        - 문제를 해결하는 최소한의 코드만 작성한다. 추측에 기반한 코드는 배제한다.
 
-    - 요청되지 않은 기능은 추가하지 않는다.
+        - 요청되지 않은 기능은 추가하지 않는다.
 
-    - 일회성 코드를 위해 추상화 계층을 만들지 않는다.
+        - 일회성 코드를 위해 추상화 계층을 만들지 않는다.
 
-    - 요청되지 않은 유연성이나 설정 가능성을 고려하지 않는다.
+        - 요청되지 않은 유연성이나 설정 가능성을 고려하지 않는다.
 
-    - 발생 불가능한 시나리오에 대한 예외 처리를 하지 않는다.
+        - 발생 불가능한 시나리오에 대한 예외 처리를 하지 않는다.
 
-    - 200줄의 코드를 50줄로 줄일 수 있다면 코드를 다시 작성한다.
+        - 200줄의 코드를 50줄로 줄일 수 있다면 코드를 다시 작성한다.
 
-    - "시니어 엔지니어가 보기에 이 코드가 지나치게 복잡한가?"라고 자문한다. 그렇다면 단순화한다.
+        - "시니어 엔지니어가 보기에 이 코드가 지나치게 복잡한가?"라고 자문한다. 그렇다면 단순화한다.
 
-    ### 3. 정밀한 수정 (Surgical Changes)
-    필요한 부분만 수정한다. 본인이 만든 코드의 뒷정리만 수행한다.
+        ### 3. 정밀한 수정 (Surgical Changes)
+        필요한 부분만 수정한다. 본인이 만든 코드의 뒷정리만 수행한다.
 
-    기존 코드를 편집할 때 다음을 준수한다:
+        기존 코드를 편집할 때 다음을 준수한다:
 
-    - 인접한 코드, 주석, 포맷을 임의로 개선하지 않는다.
-    - 망가지지 않은 부분을 리팩토링하지 않는다.
-    - 본인의 스타일과 다르더라도 기존 스타일을 따른다.
-    - 작업과 무관한 데드 코드를 발견하면 보고하되 직접 삭제하지 않는다.
+        - 인접한 코드, 주석, 포맷을 임의로 개선하지 않는다.
+        - 망가지지 않은 부분을 리팩토링하지 않는다.
+        - 본인의 스타일과 다르더라도 기존 스타일을 따른다.
+        - 작업과 무관한 데드 코드를 발견하면 보고하되 직접 삭제하지 않는다.
 
-    수정으로 인해 사용되지 않게 된 요소가 발생할 경우:
+        수정으로 인해 사용되지 않게 된 요소가 발생할 경우:
 
-    - 본인의 수정으로 인해 불필요해진 임포트, 변수, 함수는 제거한다.
-    - 기존에 존재하던 데드 코드는 요청이 없는 한 그대로 둔다.
-    - 테스트 기준: 변경된 모든 라인은 사용자의 요청사항과 직접적으로 연결되어야 한다.
+        - 본인의 수정으로 인해 불필요해진 임포트, 변수, 함수는 제거한다.
+        - 기존에 존재하던 데드 코드는 요청이 없는 한 그대로 둔다.
+        - 테스트 기준: 변경된 모든 라인은 사용자의 요청사항과 직접적으로 연결되어야 한다.
 
-    ### 4. 목표 중심 실행 (Goal-Driven Execution)
-    성공 기준을 정의한다. 검증될 때까지 반복한다.
-    작업을 검증 가능한 목표로 변환한다:
+        ### 4. 목표 중심 실행 (Goal-Driven Execution)
+        성공 기준을 정의한다. 검증될 때까지 반복한다.
+        작업을 검증 가능한 목표로 변환한다:
 
-    - "유효성 검사 추가" → "잘못된 입력에 대한 테스트 작성 후 통과 확인"
-    - "버그 수정" → "버그를 재현하는 테스트 작성 후 통과 확인"
-    - "X 리팩토링" → "리팩토링 전후의 테스트 통과 확인"
+        - "유효성 검사 추가" → "잘못된 입력에 대한 테스트 작성 후 통과 확인"
+        - "버그 수정" → "버그를 재현하는 테스트 작성 후 통과 확인"
+        - "X 리팩토링" → "리팩토링 전후의 테스트 통과 확인"
 
-    다단계 작업의 경우 간략한 계획을 수립한다:
+        다단계 작업의 경우 간략한 계획을 수립한다:
 
-    1. [단계] → 검증: [확인 사항]
-    2. [단계] → 검증: [확인 사항]
-    3. [단계] → 검증: [확인 사항]
-    성공 기준이 명확해야 독립적인 작업이 가능하다. "작동하게 만들기"와 같은 모호한 기준은 불필요한 재질의를 야기한다.
+        1. [단계] → 검증: [확인 사항]
+        2. [단계] → 검증: [확인 사항]
+        3. [단계] → 검증: [확인 사항]
+        성공 기준이 명확해야 독립적인 작업이 가능하다. "작동하게 만들기"와 같은 모호한 기준은 불필요한 재질의를 야기한다.
 
-    지침 작동 확인: Diff 내 불필요한 변경 감소, 복잡성으로 인한 재작성 빈도 감소, 구현 전 질문을 통한 명확한 의사결정 증대.
-    ```
+        지침 작동 확인: Diff 내 불필요한 변경 감소, 복잡성으로 인한 재작성 빈도 감소, 구현 전 질문을 통한 명확한 의사결정 증대.
+        ```
 
-  </details>
+    </details>
 
 - **세 가지 핵심 기둥**
 
-  1. Context Engineering - 컨텍스트 설계
+    1. Context Engineering - 컨텍스트 설계
 
-    - 에이전트 입장에서 컨텍스트 안에 없는 정보는 존재하지 않는 것과 같음<br>
-      ex) Goolge Docs에 정리해둔 설계 문서? → 에이전트는 못 봄 / Slcak에서 공유한 결정 사항? → 못 봄
+        - 에이전트 입장에서 컨텍스트 안에 없는 정보는 존재하지 않는 것과 같음<br>
+            ex) Goolge Docs에 정리해둔 설계 문서? → 에이전트는 못 봄 / Slcak에서 공유한 결정 사항? → 못 봄
 
-    - **프로젝트의 규칙과 지식을 레포지토리 안에 기계가 읽을 수 있는 형태로 옮겨야 함**
+        - **프로젝트의 규칙과 지식을 레포지토리 안에 기계가 읽을 수 있는 형태로 옮겨야 함**
 
   | 흩어진 지식 | 레포 안의 형태로 |
   | --- | --- |
@@ -187,50 +187,50 @@ LLM은 똑똑하지만, 혼자서는 아무것도 못 함
   | 위키의 API 명세 | 코드로 정의된 API 계약 (OpenAPI/Pydantic) |
   | 머릿속의 스타일 가이드 | 린터 규칙(eslint/checkstyle) |
 
-  2. Architectural Constraints - 아키텍처 제약
+    2. Architectural Constraints - 아키텍처 제약
 
-    - 에이전트에게 자유를 많이 줄수록 결과가 더 안 좋음
+        - 에이전트에게 자유를 많이 줄수록 결과가 더 안 좋음
 
-    - **의존성 레이어를 단방향으로 강제**하면, 에이전트가 탐색할 수 있는 솔루션 공간이 좁아짐
+        - **의존성 레이어를 단방향으로 강제**하면, 에이전트가 탐색할 수 있는 솔루션 공간이 좁아짐
 
-      ```plaintext
-      Types → Config → Repo → Service → Runtime → UI
-      └─→ 위쪽으로만 의존, 아래쪽 참조 금지
-      ```
+            ```plaintext
+            Types → Config → Repo → Service → Runtime → UI
+            └─→ 위쪽으로만 의존, 아래쪽 참조 금지
+            ```
 
-    - 선택지가 줄어들기 때문에, 올바른 답을 찾을 확률이 올라감
+        - 선택지가 줄어들기 때문에, 올바른 답을 찾을 확률이 올라감
 
-    - 이런 **규칙은 사람이 검토하지 않고 구조적 테스트나 린터로 기계적으로 검증**
+        - 이런 **규칙은 사람이 검토하지 않고 구조적 테스트나 린터로 기계적으로 검증**
 
-  3. Entropy Management - 엔트로피 관리
-    - 에이전트가 코드를 많이 생성할수록 코드베이스의 무질서도(entropy)가 올라감<br>
-      ex) 문서와 코드가 안 맞거나, 비슷한 기능의 중복 코드가 늘어나고, 안 쓰는 임포트가 쌓임
+    3. Entropy Management - 엔트로피 관리
+        - 에이전트가 코드를 많이 생성할수록 코드베이스의 무질서도(entropy)가 올라감<br>
+            ex) 문서와 코드가 안 맞거나, 비슷한 기능의 중복 코드가 늘어나고, 안 쓰는 임포트가 쌓임
 
-    - 방치하면 에이전트의 다음 작업 품질이 계속 떨어짐 → **별도의 정리 에이전트를 둬야함**
+        - 방치하면 에이전트의 다음 작업 품질이 계속 떨어짐 → **별도의 정리 에이전트를 둬야함**
 
-    - 정리 에이전트가 하는 일<br>
-      <hr>
+        - 정리 에이전트가 하는 일<br>
+            <hr>
 
-      문서 ↔ 코드 일관성 검증
+            문서 ↔ 코드 일관성 검증
 
-      <hr>
+            <hr>
 
-      패턴 위반 스캔
+            패턴 위반 스캔
 
-      <hr>
+            <hr>
 
-      순환 의존성 감사
+            순환 의존성 감사
 
-      <hr>
+            <hr>
 
-      사용되지 않는 코드 정리
+            사용되지 않는 코드 정리
 
-      <hr>
+            <hr>
 
 - **핵심 원칙: 레포지토리가 유일한 진실의 원천**<br>
-  > Harness Engineering의 가장 중요한 한 줄: **“레포지토리가 Single Source of Truth가 되어야 한다.”**
+    > Harness Engineering의 가장 중요한 한 줄: **“레포지토리가 Single Source of Truth가 되어야 한다.”**
 
-  - 단순히 문서를 잘 쓰자는 수준이 아니라, Harness 친화적 방식을 사용해야함
+    - 단순히 문서를 잘 쓰자는 수준이 아니라, Harness 친화적 방식을 사용해야함
 
   | 기존 방식 | Harness 친화적 방식 |
   | --- | --- |
@@ -238,53 +238,53 @@ LLM은 똑똑하지만, 혼자서는 아무것도 못 함
   | 시스템 관계를 다이어그램으로 그리기 | 시스템 관계를 **코드(YAML/IaC)로 정의**하기 |
   | 워크플로우를 노션에 설명 | 워크플로우를 **실행 가능한 스크립트**로 만들기 |
 
-  ex) 
+    ex) 
 
-  ![image](/assets/img/notion/TIL-JIRA-MCP-와-Harness-Engineering-특강/04-0175f95c34.png)
+    ![image](/assets/img/notion/TIL-JIRA-MCP-와-Harness-Engineering-특강/04-0175f95c34.png)
 
-  ![image](/assets/img/notion/TIL-JIRA-MCP-와-Harness-Engineering-특강/05-b2e49b4152.png)
+    ![image](/assets/img/notion/TIL-JIRA-MCP-와-Harness-Engineering-특강/05-b2e49b4152.png)
 
 - **AGENTS.md는 백과사전이 아니라 목차**
 
-  - OpenAI는 `AGENTS.md`를 약 100줄 정도의 짤은 목차로 유지하라고 권함
+    - OpenAI는 `AGENTS.md`를 약 100줄 정도의 짤은 목차로 유지하라고 권함
 
-  - 전체 그림을 보여주는 맵 역할만 하고, 실제 지식은 `docs/` 디렉토리에 나눠서 정리함
+    - 전체 그림을 보여주는 맵 역할만 하고, 실제 지식은 `docs/` 디렉토리에 나눠서 정리함
 
-  - 권장 구조
+    - 권장 구조
 
-    ```markdown
-    # 프로젝트 컨텍스트
+        ```markdown
+        # 프로젝트 컨텍스트
 
-    ## 빌드 & 테스트
-    빌드/테스트 명령어와 CI 설정은 docs/build.md 참조
+        ## 빌드 & 테스트
+        빌드/테스트 명령어와 CI 설정은 docs/build.md 참조
 
-    ## 아키텍처
-    시스템 구조와 의존성 레이어는 docs/architecture.md 참조
+        ## 아키텍처
+        시스템 구조와 의존성 레이어는 docs/architecture.md 참조
 
-    ## 코딩 컨벤션
-    코딩 스타일과 패턴은 docs/conventions.md 참조
+        ## 코딩 컨벤션
+        코딩 스타일과 패턴은 docs/conventions.md 참조
 
-    ## API 계약
-    엔드포인트 명세는 docs/api/ 디렉토리 참조
-    ```
+        ## API 계약
+        엔드포인트 명세는 docs/api/ 디렉토리 참조
+        ```
 
-    - 에이전트가 필요한 정보만 골라서 읽고, 변경된 부분만 해당 문서를 고치게 하고, 사람도 검색하기 쉽도록
+        - 에이전트가 필요한 정보만 골라서 읽고, 변경된 부분만 해당 문서를 고치게 하고, 사람도 검색하기 쉽도록
 
 - **에이전트와 CI/CD 통합 - 자동 피드백 루프**
-  ![image](/assets/img/notion/TIL-JIRA-MCP-와-Harness-Engineering-특강/06-632dd0146f.png)
+    ![image](/assets/img/notion/TIL-JIRA-MCP-와-Harness-Engineering-특강/06-632dd0146f.png)
 
-  - 사람이 코드 리뷰하는 것과 비슷하지만, 기계적으로 검증 가능한 부분을 자동화한다는 점이 다름
-    - 린터가 경고하면 에이전트가 자동 수정
+    - 사람이 코드 리뷰하는 것과 비슷하지만, 기계적으로 검증 가능한 부분을 자동화한다는 점이 다름
+        - 린터가 경고하면 에이전트가 자동 수정
 
-    - 테스트가 실패하면 에이전트가 다시 시도
+        - 테스트가 실패하면 에이전트가 다시 시도
 
-    - 기준 충족까지 반복
+        - 기준 충족까지 반복
 
-  - GitHub Actions 같은 도구로 이미 구현 가능하며, PR이 올라오면 자동 코드 리뷰를 돌리고, 이슈에 `@Claude` 같은 멘션을 달면 에이전트가 수정 PR을 만들어주는 워크플로우가 그 예시임
+    - GitHub Actions 같은 도구로 이미 구현 가능하며, PR이 올라오면 자동 코드 리뷰를 돌리고, 이슈에 `@Claude` 같은 멘션을 달면 에이전트가 수정 PR을 만들어주는 워크플로우가 그 예시임
 
 - **관측성 - 에이전트도 로그를 봐야 함**
 
-  - 에이전트가 프로덕션 버그를 고치려면 로그, 메트릭, 트레이스에 접근할 수 있어야 함
+    - 에이전트가 프로덕션 버그를 고치려면 로그, 메트릭, 트레이스에 접근할 수 있어야 함
 
   | 데이터 종류 | 에이전트가 하는 일 |
   | --- | --- |
@@ -292,7 +292,7 @@ LLM은 똑똑하지만, 혼자서는 아무것도 못 함
   | **메트릭** | 성능 저하 구간 찾기 |
   | **트레이스** | 요청 흐름 따라가며 원인 추적 |
 
-  - 관측성 도구의 데이터를 에이전트가 읽을 수 있게 열어줘야 함 → 로그 검색 API를 만들거나, 메트릭 쿼리 도구를 (MCP 등을 통해) 에이전트에 연결하는 식
+    - 관측성 도구의 데이터를 에이전트가 읽을 수 있게 열어줘야 함 → 로그 검색 API를 만들거나, 메트릭 쿼리 도구를 (MCP 등을 통해) 에이전트에 연결하는 식
 
 - **흔히 저지르는 실수들**
 
@@ -322,75 +322,75 @@ LLM은 똑똑하지만, 혼자서는 아무것도 못 함
 
 - 명령형 vs 선언형
 
-  - Before - 명령형
+    - Before - 명령형
 
-    ```bash
-    # 운영자가 직접 실행
-    kubectl apply -f deployment.yaml
-    kubectl scale deployment myapp --replicas=5
-    kubectl set image deployment/myapp myapp=myapp:v2.0
-    ```
+        ```bash
+        # 운영자가 직접 실행
+        kubectl apply -f deployment.yaml
+        kubectl scale deployment myapp --replicas=5
+        kubectl set image deployment/myapp myapp=myapp:v2.0
+        ```
 
-    - 문제점
-      - 누가 언제 뭘 했는지 추적 어려움
+        - 문제점
+            - 누가 언제 뭘 했는지 추적 어려움
 
-      - 사람마다 절차가 달라짐
+            - 사람마다 절차가 달라짐
 
-      - 클러스터 상태 ≠ Git 상태 (드리프트 발생)
+            - 클러스터 상태 ≠ Git 상태 (드리프트 발생)
 
-  - After - 선언형
+    - After - 선언형
 
-    ```bash
-    # Git에 commit된 desired-state.yaml
-    apiVersion: apps/v1
-    kind: Deployment
-    metadata:
-      name: myapp
-    spec:
-      replicas: 5
-      template:
+        ```bash
+        # Git에 commit된 desired-state.yaml
+        apiVersion: apps/v1
+        kind: Deployment
+        metadata:
+          name: myapp
         spec:
-          containers:
-            - name: myapp
-              image: myapp:v2.0
-    ```
+          replicas: 5
+          template:
+            spec:
+              containers:
+                - name: myapp
+                  image: myapp:v2.0
+        ```
 
-    - Git에 commit 하면 → 컨트롤러(Argo CD/Flux)가 감지 → 클러스터에 자동 적용
+        - Git에 commit 하면 → 컨트롤러(Argo CD/Flux)가 감지 → 클러스터에 자동 적용
 
-    - 장점
-      - 변경 = Git commit (감사 추적, 리뷰, 승인 가능)
+        - 장점
+            - 변경 = Git commit (감사 추적, 리뷰, 승인 가능)
 
-      - 롤백 = `git revert` 한 번
+            - 롤백 = `git revert` 한 번
 
-      - 어떤 시점이든 ‘지금 환경이 정확히 무엇인지’ Git만 보면 됨
+            - 어떤 시점이든 ‘지금 환경이 정확히 무엇인지’ Git만 보면 됨
 
 - **GitOps 동작 흐름**
 
-  ```plaintext
-  ┌──────────────┐                ┌──────────────────┐
-  │  개발자       │  git commit    │   Git Repository │
-  │              ├───────────────►│   (desired       │
-  │              │                │    state)        │
-  └──────────────┘                └────────┬─────────┘
-                                           │ Watch
-                                           ↓
-                                  ┌──────────────────┐
-                                  │  GitOps Agent    │
-                                  │  (Argo CD/Flux)  │
-                                  └────────┬─────────┘
-                                           │ Sync
-                                           ↓
-                                  ┌──────────────────┐
-                                  │  K8s Cluster     │
-                                  │  (actual state)  │
-                                  └──────────────────┘
-                                           │
-                                           │ 만약 차이 발생 시
-                                           ↓
-                                [Reconcile / Drift Correct]
-  ```
+    ```plaintext
+    ┌──────────────┐                ┌──────────────────┐
+    │  개발자       │  git commit    │   Git Repository │
+    │              ├───────────────►│   (desired       │
+    │              │                │    state)        │
+    └──────────────┘                └────────┬─────────┘
+                                             │ Watch
+                                             ↓
+                                    ┌──────────────────┐
+                                    │  GitOps Agent    │
+                                    │  (Argo CD/Flux)  │
+                                    └────────┬─────────┘
+                                             │ Sync
+                                             ↓
+                                    ┌──────────────────┐
+                                    │  K8s Cluster     │
+                                    │  (actual state)  │
+                                    └──────────────────┘
+                                             │
+                                             │ 만약 차이 발생 시
+                                             ↓
+                                  [Reconcile / Drift Correct]
+    ```
 
-  - 시나리오 예시
+    - 시나리오 예시
 
   | 행동 | 결과 |
   | --- | --- |
@@ -413,18 +413,18 @@ LLM은 똑똑하지만, 혼자서는 아무것도 못 함
 > : 팀 누구나(그리고 AI 에이전트도) 지금 무엇이 어디에 어떤 상태로 있는지 알 수 있는 정도
 
 - 가시성이 높은 팀의 증상
-  - 누가 봐도 한 화면에서 **이슈 → PR → 빌드 → 배포 → 운영 메트릭**이 연결됨
+    - 누가 봐도 한 화면에서 **이슈 → PR → 빌드 → 배포 → 운영 메트릭**이 연결됨
 
-  - 새로 들어온 사람이 1주일 안에 전체 흐름을 이해
+    - 새로 들어온 사람이 1주일 안에 전체 흐름을 이해
 
-  - AI 에이전트가 사람과 같은 정보로 판단 가능
+    - AI 에이전트가 사람과 같은 정보로 판단 가능
 
 - 도구 연결이 만들어내는 가치 사슬
-  ![image](/assets/img/notion/TIL-JIRA-MCP-와-Harness-Engineering-특강/07-c7e8b0b221.png)
+    ![image](/assets/img/notion/TIL-JIRA-MCP-와-Harness-Engineering-특강/07-c7e8b0b221.png)
 
-  - 각 단계를 자동으로 연결하면 통찰이 만들어짐
+    - 각 단계를 자동으로 연결하면 통찰이 만들어짐
 
-  - 이 사슬이 만들어지면 다음 질문에 자동으로 답할 수 있음
+    - 이 사슬이 만들어지면 다음 질문에 자동으로 답할 수 있음
 
 - 가시성이 곧 생산성
 

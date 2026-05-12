@@ -51,13 +51,13 @@ def solution(s):
 ```
 
 - At first, the while statement in the binary conversion part within the while statement was written as `while num//2 != 0:`, but then when only 1 remained at the end, 1 was not included and the loop ended due to a condition.
-  - Therefore, change the condition to `num != 0`
+    - Therefore, change the condition to `num != 0`
 
 - Also, at first, when reverse sorting, I wrote it as `arr.sort(reverse=True)`, but if I write it that way, the order is broken because it just sorts from the largest number.
-  - Therefore, `arr.reverse()` allows the remainder to be stacked upside down.
+    - Therefore, `arr.reverse()` allows the remainder to be stacked upside down.
 
 - At first, an error occurred because `s = arr` was used to assign the created arr to s, making it a list rather than a string.
-  - To solve the problem, you can save it as a string through `s = '',join(arr)`.
+    - To solve the problem, you can save it as a string through `s = '',join(arr)`.
 
 ```python
 def solution(s):
@@ -92,6 +92,6 @@ def solution(s):
 It can also be written in the same way as above.
 
 - `bin()` function
-  - Python function that converts a number into a string in binary form ex) `bin(10)` -> Changes to `'0b1010'` (`0b` in front indicates a binary number)
+    - Python function that converts a number into a string in binary form ex) `bin(10)` -> Changes to `'0b1010'` (`0b` in front indicates a binary number)
 
-  - In the above code, only the binary part is needed, so cut out the part that indicates a binary number, such as `bin(10)[2:]`.
+    - In the above code, only the binary part is needed, so cut out the part that indicates a binary number, such as `bin(10)[2:]`.

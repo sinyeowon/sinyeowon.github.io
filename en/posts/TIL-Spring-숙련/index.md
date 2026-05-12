@@ -1,8 +1,9 @@
 ---
 layout: "post"
 title: "[TIL] Spring Advanced - JWT authentication and role management"
+title_source: "manual"
 date: 2026-05-10 09:00:00 +0900
-last_modified_at: 2026-05-11 10:25:00 +0900
+last_modified_at: 2026-05-11 11:33:00 +0900
 categories: ["Spring 단기 심화", "Spring 강의"]
 tags: ["Spring", "TIL", "내일배움캠프"]
 description: "This post summarizes adding JWT dependencies, configuring the secret key, building JwtUtil, managing user roles with an enum, and creating tokens."
@@ -14,7 +15,6 @@ permalink: "/en/posts/TIL-Spring-숙련/"
 original_url: "/posts/TIL-Spring-숙련/"
 notion_id: "35c7788a-fc66-805b-b95d-efebac969913"
 notion_lang: "en"
-title_source: "manual"
 ---
 ## What I studied
 
@@ -31,206 +31,202 @@ title_source: "manual"
 We plan to create a class called JwtUtil with JWT-related functions to perform JWT-related functions.
 
 - **JWT-related features**
-  1. Create JWT
+    1. Create JWT
 
-  2. Save the generated JWT in Cookie
+    2. Save the generated JWT in Cookie
 
-  3. Substring the JWT token contained in the cookie
+    3. Substring the JWT token contained in the cookie
 
-  4. JWT verification
+    4. JWT verification
 
-  5. Get user information from JWT
+    5. Get user information from JWT
 
 - Data required for token creation
 
-  ```java
-  // Header KEY 값
-  public static final String AUTHORIZATION_HEADER = "Authorization";
-  // 사용자 권한 값의 KEY
-  public static final String AUTHORIZATION_KEY = "auth";
-  // Token 식별자
-  public static final String BEARER_PREFIX = "Bearer ";
-  // 토큰 만료시간
-  private final long TOKEN_TIME = 60 * 60 * 1000L; // 60분
+    ```java
+    // Header KEY 값
+    public static final String AUTHORIZATION_HEADER = "Authorization";
+    // 사용자 권한 값의 KEY
+    public static final String AUTHORIZATION_KEY = "auth";
+    // Token 식별자
+    public static final String BEARER_PREFIX = "Bearer ";
+    // 토큰 만료시간
+    private final long TOKEN_TIME = 60 * 60 * 1000L; // 60분
 
-  @Value("${jwt.secret.key}") // Base64 Encode 한 SecretKey
-  private String secretKey;
-  private Key key;
-  private final SignatureAlgorithm signatureAlgorithm = SignatureAlgorithm.HS256;
+    @Value("${jwt.secret.key}") // Base64 Encode 한 SecretKey
+    private String secretKey;
+    private Key key;
+    private final SignatureAlgorithm signatureAlgorithm = SignatureAlgorithm.HS256;
 
-  // 로그 설정
-  public static final Logger logger = LoggerFactory.getLogger("JWT 관련 로그");
+    // 로그 설정
+    public static final Logger logger = LoggerFactory.getLogger("JWT 관련 로그");
 
-  @PostConstruct
-  public void init() {
-      byte[] bytes = Base64.getDecoder().decode(secretKey);
-      key = Keys.hmacShaKeyFor(bytes);
-  }
-  ```
+    @PostConstruct
+    public void init() {
+        byte[] bytes = Base64.getDecoder().decode(secretKey);
+        key = Keys.hmacShaKeyFor(bytes);
+    }
+    ```
 
-  - Write the Secret Key encoded in Base64 in properties and retrieve it through @Value.
+    - Write the Secret Key encoded in Base64 in properties and retrieve it through @Value.
 
-  - Encrypt with the Secret Key taken when creating the JWT.
-    - At this time, the encoded Secret Key is decoded and used.
+    - Encrypt with the Secret Key taken when creating the JWT.
+        - At this time, the encoded Secret Key is decoded and used.
 
-    - Key is an object containing the decoded Secret Key.
+        - Key is an object containing the decoded Secret Key.
 
-    - @PostConstruct is used to prevent the mistake of calling a new request every time you use a value that only needs to be received once. 
-      - Executes after calling the constructor of the JwtUtil class and injects the value into the Key field.
+        - @PostConstruct is used to prevent the mistake of calling a new request every time you use a value that only needs to be received once. 
+            - Executes after calling the constructor of the JwtUtil class and injects the value into the Key field.
 
-  - The encryption algorithm uses the HS256 algorithm.
+    - The encryption algorithm uses the HS256 algorithm.
 
-  - Bearer indicates that a JWT or OAuth token is used.
+    - Bearer indicates that a JWT or OAuth token is used.
+        - What is Bearer<br>
+            [https://docs.tosspayments.com/resources/glossary/bearer-auth](https://docs.tosspayments.com/resources/glossary/bearer-auth)
 
-  - Logging means recording project status or operation information in chronological order while the application is running.
-    - We will proceed with logging using the Logback logging framework.
-
-> User permission types are managed with an enum.
+    - Logging means recording project status or operation information in chronological order while the application is running.
+        - We will proceed with logging using the Logback logging framework.> User permission types are managed using Enum.
 >
-> - Used when adding a user's role to the token while creating a JWT.
+> - Used to enter the user's permissions using the user's information when creating a JWT
 >
-> ```java
-> public enum UserRoleEnum {
->     USER(Authority.USER),  // 사용자 권한
->     ADMIN(Authority.ADMIN);  // 관리자 권한
+>```java
+>     public enum UserRoleEnum {
+>         USER(Authority.USER),  // 사용자 권한
+>         ADMIN(Authority.ADMIN);  // 관리자 권한
 >
->     private final String authority;
+>         private final String authority;
 >
->     UserRoleEnum(String authority) {
->         this.authority = authority;
+>         UserRoleEnum(String authority) {
+>             this.authority = authority;
+>         }
+>
+>         public String getAuthority() {
+>             return this.authority;
+>         }
+>
+>         public static class Authority {
+>             public static final String USER = "ROLE_USER";
+>             public static final String ADMIN = "ROLE_ADMIN";
+>         }
 >     }
->
->     public String getAuthority() {
->         return this.authority;
->     }
->
->     public static class Authority {
->         public static final String USER = "ROLE_USER";
->         public static final String ADMIN = "ROLE_ADMIN";
->     }
-> }
-> ```
+>     ```
 >
 > <details markdown="1">
 > <summary>Code description</summary>
 >
-> - `UserRoleEnum` is a class that manages user roles as an enum.
+> - `UserRoleEnum` is a class that manages user permissions (Role) as an enum.
 >
->   - Using an enum helps prevent typos because permission values do not need to be written directly as strings.
+> - Using enums prevents typos by not having to write permission values directly as strings.
 >
->   - The current roles are `USER` and `ADMIN`.
+> - Currently, there are two permissions defined: `USER` and `ADMIN`.
 >
-> ```java
-> USER(Authority.USER),
-> ADMIN(Authority.ADMIN);
-> ```
+>```java
+>             USER(Authority.USER),
+>             ADMIN(Authority.ADMIN);
+>             ```
 >
-> - `USER` is a normal user role.
+> - `USER` is a normal user privilege.
 >
-> - `ADMIN` is an administrator role.
+> - `ADMIN` has administrator privileges.
 >
-> - The `authority` field stores the authority string used by Spring Security.
+> - The `authority` field stores the permission string used by the actual Spring Security.
 >
-> ```java
-> private final String authority;
-> ```
+>```java
+>             private final String authority;
+>             ```
 >
-> - Spring Security typically uses authority values with the `ROLE_` prefix.
+> - Spring Security typically uses permission values with the `ROLE_` prefix.
 >
-> ```plaintext
-> ROLE_USER
-> ROLE_ADMIN
-> ```
+>```plaintext
+>             ROLE_USER
+>             ROLE_ADMIN
+>             ```
 >
-> - The enum constructor stores the authority string.
+> - Stores the permission string via the enum constructor.
 >
-> ```java
-> UserRoleEnum(String authority) {
->     this.authority = authority;
-> }
-> ```
+>```java
+>             UserRoleEnum(String authority) {
+>                 this.authority = authority;
+>             }
+>             ```
 >
-> - The authority string passed while creating the enum is stored in the `authority` field.
+> - The permission string passed when creating an enum is stored in the `authority` field.
 >
-> ```java
-> USER("ROLE_USER")
-> ADMIN("ROLE_ADMIN")
-> ```
+>```java
+>             USER("ROLE_USER")
+>             ADMIN("ROLE_ADMIN")
+>             ```
 >
-> - The `getAuthority()` method returns the stored authority string.
+> - The `getAuthority()` method returns the stored permission string.
 >
-> ```java
-> public String getAuthority() {
->     return this.authority;
-> }
-> ```
+>```java
+>             public String getAuthority() {
+>                 return this.authority;
+>             }
+>             ```
 >
 > - Example
 >
-> ```java
-> UserRoleEnum.USER.getAuthority()
-> ```
+>```java
+>             UserRoleEnum.USER.getAuthority()
+>             ```
+>>```plaintext
+>             ROLE_USER
+>             ```
 >
-> ```plaintext
-> ROLE_USER
-> ```
+> - The `Authority` inner class manages permission string constants.
 >
-> - The `Authority` inner class manages authority string constants.
+>```java
+>             public static class Authority {
+>                 public static final String USER = "ROLE_USER";
+>                 public static final String ADMIN = "ROLE_ADMIN";
+>             }
+>             ```
 >
-> ```java
-> public static class Authority {
->     public static final String USER = "ROLE_USER";
->     public static final String ADMIN = "ROLE_ADMIN";
-> }
-> ```
+> - If you manage the permission string as a constant, you don't have to write the string yourself.
 >
-> - Managing authority strings as constants removes the need to write raw strings repeatedly.
+> - Prevents typos and improves maintainability.
 >
-> - This prevents typos and improves maintainability.
+>```java
+>             "ROLE_USRE" // 오타 발생 가능
+>             ```
 >
-> ```java
-> "ROLE_USRE" // typo-prone
-> ```
+> - full flow
 >
-> - Overall flow
+> - enum name
 >
->   - Enum name
+>```java
+>             UserRoleEnum.USER
+>             ```
 >
-> ```java
-> UserRoleEnum.USER
-> ```
+> → Permission types used in code
 >
-> → Role type used in code
+> - actual permission string
 >
->   - Actual authority string
+>```java
+>             UserRoleEnum.USER.getAuthority()
+>             ```
 >
-> ```java
-> UserRoleEnum.USER.getAuthority()
-> ```
+> → Permission values recognized by Spring Security
 >
-> → Authority value recognized by Spring Security
+>```plaintext
+>             ROLE_USER
+>             ```
 >
-> ```plaintext
-> ROLE_USER
-> ```
+> - Cleanup
+> - `UserRoleEnum`
+> - Manage user permission types with enum
 >
-> - Summary
+> - `Authority`
+> - Manage actual permission string constants
 >
->   - `UserRoleEnum`
->     - Manages user role types as an enum.
+> - `getAuthority()`
+> - Returns a permission string to be used by Spring Security
 >
->   - `Authority`
->     - Manages actual authority string constants.
+> - Purpose
+> - This is to manage permissions safely and consistently.
 >
->   - `getAuthority()`
->     - Returns the authority string used by Spring Security.
->
->   - Purpose
->     - To manage roles safely and consistently.
->
-> </details>
-
-1. Create JWT
+> </details>1. Create JWT
 
     ```java
     // 토큰 생성
@@ -257,7 +253,7 @@ We plan to create a class called JwtUtil with JWT-related functions to perform J
     - Insert the date of issue into issuedAt.
 
     - Enter the key containing the secretKey value and the encryption algorithm in signWith.
-      - Encrypt JWT using ket and encryption algorithm.
+        - Encrypt JWT using ket and encryption algorithm.
 
 2. Save to JWT Cookie
 
@@ -330,7 +326,7 @@ We plan to create a class called JwtUtil with JWT-related functions to perform J
     }
     ```
 
-    - The **Payload** part of the JWT structure contains information contained in the token.
+    - The **Payload** part of the JWT structure contains information contained in the token. 
 
     - A ‘piece’ of information contained here is called a claim (**claim**), and it consists of a key-value pair. A token can contain multiple claims.
 

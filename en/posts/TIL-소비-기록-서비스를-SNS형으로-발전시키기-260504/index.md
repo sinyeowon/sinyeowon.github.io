@@ -1,6 +1,7 @@
 ---
 layout: "post"
 title: "[TIL] Developing a consumption record service into an SNS-style service"
+title_source: "manual"
 date: 2026-05-04 09:00:00 +0900
 last_modified_at: 2026-05-07 11:33:00 +0900
 categories: ["GDGoC KNU", "0 to Product"]
@@ -14,40 +15,39 @@ permalink: "/en/posts/TIL-소비-기록-서비스를-SNS형으로-발전시키�
 original_url: "/posts/TIL-소비-기록-서비스를-SNS형으로-발전시키기-260504/"
 notion_id: "3587788a-fc66-80fd-985d-eefcbe2ec170"
 notion_lang: "en"
-title_source: "manual"
 ---
 ## What I did today
 
 - Create team notion
 
 - Drafting a plan and drafting a meeting agenda
-  - Creating a basic framework for an idea-based plan
+    - Creating a basic framework for an idea-based plan
 
 - Planning meeting
 
 ## Meeting
 
 - Final decision and materialization of idea
-  - The idea I had in mind was too similar to other services, so I needed something different.
+    - The idea I had in mind was too similar to other services, so I needed something different.
 
-  - We want to add a lot of fun elements so that it can go viral among users.
+    - We want to add a lot of fun elements so that it can go viral among users.
 
-  - Also encourages users to use it every day
+    - Also encourages users to use it every day
 
-  - We want to create a SNS-type service with friends, like the recently popular Setlog.
+    - We want to create a SNS-type service with friends, like the recently popular Setlog.
 
 - Feature discussion
-  - Transaction details are imported and reflected through Excel and PDF files
-    - Problem: Is it possible to retrieve transfer details other than card payments, and since information about transfer details is not automatically reflected, is it possible to enable AI to allow users to enter and record information about why and where they used it?
+    - Transaction details are imported and reflected through Excel and PDF files
+        - Problem: Is it possible to retrieve transfer details other than card payments, and since information about transfer details is not automatically reflected, is it possible to enable AI to allow users to enter and record information about why and where they used it?
 
-    - Solution: When a notification appears on the banking app during a transfer, the notification is detected and the user is notified so that they can enter the transfer information themselves immediately when transferring! → Since the information about the transfer has already been created, if you download the transaction history, you can also retrieve the information you created about the transfer.
-      - Another problem...: All information may not be retrieved, iOS does not work, and is sensitive because it is information from a financial app + Salad Bank
+        - Solution: When a notification appears on the banking app during a transfer, the notification is detected and the user is notified so that they can enter the transfer information themselves immediately when transferring! → Since the information about the transfer has already been created, if you download the transaction history, you can also retrieve the information you created about the transfer.
+            - Another problem...: All information may not be retrieved, iOS does not work, and is sensitive because it is information from a financial app + Salad Bank
 
-  - Final solution
-    - We judged that loading transaction details separately would be difficult for our project.
+    - Final solution
+        - We judged that loading transaction details separately would be difficult for our project.
 
-    - Have a consumption competition with your friends every day on a fun topic, and encourage them to capture and post daily transaction details for the parts they want to post.
-      - Use text recognition through OCR
+        - Have a consumption competition with your friends every day on a fun topic, and encourage them to capture and post daily transaction details for the parts they want to post.
+            - Use text recognition through OCR
 
 ## Lessons learned
 
@@ -60,8 +60,8 @@ title_source: "manual"
 ## What to do next
 
 - Meetings by series
-  - Determine your technology stack
+    - Determine your technology stack
 
-  - Write ERD
+    - Write ERD
 
-  - Project settings
+    - Project settings
