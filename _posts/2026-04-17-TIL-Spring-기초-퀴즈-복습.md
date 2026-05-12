@@ -1,11 +1,12 @@
 ---
-title: "[TIL] Spring 기초 퀴즈 복습"
+title: "[TIL] 스프링 기초 - 핵심 개념 퀴즈 복습"
+title_source: "manual"
 date: 2026-04-17 09:00:00 +0900
 last_modified_at: 2026-05-12 12:15:00 +0900
 categories: ["Spring 단기 심화", "특강"]
 tags: ["Spring"]
-description: "DispatcherServlet: 모든 요청을 먼저 받아 적절한 Controller를 찾아 연결해줌 @RestController: @Controller + @ResponseBody"
-description_source: "excerpt"
+description: "DispatcherServlet, @RestController, @RequestBody, DI, 싱글톤 스코프 등 스프링 기초 퀴즈에서 다룬 핵심 개념을 복습한 글입니다."
+description_source: "manual"
 english_url: "/en/posts/TIL-Spring-기초-퀴즈-복습/"
 notion_id: "35e7788a-fc66-80d0-8238-e7b6d699f7e3"
 notion_lang: "ko"

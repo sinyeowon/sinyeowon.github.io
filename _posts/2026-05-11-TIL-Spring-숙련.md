@@ -1,12 +1,13 @@
 ---
-title: "[TIL] Spring 숙련 -"
+title: "[TIL] 스프링 숙련 - 회원가입 구현"
+title_source: "manual"
 date: 2026-05-11 09:00:00 +0900
 last_modified_at: 2026-05-12 12:34:00 +0900
 categories: ["Spring 단기 심화", "Spring 강의"]
 tags: ["Spring", "TIL", "내일배움캠프"]
-description: "회원 DB에 매핑되는 @Entity 클래스 구현 @Enumerated(value = EnumType.STRING)"
-description_source: "excerpt"
-english_url: "/en/posts/TIL-Spring-숙련/"
+description: "회원 엔티티와 권한 enum, 관리자 가입 토큰, PasswordEncoder 기반 비밀번호 암호화와 회원가입 API 구현 흐름을 정리한 글입니다."
+description_source: "manual"
+permalink: "/posts/TIL-Spring-숙련-2026-05-11/"
 notion_id: "35d7788a-fc66-8010-8d47-c4452137ba98"
 notion_lang: "ko"
 ---

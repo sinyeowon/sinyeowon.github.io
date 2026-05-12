@@ -1,12 +1,13 @@
 ---
 layout: "post"
-title: "[Java] Programmers - the next big number"
+title: "[Java] Programmers - Next Big Number"
+title_source: "manual"
 date: 2026-05-12 09:00:00 +0900
 last_modified_at: 2026-05-12 12:10:00 +0900
 categories: ["Programmers", "Java"]
 tags: ["Java", "programmers"]
-description: "Programmers Next Big Number I continued to solve the problem using different solving methods, but it was difficult to pass the accuracy test but not the efficiency test."
-description_source: "excerpt"
+description: "This post uses Java Integer.bitCount() to find the next larger number with the same number of 1 bits, and notes the efficiency limits of a brute-force approach."
+description_source: "manual"
 lang: "en"
 ui_lang: "ko-KR"
 toc: true

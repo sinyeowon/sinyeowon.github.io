@@ -422,6 +422,57 @@ function slugify(value) {
   return `notion-${Date.now()}`;
 }
 
+function pageDateValue(page) {
+  const dateProperty = findProperty(page, propertyNames.date, 'date');
+  return propertyText(dateProperty) || page.created_time;
+}
+
+function pageBaseSlug(page) {
+  const title = propertyText(findProperty(page, propertyNames.title, 'title'));
+  const slugProperty = findProperty(page, propertyNames.slug);
+  return slugify(propertyText(slugProperty) || title);
+}
+
+function createUrlSlugPlan(pages) {
+  const groups = new Map();
+
+  for (const page of pages) {
+    const baseSlug = pageBaseSlug(page);
+    if (!baseSlug) {
+      continue;
+    }
+
+    const entries = groups.get(baseSlug) || [];
+    entries.push({ page, dateValue: pageDateValue(page) });
+    groups.set(baseSlug, entries);
+  }
+
+  const plan = new Map();
+
+  for (const [baseSlug, entries] of groups.entries()) {
+    entries.sort((a, b) => {
+      const byDate = String(a.dateValue).localeCompare(String(b.dateValue));
+      return byDate || String(a.page.id).localeCompare(String(b.page.id));
+    });
+
+    const used = new Set();
+    entries.forEach((entry, index) => {
+      let candidate = index === 0 ? baseSlug : `${baseSlug}-${datePrefix(entry.dateValue)}`;
+      let suffix = 2;
+
+      while (used.has(candidate)) {
+        candidate = `${baseSlug}-${datePrefix(entry.dateValue)}-${suffix}`;
+        suffix += 1;
+      }
+
+      used.add(candidate);
+      plan.set(entry.page.id, candidate);
+    });
+  }
+
+  return plan;
+}
+
 function yamlString(value) {
   return JSON.stringify(String(value || ''));
 }
@@ -949,20 +1000,20 @@ function extensionFromUrl(url) {
   return extension && extension.length <= 6 ? extension : '';
 }
 
-async function buildPost(page) {
+async function buildPost(page, urlSlugPlan = new Map()) {
   const notionTitle = propertyText(findProperty(page, propertyNames.title, 'title'));
   if (!notionTitle) {
     throw new Error(`Notion page ${page.id} has no title.`);
   }
 
-  const dateProperty = findProperty(page, propertyNames.date, 'date');
-  const dateValue = propertyText(dateProperty) || page.created_time;
+  const dateValue = pageDateValue(page);
   const slugProperty = findProperty(page, propertyNames.slug);
   const slug = slugify(propertyText(slugProperty) || notionTitle);
+  const urlSlug = urlSlugPlan.get(page.id) || slug;
   const date = formatDateForJekyll(dateValue);
   const fileName = `${datePrefix(dateValue)}-${slug}.md`;
   const filePath = path.join(POSTS_DIR, fileName);
-  const englishPath = path.join(EN_POSTS_DIR, slug, 'index.md');
+  const englishPath = path.join(EN_POSTS_DIR, urlSlug, 'index.md');
   const existingTitleState = await existingPostTitleState(filePath);
   const title =
     existingTitleState.source === 'manual' && existingTitleState.title
@@ -991,8 +1042,8 @@ async function buildPost(page) {
       ? existingDescriptionState.source || (existingDescriptionIsGenerated ? 'excerpt' : 'manual')
       : 'excerpt';
   const lastModifiedAt = formatDateForJekyll(page.last_edited_time);
-  const koreanUrl = `/posts/${slug}/`;
-  const englishUrl = `/en/posts/${slug}/`;
+  const koreanUrl = `/posts/${urlSlug}/`;
+  const englishUrl = `/en/posts/${urlSlug}/`;
 
   const metadata = {
     title,
@@ -1002,6 +1053,7 @@ async function buildPost(page) {
     tags,
     description: fallbackDescription,
     descriptionSource,
+    permalink: urlSlug === slug ? '' : koreanUrl,
     englishUrl,
     notionId: page.id,
     notionLang: 'ko',
@@ -1552,6 +1604,7 @@ async function main() {
   const pages = await queryDatabase();
   const publishedPages = pages.filter(isPublished);
   const skippedCount = pages.length - publishedPages.length;
+  const urlSlugPlan = createUrlSlugPlan(publishedPages);
 
   console.log(`Fetched ${pages.length} Notion page(s).`);
   console.log(`Importing ${publishedPages.length} published page(s).`);
@@ -1561,7 +1614,7 @@ async function main() {
 
   const posts = [];
   for (const page of publishedPages) {
-    const pagePosts = await buildPost(page);
+    const pagePosts = await buildPost(page, urlSlugPlan);
     posts.push(...pagePosts);
   }
 

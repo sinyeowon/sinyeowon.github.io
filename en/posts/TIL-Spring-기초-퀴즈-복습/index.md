@@ -1,12 +1,13 @@
 ---
 layout: "post"
-title: "[TIL] Spring Basic Quiz Review"
+title: "[TIL] Spring Basics - Quiz Review"
+title_source: "manual"
 date: 2026-04-17 09:00:00 +0900
 last_modified_at: 2026-05-12 12:15:00 +0900
 categories: ["Spring 단기 심화", "특강"]
 tags: ["Spring"]
-description: "DispatcherServlet: Receives all requests first, finds and connects to the appropriate Controller @RestController: @Controller + @ResponseBody"
-description_source: "excerpt"
+description: "This post reviews core Spring concepts from a basic quiz, including DispatcherServlet, @RestController, @RequestBody, dependency injection, and singleton scope."
+description_source: "manual"
 lang: "en"
 ui_lang: "ko-KR"
 toc: true
