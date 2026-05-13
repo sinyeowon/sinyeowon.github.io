@@ -1,26 +1,30 @@
 ---
-title: "[TIL] 스프링 숙련 - 회원가입 구현"
+layout: "post"
+title: "[TIL] Spring Skills - Membership Registration Implementation"
 title_source: "manual"
 date: 2026-05-11 09:00:00 +0900
 last_modified_at: 2026-05-12 12:34:00 +0900
 categories: ["Spring 단기 심화", "Spring 강의"]
 tags: ["Spring", "TIL", "내일배움캠프"]
-description: "회원 엔티티와 권한 enum, 관리자 가입 토큰, PasswordEncoder 기반 비밀번호 암호화와 회원가입 API 구현 흐름을 정리한 글입니다."
+description: "This article summarizes the member entity, permission enum, administrator sign-up token, PasswordEncoder-based password encryption, and member sign-up API implementation flow."
 description_source: "manual"
-permalink: "/posts/TIL-Spring-숙련-2026-05-11/"
-english_url: "/en/posts/TIL-Spring-숙련-2026-05-11/"
+lang: "en"
+ui_lang: "ko-KR"
+toc: true
+permalink: "/en/posts/TIL-Spring-숙련-2026-05-11/"
+original_url: "/posts/TIL-Spring-숙련-2026-05-11/"
 notion_id: "35d7788a-fc66-8010-8d47-c4452137ba98"
-notion_lang: "ko"
+notion_lang: "en"
 ---
-## 공부한 내용
+## What I studied
 
-### 회원가입 구현
+### Membership registration implementation
 
-- **회원가입 설계**
+- **Membership registration design**
 
     ![image](/assets/img/notion/TIL-Spring-숙련/01-2179216dd3.png)
 
-    - 회원 DB에 매핑되는 @Entity 클래스 구현
+    - Implement @Entity class mapped to member DB
 
         ```java
         package com.sparta.springauth.entity;
@@ -56,56 +60,54 @@ notion_lang: "ko"
         ```
 
         - `@Enumerated(value = EnumType.`*`STRING`*`)`
-            - EnumType을 DB 컬럼에 저장할 때 사용하는 애너테이션입니다.
+            - This is an annotation used when storing EnumType in a DB column.
 
-            - `EnumType.`*`STRING`* 옵션을 사용하면 Enum의 이름을 DB에 그대로 저장합니다.
+            - If you use the `EnumType.`*`STRING`* options, the name of the enum is stored in the DB as is.
 
             - `USER(Authority.USER)` → USER
 
-    - 관리자 회원 가입 인가 방법
-        - ‘관리자 가입 토큰’ 입력이 필요하도록: 랜덤하게 생성된 토큰 사용<br>
+    - How to authorize administrator membership
+        - Requires entry of ‘administrator sign-up token’: Use of randomly generated tokens<br>
             ex) `"AAABnvxRVklrnYxKZ0aHgTBcXukeZygoC"`
 
-        - 보통 현업에서는 위와 같이 권한을 부여하지 않음
-            - 해커가 해당 암호를 갈취하게 되면, 관리자 권한을 쉽게 획득할 수 있기 때문
+        - Usually, in the field, the above authority is not granted.
+            - If a hacker steals the password, he or she can easily obtain administrator privileges.
 
-            - 실제로는,
-                1. ‘관리자’ 권한을 부여할 수 있는 관리자 페이지 구현
+            - Actually,
+                1. Implementation of an administrator page that can grant ‘administrator’ privileges
 
-                2. 승인자에 의한 결재 과정 구현 → 관리자 권한 부여
+                2. Implementation of approval process by approver → Grant administrator authority
 
-                처럼 구현하게 됨
+                Implemented like this:
 
-- **패스워드 암호화 이해**<br>
-    > 회원 등록 시, ‘비밀번호’는 사용자가 입력한 문자 그대로 DB에 등록하면 안됨
-    >     ‘정보통신망법, 개인정보보호법’에 의해 비밀번호 암호화(Encryption)가 의무임
+- **Understanding Password Encryption**<br>
+    > When registering as a member, the ‘password’ must not be registered in the DB exactly as it is entered by the user.
+    > Password encryption is mandatory under the ‘Information and Communications Network Act and Personal Information Protection Act’
 
-    - 암호화 후, 패스워드 저장이 필요함
-        - 평문 → (암호화 알고리즘) → 암호문
+    - After encryption, password storage is required.
+        - Plaintext → (Encryption algorithm) → Ciphertext
 ex) “nobodynobody” → “$2a$10$..”
 
-        - 만약 해커가 DB에 있는 앨리스의 패스워드 정보를 갈취하더라도 실제 암호를 알 수 없음
+        - Even if a hacker steals Alice’s password information in the DB, the actual password cannot be known.
 
-        - 그래서 복호화가 불가능한 **단방향 알고리즘 사용이 필요**함
-            - **단방향 암호 알고리즘**
-                - 암호화: 평문 → (암호화 알고리즘) → 암호문
+        - Therefore, decryption is impossible **one-way algorithm must be used**
+            - **One-way encryption algorithm**
+                - Encryption: Plaintext → (Encryption algorithm) → Ciphertext- Decryption: **Not possible** ~~(ciphertext → (encryption algorithm) → plaintext)~~
 
-                - 복호화: **불가** ~~(암호문 → (암호화 알고리즘) → 평문)~~
+                - **Then, does the user have to remember the encrypted password when logging in?**
+                    - Password confirmation procedure
+                        1. User enters “ID, password (plain text)” to log in → Request to log in to server
+                            1. Encrypt the password (plaintext) on the server
 
-                - **그럼 사용자가 로그인 할 때는 암호화된 패스워드를 기억해야하는지**
-                    - Password 확인 절차
-                        1. 사용자가 로그인을 위해 “아이디, 패스워드 (평문)” 입력 → 서버에 로그인 요청
-                            1. 서버에서 패스워드 (평문)을 암호화
+                            2. Plaintext → (Encryption algorithm) → Ciphertext
 
-                            2. 평문 → (암호화 알고리즘) → 암호문
-
-                        2. **DB에 저장된 “아이디, 패스워드(암호문)”와 일치 여부 확인**
+                        2. **Check whether it matches the “ID, password (ciphertext)” stored in the DB**
 
     - Password Matching<br>
-        > Spring Security라는 프레임워크에서 제공하는 비밀번호 암호화 기능을 사용
-        >         Bean 수동등록 예제로 봤던 PasswordEncoder가 해당 Security에서 제공하는 비밀번호 암호화 메서드임
+        > Use the password encryption function provided by a framework called Spring Security.
+        > PasswordEncoder, which we saw as an example of manual bean registration, is a password encryption method provided by the security.
         >
-        >         사용자가 입력한 비밀번호가 암호화되어 저장된 비밀번호와 비교하여 일치여부를 확인해주는 기능도 가지고 있어 많이 사용됨
+        > It is also widely used as it has a function that compares the password entered by the user with the encrypted and stored password to check whether it matches.
 
         ```java
         // 사용예시
@@ -116,11 +118,11 @@ ex) “nobodynobody” → “$2a$10$..”
         ```
 
         - boolean matches(CharSequence rawPassword, String encodedPassword);
-            - rawPassword : 사용자가 입력한 비밀번호
+            - rawPassword: Password entered by the user
 
-            - encodedPassword : 암호화되어 DB 에 저장된 비밀번호
+            - encodedPassword: Password encrypted and stored in DB
 
-- **회원가입 API 구현**
+- **Implementation of membership registration API**
 
     ![image](/assets/img/notion/TIL-Spring-숙련/02-e63d1094c7.png)
 
@@ -266,9 +268,7 @@ ex) “nobodynobody” → “$2a$10$..”
         }
         ```
 
-### 로그인 구현
-
-- 로그인 API 설계
+### Login implementation- Login API design
     ![image](/assets/img/notion/TIL-Spring-숙련/03-b2faf6d8de.png)
 
 - LoginRequestDto
