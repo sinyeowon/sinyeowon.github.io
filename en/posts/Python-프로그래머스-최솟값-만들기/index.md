@@ -17,7 +17,7 @@ notion_lang: "en"
 ---
 [Programmers 최솟값 만들기](https://school.programmers.co.kr/learn/courses/30/lessons/12941)
 
-## Solution
+## 풀이
 
 ```python
 def solution(A,B):

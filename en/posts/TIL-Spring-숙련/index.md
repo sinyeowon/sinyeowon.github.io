@@ -87,7 +87,7 @@ We plan to create a class called JwtUtil with JWT-related functions to perform J
     - Logging means recording project status or operation information in chronological order while the application is running.
         - We will proceed with logging using the Logback logging framework.> User permission types are managed using Enum.
 >
-> - Used to enter the user's permissions using the user's information when creating a JWT
+> - Used to enter the user's permissions using the user's information when creating a JWT.
 >
 >```java
 >     public enum UserRoleEnum {

@@ -316,7 +316,7 @@ Conflicts occur when two branches modify the same line in the same file differen
               path: build/reports/tests/test
     ```
 
-    - What happens the moment it moves
+    - What happens the moment it operates
         1. When you upload a PR, GitHub automatically executes the above sequence.
 
         2. If even one step fails, mark x in PR
@@ -359,7 +359,7 @@ Conflicts occur when two branches modify the same line in the same file differen
 Q. Should I use Squash merge / Rebase merge / Merge commit?
 
 > There is no correct answer. **The answer is to set a team convention and go consistently**
-> - **Squash merge**: compresses PR into 1 commit / cleanest history (most used)
+> - **Squash merge**: Compress PR into 1 commit / Cleanest history (most used)
 >
 > - **Rebase merge**: Attach PR commits in a row to main / Enable track of commit units
 >
