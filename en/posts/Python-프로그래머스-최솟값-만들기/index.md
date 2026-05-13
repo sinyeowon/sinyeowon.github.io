@@ -17,7 +17,7 @@ notion_lang: "en"
 ---
 [Programmers 최솟값 만들기](https://school.programmers.co.kr/learn/courses/30/lessons/12941)
 
-## 풀이
+## Solution
 
 ```python
 def solution(A,B):
@@ -63,7 +63,7 @@ def solution(A,B):
 
 I wrote the following, but it doesn't pass the efficiency test:
 
-- In Python, bubble sort is not used separately, but can be sorted simply through the `sort()` function.
+- In Python, you can simply sort through the `sort()` function without using bubble sort separately.
 
 `sort()`
 

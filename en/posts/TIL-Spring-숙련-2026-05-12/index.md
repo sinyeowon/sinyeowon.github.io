@@ -20,7 +20,7 @@ notion_lang: "en"
 ### filter
 
 > **Filter**
->: This is an area managed in the web application and is the first/final stage for requests and responses from clients. Through this, information in requests and responses can be changed or additional functions can be added.
+>: This is an area managed in a web application and is the first/final stage for requests and responses from clients. Through this, information in requests and responses can be changed or additional functions can be added.
 >
 >![image](/assets/img/notion/TIL-Spring-숙련/01-86d9426f4e.png)
 
@@ -126,7 +126,7 @@ notion_lang: "en"
         }
         ```
 
-        - `httpServletRequest.getRequestURI()` Get the request URL and separate it. (approval)
+        - `httpServletRequest.getRequestURI()` Get the request URL and separate it. (authorization)
             - URLs starting with `"/api/user"`, `"/css"`, and `"/js"` are excluded from authentication processing.
 
         - Other URLs undergo authentication processing.
@@ -311,7 +311,7 @@ notion_lang: "en"
             }
             ```
 
-            - The reason for disabling `@Component` is that **if the filter is auto-registered, it may run first outside of the Spring Security flow**- CSRF<br>
+            - The reason for disabling `@Component` is **that if the filter is auto-registered, it may be executed first outside of the Spring Security flow**- CSRF<br>
         > **CSRF (Cross-site request forgery)**
 
         - An attacker uses the session information of cookies stored in an authenticated browser to send a request that the user did not intend to the web server.<br>
@@ -417,4 +417,4 @@ notion_lang: "en"
         >UserDetails
         > - Verified UserDetails are used when creating Authentication of the UsernamePasswordAuthenticationToken type, and the corresponding authentication object is set in SecurityContextHoler.
         >
-        > - Available for customization
+        > - Can be used as customized

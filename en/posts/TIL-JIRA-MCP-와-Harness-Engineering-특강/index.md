@@ -207,7 +207,7 @@ This concept was formalized in Harness Engineering published by OpenAI in 2025.P
         - As the agent generates more code, the entropy of the code base increases.<br>
             ex) The document and code do not match, duplicate codes with similar functions increase, and unused imports pile up.
 
-        - If left unattended, the quality of the agent's next work will continue to deteriorate → **Separate cleaning agent must be appointed**
+        - If left unattended, the quality of the agent's next work will continue to deteriorate → **Separate cleaning agent must be installed**
 
         - What a clearance agent does<br>
             <hr>
@@ -404,7 +404,7 @@ All settings in the operating environment must be in Git, and when Git changes, 
   | **See people and see AI** | All infrastructure status is exposed by simply reading Git |
   | **Change people and change AI** | Same procedure for both with a unified interface called PR |
   | **Change tracking is automatic** | Who (Human/AI), when, and what changed remains in Git history |
-  | **Rollback is unified** | Regardless of whether it is a human-made accident or an AI-made accident, recovery is the same with `git revert`. |
+  | **Rollback is unified** | Whether it is a human-made accident or an AI-made accident, recovery is the same with `git revert`. |
 
 ### Visibility - An environment for both people and AI
 
@@ -430,8 +430,8 @@ All settings in the operating environment must be in Git, and when Git changes, 
   | side | Visibility makes a difference |
   | --- | --- |
   | **Onboarding Speed** | New team members can self-learn by following the code/document/issue/deployment flow |
-  | **Incident Response Time** | From occurrence of failure → trace cause → rollback reduced to minutes |
-  | **AI Utilization** | Agents can take context, improving quality of results |
+  | **Incident Response Time** | From occurrence of failure → trace the cause → rollback, shortened to minutes |
+  | **AI Utilization** | Enhances quality of results by allowing agents to take context |
   | **Decision-making speed** | No need to agree on “where are we now” every time we meet. |
 
 ### The most important thing
