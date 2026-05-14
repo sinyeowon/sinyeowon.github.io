@@ -1,6 +1,6 @@
 ---
 layout: "post"
-title: "[TIL] Redis Lecture - Core Architecture and Caching Strategies"
+title: "[TIL] Redis Practical Master Class Lecture 1 - Core Architecture and Caching Strategies"
 title_source: "manual"
 date: 2026-05-12 09:00:00 +0900
 last_modified_at: 2026-05-13 16:03:00 +0900

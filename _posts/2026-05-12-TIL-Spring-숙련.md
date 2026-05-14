@@ -1,5 +1,5 @@
 ---
-title: "[TIL] 스프링 숙련 - 필터와 Spring Security"
+title: "[TIL] Spring 숙련 - 필터와 Spring Security"
 title_source: "manual"
 date: 2026-05-12 09:00:00 +0900
 last_modified_at: 2026-05-13 12:14:00 +0900
