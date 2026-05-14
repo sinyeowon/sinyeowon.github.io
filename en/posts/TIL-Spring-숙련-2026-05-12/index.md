@@ -1,12 +1,13 @@
 ---
 layout: "post"
-title: "[TIL] Spring Skills -"
+title: "[TIL] Spring Skills - Filters and Spring Security"
+title_source: "manual"
 date: 2026-05-12 09:00:00 +0900
 last_modified_at: 2026-05-13 12:14:00 +0900
 categories: ["Spring 단기 심화", "Spring 강의"]
 tags: ["Spring", "TIL", "내일배움캠프"]
-description: ": This is an area managed in a web application and is the first/final stage for requests and responses from clients. Through this, information in requests and responses can be changed or additional functions can be added."
-description_source: "excerpt"
+description: "This post covers Servlet Filter and Filter Chain for request logging, authentication and authorization flow, and the basics of applying Spring Security."
+description_source: "manual"
 lang: "en"
 ui_lang: "ko-KR"
 toc: true

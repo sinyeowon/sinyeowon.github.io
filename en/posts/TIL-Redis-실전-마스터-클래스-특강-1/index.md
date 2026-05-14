@@ -1,12 +1,13 @@
 ---
 layout: "post"
-title: "[TIL] Redis Practical Master Class Lecture 1"
+title: "[TIL] Redis Lecture - Core Architecture and Caching Strategies"
+title_source: "manual"
 date: 2026-05-12 09:00:00 +0900
 last_modified_at: 2026-05-13 16:03:00 +0900
 categories: ["Spring 단기 심화", "특강"]
 tags: ["Redis"]
-description: "Redis core architecture and basics If the existing disk-based DB was like walking down to the library's basement library to find and take out a heavy book,"
-description_source: "excerpt"
+description: "This post summarizes Redis' in-memory architecture, single-threaded event loop, cache patterns, and TTL strategies from a practical service perspective."
+description_source: "manual"
 lang: "en"
 ui_lang: "ko-KR"
 toc: true
