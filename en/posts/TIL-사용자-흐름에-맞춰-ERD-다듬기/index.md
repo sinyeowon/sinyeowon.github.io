@@ -36,7 +36,7 @@ notion_lang: "en"
 
 - 1st revision
 
-    ![image](/assets/img/notion/TIL-260512/01-171908815a.png)
+    ![image](/assets/img/notion/TIL-사용자-흐름에-맞춰-ERD-다듬기/01-171908815a.png)
 
   | **Change Items** | **Existing structure** | **Change structure** | **Reason for change** |
   | --- | --- | --- | --- |
@@ -65,7 +65,7 @@ notion_lang: "en"
 
 - 2nd revision
 
-    ![image](/assets/img/notion/TIL-260512/02-cba4234997.png)
+    ![image](/assets/img/notion/TIL-사용자-흐름에-맞춰-ERD-다듬기/02-cba4234997.png)
 
   | **Change Items** | **Existing structure** | **Change structure** | **Reason for change** |
   | --- | --- | --- | --- |
