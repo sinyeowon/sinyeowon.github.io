@@ -62,7 +62,7 @@ notion_lang: "en"
   | **speed** | Very fast (In-Memory) | Very fast (In-Memory) | Slow (Disk I/O) | **Fastest** (no network I/O) |
   | **Data structure support** | Rich collection of more than 5 types | Only String (Key-Value) | Tables, views, etc. | Object self storage |
   | **Data Persistence** | Support (RDB snapshot, AOF) | Not supported (will evaporate when the server is turned off) | Full support (ACID) | Not supported (will evaporate when the server is turned off) |
-  | **Support for distributed environment** | Clustering, replication, Sentinel | Third party dependency | Replication support (heavy) | Not supported |
+  | **Support for distributed environments** | Clustering, replication, Sentinel | Third party dependency | Replication support (heavy) | Not supported |
   | **Typical usage scenario** | Ranking, Queue, Session, Global Cache | Simple text/session caching | Data that requires permanent retention | Settings, static data from a single server |
 
 > **Q Multi-threading seems to be the best, but why did Redis choose to have only one worker**
@@ -252,9 +252,9 @@ Assuming a popular shopping mall, we plan to map each data structure with comman
 
 ## Questions & Errors
 
-**Q I heard that existing disk-based DBs require locks and are slow because they are multi-threaded, but why does Redis use distributed locks since it is single-threaded?**
+**Q I heard that existing disk-based DBs require locks and are slow because they are multi-threaded, but Redis is single-threaded, so why does it use distributed locks again?**
 
-- Redis’ single thread refers to **Redis** **internally** **how commands are processed**
+- Redis' single thread refers to **Redis** **internally** **how commands are processed**
     - In other words, because Redis processes only one command at a time in order, there are fewer conflicts that occur when multiple threads modify the same memory data at the same time.
 
     - Redis commands themselves are executed atomically.

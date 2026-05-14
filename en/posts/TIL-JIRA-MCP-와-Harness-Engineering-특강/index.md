@@ -46,7 +46,7 @@ LLM is smart, but can't do anything alone
   | --- | --- |
   | **MCP Host** | Environment where AI operates (e.g. Claude Desktop, Cursor IDE) |
   | **MCP Client** | Module that resides in the host and communicates with the server |
-  | **MCP Server** | Gateway to expose external systems (Jira, GitHub, etc.) to MCP standards |
+  | **MCP Server** | Gateway exposing external systems (Jira, GitHub, etc.) to MCP standards |
 
 - **Three basic units exposed by MCP**
 
@@ -298,12 +298,12 @@ This concept was formalized in Harness Engineering published by OpenAI in 2025.P
   | mistake | why is it a problem | what should i do |
   | --- | --- | --- |
   | Write AGENTS.md ambiguously | “Maintain code quality” → Agent does not know what to do | **Testable rules** such as “Functions must have less than 50 lines, JSDoc required for public functions” |
-  | No feedback loop | The agent assumes that he is correct and proceeds. | Test/linter/type checker automation required |
+  | Absence of feedback loop | The agent assumes that he is correct and proceeds. | Test/linter/type checker automation required |
   | Neglecting tacit knowledge | As “you know it all” piles up, agent mistakes increase dramatically. | State the rules in your head as code/documentation |
   | Control all actions with scripts | If you kill too much autonomy, the agent's strengths disappear. | **Only provide direction** and delegate execution |
-  | Make a harness once and leave it alone | The model/project evolves, but only the harness remains static. | Regularly inspected and updated |
+  | Harness made once and left unattended | The model/project evolves, but only the harness remains static. | Regularly inspected and updated |
 
-### GitOps - A source of truth shared between people and AI
+### GitOps - A source of truth shared between humans and AI
 
 > GitOps
 > : A Git repository is used as the Single Source of Truth (SSOT) of the system state, and an automated controller continuously reconciles the declarative definition of Git with the actual environment.
@@ -430,7 +430,7 @@ All settings in the operating environment must be in Git, and when Git changes, 
   | side | Visibility makes a difference |
   | --- | --- |
   | **Onboarding Speed** | New team members can self-learn by following the code/document/issue/deployment flow |
-  | **Incident Response Time** | From occurrence of failure → trace cause → rollback reduced to minutes |
+  | **Incident Response Time** | From occurrence of failure → trace the cause → rollback, shortened to minutes |
   | **AI Utilization** | Agents can take context, improving quality of results |
   | **Decision-making speed** | No need to agree on “where are we now” every time we meet. |
 
