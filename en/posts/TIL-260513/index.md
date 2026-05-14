@@ -1,12 +1,13 @@
 ---
 layout: "post"
-title: "[TIL]-260513"
+title: "[TIL] Preparing TodayPoor's preliminary survey and API spec"
+title_source: "manual"
 date: 2026-05-13 09:00:00 +0900
 last_modified_at: 2026-05-14 21:16:00 +0900
 categories: ["GDGoC KNU", "0 to Product"]
 tags: ["project"]
-description: "We reflected the feedback that it would be good to conduct a preliminary survey by creating and distributing a Google form to check whether the users we are actually targeting are willing to use this service and whether they have any objection to disclosing their spending habits to others."
-description_source: "excerpt"
+description: "This post summarizes preparing a preliminary survey to check target users' willingness to use the service and share spending habits."
+description_source: "manual"
 lang: "en"
 ui_lang: "ko-KR"
 toc: true

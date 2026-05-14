@@ -1,12 +1,13 @@
 ---
 layout: "post"
-title: "[Java] Programmers - pair removal"
+title: "[Java] Programmers - Pair Removal"
+title_source: "manual"
 date: 2026-05-14 09:00:00 +0900
 last_modified_at: 2026-05-14 15:09:00 +0900
 categories: ["Programmers", "Java"]
 tags: ["Java", "programmers"]
-description: "Programmers pairing and removing using Stack data structure in Java"
-description_source: "excerpt"
+description: "This post solves the pair-removal problem in Java by using a Stack to remove adjacent equal characters."
+description_source: "manual"
 lang: "en"
 ui_lang: "ko-KR"
 toc: true

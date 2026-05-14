@@ -1,12 +1,13 @@
 ---
 layout: "post"
-title: "[Python] Programmers - pair removal"
+title: "[Python] Programmers - Pair Removal"
+title_source: "manual"
 date: 2026-05-14 09:00:00 +0900
 last_modified_at: 2026-05-14 14:54:00 +0900
 categories: ["Programmers", "Python"]
 tags: ["Python", "programmers"]
-description: "Programmers: Pair removal: Put one alphabet in the stack, bring in the next alphabet, pop the previously inserted alphabet if it matches the previously inserted alphabet, and if it does not match, put that alphabet in the stack as well."
-description_source: "excerpt"
+description: "This post solves the pair-removal problem in Python by using a list as a stack to remove adjacent equal characters."
+description_source: "manual"
 lang: "en"
 ui_lang: "ko-KR"
 toc: true

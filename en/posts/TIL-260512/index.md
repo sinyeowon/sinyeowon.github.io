@@ -1,12 +1,13 @@
 ---
 layout: "post"
-title: "[TIL] - 260512"
+title: "[TIL] Refining TodayPoor's final plan and ERD"
+title_source: "manual"
 date: 2026-05-12 09:00:00 +0900
 last_modified_at: 2026-05-14 21:02:00 +0900
 categories: ["GDGoC KNU", "0 to Product"]
 tags: ["project"]
-description: "Prepare final plan and reflect feedback from management"
-description_source: "excerpt"
+description: "This GDGoC 0 to Product note summarizes final planning work, organizer feedback, and ERD refinements for TodayPoor."
+description_source: "manual"
 lang: "en"
 ui_lang: "ko-KR"
 toc: true

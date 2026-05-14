@@ -1,12 +1,13 @@
 ---
 layout: "post"
-title: "[TIL]-260511"
+title: "[TIL] Reframing TodayPoor's service direction"
+title_source: "manual"
 date: 2026-05-11 09:00:00 +0900
 last_modified_at: 2026-05-14 15:41:00 +0900
 categories: ["GDGoC KNU", "0 to Product"]
 tags: ["project"]
-description: "Check feedback on the first plan and discuss direction for plan supplementation"
-description_source: "excerpt"
+description: "This GDGoC 0 to Product note reviews feedback on the first plan and summarizes the direction for refining TodayPoor."
+description_source: "manual"
 lang: "en"
 ui_lang: "ko-KR"
 toc: true
