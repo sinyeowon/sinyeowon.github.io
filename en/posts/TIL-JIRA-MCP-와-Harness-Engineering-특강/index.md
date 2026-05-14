@@ -301,9 +301,9 @@ This concept was formalized in Harness Engineering published by OpenAI in 2025.P
   | No feedback loop | The agent assumes that he is correct and proceeds. | Test/linter/type checker automation required |
   | Neglecting tacit knowledge | As “you know it all” piles up, agent mistakes increase dramatically. | State the rules in your head as code/documentation |
   | Control all actions with scripts | If you kill too much autonomy, the agent's strengths disappear. | **Only provide direction** and delegate execution |
-  | Make a harness once and leave it alone | The model/project evolves, but only the harness remains static. | Regularly inspected and updated |
+  | Harness made once and left unattended | The model/project evolves, but only the harness remains static. | Regularly inspected and updated |
 
-### GitOps - A source of truth shared between people and AI
+### GitOps - A source of truth shared between humans and AI
 
 > GitOps
 > : A Git repository is used as the Single Source of Truth (SSOT) of the system state, and an automated controller continuously reconciles the declarative definition of Git with the actual environment.
@@ -430,8 +430,8 @@ All settings in the operating environment must be in Git, and when Git changes, 
   | side | Visibility makes a difference |
   | --- | --- |
   | **Onboarding Speed** | New team members can self-learn by following the code/document/issue/deployment flow |
-  | **Incident Response Time** | From occurrence of failure → trace cause → rollback reduced to minutes |
-  | **AI Utilization** | Agents can take context, improving quality of results |
+  | **Incident Response Time** | From occurrence of failure → trace the cause → rollback, shortened to minutes |
+  | **AI Utilization** | Enhances quality of results by allowing agents to take context |
   | **Decision-making speed** | No need to agree on “where are we now” every time we meet. |
 
 ### The most important thing

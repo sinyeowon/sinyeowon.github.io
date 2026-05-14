@@ -62,7 +62,7 @@ notion_lang: "en"
   | **speed** | Very fast (In-Memory) | Very fast (In-Memory) | Slow (Disk I/O) | **Fastest** (no network I/O) |
   | **Data structure support** | Rich collection of more than 5 types | Only String (Key-Value) | Tables, views, etc. | Object self storage |
   | **Data Persistence** | Support (RDB snapshot, AOF) | Not supported (will evaporate when the server is turned off) | Full support (ACID) | Not supported (will evaporate when the server is turned off) |
-  | **Support for distributed environment** | Clustering, replication, Sentinel | Third party dependency | Replication support (heavy) | Not supported |
+  | **Support for distributed environments** | Clustering, replication, Sentinel | Third party dependency | Replication support (heavy) | Not supported |
   | **Typical usage scenario** | Ranking, Queue, Session, Global Cache | Simple text/session caching | Data that requires permanent retention | Settings, static data from a single server |
 
 > **Q Multi-threading seems to be the best, but why did Redis choose to have only one worker**
@@ -185,7 +185,7 @@ Assuming a popular shopping mall, we plan to map each data structure with comman
 
 4. Sorted Set (ZSET)
 
-    - Core data structure that automatically sorts in score order by adding the concept of ‘Score’ to Set
+    - A core data structure that automatically sorts in score order by adding the concept of ‘Score’ to Set.
 
     - Example: Real-time purchasing ranking → Real-time ranking is created using the user’s cumulative purchase amount as the score.
 

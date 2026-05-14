@@ -2,10 +2,10 @@
 layout: "post"
 title: "[TIL] How far should FK be allowed in MSA?"
 date: 2026-05-14 09:00:00 +0900
-last_modified_at: 2026-05-14 22:37:00 +0900
+last_modified_at: 2026-05-14 22:46:00 +0900
 categories: ["Spring 단기 심화", "숙련 프로젝트"]
 tags: ["project"]
-description: "While writing the logistics/delivery platform SA document, I summarized my concerns about MSA service boundaries, table ownership, FK usage scope, and logical reference method."
+description: "This is a record of my thoughts on MSA service boundaries, table ownership, FK usage scope, and logical reference method while writing a logistics/delivery platform SA document."
 description_source: "notion"
 lang: "en"
 ui_lang: "ko-KR"
@@ -19,7 +19,7 @@ notion_lang: "en"
 
 - Start writing logistics management and delivery system SA documents
 
-- Create domain definition and table statement
+- Creating domain definitions and table statements
 
 - Discussion of MSA service boundary separation
 
@@ -33,23 +33,23 @@ notion_lang: "en"
 
 It was decided to separate the project into five services as follows:
 
-### **1. Users and Authentication**
+**1. Users and Authentication**
 
 - p_users
 
-### **2. Hubs and Hub Management**
+**2. Hubs and Hub Management**
 
 - p_hub
 
 - p_hub_to_hub
 
-### **3. Companies and products**
+**3. Companies and products**
 
 - p_company
 
 - p_product
 
-### **4. Order and delivery execution**
+**4. Order and delivery execution**
 
 - p_order
 
@@ -59,11 +59,35 @@ It was decided to separate the project into five services as follows:
 
 - p_delivery_manager
 
-### **5. Notifications and AI messages**
+**5. Notifications and AI messages**
 
 - p_slack_message
 
 - p_ai_message
+
+<hr>
+
+## **Why separate services?**
+
+At first, I thought MSA was simply a “structure that divides services into multiple services.”
+
+However, while working on the design today, I learned that the important thing is not simple separation, but making sure that each service can manage its own responsibilities and data independently.
+
+For example:
+
+- User Service focuses on authentication and authority management.
+
+- Hub Service focuses on managing hub and logistics movement information
+
+- Order/Delivery Service focuses on order and delivery flow management.
+
+Separating roles in this way can reduce the impact of modifications to specific functions on other services, and is also advantageous for independent deployment and expansion of each service.
+
+It was also impressive that by separating data ownership for each service, each service could focus on its own business logic.
+
+However, considering the scale of the project and the difficulty of implementation, the current design was designed to bundle strongly connected functions into one service rather than splitting them into pieces.
+
+For example, since the delivery creation flow after order creation is closely connected, Order and Delivery were organized into one service.
 
 <hr>
 
@@ -73,9 +97,7 @@ In the MSA structure, each service must own its own data.
 
 Therefore, we decided to store only the UUID value and connect it logically, rather than directly referencing other service tables as FKs.
 
-For example:
-
-- Order Service stores user_id, but
+for example:- Order Service stores user_id, but
 
 - The users table of User Service and the physical FK are not connected.
 
@@ -111,7 +133,9 @@ For example:
 
 We had to consider a structure in which the reference object varies depending on the role.
 
-<hr>## **Delivery manager design concerns**
+<hr>
+
+## **Delivery manager design concerns**
 
 I was wondering what kind of relationship the delivery person should have with the user entity.
 
