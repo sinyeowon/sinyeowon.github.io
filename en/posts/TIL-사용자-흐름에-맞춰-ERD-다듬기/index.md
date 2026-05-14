@@ -1,18 +1,18 @@
 ---
 layout: "post"
-title: "[TIL] Refining TodayPoor's final plan and ERD"
+title: "[TIL] Refining the ERD around the user flow"
 title_source: "manual"
 date: 2026-05-12 09:00:00 +0900
 last_modified_at: 2026-05-14 21:02:00 +0900
 categories: ["GDGoC KNU", "0 to Product"]
 tags: ["project"]
-description: "This GDGoC 0 to Product note summarizes final planning work, organizer feedback, and ERD refinements for TodayPoor."
+description: "This note reconnects crew, OCR results, AI feedback, and ranking tables around the actual TodayPoor user flow while refining the ERD."
 description_source: "manual"
 lang: "en"
 ui_lang: "ko-KR"
 toc: true
-permalink: "/en/posts/TIL-260512/"
-original_url: "/posts/TIL-260512/"
+permalink: "/en/posts/TIL-사용자-흐름에-맞춰-ERD-다듬기/"
+original_url: "/posts/TIL-사용자-흐름에-맞춰-ERD-다듬기/"
 notion_id: "3607788a-fc66-8030-98ea-d4ed3a89ff0c"
 notion_lang: "en"
 ---

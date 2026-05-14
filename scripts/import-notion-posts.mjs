@@ -422,6 +422,43 @@ function slugify(value) {
   return `notion-${Date.now()}`;
 }
 
+async function existingGeneratedPostPath(notionId, notionLang) {
+  const directories = notionLang === 'en' ? [EN_POSTS_DIR] : [POSTS_DIR];
+
+  for (const directory of directories) {
+    const files = await generatedMarkdownFiles(directory);
+
+    for (const filePath of files) {
+      const content = await readFile(filePath, 'utf8');
+      const idMatch = content.match(/^notion_id:\s*["']?([^"'\n]+)["']?/m);
+
+      if (!idMatch || idMatch[1] !== notionId) {
+        continue;
+      }
+
+      const langMatch = content.match(/^notion_lang:\s*["']?([^"'\n]+)["']?/m);
+      const fileLang = langMatch?.[1] || 'ko';
+
+      if (fileLang === notionLang) {
+        return filePath;
+      }
+    }
+  }
+
+  return '';
+}
+
+function slugFromKoreanPostPath(filePath) {
+  return path
+    .basename(filePath, '.md')
+    .replace(/^\d{4}-\d{2}-\d{2}-/, '');
+}
+
+function slugFromEnglishPostPath(filePath) {
+  const directory = path.dirname(filePath);
+  return path.relative(EN_POSTS_DIR, directory).split(path.sep).join('/');
+}
+
 function pageDateValue(page) {
   const dateProperty = findProperty(page, propertyNames.date, 'date');
   return propertyText(dateProperty) || page.created_time;
@@ -1008,12 +1045,17 @@ async function buildPost(page, urlSlugPlan = new Map()) {
 
   const dateValue = pageDateValue(page);
   const slugProperty = findProperty(page, propertyNames.slug);
-  const slug = slugify(propertyText(slugProperty) || notionTitle);
-  const urlSlug = urlSlugPlan.get(page.id) || slug;
+  const requestedSlug = slugify(propertyText(slugProperty) || notionTitle);
+  const existingKoreanPath = await existingGeneratedPostPath(page.id, 'ko');
+  const existingEnglishPath = await existingGeneratedPostPath(page.id, 'en');
+  const slug = existingKoreanPath ? slugFromKoreanPostPath(existingKoreanPath) : requestedSlug;
+  const urlSlug = existingEnglishPath
+    ? slugFromEnglishPostPath(existingEnglishPath)
+    : urlSlugPlan.get(page.id) || slug;
   const date = formatDateForJekyll(dateValue);
   const fileName = `${datePrefix(dateValue)}-${slug}.md`;
-  const filePath = path.join(POSTS_DIR, fileName);
-  const englishPath = path.join(EN_POSTS_DIR, urlSlug, 'index.md');
+  const filePath = existingKoreanPath || path.join(POSTS_DIR, fileName);
+  const englishPath = existingEnglishPath || path.join(EN_POSTS_DIR, urlSlug, 'index.md');
   const existingTitleState = await existingPostTitleState(filePath);
   const title =
     existingTitleState.source === 'manual' && existingTitleState.title

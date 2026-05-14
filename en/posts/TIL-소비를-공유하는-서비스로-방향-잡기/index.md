@@ -1,18 +1,18 @@
 ---
 layout: "post"
-title: "[TIL] Reframing TodayPoor's service direction"
+title: "[TIL] Turning TodayPoor toward shared spending"
 title_source: "manual"
 date: 2026-05-11 09:00:00 +0900
 last_modified_at: 2026-05-14 15:41:00 +0900
 categories: ["GDGoC KNU", "0 to Product"]
 tags: ["project"]
-description: "This GDGoC 0 to Product note reviews feedback on the first plan and summarizes the direction for refining TodayPoor."
+description: "This note uses feedback on TodayPoor to shift the service from habit correction to social spending sharing, then narrows the MVP scope and privacy rules."
 description_source: "manual"
 lang: "en"
 ui_lang: "ko-KR"
 toc: true
-permalink: "/en/posts/TIL-260511/"
-original_url: "/posts/TIL-260511/"
+permalink: "/en/posts/TIL-소비를-공유하는-서비스로-방향-잡기/"
+original_url: "/posts/TIL-소비를-공유하는-서비스로-방향-잡기/"
 notion_id: "3607788a-fc66-80bb-a7d2-c2d21320e002"
 notion_lang: "en"
 ---

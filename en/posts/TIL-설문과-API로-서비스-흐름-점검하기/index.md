@@ -1,18 +1,18 @@
 ---
 layout: "post"
-title: "[TIL] Preparing TodayPoor's preliminary survey and API spec"
+title: "[TIL] Checking the service flow through surveys and API discussion"
 title_source: "manual"
 date: 2026-05-13 09:00:00 +0900
 last_modified_at: 2026-05-14 21:16:00 +0900
 categories: ["GDGoC KNU", "0 to Product"]
 tags: ["project"]
-description: "This post summarizes preparing a preliminary survey to check target users' willingness to use the service and share spending habits."
+description: "This note turns preliminary survey questions and backend discussions into a clearer service flow for feeds, rankings, AI feedback, and API ownership."
 description_source: "manual"
 lang: "en"
 ui_lang: "ko-KR"
 toc: true
-permalink: "/en/posts/TIL-260513/"
-original_url: "/posts/TIL-260513/"
+permalink: "/en/posts/TIL-설문과-API로-서비스-흐름-점검하기/"
+original_url: "/posts/TIL-설문과-API로-서비스-흐름-점검하기/"
 notion_id: "3607788a-fc66-8011-9346-c854c80330cb"
 notion_lang: "en"
 ---
