@@ -19,7 +19,7 @@ notion_lang: "en"
 
 ### **Git Flow branching strategy**
 
-Without a branching strategy, accidents can occur, such as your work overwriting your colleague's work, unfinished code mixed in when you're about to deploy, or you wanting to roll back but having no reference point.
+Without a branching strategy, accidents can occur such as your work overwriting your colleague's work, unfinished code mixed in when you're about to deploy, or you wanting to roll back but having no reference point.
 
 → Branch strategy = accident prevention device
 
@@ -56,7 +56,7 @@ Without a branching strategy, accidents can occur, such as your work overwriting
 
   | role | explanation |
   | --- | --- |
-  | 👀 **Code review chapter** | A space for colleagues to view changes and leave feedback |
+  | 👀 **The chapter of code review** | A space for colleagues to view changes and leave feedback |
   | 🧪 **Automatic Verification Trigger** | Execute CI pipeline (automatically perform build/test) |
   | 📜 **Record change history** | Permanently preserve why/what/when you changed |
 
@@ -150,7 +150,7 @@ Without a branching strategy, accidents can occur, such as your work overwriting
 
     - No merge commits - remove noise
 
-    - Existing commits are replaced with new commits - Collaboration is destroyed if done on a shared branch.
+    - Existing commits are replaced by new commits - Collaboration is destroyed if done on a shared branch
 
 - When to use what (Merge & Rebase)
 
@@ -265,7 +265,7 @@ Conflicts occur when two branches modify the same line in the same file differen
 
 > **CI/CD Terminology**
 >
-> | Abbreviation | Full name | Meaning |
+> | Abbreviation | Full name | meaning |
 > | --- | --- | --- |
 > | CI | Continuous **Integration** | Frequent code integration and automatic verification |
 > | CD | Continuous **Delivery** | Stay deployable at any time (manual approval) |

@@ -127,7 +127,7 @@ notion_lang: "en"
         }
         ```
 
-        - `httpServletRequest.getRequestURI()` Get the request URL and separate it. (authorization)
+        - `httpServletRequest.getRequestURI()` Get the request URL and separate it. (approval)
             - URLs starting with `"/api/user"`, `"/css"`, and `"/js"` are excluded from authentication processing.
 
         - Other URLs undergo authentication processing.
@@ -312,7 +312,7 @@ notion_lang: "en"
             }
             ```
 
-            - The reason for disabling `@Component` is **that if the filter is auto-registered, it may be executed first outside of the Spring Security flow**- CSRF<br>
+            - The reason for disabling `@Component` is that **if the filter is auto-registered, it may run first outside of the Spring Security flow**- CSRF<br>
         > **CSRF (Cross-site request forgery)**
 
         - An attacker uses the session information of cookies stored in an authenticated browser to send a request that the user did not intend to the web server.<br>
@@ -339,7 +339,7 @@ notion_lang: "en"
 
             - Therefore, in JWT-based REST API, CSRF protection is usually turned off as shown below.
 
-        - Instead of processing each POST request, CSRF protection is disabled<br>
+        - Disables CSRF protection instead of processing each POST request.<br>
             `http.csrf((csrf) -> csrf.disable());`
 
 - Spring Security's default login function
@@ -354,7 +354,7 @@ notion_lang: "en"
 
 - Understanding Spring Security
     - **Spring Security - Filter Chain**
-        - In Spring, all calls pass through DispatcherServlet and are then distributed to the Controller in charge of each request.
+        - In Spring, all calls pass through the DispatcherServlet and are then distributed to the Controller in charge of each request.
 
         - **At this time, when it is necessary to process each request in common, a step is required before DispatcherServlet and this is FIlter**
 

@@ -28,7 +28,7 @@ notion_lang: "en"
 
     - Is it a fun SNS that shares consumption history?
 
-- After discussion, our team decided that it would be right to move closer to **a fun SNS that shares consumption history**.
+- After discussion, our team decided that it was right to move closer to **a fun SNS that shares consumption history**.
     - Improving consumption is an additional effect, but the key is to share and compare consumption with friends and make it fun to keep records.
 
 - OCR itself is already provided by many household account book services or receipt record services.
@@ -77,7 +77,7 @@ notion_lang: "en"
 
     - Good AI/Bad AI mode selection### What I learned about ERD
 
-- Currently, AI functions have two main roles, but in ERD it was not clear where personal feedback connects.
+- Currently, AI functions have two main roles, but it was not clear in ERD where personal feedback connects.
     1. AI results for MVP selection
 
     2. AI feedback on personal consumption history
@@ -92,7 +92,7 @@ notion_lang: "en"
 
 - In addition, compared to similar services, it is concluded that the structure of sharing consumption with friends and AI providing interesting feedback is a more important differentiator than the OCR function itself.
 
-- In the future, the following information must be supplemented in the plan:
+- In the future, the following information must be supplemented in the plan.
     - Clarification of service purpose
 
     - Persona specification
