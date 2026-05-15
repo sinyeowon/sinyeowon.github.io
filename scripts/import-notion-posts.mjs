@@ -664,6 +664,9 @@ async function renderBlock(block, context, depth = 0, listNumber = 1) {
     case 'heading_3':
       output = `### ${markdownInline(value.rich_text, context)}`;
       break;
+    case 'heading_4':
+      output = `#### ${markdownInline(value.rich_text, context)}`;
+      break;
     case 'bulleted_list_item':
       output = `${indent}- ${markdownInline(value.rich_text, context)}`;
       break;
