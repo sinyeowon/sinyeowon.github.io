@@ -63,7 +63,7 @@ But in reality there was a difference.
 
 Our team ultimately organized the structure into the following five business services.
 
-```json
+```yaml
 - user-service
 - hub-service
 - company-service
@@ -74,7 +74,7 @@ Our team ultimately organized the structure into the following five business ser
 
 Additionally, we decided to use the following services to configure the MSA environment.
 
-```json
+```yaml
 - eureka-server
 - gateway-service
 

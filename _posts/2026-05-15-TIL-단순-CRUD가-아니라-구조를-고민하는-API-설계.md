@@ -58,7 +58,7 @@ API 명세서에서 비어있던 부분들을 채우는 작업을 진행했다.
 
 우리 팀은 최종적으로 다음과 같은 5개의 비즈니스 서비스로 구조를 정리했다.
 
-```json
+```yaml
 - user-service
 - hub-service
 - company-service
@@ -69,7 +69,7 @@ API 명세서에서 비어있던 부분들을 채우는 작업을 진행했다.
 
 추가적으로 MSA 환경 구성을 위해 다음 서비스들도 함께 사용하기로 했다.
 
-```json
+```yaml
 - eureka-server
 - gateway-service
 

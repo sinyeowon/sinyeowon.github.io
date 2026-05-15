@@ -696,10 +696,11 @@ async function renderBlock(block, context, depth = 0, listNumber = 1) {
       output = markdownInline(value.rich_text, context);
       break;
     case 'code': {
-      const language = markdownCodeLanguage(value.language);
+      const plainCode = richTextPlain(value.rich_text);
+      const language = markdownCodeLanguage(value.language, plainCode);
       const code = [
         `\`\`\`${language}`,
-        richTextPlain(value.rich_text),
+        plainCode,
         '```'
       ].join('\n');
       output = depth > 0 ? indentMarkdown(code, depth) : code;
@@ -786,7 +787,7 @@ function shouldIndentNestedBlock(type, depth) {
   );
 }
 
-function markdownCodeLanguage(language = '') {
+function markdownCodeLanguage(language = '', code = '') {
   const trimmed = String(language || '').trim();
 
   if (!trimmed) {
@@ -797,7 +798,14 @@ function markdownCodeLanguage(language = '') {
     return 'plaintext';
   }
 
-  return trimmed.replace(/\s+/g, '-').toLowerCase();
+  const normalized = trimmed.replace(/\s+/g, '-').toLowerCase();
+  const codeValue = String(code || '').trim();
+
+  if (normalized === 'json' && /^-\s+\S/m.test(codeValue)) {
+    return 'yaml';
+  }
+
+  return normalized;
 }
 
 function containsMarkdownTable(markdown) {
