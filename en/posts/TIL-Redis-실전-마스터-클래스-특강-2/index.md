@@ -304,40 +304,48 @@ It is often used in situations where traffic is high, such as first-come-first-s
 **Q Redis Pub/Sub**
 
 A. Notification structure that separates the sender and receiver of messages
-  Here, Pub/Sub means the following, respectively:
+<div class="notion-indent" markdown="1">
 
-  - **Pub(Publish)**: Publishing a message
+Here, Pub/Sub means the following, respectively:
 
-  - **Sub(Subscribe)**: Subscribe and wait for messages
+- **Pub(Publish)**: Publishing a message
 
-  To put it simply, it is similar to **group chat room notification**.Just as when someone sends a message to a group chat room, the people in the room immediately receive the message, in Redis, when an event occurs, a message can be delivered to the subscribed target.
+- **Sub(Subscribe)**: Subscribe and wait for messages
 
-  Redisson lock uses this structure to wait without continuously checking whether the lock has been released.
+To put it simply, it is similar to **group chat room notification**. Just as when someone sends a message to a group chat room, the people in the room immediately receive the message, in Redis, when an event occurs, a message can be delivered to the subscribed target.
 
-  When the request holding the lock finishes its work and releases the lock, Redis notifies the waiting request that “the lock has been released.”
+Redisson lock uses this structure to wait without continuously checking whether the lock has been released.
 
-  In other words, Redis Pub/Sub is not a method that asks continuously, but a method that notifies you when it is resolved.
+When the request holding the lock finishes its work and releases the lock, Redis notifies the waiting request that “the lock has been released.”
+
+In other words, Redis Pub/Sub is not a method that asks continuously, but a method that notifies you when it is resolved.
+
+</div>
 
 **Q Why did you choose Redis distributed lock rather than MySQL DB lock?**
 
 A. Concurrency problems can be solved with MySQL DB locks.
-  However, in an environment where thousands of inventory movement requests occur simultaneously, such as a logistics system, directly locking the DB can be burdensome.
+<div class="notion-indent" markdown="1">
 
-  - If DB lock is used, other requests must wait until the task is completed.
+However, in an environment where thousands of inventory movement requests occur simultaneously, such as a logistics system, directly locking the DB can be burdensome.
 
-  - The DB connection continues to be used while waiting.
+- If DB lock is used, other requests must wait until the task is completed.
 
-  - If there are many requests, the connection pool may become insufficient.
+- The DB connection continues to be used while waiting.
 
-  - Deadlocks can also occur when multiple requests wait for each other to lock.
+- If there are many requests, the connection pool may become insufficient.
 
-  - In severe cases, there is a risk that the entire logistics system will slow down or stop.
+- Deadlocks can also occur when multiple requests wait for each other to lock.
 
-  So, we used Redis distributed locks instead of DB to first control the request order.
+- In severe cases, there is a risk that the entire logistics system will slow down or stop.
 
-  Redis is memory-based, so it can handle locks much faster and more lightly than DB.
+So, we used Redis distributed locks instead of DB to first control the request order.
 
-  In other words, Redis distributed locking is a method used to reduce DB burden and manage request order stably in an environment with many concurrent requests.
+Redis is memory-based, so it can handle locks much faster and more lightly than DB.
+
+In other words, Redis distributed locking is a method used to reduce DB burden and manage request order stably in an environment with many concurrent requests.
+
+</div>
 
 **Q Why did you switch from synchronous to asynchronous using Redis?**
 

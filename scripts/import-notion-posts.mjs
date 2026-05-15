@@ -753,20 +753,26 @@ async function renderBlock(block, context, depth = 0, listNumber = 1) {
   }
 
   if (block.has_children && type !== 'toggle' && type !== 'table') {
+    const wrapNestedChildren = shouldWrapNestedChildren(type);
     const childDepth =
-      layoutBlockTypes.has(type) || type === 'quote' || type === 'callout'
+      wrapNestedChildren || layoutBlockTypes.has(type) || type === 'quote' || type === 'callout'
         ? depth
         : listBlockTypes.has(type)
           ? depth + 2
-        : depth + 1;
+          : depth + 1;
     const children = await renderBlocks(await getBlockChildren(block.id), context, childDepth);
     if (children.trim()) {
-      const separator = listBlockTypes.has(type) && startsWithContinuationParagraph(children)
-        ? '<br>\n'
-        : containsMarkdownBlock(children)
-          ? '\n\n'
-          : '\n';
-      output = output ? `${output}${separator}${children}` : children;
+      const renderedChildren = wrapNestedChildren
+        ? indentMarkdown(nestedChildrenContainer(children), depth)
+        : children;
+      const separator = wrapNestedChildren
+        ? '\n\n'
+        : listBlockTypes.has(type) && startsWithContinuationParagraph(renderedChildren)
+          ? '<br>\n'
+          : containsMarkdownBlock(renderedChildren)
+            ? '\n\n'
+            : '\n';
+      output = output ? `${output}${separator}${renderedChildren}` : renderedChildren;
     }
   }
 
@@ -785,6 +791,18 @@ function shouldIndentNestedBlock(type, depth) {
     !listBlockTypes.has(type) &&
     !['code', 'table', 'quote', 'callout'].includes(type)
   );
+}
+
+function shouldWrapNestedChildren(type) {
+  return (
+    !layoutBlockTypes.has(type) &&
+    !listBlockTypes.has(type) &&
+    !['quote', 'callout', 'code', 'table', 'toggle'].includes(type)
+  );
+}
+
+function nestedChildrenContainer(markdown) {
+  return `<div class="notion-indent" markdown="1">\n\n${String(markdown || '').trim()}\n\n</div>`;
 }
 
 function markdownCodeLanguage(language = '', code = '') {

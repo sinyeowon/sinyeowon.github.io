@@ -47,6 +47,28 @@ header {
   }
 }
 
+.content {
+  .notion-indent {
+    margin: 0.75rem 0 1rem 1.75rem;
+
+    > :last-child {
+      margin-bottom: 0;
+    }
+  }
+
+  .notion-indent + .notion-indent {
+    margin-top: 0.5rem;
+  }
+}
+
+@include bp.lte(bp.get(sm)) {
+  .content {
+    .notion-indent {
+      margin-left: 1.1rem;
+    }
+  }
+}
+
 .post-tail-wrapper {
   @extend %text-sm;
 
