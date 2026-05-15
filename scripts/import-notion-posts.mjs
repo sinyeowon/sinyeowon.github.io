@@ -8,6 +8,7 @@ const POSTS_DIR = path.join(ROOT, '_posts');
 const EN_POSTS_DIR = path.join(ROOT, 'en', 'posts');
 const ASSETS_DIR = path.join(ROOT, 'assets', 'img', 'notion');
 const GENERATE_ENGLISH = process.env.NOTION_GENERATE_ENGLISH !== 'false';
+const FORCE_IMPORT = process.env.NOTION_FORCE_IMPORT === 'true';
 
 const token = process.env.NOTION_TOKEN;
 const databaseId = process.env.DATABASE_ID || process.env.NOTION_DATABASE_ID;
@@ -446,6 +447,20 @@ async function existingGeneratedPostPath(notionId, notionLang) {
   }
 
   return '';
+}
+
+async function existingGeneratedPostState(notionId, notionLang) {
+  const filePath = await existingGeneratedPostPath(notionId, notionLang);
+
+  if (!filePath) {
+    return { filePath: '', lastModifiedAt: '' };
+  }
+
+  const content = await readFile(filePath, 'utf8');
+  return {
+    filePath,
+    lastModifiedAt: frontMatterValue(content, 'last_modified_at')
+  };
 }
 
 function slugFromKoreanPostPath(filePath) {
@@ -1049,8 +1064,11 @@ async function buildPost(page, urlSlugPlan = new Map()) {
   const dateValue = pageDateValue(page);
   const slugProperty = findProperty(page, propertyNames.slug);
   const requestedSlug = slugify(propertyText(slugProperty) || notionTitle);
-  const existingKoreanPath = await existingGeneratedPostPath(page.id, 'ko');
-  const existingEnglishPath = await existingGeneratedPostPath(page.id, 'en');
+  const lastModifiedAt = formatDateForJekyll(page.last_edited_time);
+  const existingKoreanState = await existingGeneratedPostState(page.id, 'ko');
+  const existingEnglishState = await existingGeneratedPostState(page.id, 'en');
+  const existingKoreanPath = existingKoreanState.filePath;
+  const existingEnglishPath = existingEnglishState.filePath;
   const slug = existingKoreanPath ? slugFromKoreanPostPath(existingKoreanPath) : requestedSlug;
   const urlSlug = existingEnglishPath
     ? slugFromEnglishPostPath(existingEnglishPath)
@@ -1059,6 +1077,34 @@ async function buildPost(page, urlSlugPlan = new Map()) {
   const fileName = `${datePrefix(dateValue)}-${slug}.md`;
   const filePath = existingKoreanPath || path.join(POSTS_DIR, fileName);
   const englishPath = existingEnglishPath || path.join(EN_POSTS_DIR, urlSlug, 'index.md');
+  const koreanCurrent =
+    !FORCE_IMPORT && existingKoreanPath && existingKoreanState.lastModifiedAt === lastModifiedAt;
+  const englishCurrent =
+    !FORCE_IMPORT &&
+    (!GENERATE_ENGLISH || (existingEnglishPath && existingEnglishState.lastModifiedAt === lastModifiedAt));
+
+  if (koreanCurrent && englishCurrent) {
+    const posts = [
+      {
+        notionId: page.id,
+        notionLang: 'ko',
+        filePath,
+        skipped: true
+      }
+    ];
+
+    if (GENERATE_ENGLISH) {
+      posts.push({
+        notionId: page.id,
+        notionLang: 'en',
+        filePath: englishPath,
+        skipped: true
+      });
+    }
+
+    return posts;
+  }
+
   const existingTitleState = await existingPostTitleState(filePath);
   const title =
     existingTitleState.source === 'manual' && existingTitleState.title
@@ -1086,7 +1132,6 @@ async function buildPost(page, urlSlugPlan = new Map()) {
     : existingDescription
       ? existingDescriptionState.source || (existingDescriptionIsGenerated ? 'excerpt' : 'manual')
       : 'excerpt';
-  const lastModifiedAt = formatDateForJekyll(page.last_edited_time);
   const koreanUrl = `/posts/${urlSlug}/`;
   const englishUrl = `/en/posts/${urlSlug}/`;
 
@@ -1106,56 +1151,73 @@ async function buildPost(page, urlSlugPlan = new Map()) {
   };
 
   const posts = [
-    {
-      notionId: page.id,
-      notionLang: 'ko',
-      filePath,
-      content: `${frontMatter(metadata)}${body.trim()}\n`
-    }
+    koreanCurrent
+      ? {
+          notionId: page.id,
+          notionLang: 'ko',
+          filePath,
+          skipped: true
+        }
+      : {
+          notionId: page.id,
+          notionLang: 'ko',
+          filePath,
+          content: `${frontMatter(metadata)}${body.trim()}\n`
+        }
   ];
 
   if (GENERATE_ENGLISH) {
-    const existingEnglishTitleState = await existingPostTitleState(englishPath);
-    const englishTitle =
-      existingEnglishTitleState.source === 'manual' && existingEnglishTitleState.title
-        ? existingEnglishTitleState.title
-        : await translateText(title);
-    const englishTitleSource = existingEnglishTitleState.source === 'manual' ? 'manual' : titleSource;
-    const existingEnglishDescriptionState = description
-      ? { description: '', source: '' }
-      : await existingPostDescriptionState(englishPath);
-    const englishDescription = existingEnglishDescriptionState.description || await translateText(fallbackDescription);
-    const englishDescriptionSource = description
-      ? 'notion'
-      : existingEnglishDescriptionState.description
-        ? existingEnglishDescriptionState.source || descriptionSource
-        : descriptionSource;
-    const englishBody = normalizeMarkdown(await translateMarkdown(body));
-    const englishMetadata = {
-      layout: 'post',
-      title: englishTitle || title,
-      date,
-      lastModifiedAt,
-      categories: metadata.categories,
-      tags,
-      description: englishDescription || fallbackDescription,
-      descriptionSource: englishDescriptionSource,
-      lang: 'en',
-      uiLang: 'ko-KR',
-      toc: true,
-      permalink: englishUrl,
-      originalUrl: koreanUrl,
-      notionId: page.id,
-      notionLang: 'en',
-      titleSource: englishTitleSource
-    };
+    if (englishCurrent) {
+      posts.push({
+        notionId: page.id,
+        notionLang: 'en',
+        filePath: englishPath,
+        skipped: true
+      });
+    } else {
+      const existingEnglishTitleState = await existingPostTitleState(englishPath);
+      const englishTitle =
+        existingEnglishTitleState.source === 'manual' && existingEnglishTitleState.title
+          ? existingEnglishTitleState.title
+          : await translateText(title);
+      const englishTitleSource = existingEnglishTitleState.source === 'manual' ? 'manual' : titleSource;
+      const existingEnglishDescriptionState = description
+        ? { description: '', source: '' }
+        : await existingPostDescriptionState(englishPath);
+      const englishDescription =
+        existingEnglishDescriptionState.description || (await translateText(fallbackDescription));
+      const englishDescriptionSource = description
+        ? 'notion'
+        : existingEnglishDescriptionState.description
+          ? existingEnglishDescriptionState.source || descriptionSource
+          : descriptionSource;
+      const englishBody = normalizeMarkdown(await translateMarkdown(body));
+      const englishMetadata = {
+        layout: 'post',
+        title: englishTitle || title,
+        date,
+        lastModifiedAt,
+        categories: metadata.categories,
+        tags,
+        description: englishDescription || fallbackDescription,
+        descriptionSource: englishDescriptionSource,
+        lang: 'en',
+        uiLang: 'ko-KR',
+        toc: true,
+        permalink: englishUrl,
+        originalUrl: koreanUrl,
+        notionId: page.id,
+        notionLang: 'en',
+        titleSource: englishTitleSource
+      };
 
-    posts.push({
-      notionId: page.id,
-      notionLang: 'en',
-      filePath: englishPath,
-      content: `${frontMatter(englishMetadata)}${englishBody.trim()}\n`
-    });
+      posts.push({
+        notionId: page.id,
+        notionLang: 'en',
+        filePath: englishPath,
+        content: `${frontMatter(englishMetadata)}${englishBody.trim()}\n`
+      });
+    }
   }
 
   return posts;
@@ -1665,10 +1727,27 @@ async function main() {
 
   await removeStaleGeneratedPosts(posts);
 
+  let skippedPosts = 0;
+  let writtenPosts = 0;
+
   for (const post of posts) {
+    if (post.skipped) {
+      skippedPosts += 1;
+      continue;
+    }
+
     await mkdir(path.dirname(post.filePath), { recursive: true });
     await writeFile(post.filePath, post.content);
+    writtenPosts += 1;
     console.log(`Wrote ${path.relative(ROOT, post.filePath)}`);
+  }
+
+  if (skippedPosts) {
+    console.log(`Skipped ${skippedPosts} unchanged generated post file(s).`);
+  }
+
+  if (!writtenPosts) {
+    console.log('No changed Notion post files to write.');
   }
 }
 

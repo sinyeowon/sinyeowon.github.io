@@ -2,6 +2,12 @@ name: Import Notion Posts
 
 on:
   workflow_dispatch:
+    inputs:
+      force:
+        description: Regenerate every published Notion post
+        required: false
+        default: false
+        type: boolean
 
 permissions:
   contents: write
@@ -26,6 +32,7 @@ jobs:
         env:
           NOTION_TOKEN: ${{ secrets.NOTION_TOKEN }}
           DATABASE_ID: ${{ secrets.DATABASE_ID }}
+          NOTION_FORCE_IMPORT: ${{ inputs.force }}
         run: node scripts/import-notion-posts.mjs
 
       - name: Commit imported posts
