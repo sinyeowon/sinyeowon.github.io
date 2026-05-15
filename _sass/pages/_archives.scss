@@ -2,139 +2,132 @@
 @use '../abstracts/placeholders';
 
 #archives {
-  letter-spacing: 0.03rem;
+  letter-spacing: 0;
 
   @include bp.lt(bp.get(sm)) {
     margin-top: -1rem;
-
-    ul {
-      letter-spacing: 0;
-    }
-  }
-
-  $timeline-width: 4px;
-
-  %timeline {
-    content: '';
-    width: $timeline-width;
-    position: relative;
-    float: left;
-    background-color: var(--timeline-color);
   }
 
   .year {
-    height: 3.5rem;
-    font-size: 1.5rem;
-    position: relative;
-    left: 2px;
-    margin-left: -$timeline-width;
+    color: var(--heading-color);
+    font-size: 1.55rem;
+    font-weight: 500;
+    margin: 1.75rem 0 1rem;
+  }
 
-    &::before {
-      @extend %timeline;
+  .archive-month {
+    background: var(--card-bg);
+    border: 1px solid var(--categories-border);
+    border-radius: 8px;
+    margin-bottom: 0.95rem;
+    overflow: hidden;
 
-      height: 72px;
-      left: 79px;
-      bottom: 16px;
+    &[open] {
+      .archive-month-chevron {
+        transform: rotate(180deg);
+      }
+    }
+  }
+
+  .archive-month-header {
+    align-items: center;
+    color: var(--text-color);
+    cursor: pointer;
+    display: flex;
+    gap: 1rem;
+    list-style: none;
+    min-height: 3.35rem;
+    padding: 0.85rem 1rem;
+
+    &::-webkit-details-marker {
+      display: none;
     }
 
-    &:first-child::before {
-      @extend %timeline;
-
-      height: 32px;
-      top: 24px;
+    &:focus-visible {
+      outline: 2px solid var(--input-focus-border-color);
+      outline-offset: -4px;
     }
+  }
 
-    /* Year dot */
-    &::after {
-      content: '';
-      display: inline-block;
-      position: relative;
-      border-radius: 50%;
-      width: 12px;
-      height: 12px;
-      left: 21.5px;
-      border: 3px solid;
-      background-color: var(--timeline-year-dot-color);
-      border-color: var(--timeline-node-bg);
-      box-shadow: 0 0 2px 0 #c2c6cc;
-      z-index: 1;
-    }
+  .archive-month-title {
+    align-items: baseline;
+    display: flex;
+    gap: 0.7rem;
+    min-width: 0;
+  }
+
+  .archive-month-name {
+    color: var(--text-color);
+    font-size: 1.05rem;
+    font-weight: 600;
+    white-space: nowrap;
+  }
+
+  .archive-month-count {
+    color: var(--text-muted-color);
+    font-size: 0.9rem;
+    white-space: nowrap;
+  }
+
+  .archive-month-chevron {
+    color: var(--text-muted-color);
+    flex: 0 0 auto;
+    font-size: 0.8rem;
+    margin-left: auto;
+    transition: transform 180ms ease;
   }
 
   ul {
-    li {
-      font-size: 1.1rem;
-      line-height: 3rem;
+    border-top: 1px solid var(--categories-border);
+    margin-bottom: 0;
+  }
 
-      @extend %text-ellipsis;
+  li {
+    align-items: center;
+    background: var(--card-bg);
+    display: grid;
+    gap: 1rem;
+    grid-template-columns: 3rem minmax(0, 1fr);
+    min-height: 3rem;
+    padding: 0.55rem 1rem;
 
-      &:nth-child(odd) {
-        background-color: var(--main-bg, #ffffff);
-        background-image: linear-gradient(
-          to left,
-          #ffffff,
-          #fbfbfb,
-          #fbfbfb,
-          #fbfbfb,
-          #ffffff
-        );
-      }
-
-      &::before {
-        @extend %timeline;
-
-        top: 0;
-        left: 77px;
-        height: 3.1rem;
-      }
-    }
-
-    &:last-child li:last-child::before {
-      height: 1.5rem;
-    }
-  } /* #archives ul */
-
-  .date {
-    white-space: nowrap;
-    display: inline-block;
-    position: relative;
-    right: 0.5rem;
-
-    &.month {
-      width: 1.4rem;
-      text-align: center;
-    }
-
-    &.day {
-      font-size: 85%;
-      font-family: Lato, sans-serif;
+    &:nth-child(odd) {
+      background: var(--taxonomy-nested-bg);
+      background-image: none;
     }
   }
 
-  a {
-    /* post title in Archives */
-    margin-left: 2.5rem;
-    position: relative;
-    top: 0.1rem;
+  li + li {
+    border-top: 1px solid var(--categories-border);
+  }
 
+  .archive-post-date {
+    color: var(--text-muted-color);
+    font-size: 0.95rem;
+    text-align: center;
+    white-space: nowrap;
+  }
+
+  .date.day {
+    font-family: Lato, sans-serif;
+  }
+
+  .archive-post-title {
+    @extend %text-ellipsis;
+
+    border-bottom: 0 !important;
+    box-shadow: none !important;
+    min-width: 0;
+    text-decoration: none !important;
+
+    &:active,
+    &:focus,
+    &:focus-visible,
     &:hover {
-      border-bottom: none;
-    }
-
-    &::before {
-      /* the dot before post title */
-      content: '';
-      display: inline-block;
-      position: relative;
-      border-radius: 50%;
-      width: 8px;
-      height: 8px;
-      float: left;
-      top: 1.35rem;
-      left: 71px;
-      background-color: var(--timeline-node-bg);
-      box-shadow: 0 0 3px 0 #c2c6cc;
-      z-index: 1;
+      border-bottom: 0 !important;
+      box-shadow: none !important;
+      margin-bottom: 0 !important;
+      text-decoration: none !important;
     }
   }
 } /* #archives */
