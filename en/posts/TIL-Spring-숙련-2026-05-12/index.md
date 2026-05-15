@@ -312,7 +312,7 @@ notion_lang: "en"
             }
             ```
 
-            - The reason for disabling `@Component` is **that if the filter is auto-registered, it may be executed first outside of the Spring Security flow**- CSRF<br>
+            - The reason for disabling `@Component` is that **if the filter is auto-registered, it may run first outside of the Spring Security flow**- CSRF<br>
         > **CSRF (Cross-site request forgery)**
 
         - An attacker uses the session information of cookies stored in an authenticated browser to send a request that the user did not intend to the web server.<br>
@@ -418,4 +418,4 @@ notion_lang: "en"
         >UserDetails
         > - Verified UserDetails are used when creating Authentication of the UsernamePasswordAuthenticationToken type, and the corresponding authentication object is set in SecurityContextHoler.
         >
-        > - Can be used as customized
+        > - Available for customization

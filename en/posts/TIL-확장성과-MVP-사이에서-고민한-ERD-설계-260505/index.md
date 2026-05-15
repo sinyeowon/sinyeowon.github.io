@@ -194,11 +194,11 @@ notion_lang: "en"
 
 - The biggest thing I felt through this meeting was that a good design is not necessarily a complicated design.
 
-- At first, we thought about maximizing scalability by separating categories into separate tables, adding AI prompt tables, and managing booleans for notes or not, but as we discussed it, we felt that it was more important to make decisions based on `“지금 실제로 필요한 기능인가?”` at the MVP stage.
+- At first, we thought about maximizing scalability, such as separating categories into separate tables, adding AI prompt tables, and managing booleans for notes or not, but as we discussed it, we felt that it was more important to make decisions based on `“지금 실제로 필요한 기능인가?”` at the MVP stage.
 
 - I also learned that we need to think not only about functional implementation, but also about data duplication, separation of responsibilities, roles of front and back end, and balance between scalability and current complexity.
 
-- I was particularly impressed by `“숨기는 것”과 “실제로 접근을 제한하는 것”은 다르다` in terms of privacy processing. I learned that it is not just simple UI processing, but also the need to consider what form the data will be sent from the backend.- I also felt `AI를 사용한다고 해서 모든 것을 AI 전용 테이블로 관리할 필요는 없다` in the AI ​​design part. Choosing an appropriate structure for the current service phase was more important than a technically feasible structure.
+- I was particularly impressed by `“숨기는 것”과 “실제로 접근을 제한하는 것”은 다르다` in terms of privacy processing. I learned that it is not just simple UI processing, but also the need to consider what form the data will be sent from the backend.- `AI를 사용한다고 해서 모든 것을 AI 전용 테이블로 관리할 필요는 없다` was also felt in the AI ​​design area. Choosing an appropriate structure for the current service phase was more important than a technically feasible structure.
 
 - Through this meeting, I was able to learn that a design that can explain `왜 이런 구조를 선택했는가` is more important than simply “implementing functions.”
 

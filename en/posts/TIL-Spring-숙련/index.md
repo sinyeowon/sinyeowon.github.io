@@ -24,6 +24,8 @@ notion_lang: "en"
 
 - set jwt.secret.key to `application.properties`
 
+#### Creating a JWT Util
+
 >Util class
 > : refers to a class that has methods that perform operations on specific parameters (parameters).
 > → A class that operates as a module without depending on other objects
@@ -215,7 +217,7 @@ We plan to create a class called JwtUtil with JWT-related functions to perform J
 >
 > - Cleanup
 > - `UserRoleEnum`
-> - Manage user permission types with enum
+> - Manage user permission types with enums
 >
 > - `Authority`
 > - Manage actual permission string constants

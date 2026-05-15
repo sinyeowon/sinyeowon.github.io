@@ -19,6 +19,8 @@ notion_lang: "ko"
 
 - `application.properties`에 jwt.secret.key 설정
 
+#### JWT Util 만들기
+
 > Util 클래스
 > : 특정 매개 변수(파라미터)에 대한 작업을 수행하는 메서드들이 존재하는 클래스를 뜻함
 > → 다른 객체에 의존하지 않고, 하나의 모듈로서 동작하는 클래스

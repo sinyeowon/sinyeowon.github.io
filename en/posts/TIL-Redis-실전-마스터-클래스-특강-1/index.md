@@ -37,6 +37,8 @@ notion_lang: "en"
 
 ![image](/assets/img/notion/TIL-Redis-실전-마스터-클래스-특강-1/03-8722d1764d.png)
 
+#### What is Redis & Comparison of Competing Technologies
+
 > **Redis**
 > : Abbreviation for REmote Dictionary Server
 > - REmote (remote): means that it exists as a remote (external) process, not inside our application program.
@@ -62,8 +64,10 @@ notion_lang: "en"
   | **speed** | Very fast (In-Memory) | Very fast (In-Memory) | Slow (Disk I/O) | **Fastest** (no network I/O) |
   | **Data structure support** | Rich collection of more than 5 types | Only String (Key-Value) | Tables, views, etc. | Object self storage |
   | **Data Persistence** | Support (RDB snapshot, AOF) | Not supported (will evaporate when the server is turned off) | Full support (ACID) | Not supported (will evaporate when the server is turned off) |
-  | **Support for distributed environments** | Clustering, replication, Sentinel | Third party dependency | Replication support (heavy) | Not supported |
+  | **Support for distributed environment** | Clustering, replication, Sentinel | Third party dependency | Replication support (heavy) | Not supported |
   | **Typical usage scenario** | Ranking, Queue, Session, Global Cache | Simple text/session caching | Data that requires permanent retention | Settings, static data from a single server |
+
+#### Deepening single-threaded architecture
 
 > **Q Multi-threading seems to be the best, but why did Redis choose to have only one worker**
 >
@@ -85,6 +89,8 @@ notion_lang: "en"
         ![image](/assets/img/notion/TIL-Redis-실전-마스터-클래스-특강-1/06-c5e72bc9c0.png)
 
         - Redis single thread → Processing is completed instantly, ensuring atomicity, without waiting for locks or exchanging context!
+
+#### Caching Strategy Scenario
 
 According to the **Pareto Principle**, 80% of all requests come from 20% of the data.
 
@@ -133,6 +139,8 @@ _We will see a strategy for caching this 20%_
     → Therefore, in practice, **when setting TTL for a large amount of data, a random number (Jitter) between 1 and 5 minutes must be added to the basic TTL value.**
       - This will distribute the cache expiration time and prevent the load from being concentrated on the DB at once.
 
+#### Practical examples of 5 types of data structures
+
 Assuming a popular shopping mall, we plan to map each data structure with commands.
 
 1. String
@@ -153,7 +161,7 @@ Assuming a popular shopping mall, we plan to map each data structure with comman
 
     - Insertion/deletion at both ends is fast, but insertion in the middle is slow.
 
-    - Example: Recently viewed products → Whenever the user moves the page, products are placed at the front of the list, and older ones are cut out.
+    - Example: Recently viewed product → Each time the user moves the page, the product is placed at the front of the list, and older items are cut out.
 
         ```bash
         # 유저(999)가 상품(123)을 최근에 봤습니다. 리스트 맨 앞에 밀어 넣습니다.
@@ -210,6 +218,8 @@ Assuming a popular shopping mall, we plan to map each data structure with comman
         OK
         ```
 
+#### Practical example: Baedal Minjok B-Mart distributed lock
+
 > Q What happens if there is only 1 limited edition shoe left in a shopping mall, and 100 people press the payment button at the same time without an error of 0.1 second?
 >
 >![image](/assets/img/notion/TIL-Redis-실전-마스터-클래스-특강-1/13-b0f0b6eeaf.png)
@@ -241,6 +251,8 @@ Assuming a popular shopping mall, we plan to map each data structure with comman
             - As numerous inventory allocation/cancellation requests poured into the DB, each other would have been clamoring to lock the row.
 
             - In the end, numerous queries would be in a blocking state, the DB connection pool would be depleted, and in the worst case, a catastrophe would have occurred in which the entire B-Mart logistics system would have been paralyzed due to deadlock in which each party was holding on to each other's locks.
+
+#### Finalizing Redis core architecture and basics
 
 1. **Redis uses memory to eliminate disk operations and completely guarantees atomicity without context switching delay through an event loop-based single thread.**
 

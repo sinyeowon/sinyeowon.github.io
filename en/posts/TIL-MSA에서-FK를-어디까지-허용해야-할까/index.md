@@ -2,7 +2,7 @@
 layout: "post"
 title: "[TIL] How far should FK be allowed in MSA?"
 date: 2026-05-14 09:00:00 +0900
-last_modified_at: 2026-05-14 22:46:00 +0900
+last_modified_at: 2026-05-15 19:18:00 +0900
 categories: ["Spring 단기 심화", "숙련 프로젝트"]
 tags: ["project"]
 description: "This is a record of my thoughts on MSA service boundaries, table ownership, FK usage scope, and logical reference method while writing a logistics/delivery platform SA document."

@@ -46,7 +46,7 @@ LLM is smart, but can't do anything alone
   | --- | --- |
   | **MCP Host** | Environment where AI operates (e.g. Claude Desktop, Cursor IDE) |
   | **MCP Client** | Module that resides in the host and communicates with the server |
-  | **MCP Server** | Gateway to expose external systems (Jira, GitHub, etc.) to MCP standards |
+  | **MCP Server** | Gateway exposing external systems (Jira, GitHub, etc.) to MCP standards |
 
 - **Three basic units exposed by MCP**
 

@@ -24,6 +24,8 @@ notion_lang: "en"
 
 ## Key feedback received
 
+#### 1. The purpose of the service needs to be clearer
+
 - The most common part of the feedback was that the direction of this service needs to be clarified.
     - Is it a service to improve consumption habits?
 
@@ -31,6 +33,8 @@ notion_lang: "en"
 
 - After discussion, our team decided that it would be right to move closer to **a fun SNS that shares consumption history**.
     - Improving consumption is an additional effect, but the key is to share and compare consumption with friends and make it fun to keep records.
+
+#### 2. The difference is not OCR but social loop
 
 - OCR itself is already provided by many household account book services or receipt record services.
 
@@ -49,6 +53,8 @@ notion_lang: "en"
 
 - In other words, OCR is a tool that lowers the entry barrier, and the core of the service can be seen as **the experience of sharing consumption like a meme**
 
+#### 3. MVP scope should be reduced
+
 - The initial plan included many features such as OCR, SNS feed, likes, comments, AI MVP selection, AI feedback, random topics, chat, etc.
     - However, we received feedback that the functionality may be too broad considering the 6-week project period.
 
@@ -65,18 +71,20 @@ notion_lang: "en"
 
     Advanced SNS features such as chatting, likes, and comments will be given a lower priority.
 
+#### 4. Personal information protection by design is important
+
 - Because consumption details are sensitive information, there was also feedback that designing the scope of disclosure is important.
 
 - In particular, disclosing all information such as amount, affiliated store, category, etc. can be burdensome, so users should be able to choose whether to disclose it or not.
 
-- Even if it is a fun service, I feel that it is important to have safety measures in place to prevent users from feeling shame or discomfort.
-
-- MVP should at least consider the following features:
+- Even if it is a fun service, I feel that it is important to have safety measures in place to prevent users from feeling shame or discomfort.- MVP should at least consider the following features:
     - Choose whether to disclose information
 
     - Whether to agree to AI roasting
 
-    - Good AI/Bad AI mode selection### What I learned about ERD
+    - Good AI/Bad AI mode selection
+
+### What I learned about ERD
 
 - Currently, AI functions have two main roles, but in ERD it was not clear where personal feedback connects.
     1. AI results for MVP selection
@@ -119,6 +127,4 @@ notion_lang: "en"
 ## What to do next
 
 - Meetings by series
-    - Modify ERD by reflecting feedback
-
-    - Writing API specifications
+    - Modify ERD by reflecting feedback- Writing API specifications

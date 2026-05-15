@@ -81,7 +81,7 @@ notion_lang: "en"
                 Implemented like this:
 
 - **Understanding Password Encryption**<br>
-    > When registering as a member, the ‘password’ must not be registered in the DB exactly as it is entered by the user.
+    > When registering as a member, the ‘password’ must not be registered in the DB exactly as it was entered by the user.
     > Password encryption is mandatory under the ‘Information and Communications Network Act and Personal Information Protection Act’
 
     - After encryption, password storage is required.
