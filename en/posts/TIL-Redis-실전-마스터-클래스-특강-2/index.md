@@ -1,12 +1,13 @@
 ---
 layout: "post"
-title: "[TIL] Redis Practical Master Class Special Lecture 2"
+title: "[TIL] Redis Practical Master Class 2 - Distributed Locks and Async Processing"
+title_source: "manual"
 date: 2026-05-14 09:00:00 +0900
 last_modified_at: 2026-05-15 21:37:00 +0900
 categories: ["Spring 단기 심화", "특강"]
 tags: ["Redis"]
-description: "Concurrency control and asynchronous communication in the MSA distributed environment The biggest enemies of the distributed environment: concurrency problems and distributed locks"
-description_source: "excerpt"
+description: "A summary of Redis distributed locks, SETNX and SET NX EX atomic locking, TTL and UUID validation, Redisson RLock, Pub/Sub waiting, and why Redis was used for asynchronous processing."
+description_source: "manual"
 lang: "en"
 ui_lang: "ko-KR"
 toc: true
