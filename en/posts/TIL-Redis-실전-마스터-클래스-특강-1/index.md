@@ -3,7 +3,7 @@ layout: "post"
 title: "[TIL] Redis Practical Master Class Lecture 1 - Core Architecture and Caching Strategies"
 title_source: "manual"
 date: 2026-05-12 09:00:00 +0900
-last_modified_at: 2026-05-13 16:03:00 +0900
+last_modified_at: 2026-05-15 20:57:00 +0900
 categories: ["Spring 단기 심화", "특강"]
 tags: ["Redis"]
 description: "This post summarizes Redis' in-memory architecture, single-threaded event loop, cache patterns, and TTL strategies from a practical service perspective."
@@ -64,7 +64,7 @@ notion_lang: "en"
   | **speed** | Very fast (In-Memory) | Very fast (In-Memory) | Slow (Disk I/O) | **Fastest** (no network I/O) |
   | **Data structure support** | Rich collection of more than 5 types | Only String (Key-Value) | Tables, views, etc. | Object self storage |
   | **Data Persistence** | Support (RDB snapshot, AOF) | Not supported (will evaporate when the server is turned off) | Full support (ACID) | Not supported (will evaporate when the server is turned off) |
-  | **Support for distributed environment** | Clustering, replication, Sentinel | Third party dependency | Replication support (heavy) | Not supported |
+  | **Support for distributed environments** | Clustering, replication, Sentinel | Third party dependency | Replication support (heavy) | Not supported |
   | **Typical usage scenario** | Ranking, Queue, Session, Global Cache | Simple text/session caching | Data that requires permanent retention | Settings, static data from a single server |
 
 #### Deepening single-threaded architecture
@@ -161,7 +161,7 @@ Assuming a popular shopping mall, we plan to map each data structure with comman
 
     - Insertion/deletion at both ends is fast, but insertion in the middle is slow.
 
-    - Example: Recently viewed product → Each time the user moves the page, the product is placed at the front of the list, and older items are cut out.
+    - Example: Recently viewed products → Whenever the user moves the page, products are placed at the front of the list, and older ones are cut out.
 
         ```bash
         # 유저(999)가 상품(123)을 최근에 봤습니다. 리스트 맨 앞에 밀어 넣습니다.
@@ -193,7 +193,7 @@ Assuming a popular shopping mall, we plan to map each data structure with comman
 
 4. Sorted Set (ZSET)
 
-    - A core data structure that automatically sorts in score order by adding the concept of ‘Score’ to Set.
+    - Core data structure that automatically sorts in score order by adding the concept of ‘Score’ to Set
 
     - Example: Real-time purchasing ranking → Real-time ranking is created using the user’s cumulative purchase amount as the score.
 
@@ -264,9 +264,9 @@ Assuming a popular shopping mall, we plan to map each data structure with comman
 
 ## Questions & Errors
 
-**Q I heard that existing disk-based DBs require locks and are slow because they are multi-threaded, but why does Redis use distributed locks since it is single-threaded?**
+**Q I heard that existing disk-based DBs require locks and are slow because they are multi-threaded, but Redis is single-threaded, so why does it use distributed locks again?**
 
-- Redis’ single thread refers to **Redis** **internally** **how commands are processed**
+- Redis' single thread refers to **Redis** **internally** **how commands are processed**
     - In other words, because Redis processes only one command at a time in order, there are fewer conflicts that occur when multiple threads modify the same memory data at the same time.
 
     - Redis commands themselves are executed atomically.
@@ -288,17 +288,11 @@ Assuming a popular shopping mall, we plan to map each data structure with comman
 
     ```plaintext
     서버 A: 락 획득 성공
-
     서버 B: 락 획득 실패 → 대기
-
     서버 A:
-
-    - 재고 확인
-
-    - 주문 생성
-
-    - 재고 감소
-
+    	- 재고 확인
+    	- 주문 생성
+    	- 재고 감소
     작업 완료 후 락 반납
     ```
 
