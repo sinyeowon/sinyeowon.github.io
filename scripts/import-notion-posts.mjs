@@ -819,8 +819,16 @@ function markdownCodeLanguage(language = '', code = '') {
   const normalized = trimmed.replace(/\s+/g, '-').toLowerCase();
   const codeValue = String(code || '').trim();
 
-  if (normalized === 'json' && /^-\s+\S/m.test(codeValue)) {
-    return 'yaml';
+  if (normalized === 'json') {
+    if (/^-\s+\S/m.test(codeValue)) {
+      return 'yaml';
+    }
+
+    try {
+      JSON.parse(codeValue);
+    } catch {
+      return 'plaintext';
+    }
   }
 
   return normalized;

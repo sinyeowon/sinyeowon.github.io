@@ -94,7 +94,7 @@ In an MSA environment, in order to reduce DB dependency between services and mai
 
 For example, when creating an order:
 
-```json
+```plaintext
 1. company-service에 producer_id 존재 여부 확인
 
 2. company-service에 receiver_id 존재 여부 확인
@@ -113,7 +113,7 @@ It was interesting that in practice, FK is not used unconditionally, but is used
 
 It was decided to apply the `Layered + Package by Feature` structure inside each service.
 
-```json
+```plaintext
 presentation
 application
 domain
