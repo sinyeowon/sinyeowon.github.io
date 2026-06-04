@@ -776,9 +776,14 @@ async function renderBlock(block, context, depth = 0, listNumber = 1) {
     }
   }
 
-  if ((type === 'quote' || type === 'callout') && output.trim()) {
+  if (type === 'quote' && output.trim()) {
     const quoted = blockquoteMarkdown(output);
     return depth > 0 ? indentMarkdown(quoted, depth) : quoted;
+  }
+
+  if (type === 'callout' && output.trim()) {
+    const callout = calloutMarkdown(output, notionCalloutIcon(block));
+    return depth > 0 ? indentMarkdown(callout, depth) : callout;
   }
 
   return output;
@@ -861,6 +866,38 @@ function blockquoteMarkdown(markdown) {
     .split('\n')
     .map((line) => (line.trim() ? `> ${line}` : '>'))
     .join('\n');
+}
+
+function notionCalloutIcon(block) {
+  const icon = block.callout?.icon;
+
+  if (icon?.type === 'emoji' && icon.emoji) {
+    return icon.emoji;
+  }
+
+  return '💡';
+}
+
+function calloutMarkdown(markdown, icon = '💡') {
+  const content = String(markdown || '').trim();
+
+  return [
+    '<div class="notion-callout" markdown="1">',
+    `<span class="notion-callout-icon">${escapeHtml(icon)}</span>`,
+    '',
+    content,
+    '',
+    '</div>'
+  ].join('\n');
+}
+
+function escapeHtml(value) {
+  return String(value)
+    .replace(/&/g, '&amp;')
+    .replace(/</g, '&lt;')
+    .replace(/>/g, '&gt;')
+    .replace(/"/g, '&quot;')
+    .replace(/'/g, '&#39;');
 }
 
 function normalizeMarkdown(markdown) {

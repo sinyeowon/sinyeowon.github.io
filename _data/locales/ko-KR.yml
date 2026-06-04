@@ -13,7 +13,7 @@ tabs:
   home: Home
   categories: Category
   tags: Tag
-  archives: Archive
+  archives: Archives
   about: About Me
 
 # the text displayed in the search bar & search results
@@ -23,9 +23,9 @@ search:
   no_results: 검색 결과가 없습니다.
 
 panel:
-  lastmod: 최근 업데이트
-  trending_tags: 인기 태그
-  toc: 바로가기
+  lastmod: Recently Updated
+  trending_tags: Trending Tags
+  toc: Contents
 
 copyright:
   # Shown at the bottom of the post
@@ -83,5 +83,5 @@ df:
 
 # categories page
 categories:
-  category_measure: 카테고리
-  post_measure: 포스트
+  category_measure: Category
+  post_measure: Posts
