@@ -3,7 +3,7 @@ layout: "post"
 title: "[TIL] Checking the service flow through surveys and API discussion"
 title_source: "manual"
 date: 2026-05-13 09:00:00 +0900
-last_modified_at: 2026-05-14 21:16:00 +0900
+last_modified_at: 2026-06-04 22:53:00 +0900
 categories: ["GDGoC KNU", "0 to Product"]
 tags: ["project"]
 description: "This note turns preliminary survey questions and backend discussions into a clearer service flow for feeds, rankings, AI feedback, and API ownership."

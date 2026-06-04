@@ -3,7 +3,7 @@ layout: "post"
 title: "[TIL] Refining the ERD around the user flow"
 title_source: "manual"
 date: 2026-05-12 09:00:00 +0900
-last_modified_at: 2026-05-14 21:02:00 +0900
+last_modified_at: 2026-06-04 22:53:00 +0900
 categories: ["GDGoC KNU", "0 to Product"]
 tags: ["project"]
 description: "This note reconnects crew, OCR results, AI feedback, and ranking tables around the actual TodayPoor user flow while refining the ERD."
@@ -38,7 +38,7 @@ notion_lang: "en"
 
     ![image](/assets/img/notion/TIL-사용자-흐름에-맞춰-ERD-다듬기/01-171908815a.png)
 
-  | **Change Items** | **Existing structure** | **Change structure** | **Reason for change** |
+  | **Change Items** | **Existing structure** | **Change Structure** | **Reason for change** |
   | --- | --- | --- | --- |
   | Change group terminology | GROUP, GROUP_MEMBER | CREW, CREW_MEMBER | Since the term “crew” is used in the front wireframe, the FE/BE/plan terminology was changed to unify it. |
   | Change group FK name | group_id | crew_id | Since the table name was changed to CREW, the FK name was also modified to be consistent. |
@@ -67,10 +67,10 @@ notion_lang: "en"
 
     ![image](/assets/img/notion/TIL-사용자-흐름에-맞춰-ERD-다듬기/02-cba4234997.png)
 
-  | **Change Items** | **Existing structure** | **Change structure** | **Reason for change** |
+  | **Change Items** | **Existing structure** | **Change Structure** | **Reason for change** |
   | --- | --- | --- | --- |
   | Add ranking type | There is no ranking type distinction in RANKING_RESULT | Add ranking_type | Added to distinguish between date-based ranking results and random topic-based ranking results |
-  | Ranking type enum definition | doesn't exist | DAILY, RANDOM_TOPIC | Front wireframe shows both daily and random topic results to clearly distinguish between result types |
+  | Ranking type enum definition | doesn't exist | DAILY, RANDOM_TOPIC | Front wireframe shows both daily and random topic results, clearly distinguishing between result types |
   | Add consent to member information | No consent to USER | Add is_agreeed | Added to store personal information and consent regarding service use when registering as a member |
   | Add AI mode for each crew | AI mode exists only in result table | Add CREW.ai_mode | Added to allow setting AI feedback mood/intensity for each crew |
   | Stay in AI Results Mode | AI_RESULT.mode exists | stay the same | Maintain a record of what mode the AI ​​results were created in |

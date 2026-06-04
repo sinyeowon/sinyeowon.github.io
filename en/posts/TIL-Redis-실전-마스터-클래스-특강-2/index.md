@@ -3,7 +3,7 @@ layout: "post"
 title: "[TIL] Redis Practical Master Class 2 - Distributed Locks and Async Processing"
 title_source: "manual"
 date: 2026-05-14 09:00:00 +0900
-last_modified_at: 2026-05-15 21:37:00 +0900
+last_modified_at: 2026-06-04 23:26:00 +0900
 categories: ["Spring 단기 심화", "특강"]
 tags: ["Redis"]
 description: "A summary of Redis distributed locks, SETNX and SET NX EX atomic locking, TTL and UUID validation, Redisson RLock, Pub/Sub waiting, and why Redis was used for asynchronous processing."
@@ -87,7 +87,7 @@ In an MSA environment, multiple servers rush to read and modify inventory data i
         >
         >![image](/assets/img/notion/TIL-Redis-실전-마스터-클래스-특강-2/03-9008952e17.png)
         >
-        > ⇒ So, **put a unique value such as UUID in the value of the lock, and when erasing, verification logic such as ‘Erase only if it matches my UUID!’ is absolutely necessary**2. **Concurrency control technology comparison**
+        > ⇒ So, **put a unique value such as UUID in the value of the lock, and when erasing, verification logic such as ‘Erase only if it matches my UUID!’ is absolutely necessary**2. **Comparison of concurrency control technologies**
 
   | Compare items | DB Pessimistic Rock | DB optimistic lock | Redis basic distributed locking | Redisson (RLock) |
   | --- | --- | --- | --- | --- |
@@ -101,7 +101,7 @@ In an MSA environment, multiple servers rush to read and modify inventory data i
 
     - ❌ [Version 1] Redis distributed lock implemented directly (full of risk factors!)
 
-        ```javascript
+        ```java
         public void issueCouponDirect(String userId, String couponId) {
             String lockKey = "lock:coupon:" + couponId;
             String uuid = UUID.randomUUID().toString();
@@ -131,7 +131,7 @@ In an MSA environment, multiple servers rush to read and modify inventory data i
 
     - ✅ [Version 2] Distributed locking using Redisson (★ Watchdog precautions included)
 
-        ```javascript
+        ```java
         public void issueCouponRedisson(String userId, String couponId) {
             String lockKey = "lock:coupon:" + couponId;
             RLock lock = redissonClient.getLock(lockKey);
@@ -172,7 +172,7 @@ In an MSA environment, multiple servers rush to read and modify inventory data i
 
 #### Postman between services: Redis Pub/Sub vs Message Queue
 
-> **Q When the customer completes the payment, the ordering service must send a ‘payment completion notification’ to the shipping service. What is the critical reason why Redis Pub/Sub should not be used in this case?**
+> **Q When the customer completes the payment, the ordering service must send a ‘payment completion notification’ to the shipping service. What is the crucial reason why Redis Pub/Sub should not be used in this case?**
 > - Message may be lost midway
 >
 > → Payment notifications are key data that must arrive 100% of the time.
@@ -194,8 +194,8 @@ In an MSA environment, multiple servers rush to read and modify inventory data i
   | Compare items | Redis Pub/Sub (broadcasting station) | Kafka (Post Office) |
   | --- | --- | --- |
   | **Whether to store the message** | ❌ Do not store (volatilizes immediately) | ⭕ Keep queues on disk/memory |
-  | **Receipt confirmation (Ack)** | ❌ No confirmation | ⭕ Consumer sends Ack to clear from queue |
-  | **Level of Processing Assurance** | Low (high probability of loss) | **Very high (guaranteed at least once, etc.)** |
+  | **Receipt confirmation (Ack)** | ❌ Do not confirm | ⭕ Consumer sends Ack to clear from queue |
+  | **Processing Assurance Level** | Low (high probability of loss) | **Very high (guaranteed at least once, etc.)** |
   | **Performance (Speed)** | **Extreme speed** (latency < 1ms) | High (heavier than Redis due to disk I/O) |
   | **Operational Complexity** | very low | very high |
   | **Typical usage scenario** | Real-time chat, stock price updates | Payment completion event, **data stream that must never be lost** |
@@ -277,34 +277,40 @@ In an MSA environment, multiple servers rush to read and modify inventory data i
 **Q What are DB pessimistic locks, DB optimistic locks, Redis distributed locks, and Redisson RLocks and what is the difference between them?**
 
 A. These are methods to prevent conflicts when multiple requests attempt to modify the same data at the same time.
-  - **DB Pessimistic Lock**
+
+<div class="notion-indent" markdown="1">
+
+- **DB Pessimistic Lock**
 It is a “no one should access it until I finish the work” method. It locks the data directly with `SELECT FOR UPDATE`, and although it is safe, performance is slow and there is a risk of deadlock.
 It is used in situations where consistency is most important, such as financial transactions.
 
-  - **DB Optimistic Lock**
+- **DB Optimistic Lock**
 It is the “let’s edit together first and check for conflicts at the end” approach. Check for conflicts using the `version` column, and if there are few conflicts, the performance is good.
 Used in cases where simultaneous modification is unlikely, such as modifying member information.
 
-  - **Redis basic distributed locking**
+- **Redis basic distributed locking**
 This is a method of creating a lock (key) in Redis and allowing only requests with the key to work.
 It is processed quickly using Redis' single-threaded characteristics, but it is difficult because TTL, retries, error handling, etc. must be implemented directly.
 
-  - **Redisson RLock**
+- **Redisson RLock**
 This is a library-based lock created to make Redis distributed locking safer and more convenient to use.
 It waits in Pub/Sub mode and automatically extends TTL with Watchdog.
 It is often used in situations where traffic is high, such as first-come-first-served coupons and time sales.
 
-  That is,
+That is,
 
-  - DB lock focuses on data consistency
+- DB lock focuses on data consistency
 
-  - Redis/Redisson locks are centered on controlling concurrent requests in a distributed server environment
+- Redis/Redisson locks are centered on controlling concurrent requests in a distributed server environment
 
-  You can understand this as follows.
+You can understand this as follows.
+
+</div>
 
 **Q Redis Pub/Sub**
 
 A. Notification structure that separates the sender and receiver of messages
+
 <div class="notion-indent" markdown="1">
 
 Here, Pub/Sub means the following, respectively:
@@ -313,7 +319,7 @@ Here, Pub/Sub means the following, respectively:
 
 - **Sub(Subscribe)**: Subscribe and wait for messages
 
-To put it simply, it is similar to **group chat room notification**. Just as when someone sends a message to a group chat room, the people in the room immediately receive the message, in Redis, when an event occurs, a message can be delivered to the subscribed target.
+To put it simply, it is similar to **group chat room notification**.Just as when someone sends a message to a group chat room, the people in the room immediately receive the message, in Redis, when an event occurs, a message can be delivered to the subscribed target.
 
 Redisson lock uses this structure to wait without continuously checking whether the lock has been released.
 
@@ -326,6 +332,7 @@ In other words, Redis Pub/Sub is not a method that asks continuously, but a meth
 **Q Why did you choose Redis distributed lock rather than MySQL DB lock?**
 
 A. Concurrency problems can be solved with MySQL DB locks.
+
 <div class="notion-indent" markdown="1">
 
 However, in an environment where thousands of inventory movement requests occur simultaneously, such as a logistics system, directly locking the DB can be burdensome.
@@ -340,7 +347,7 @@ However, in an environment where thousands of inventory movement requests occur 
 
 - In severe cases, there is a risk that the entire logistics system will slow down or stop.
 
-So, we used Redis distributed locks instead of DB to first control the request order.
+So, we first used Redis distributed locks instead of DB to control the request order.
 
 Redis is memory-based, so it can handle locks much faster and more lightly than DB.
 
@@ -351,73 +358,81 @@ In other words, Redis distributed locking is a method used to reduce DB burden a
 **Q Why did you switch from synchronous to asynchronous using Redis?**
 
 A. Olive Young's first-come-first-served coupon event received hundreds of thousands of requests at the same time at 12 o'clock at night.
-  If you process it in a synchronous way, which stores it in the DB immediately every time a request comes in, like the existing method, all requests will be concentrated in the main DB at once.
 
-  - As a result, the DB connection pool quickly filled up.
+<div class="notion-indent" markdown="1">
 
-  - A problem occurred where the entire site slowed down or paralyzed.
+If you process it in a synchronous way, which stores it in the DB immediately every time a request comes in, like the existing method, all requests will be concentrated in the main DB at once.
 
-  So, we changed the structure by first storing requests in Redis rather than storing them in the DB right away.
+- As a result, the DB connection pool quickly filled up.
 
-  - User requests are stored in the Redis List. (`RPUSH`)
+- A problem occurred where the entire site slowed down or paralyzed.
 
-  - Pub/Sub is used only to notify the Worker, “Start processing!”- Worker pulls out data one by one from the Redis List (`LPOP`) and stores it in the DB.
+So, we changed the structure by first storing requests in Redis rather than storing them in the DB right away.
 
-  In other words, the request was changed to an asynchronous method that does not process the request immediately, but queues it in Redis for a while and processes it later.
+- User requests are stored in the Redis List. (`RPUSH`)- Pub/Sub is used only to notify the Worker, “Start processing!”
 
-  Through this, we were able to reduce the phenomenon of a large number of requests being made to the main DB at once, and also improve overall site performance.
+- Worker pulls out data one by one from the Redis List (`LPOP`) and stores it in the DB.
+
+In other words, the request was changed to an asynchronous method that does not process the request immediately, but queues it in Redis for a while and processes it later.
+
+Through this, we were able to reduce the phenomenon of a large number of requests being made to the main DB at once, and also improve overall site performance.
+
+</div>
 
 **Q Why did the Redlock algorithm appear and why was there controversy**
 
 A. Existing Redis distributed locks were usually stored on a single Redis Master server.
-  But there was one problem.
 
-  For example:
+<div class="notion-indent" markdown="1">
 
-  - Client A acquires lock on Master
+But there was one problem.
 
-  - Before lock information is copied to Slave
+For example:
 
-  - Master server suddenly dies
+- Client A acquires lock on Master
 
-  - Slave is promoted to new Master
+- Before lock information is copied to Slave
 
-  In this situation, because the new Master has no lock information, another client can acquire the same lock again.
+- Master server suddenly dies
 
-  In other words, the lock was originally supposed to be held by only one person, but due to server failure, a problem arose where two people could act as if they had the lock at the same time.
+- Slave is promoted to new Master
 
-  To solve this problem, the founder of Redis proposed the Redlock algorithm.
+In this situation, because the new Master has no lock information, another client can acquire the same lock again.
 
-  Redlock:
+In other words, the lock was originally supposed to be held by only one person, but due to server failure, a problem arose where two people could act as if they had the lock at the same time.
 
-  - Don’t trust only one Redis
+To solve this problem, the founder of Redis proposed the Redlock algorithm.
 
-  - After requesting locks from multiple independent Redis servers simultaneously
+Redlock:
 
-  - This method recognizes success only when more than half of the locks are obtained.
+- Don’t trust only one Redis
 
-  For example, if you have 5 Redis servers:
+- After requesting locks from multiple independent Redis servers simultaneously
 
-  - Obtain 3 or more locks → Success
+- This method recognizes success only when more than half of the locks are obtained.
 
-  - 2 or less → failure
+For example, if you have 5 Redis servers:
 
-  The purpose was to increase stability even if some servers died.
+- Obtain 3 or more locks → Success
 
-  But then a controversy arose.
+- 2 or less → failure
 
-  Martin Kleppmann, a distributed systems researcher:
+The purpose was to increase stability even if some servers died.
 
-  - Redlock relies heavily on system time synchronization
+But then a controversy arose.
 
-  - Criticized that it may not be completely safe in certain disability situations.
+Martin Kleppmann, a distributed systems researcher:
 
-  In other words, he argued, “It may be dangerous in truly important financial transactions or systems that require strong distributed consensus.”
+- Redlock relies heavily on system time synchronization
 
-  So now it is used differently depending on the situation.
+- Criticized that it may not be completely safe in certain disability situations.
 
-  - General services such as first-come-first-served coupons and inventory processing → Redlock available
+In other words, he argued, “It may be dangerous in truly important financial transactions or systems that require strong distributed consensus.”
 
-  - Financial transactions, a system where data errors cannot occur → Use a stronger consensus system such as Zookeeper
+So now it is used differently depending on the situation.
 
-  You can understand this as follows.
+- General services such as first-come-first-served coupons and inventory processing → Redlock available- Financial transactions, a system where data errors cannot occur → Use a stronger consensus system such as Zookeeper
+
+You can understand this as follows.
+
+</div>

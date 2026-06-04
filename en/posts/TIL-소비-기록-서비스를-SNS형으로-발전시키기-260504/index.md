@@ -3,7 +3,7 @@ layout: "post"
 title: "[TIL] Developing a consumption record service into an SNS-style service"
 title_source: "manual"
 date: 2026-05-04 09:00:00 +0900
-last_modified_at: 2026-05-07 11:33:00 +0900
+last_modified_at: 2026-06-04 22:53:00 +0900
 categories: ["GDGoC KNU", "0 to Product"]
 tags: ["project"]
 description: "This post summarizes how the team reviewed the limits of automatic financial-data collection and shifted the product direction toward OCR-based uploads and SNS-style spending sharing with friends."
@@ -41,7 +41,7 @@ notion_lang: "en"
         - Problem: Is it possible to retrieve transfer details other than card payments, and since information about transfer details is not automatically reflected, is it possible to enable AI to allow users to enter and record information about why and where they used it?
 
         - Solution: When a notification appears on the banking app during a transfer, the notification is detected and the user is notified so that they can enter the transfer information themselves immediately when transferring! → Since the information about the transfer has already been created, if you download the transaction history, you can also retrieve the information you created about the transfer.
-            - Another problem...: All information may not be retrieved, iOS does not work, and is sensitive because it is information from a financial app + Salad Bank
+            - Another problem..: All information may not be retrieved, iOS does not work, and is sensitive because it is information from a financial app + Salad Bank
 
     - Final solution
         - We judged that loading transaction details separately would be difficult for our project.

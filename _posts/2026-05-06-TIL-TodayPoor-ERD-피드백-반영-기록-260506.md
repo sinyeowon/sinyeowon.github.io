@@ -2,7 +2,7 @@
 title: "[TIL] TodayPoor ERD 피드백 반영 기록"
 title_source: "manual"
 date: 2026-05-06 09:00:00 +0900
-last_modified_at: 2026-05-10 22:25:00 +0900
+last_modified_at: 2026-06-04 22:53:00 +0900
 categories: ["GDGoC KNU", "0 to Product"]
 tags: ["project"]
 description: "OCR 결과 분리, AI 프롬프트 테이블 제거, 랭킹 결과 구조 변경 등 TodayPoor ERD 피드백을 반영하며 설계를 정리한 글입니다."

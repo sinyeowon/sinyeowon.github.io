@@ -3,7 +3,7 @@ layout: "post"
 title: "[TIL] Applying TodayPoor ERD feedback"
 title_source: "manual"
 date: 2026-05-06 09:00:00 +0900
-last_modified_at: 2026-05-10 22:25:00 +0900
+last_modified_at: 2026-06-04 22:53:00 +0900
 categories: ["GDGoC KNU", "0 to Product"]
 tags: ["project"]
 description: "This post summarizes how TodayPoor ERD feedback was reflected by separating OCR results, removing the AI prompt table, and revising the ranking-result relationship structure."
@@ -36,7 +36,7 @@ In the initial design, we focused on quickly reflecting the functionality, but t
             - The original OCR text may be long, and there is a possibility that OCR accuracy or analysis results may be managed separately in the future.
 
         - Solved: So separate table `OCR_RESULT`
-            - With this separation, `EXPENSE` focuses on confirmed consumption data, and `OCR_RESULT` is responsible for analysis results, making the role clearer.
+            - With this separation, `EXPENSE` focuses on confirmed consumption data, and `OCR_RESULT` is responsible for analysis results, making their roles clearer.
 
     - Remove AI prompt table
         - Initially, the `AI_PROMPT_TEMPLATE` table was added considering AI functions.
