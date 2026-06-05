@@ -2,7 +2,7 @@
 layout: "post"
 title: "[TIL] Review of Redis special lecture: Understanding cache, distributed locking, and asynchronous processing"
 date: 2026-06-05 09:00:00 +0900
-last_modified_at: 2026-06-05 00:57:00 +0900
+last_modified_at: 2026-06-05 15:58:00 +0900
 categories: ["Spring 단기 심화", "심화 주차"]
 tags: ["Redis"]
 description: "I knew Redis as a simple cache storage, but while reviewing the special lecture notes, I summarized how Redis is used in caching, distributed locking, first-come-first-served event processing, and asynchronous structure."
@@ -78,7 +78,7 @@ DB = 최종 저장소
 
 Connection pool depletion refers to a state in which all connections made in advance by an application to connect to the DB are being used.
 
-A request borrows a connection from the connection pool to perform a DB operation, and returns it when the operation is complete. However, if a query takes a long time, a transaction remains long, or a lock wait occurs, connection release is delayed.
+A request borrows a connection from the connection pool to perform a DB operation, and returns it when the operation is completed. However, if a query takes a long time, a transaction remains long, or a lock wait occurs, connection release is delayed.
 
 As a result, new requests may wait or timeouts may occur because they cannot obtain a connection to use.
 
@@ -89,7 +89,7 @@ As a result, new requests may wait or timeouts may occur because they cannot obt
 
 Distributed locking is a method of controlling multiple servers from accessing the same resource at the same time.
 
-If there is one server, simultaneous access can be prevented using Java's synchronized method, but if there are multiple servers, the memory of each server is not shared. Therefore, locks can be managed using Redis, which multiple servers can commonly access.
+If there is only one server, simultaneous access can be prevented using Java's synchronized method, but if there are multiple servers, the memory of each server is not shared. Therefore, locks can be managed using Redis, which multiple servers can commonly access.
 
 In the Java/Spring environment, Redisson is often used rather than directly implementing Redis distributed locking. Redisson is a Redis-based Java client library that allows distributed locks to be used like objects through RLock.
 
@@ -137,7 +137,7 @@ However, asynchronous methods are not always better. The synchronous method is s
 
 ## What is Kafka?
 
-Kafka is a large-capacity event streaming platform. The structure is such that when the producer publishes a message to the topic, the consumer subscribes to it and processes it.
+Kafka is a large-capacity event streaming platform. The structure is such that when a producer publishes a message to a topic, the consumer subscribes to it and processes it.
 
 - Producer → Kafka Topic → Consumer
 
@@ -228,7 +228,7 @@ The problem is when the Master suddenly dies when using Redis as a distributed l
 
 → As a result, a situation may arise where Client A and Client B think they have the same lock at the same time.To compensate for this, the founder of Redis proposed the Redlock algorithm. Redlock does not lock only one Redis node, but requests a lock from multiple independent Redis nodes and acknowledges the lock only when more than half of them succeed in obtaining the lock.
 
-For example, the lock is considered to have been obtained only when the lock is successfully acquired from at least 3 out of 5 Redis nodes.
+For example, the lock is determined to be obtained only when lock acquisition is successful in at least 3 out of 5 Redis nodes.
 
 However, Redlock is not a perfect solution either. In distributed systems, network delays, server time differences, and state inconsistencies may occur during disaster recovery. Therefore, in areas that must never be messed up, such as financial transactions or account transfers, stronger consensus methods such as DB transactions, Zookeeper, etcd should be considered rather than Redis distributed locks.
 
