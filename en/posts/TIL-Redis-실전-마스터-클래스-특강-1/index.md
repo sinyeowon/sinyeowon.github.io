@@ -27,7 +27,7 @@ notion_lang: "en"
 - Redis is like placing a frequently read book on a small bookshelf next to your desk and taking it out in just one second.
 
 > **Q If the shopping mall becomes a hit and 100,000 customers access the main page per second, what will happen to the server if only the existing DBMS is used?**
->![image](/assets/img/notion/TIL-Redis-실전-마스터-클래스-특강-1/02-321db45700.png)
+> ![image](/assets/img/notion/TIL-Redis-실전-마스터-클래스-특강-1/02-321db45700.png)
 >
 > - The server crashed due to too many queries in the DB.
 >
@@ -71,14 +71,14 @@ notion_lang: "en"
 
 > **Q Multi-threading seems to be the best, but why did Redis choose to have only one worker**
 >
->![image](/assets/img/notion/TIL-Redis-실전-마스터-클래스-특강-1/04-e2d8e2bd23.png)
+> ![image](/assets/img/notion/TIL-Redis-실전-마스터-클래스-특강-1/04-e2d8e2bd23.png)
 >
 > - If multiple threads access data at the same time, the data may become entangled, so this is done to prevent that.
 >
 > → Multi-threading causes context switching overhead and lock contention problems as multiple threads fight to take over the lock.
 > ⇒ Since Redis' memory operation itself is so fast, we decided that it would be better to process it like crazy alone rather than locking it and waiting.
 >
->![image](/assets/img/notion/TIL-Redis-실전-마스터-클래스-특강-1/05-4f15daf468.png)
+> ![image](/assets/img/notion/TIL-Redis-실전-마스터-클래스-특강-1/05-4f15daf468.png)
 
 - **Understanding event loop-based multiplexing**
     - If compared to a waiter at a restaurant
@@ -123,12 +123,12 @@ _We will see a strategy for caching this 20%_
     → In practice, Active Invalidation is mainly used as the default, but the double safety device that sets the TTL as a backup in case the deletion logic fails due to a system failure is most often used.
 
 - **What is the appropriate TTL (expiration time) setting?**<br>
-    > **Q If I cache the shopping mall’s ‘Terms of Use’ page and the ‘Bitcoin Real-time Price’ page, what should be the TTL for each**?
-    > - Since the terms and conditions do not change much, it should be long, and since the Bitcoin price keeps changing, it should be very short.
-    >
-    >![image](/assets/img/notion/TIL-Redis-실전-마스터-클래스-특강-1/11-197eb1663a.png)
-    >
-    > **→ TTL must be taken differently depending on the data update cycle (volatility)**
+> **Q If I cache the shopping mall’s ‘Terms of Use’ page and the ‘Bitcoin Real-time Price’ page, what should be the TTL for each**?
+> - Since the terms and conditions do not change much, it should be long, and since the Bitcoin price keeps changing, it should be very short.
+>
+> ![image](/assets/img/notion/TIL-Redis-실전-마스터-클래스-특강-1/11-197eb1663a.png)
+>
+> **→ TTL must be taken differently depending on the data update cycle (volatility)**
 
 - **Cache Stampede Phenomenon - Deadly Trap**
     ![image](/assets/img/notion/TIL-Redis-실전-마스터-클래스-특강-1/12-f0c7b7caff.png)
@@ -146,14 +146,14 @@ Assuming a popular shopping mall, we plan to map each data structure with comman
 1. String
     - Used to store simple text or counters
 
-    > Q If you need to show ‘total number of visitors today’ on the shopping mall main page, what command should you use to implement it?
-    > → By using the atomic instruction `INCR`, perfect counting is possible without concurrency problems.
-    >
-    >```bash
-    >     # 새로운 방문자가 올 때마다 방문자 수를 1씩 증가시킵니다.
-    >     redis> INCR today_visitors
-    >     (integer) 1
-    >     ```
+> Q If you need to show ‘total number of visitors today’ on the shopping mall main page, what command should you use to implement it?
+> → By using the atomic instruction `INCR`, perfect counting is possible without concurrency problems.
+>
+>```bash
+>     # 새로운 방문자가 올 때마다 방문자 수를 1씩 증가시킵니다.
+>     redis> INCR today_visitors
+>     (integer) 1
+> ```
 
 2. List
 
@@ -222,7 +222,7 @@ Assuming a popular shopping mall, we plan to map each data structure with comman
 
 > Q What happens if there is only 1 limited edition shoe left in a shopping mall, and 100 people press the payment button at the same time without an error of 0.1 second?
 >
->![image](/assets/img/notion/TIL-Redis-실전-마스터-클래스-특강-1/13-b0f0b6eeaf.png)
+> ![image](/assets/img/notion/TIL-Redis-실전-마스터-클래스-특강-1/13-b0f0b6eeaf.png)
 >
 > - There is only one item in stock, but the payment is processed at the same time, so it is sold to multiple people (overselling phenomenon)
 >

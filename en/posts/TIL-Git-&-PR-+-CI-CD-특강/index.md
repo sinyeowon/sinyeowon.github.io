@@ -46,7 +46,7 @@ Without a branching strategy, accidents can occur such as your work overwriting 
   | Compatibility with distribution | Not compatible with rapid distribution (CD) | PR Merge = Immediate Deployment |
   | prerequisites | — | Automated testing is an essential premise |
 
-    > Most startups/web services start with Github Flow and expand to Git Flow as they grow.
+> Most startups/web services start with Github Flow and expand to Git Flow as they grow.
 
 ### **PR Workflow and Code Review**
 
@@ -194,11 +194,11 @@ Conflicts occur when two branches modify the same line in the same file differen
 - Conflict markers that Git leaves in files
 
     ```bash
-    <<<<<<< HEAD
+    # <<<<<<< HEAD
       private final int TIMEOUT = 3000;       // 내 변경 (현재 브랜치)
-    =======
+    # =======
       private final int TIMEOUT = 5000;       // 들어오는 변경 (다른 브랜치)
-    >>>>>>> feature/api
+    # >>>>>>> feature/api
     ```
 
     → Conflicts are not errors, but Git is requesting my judgment.
@@ -367,7 +367,7 @@ Q. Should I use Squash merge / Rebase merge / Merge commit?
 
 Q. Merge & Rebase
 
->![image](/assets/img/notion/TIL-Git-&-PR-+-CI-CD-특강/06-dae5302fb1.png)
+> ![image](/assets/img/notion/TIL-Git-&-PR-+-CI-CD-특강/06-dae5302fb1.png)
 
 ![image](/assets/img/notion/TIL-Git-&-PR-+-CI-CD-특강/07-c13ae95793.png)
 

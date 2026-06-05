@@ -111,7 +111,7 @@ We plan to create a class called JwtUtil with JWT-related functions to perform J
 >             public static final String ADMIN = "ROLE_ADMIN";
 >         }
 >     }
->     ```
+> ```
 >
 > <details markdown="1">
 > <summary>Code description</summary>
@@ -125,7 +125,7 @@ We plan to create a class called JwtUtil with JWT-related functions to perform J
 >```java
 >             USER(Authority.USER),
 >             ADMIN(Authority.ADMIN);
->             ```
+> ```
 >
 > - `USER` is a normal user privilege.
 >
@@ -135,14 +135,14 @@ We plan to create a class called JwtUtil with JWT-related functions to perform J
 >
 >```java
 >             private final String authority;
->             ```
+> ```
 >
 > - Spring Security typically uses permission values with the `ROLE_` prefix.
 >
 >```plaintext
 >             ROLE_USER
 >             ROLE_ADMIN
->             ```
+> ```
 >
 > - Stores the permission string via the enum constructor.
 >
@@ -150,14 +150,14 @@ We plan to create a class called JwtUtil with JWT-related functions to perform J
 >             UserRoleEnum(String authority) {
 >                 this.authority = authority;
 >             }
->             ```
+> ```
 >
 > - The permission string passed when creating an enum is stored in the `authority` field.
 >
 >```java
 >             USER("ROLE_USER")
 >             ADMIN("ROLE_ADMIN")
->             ```
+> ```
 >
 > - The `getAuthority()` method returns the stored permission string.
 >
@@ -165,16 +165,16 @@ We plan to create a class called JwtUtil with JWT-related functions to perform J
 >             public String getAuthority() {
 >                 return this.authority;
 >             }
->             ```
+> ```
 >
 > - Example
 >
 >```java
 >             UserRoleEnum.USER.getAuthority()
->             ```
+> ```
 >>```plaintext
 >             ROLE_USER
->             ```
+> ```
 >
 > - The `Authority` inner class manages permission string constants.
 >
@@ -183,7 +183,7 @@ We plan to create a class called JwtUtil with JWT-related functions to perform J
 >                 public static final String USER = "ROLE_USER";
 >                 public static final String ADMIN = "ROLE_ADMIN";
 >             }
->             ```
+> ```
 >
 > - If you manage the permission string as a constant, you don't have to write the string yourself.
 >
@@ -191,7 +191,7 @@ We plan to create a class called JwtUtil with JWT-related functions to perform J
 >
 >```java
 >             "ROLE_USRE" // 오타 발생 가능
->             ```
+> ```
 >
 > - full flow
 >
@@ -199,7 +199,7 @@ We plan to create a class called JwtUtil with JWT-related functions to perform J
 >
 >```java
 >             UserRoleEnum.USER
->             ```
+> ```
 >
 > → Permission types used in code
 >
@@ -207,13 +207,13 @@ We plan to create a class called JwtUtil with JWT-related functions to perform J
 >
 >```java
 >             UserRoleEnum.USER.getAuthority()
->             ```
+> ```
 >
 > → Permission values recognized by Spring Security
 >
 >```plaintext
 >             ROLE_USER
->             ```
+> ```
 >
 > - Cleanup
 > - `UserRoleEnum`

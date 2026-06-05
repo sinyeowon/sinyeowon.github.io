@@ -44,8 +44,8 @@ In an MSA environment, multiple servers rush to read and modify inventory data i
 
             - If successful, 1 (lock acquired), if failed, 0 (lock acquired failed) is returned.
 
-    > **Q Why** **`SET key value NX EX`** **format all at once? (Disaster Scenario)**
-    >![image](/assets/img/notion/TIL-Redis-실전-마스터-클래스-특강-2/02-49ecffa5dd.png)
+> **Q Why** **`SET key value NX EX`** **format all at once? (Disaster Scenario)**
+> ![image](/assets/img/notion/TIL-Redis-실전-마스터-클래스-특강-2/02-49ecffa5dd.png)
 
     - In the past, a lock was set and an expiration time (TTL) was set separately to prevent the bathroom door from being permanently locked.
         - **12:00:00** - Server A succeeds in `SETNX lock:sneakers 1` (lock acquired!)
@@ -80,14 +80,16 @@ In an MSA environment, multiple servers rush to read and modify inventory data i
             - **Users will see a payment error window** for an entire minute
 
         > **Q If the TTL is 3 seconds, but the payment logic takes 5 seconds and the lock is released in the middle,
-        > Even if you are lucky and no other server comes in, what kind of absurd thing will happen if the payment logic is completed and the lock is erased with `DEL lock:sneakers`**
-        > - Delete the newly acquired lock by another server, not your own lock.
+        > even if no other server happens to come in, what absurd thing can happen if the payment logic finishes and deletes the lock with `DEL lock:sneakers`?**
+        > - It may delete a newly acquired lock held by another server, not its own lock.
         >
-        > → After 3 seconds, my lock was already naturally destroyed, and after 4 seconds, server B acquired a new lock, and when I finished after 5 seconds, I erased server B's lock.
+        > After 3 seconds, my lock has already expired naturally; at 4 seconds, server B acquires a new lock; then when my job finishes at 5 seconds, I delete server B's lock.
         >
-        >![image](/assets/img/notion/TIL-Redis-실전-마스터-클래스-특강-2/03-9008952e17.png)
+        > ![image](/assets/img/notion/TIL-Redis-실전-마스터-클래스-특강-2/03-9008952e17.png)
         >
-        > ⇒ So, **put a unique value such as UUID in the value of the lock, and when erasing, verification logic such as ‘Erase only if it matches my UUID!’ is absolutely necessary**2. **Comparison of concurrency control technologies**
+        > Therefore, **a unique value such as a UUID must be stored in the lock value, and deletion must verify that the UUID matches before removing the lock.**
+
+2. **Concurrency control technology comparison**
 
   | Compare items | DB Pessimistic Rock | DB optimistic lock | Redis basic distributed locking | Redisson (RLock) |
   | --- | --- | --- | --- | --- |
@@ -255,8 +257,8 @@ In an MSA environment, multiple servers rush to read and modify inventory data i
     - For slightly more complex logic, if you throw the entire **Lua script**, which is supported starting from Redis 2.6, on the server, it will be executed atomically in a single-threaded environment, allowing perfect control without locking.
 
 2. **"The Redlock Algorithm Controversy" (Beyond the Limits of a Single Node)**<br>
-    > **Q I placed a lock on a single Redis Master node, but what happens if the Master dies right before the lock information is synchronized to the Slave?**
-    > → Since there is no lock on the newly promoted Slave, a situation occurs where another client acquires the lock again.
+> **Q I placed a lock on a single Redis Master node, but what happens if the Master dies right before the lock information is synchronized to the Slave?**
+> → Since there is no lock on the newly promoted Slave, a situation occurs where another client acquires the lock again.
 
     - To prevent this, the founder of Redis proposed an algorithm called **Redlock**.
         - A method that requests a lock from an odd number of independent Redis nodes of 5 or more and recognizes it only when a majority (3) or more is obtained.

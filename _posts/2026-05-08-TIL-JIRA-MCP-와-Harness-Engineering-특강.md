@@ -228,7 +228,7 @@ LLM은 똑똑하지만, 혼자서는 아무것도 못 함
             <hr>
 
 - **핵심 원칙: 레포지토리가 유일한 진실의 원천**<br>
-    > Harness Engineering의 가장 중요한 한 줄: **“레포지토리가 Single Source of Truth가 되어야 한다.”**
+> Harness Engineering의 가장 중요한 한 줄: **“레포지토리가 Single Source of Truth가 되어야 한다.”**
 
     - 단순히 문서를 잘 쓰자는 수준이 아니라, Harness 친화적 방식을 사용해야함
 

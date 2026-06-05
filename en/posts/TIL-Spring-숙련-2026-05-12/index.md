@@ -23,7 +23,7 @@ notion_lang: "en"
 > **Filter**
 >: This is an area managed in a web application and is the first/final stage for requests and responses from clients. Through this, information in requests and responses can be changed or additional functions can be added.
 >
->![image](/assets/img/notion/TIL-Spring-숙련/01-86d9426f4e.png)
+> ![image](/assets/img/notion/TIL-Spring-숙련/01-86d9426f4e.png)
 
 - Mainly used for general-purpose tasks, such as logging and security processing.
     - It can also handle logic related to authentication and authorization.
@@ -313,7 +313,7 @@ notion_lang: "en"
             ```
 
             - The reason for disabling `@Component` is that **if the filter is auto-registered, it may run first outside of the Spring Security flow**- CSRF<br>
-        > **CSRF (Cross-site request forgery)**
+> **CSRF (Cross-site request forgery)**
 
         - An attacker uses the session information of cookies stored in an authenticated browser to send a request that the user did not intend to the web server.<br>
             = **“An attack that pretends to be a logged in user and secretly sends unsolicited requests”**
@@ -380,42 +380,42 @@ notion_lang: "en"
 
             2. If failed, empty SecurityContextHolder3. If successful, set Authentication in SecurityContextHoler.
 
-        > **SecurityContextHoler**
-        > : Stores the detailed information (Authentication) of the user who has completed authentication.
-        >
-        >
-        >![image](/assets/img/notion/TIL-Spring-숙련/08-e3debd73e9.png)
-        >
-        > - SecurityContext can be accessed through SecurityContextHolder
-        >
-        >```java
-        >             // 예시코드
-        >             SecurityContext context = SecurityContextHolder.createEmptyContext();
-        >             Authentication authentication = new UsernamePasswordAuthenticationToken(principal, credentials, authorities);
-        >             context.setAuthentication(authentication); // SecurityContext 에 인증 객체 Authentication 를 저장합니다.
-        >
-        >             SecurityContextHolder.setContext(context);
-        >             ```
+> **SecurityContextHoler**
+> : Stores the detailed information (Authentication) of the user who has completed authentication.
+>
+>
+> ![image](/assets/img/notion/TIL-Spring-숙련/08-e3debd73e9.png)
+>
+> - SecurityContext can be accessed through SecurityContextHolder
+>
+>```java
+>             // 예시코드
+>             SecurityContext context = SecurityContextHolder.createEmptyContext();
+>             Authentication authentication = new UsernamePasswordAuthenticationToken(principal, credentials, authorities);
+>             context.setAuthentication(authentication); // SecurityContext 에 인증 객체 Authentication 를 저장합니다.
+>
+>             SecurityContextHolder.setContext(context);
+> ```
 
-        > **Authentication**
-        > : Indicates the currently authenticated user.
-        >
-        >![image](/assets/img/notion/TIL-Spring-숙련/09-d4aaa3f322.png)
-        >
-        > - Can be retrieved from SecurityContext
-        >
-        > - principal: identifies the user
-        > - Typically a UserDetails instance when authenticating with Username/Password method.
-        >
-        > - credentials: Mainly password, mostly used for user authentication and then left empty
-        >
-        > - authorities: The authority granted to the user is abstracted and used as GrantedAuthority.
+> **Authentication**
+> : Indicates the currently authenticated user.
+>
+> ![image](/assets/img/notion/TIL-Spring-숙련/09-d4aaa3f322.png)
+>
+> - Can be retrieved from SecurityContext
+>
+> - principal: identifies the user
+> - Typically a UserDetails instance when authenticating with Username/Password method.
+>
+> - credentials: Mainly password, mostly used for user authentication and then left empty
+>
+> - authorities: The authority granted to the user is abstracted and used as GrantedAuthority.
 
-        >UserDetailsService
-        > : When using the username/password authentication method, return UserDetails after querying and verifying the user.
-        > - Can be used after customizing and registering as a bean
+>UserDetailsService
+> : When using the username/password authentication method, return UserDetails after querying and verifying the user.
+> - Can be used after customizing and registering as a bean
 
-        >UserDetails
-        > - Verified UserDetails are used when creating Authentication of the UsernamePasswordAuthenticationToken type, and the corresponding authentication object is set in SecurityContextHoler.
-        >
-        > - Available for customization
+>UserDetails
+> - Verified UserDetails are used when creating Authentication of the UsernamePasswordAuthenticationToken type, and the corresponding authentication object is set in SecurityContextHoler.
+>
+> - Available for customization

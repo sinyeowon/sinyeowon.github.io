@@ -6,7 +6,6 @@ hide_title: true
 ---
 
 <div class="about-me-page">
-  <p class="about-me-logo">sinyeowon, here!</p>
 
   <section class="about-me-hero">
     <h1>Hello! I'm yeowon 👩🏻‍💻</h1>
@@ -35,33 +34,35 @@ hide_title: true
       <div class="about-skill-row">
         <div class="about-skill-category">Back-End</div>
         <div class="about-skill-badges">
-          <span class="skill-badge badge-java">JAVA</span>
-          <span class="skill-badge badge-spring">SPRING</span>
-          <span class="skill-badge badge-boot">SPRING BOOT</span>
-          <span class="skill-badge badge-jpa">JPA</span>
-          <span class="skill-badge badge-python">PYTHON</span>
+          <span class="skill-badge badge-java"><i class="fab fa-java"></i>JAVA</span>
+          <span class="skill-badge badge-spring"><i class="fas fa-seedling"></i>SPRING</span>
+          <span class="skill-badge badge-boot"><i class="fas fa-leaf"></i>SPRING BOOT</span>
+          <span class="skill-badge badge-jpa"><i class="fas fa-database"></i>JPA</span>
+          <span class="skill-badge badge-python"><i class="fab fa-python"></i>PYTHON</span>
         </div>
       </div>
       <div class="about-skill-row">
         <div class="about-skill-category">Database</div>
         <div class="about-skill-badges">
-          <span class="skill-badge badge-mysql">MYSQL</span>
-          <span class="skill-badge badge-redis">REDIS</span>
+          <span class="skill-badge badge-oracle"><i class="fas fa-database"></i>ORACLE</span>
+          <span class="skill-badge badge-mysql"><i class="fas fa-database"></i>MYSQL</span>
+          <span class="skill-badge badge-redis"><i class="fas fa-bolt"></i>REDIS</span>
         </div>
       </div>
       <div class="about-skill-row">
         <div class="about-skill-category">Front-End</div>
         <div class="about-skill-badges">
-          <span class="skill-badge badge-js">JAVASCRIPT</span>
-          <span class="skill-badge badge-react">REACT</span>
+          <span class="skill-badge badge-js"><i class="fab fa-js-square"></i>JAVASCRIPT</span>
+          <span class="skill-badge badge-ts"><i class="fas fa-code"></i>TYPESCRIPT</span>
+          <span class="skill-badge badge-react"><i class="fab fa-react"></i>REACT</span>
         </div>
       </div>
       <div class="about-skill-row">
         <div class="about-skill-category">Tools</div>
         <div class="about-skill-badges">
-          <span class="skill-badge badge-git">GIT</span>
-          <span class="skill-badge badge-github">GITHUB</span>
-          <span class="skill-badge badge-notion">NOTION</span>
+          <span class="skill-badge badge-git"><i class="fab fa-git-alt"></i>GIT</span>
+          <span class="skill-badge badge-github"><i class="fab fa-github"></i>GITHUB</span>
+          <span class="skill-badge badge-notion"><i class="fas fa-sticky-note"></i>NOTION</span>
         </div>
       </div>
     </div>

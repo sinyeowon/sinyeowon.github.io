@@ -41,7 +41,7 @@ notion_lang: "ko"
   | 배포와의 궁합 | 빠른 배포(CD)와 궁합이 안 맞음 | PR 머지 = 즉시 배포 |
   | 전제 조건 | — | 자동화 테스트가 필수 전제 |
 
-    > 대부분의 스타트업/웹 서비스는 Github Flow로 시작하고, 규모가 커지면 Git Flow로 확장함
+> 대부분의 스타트업/웹 서비스는 Github Flow로 시작하고, 규모가 커지면 Git Flow로 확장함
 
 ### **PR 워크플로우와 코드 리뷰**
 
@@ -191,11 +191,11 @@ notion_lang: "ko"
 - Git이 파일에 남기는 충돌 마커
 
     ```bash
-    <<<<<<< HEAD
+    # <<<<<<< HEAD
       private final int TIMEOUT = 3000;       // 내 변경 (현재 브랜치)
-    =======
+    # =======
       private final int TIMEOUT = 5000;       // 들어오는 변경 (다른 브랜치)
-    >>>>>>> feature/api
+    # >>>>>>> feature/api
     ```
 
     → 충돌은 에러가 아니라, Git이 내 판단을 요청하는 것

@@ -48,6 +48,24 @@ const publishedValues = new Set([
 
 const layoutBlockTypes = new Set(['column_list', 'column']);
 const listBlockTypes = new Set(['bulleted_list_item', 'numbered_list_item', 'to_do']);
+const listContinuationBlockTypes = new Set([
+  'bookmark',
+  'breadcrumb',
+  'callout',
+  'code',
+  'divider',
+  'embed',
+  'equation',
+  'file',
+  'image',
+  'link_preview',
+  'pdf',
+  'quote',
+  'synced_block',
+  'table',
+  'toggle',
+  'video'
+]);
 
 async function notion(pathname, options = {}) {
   const response = await fetch(`https://api.notion.com/v1${pathname}`, {
@@ -642,18 +660,28 @@ function wrapMarkdownLink(text, href) {
 async function renderBlocks(blocks, context, depth = 0) {
   const rendered = [];
   let numberedIndex = 1;
+  let previousListType = null;
 
   for (const block of blocks) {
+    const isListContinuation = Boolean(
+      previousListType && listContinuationBlockTypes.has(block.type)
+    );
+    const renderDepth = isListContinuation ? depth + 2 : depth;
     const listNumber = block.type === 'numbered_list_item' ? numberedIndex : 1;
-    const markdown = await renderBlock(block, context, depth, listNumber);
+    const markdown = await renderBlock(block, context, renderDepth, listNumber);
     if (markdown.trim()) {
       rendered.push(markdown);
     }
 
     if (block.type === 'numbered_list_item') {
       numberedIndex += 1;
-    } else if (!listBlockTypes.has(block.type)) {
+      previousListType = block.type;
+    } else if (block.type === 'bulleted_list_item' || block.type === 'to_do') {
       numberedIndex = 1;
+      previousListType = block.type;
+    } else if (!isListContinuation && !listBlockTypes.has(block.type)) {
+      numberedIndex = 1;
+      previousListType = null;
     }
   }
 
@@ -862,10 +890,26 @@ function startsWithContinuationParagraph(markdown) {
 }
 
 function blockquoteMarkdown(markdown) {
-  return String(markdown)
+  return normalizeBlockquoteContent(markdown)
     .split('\n')
     .map((line) => (line.trim() ? `> ${line}` : '>'))
     .join('\n');
+}
+
+function normalizeBlockquoteContent(markdown) {
+  return String(markdown || '').replace(
+    /^ {4,}(?=!\[|\*\*|[-*+]\s+|\d+\.\s+|```|<details|<\/details>|<summary|<\/summary>)/gm,
+    ''
+  );
+}
+
+function normalizeIndentedBlockquotes(markdown) {
+  return String(markdown || '')
+    .replace(/^ {4,}(> ?)/gm, '$1')
+    .replace(
+      /^([ \t]*>\s?) {4,}(?=!\[|\*\*|[-*+]\s+|\d+\.\s+|```|<details|<\/details>|<summary|<\/summary>)/gm,
+      '$1'
+    );
 }
 
 function notionCalloutIcon(block) {
@@ -901,7 +945,9 @@ function escapeHtml(value) {
 }
 
 function normalizeMarkdown(markdown) {
-  return splitJoinedMarkdownBlocks(unwrapMarkdownTableFences(normalizeFenceLines(normalizeCodeFenceLanguages(markdown))))
+  return normalizeIndentedBlockquotes(
+    splitJoinedMarkdownBlocks(unwrapMarkdownTableFences(normalizeFenceLines(normalizeCodeFenceLanguages(markdown))))
+  )
     .replace(/^([ \t]*)-([^\s-].*)$/gm, '$1- $2')
     .replace(/^ {4,}(\|.+\|[ \t]*)$/gm, '  $1')
     .replace(/^([ \t]*(?:[-*+]|\d+\.)\s+.+)\n([ \t]*```)/gm, '$1\n\n$2')
@@ -1065,7 +1111,7 @@ async function renderTable(block, depth = 0, context = {}) {
     .map((row) => `| ${row.join(' | ')} |`)
     .join('\n');
 
-  return indentMarkdown(table, Math.min(depth, 1));
+  return indentMarkdown(table, depth);
 }
 
 async function renderImage(block, context) {

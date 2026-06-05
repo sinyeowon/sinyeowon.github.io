@@ -229,7 +229,7 @@ This concept was formalized in Harness Engineering published by OpenAI in 2025.P
             <hr>
 
 - **Core Principle: Repositories are the only source of truth**<br>
-    > The most important line from Harness Engineering: **“The repository must be the Single Source of Truth.”**
+> The most important line from Harness Engineering: **“The repository must be the Single Source of Truth.”**
 
     - It is not just about writing good documents; it is necessary to use a Harness-friendly method.
 

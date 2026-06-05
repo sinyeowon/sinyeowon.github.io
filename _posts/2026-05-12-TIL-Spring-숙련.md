@@ -313,7 +313,7 @@ notion_lang: "ko"
             - `@Component`를 해제한 이유는 **필터가 자동 등록되면 Spring Security 흐름 밖에서 먼저 실행될 수 있기 때문**
 
     - CSRF<br>
-        > **CSRF (Cross-site request forgery) - 사이트 간 요청 위조**
+> **CSRF (Cross-site request forgery) - 사이트 간 요청 위조**
 
         - 공격자가 인증된 브라우저에 저장된 쿠키의 세션 정보를 활용하여 웹 서버에 사용자가 의도하지 않은 요청을 전달하는 것<br>
             = **“로그인된 사용자인 척, 사용자가 원하지 않은 요청을 몰래 보내는 공격”**
@@ -384,42 +384,42 @@ notion_lang: "ko"
 
             3. 성공하면 SecurityContextHoler에 Authentication을 세팅함
 
-        > **SecurityContextHoler**
-        > : 인증이 완료된 사용자의 상세 정보(Authentication)를 저장함
-        >
-        >
-        >         ![image](/assets/img/notion/TIL-Spring-숙련/08-e3debd73e9.png)
-        >
-        >         - SecurityContext는 SecurityContextHolder로 접근할 수 있음
-        >
-        >             ```java
-        >             // 예시코드
-        >             SecurityContext context = SecurityContextHolder.createEmptyContext();
-        >             Authentication authentication = new UsernamePasswordAuthenticationToken(principal, credentials, authorities);
-        >             context.setAuthentication(authentication); // SecurityContext 에 인증 객체 Authentication 를 저장합니다.
-        >
-        >             SecurityContextHolder.setContext(context);
-        >             ```
+> **SecurityContextHoler**
+> : 인증이 완료된 사용자의 상세 정보(Authentication)를 저장함
+>
+>
+> ![image](/assets/img/notion/TIL-Spring-숙련/08-e3debd73e9.png)
+>
+> - SecurityContext는 SecurityContextHolder로 접근할 수 있음
+>
+> ```java
+>             // 예시코드
+>             SecurityContext context = SecurityContextHolder.createEmptyContext();
+>             Authentication authentication = new UsernamePasswordAuthenticationToken(principal, credentials, authorities);
+>             context.setAuthentication(authentication); // SecurityContext 에 인증 객체 Authentication 를 저장합니다.
+>
+>             SecurityContextHolder.setContext(context);
+> ```
 
-        > **Authentication**
-        > : 현재 인증된 사용자를 나타냄
-        >
-        >         ![image](/assets/img/notion/TIL-Spring-숙련/09-d4aaa3f322.png)
-        >
-        >         - SecurityContext에서 가져올 수 있음
-        >
-        >         - principal: 사용자를 식별함
-        >             - Username/Password 방식으로 인증할 때 일반적으로 UserDetails 인스턴스
-        >
-        >         - credentials: 주로 비밀번호, 대부분 사용자 인증에 사용한 후 비움
-        >
-        >         - authorities: 사용자에게 부여한 권한을 GrantedAuthority로 추상화하여 사용
+> **Authentication**
+> : 현재 인증된 사용자를 나타냄
+>
+> ![image](/assets/img/notion/TIL-Spring-숙련/09-d4aaa3f322.png)
+>
+> - SecurityContext에서 가져올 수 있음
+>
+> - principal: 사용자를 식별함
+> - Username/Password 방식으로 인증할 때 일반적으로 UserDetails 인스턴스
+>
+> - credentials: 주로 비밀번호, 대부분 사용자 인증에 사용한 후 비움
+>
+> - authorities: 사용자에게 부여한 권한을 GrantedAuthority로 추상화하여 사용
 
-        > UserDetailsService
-        > : username/password 인증 방식을 사용할 때, 사용자를 조회하고 검증한 후 UserDetails를 반환함
-        >         - Custom하여 Bean으로 등록 후 사용 가능
+> UserDetailsService
+> : username/password 인증 방식을 사용할 때, 사용자를 조회하고 검증한 후 UserDetails를 반환함
+> - Custom하여 Bean으로 등록 후 사용 가능
 
-        > UserDetails
-        >         - 검증된 UserDetails는 UsernamePasswordAuthenticationToken 타입의 Authentication을 만들 때 사용되며, 해당 인증객체는 SecurityContextHoler에 세팅됨
-        >
-        >         - Custom 하여 사용 가능
+> UserDetails
+> - 검증된 UserDetails는 UsernamePasswordAuthenticationToken 타입의 Authentication을 만들 때 사용되며, 해당 인증객체는 SecurityContextHoler에 세팅됨
+>
+> - Custom 하여 사용 가능
