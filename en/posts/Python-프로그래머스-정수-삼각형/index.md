@@ -5,8 +5,8 @@ date: 2026-05-18 09:00:00 +0900
 last_modified_at: 2026-06-04 22:19:00 +0900
 categories: ["Programmers", "Python"]
 tags: ["Python", "programmers"]
-description: "Programmers Integer Triangle Dynamic Programming (DP)"
-description_source: "excerpt"
+description: "A dynamic programming solution for the Integer Triangle problem, updating accumulated path sums to find the maximum total from top to bottom."
+description_source: "manual"
 lang: "en"
 ui_lang: "ko-KR"
 toc: true

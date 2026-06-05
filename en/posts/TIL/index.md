@@ -1,12 +1,13 @@
 ---
 layout: "post"
-title: "[TIL]"
+title: "[TIL] MSA Transaction Consistency and Saga Pattern"
+title_source: "manual"
 date: 2026-06-04 09:00:00 +0900
 last_modified_at: 2026-06-05 14:45:00 +0900
 categories: ["Spring 단기 심화", "심화 주차"]
 tags: ["TIL", "Saga", "2PC", "MSA"]
-description: "The concept we learned today In an MSA environment, one function can be handled across multiple services."
-description_source: "excerpt"
+description: "A summary of how 2PC and the Saga pattern handle distributed transaction consistency in MSA, including their flow, tradeoffs, and practical use cases."
+description_source: "manual"
 lang: "en"
 ui_lang: "ko-KR"
 toc: true

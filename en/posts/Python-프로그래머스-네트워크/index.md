@@ -5,8 +5,8 @@ date: 2026-05-21 09:00:00 +0900
 last_modified_at: 2026-06-04 22:39:00 +0900
 categories: ["Programmers", "Python"]
 tags: ["programmers", "Python"]
-description: "Even if the Programmers network 0, 1, and 2 are not directly connected like 0 and 2, if they are connected through 1, they are on the same network."
-description_source: "excerpt"
+description: "A solution to the Programmers Network problem that traverses computer connections and counts the number of connected components."
+description_source: "manual"
 lang: "en"
 ui_lang: "ko-KR"
 toc: true
