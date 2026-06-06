@@ -1,7 +1,7 @@
 ---
-title: "[TIL] Docker와 컨테이너 관리 능력"
+title: "Docker와 컨테이너 관리 능력"
 date: 2026-06-05 09:00:00 +0900
-last_modified_at: 2026-06-05 20:59:00 +0900
+last_modified_at: 2026-06-06 22:46:00 +0900
 categories: ["Spring 단기 심화", "심화 주차"]
 tags: ["TIL", "Docker"]
 description: "Docker의 기본 개념과 컨테이너를 관리하는 방법을 공부하며, 애플리케이션 실행 환경을 일관되게 유지하는 이유를 이해했다."
@@ -20,7 +20,7 @@ notion_lang: "ko"
 
 - Docker Compose: 여러 컨테이너를 하나의 설정 파일로 함께 실행하고 관리할 수 있게 해줌
 
-<hr>
+    <hr>
 
 Docker는 애플리케이션이 실행되는 환경을 하나의 독립된 공간으로 묶어주는 도구이다.
 

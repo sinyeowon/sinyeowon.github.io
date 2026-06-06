@@ -1,8 +1,8 @@
 ---
 layout: "post"
-title: "[TIL] Docker and container management capabilities"
+title: "Docker and container management capabilities"
 date: 2026-06-05 09:00:00 +0900
-last_modified_at: 2026-06-05 20:59:00 +0900
+last_modified_at: 2026-06-06 22:46:00 +0900
 categories: ["Spring 단기 심화", "심화 주차"]
 tags: ["TIL", "Docker"]
 description: "By studying the basic concepts of Docker and how to manage containers, I understood the reason for maintaining a consistent application execution environment."
@@ -25,11 +25,11 @@ notion_lang: "en"
 
 - Docker Compose: Allows you to run and manage multiple containers together with a single configuration file.
 
-<hr>
+    <hr>
 
 Docker is a tool that binds the environment where applications run into one independent space.
 
-In the local environment, the operating system, Java version, DB settings, environment variables, etc. may vary from person to person, but using Docker, the execution environment can be defined as an image and executed as a container, thereby reducing problems due to environmental differences.
+In the local environment, the operating system, Java version, DB settings, environment variables, etc. may vary from person to person. However, using Docker, the execution environment can be defined as an image and executed as a container, thereby reducing problems due to environmental differences.
 
 In particular, when developing a back-end application, it is often necessary to run multiple components such as DB, Redis, message queue, and monitoring tools together, rather than running only an application server. At this time, if you execute each directly with the `docker run` command, management becomes complicated because you have to remember the port, environment variables, and network settings one by one.
 
@@ -91,7 +91,7 @@ In Docker Compose, `depends_on` is an option that specifies the execution order 
 
 For example, if the application container depends on the DB container, you can configure the DB container to be created first and then the application container to run.However, while organizing today, I also learned something to be careful about. `depends_on` guarantees the creation order of containers, but does not guarantee that the service is completely ready. For example, even if the DB container is launched first, it may take time for the DB to actually become connectable. So, in a real environment, additional processing such as health checks or retry logic may be required.
 
-When solving a problem, I felt that simply understanding this concept as ‘executed first’ was not enough, and that it was necessary to distinguish between ‘the order of creation and completion of preparation’.
+When solving a problem, I felt that simply understanding this concept as ‘executed first’ is insufficient, and that it is necessary to distinguish between ‘the order of creation and the completion of preparation’.
 
 ## docker compose up and down
 
@@ -107,6 +107,6 @@ What I felt while solving the problem today is that using Docker Compose not onl
 
 ## What I felt
 
-Before today’s study, I felt that Docker was simply a “tool for running programs as containers.” However, as I learned Docker Compose, I came to understand more clearly that Docker is a tool for reproducing a development environment and reliably managing multiple services.
+Before today’s study, I felt that Docker was simply a “tool for running programs as containers.” However, as I learned Docker Compose, I came to understand more clearly that Docker is a tool for recreating a development environment and reliably managing multiple services.
 
 Especially in a structure where multiple services are divided, such as MSA, communication, network, and environmental variable management between services are important. Because Docker Compose allows you to manage these elements in a single configuration file, I found it useful when practicing the MSA structure locally or customizing a team project environment.Also, while solving the problem, I learned that there are many concepts that seem similar but must be accurately distinguished, such as image and container, host port and container port, container creation order and service preparation. In the future, when using Docker, I felt that I should use it while thinking about what problem each setting is intended to solve rather than simply memorizing commands.
