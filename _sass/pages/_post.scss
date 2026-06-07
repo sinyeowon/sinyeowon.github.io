@@ -58,28 +58,57 @@ header {
 
   .notion-callout {
     margin: 1.75rem 0;
-    padding: 1.15rem 1.35rem;
-    border-left: 4px solid #f1a7bd;
-    background: #fff1f6;
+    padding: 1.25rem 1.35rem;
+    border-left: 4px solid #b5a8ff;
+    background: #f7f3ff;
     color: var(--text-color);
     font-weight: 500;
     line-height: 1.85;
-
-    &::after {
-      display: block;
-      clear: both;
-      content: '';
-    }
 
     > :last-child {
       margin-bottom: 0;
     }
 
-    .notion-callout-icon {
-      float: left;
-      margin-right: 0.55rem;
-      line-height: 1.85;
+    .notion-callout-heading {
+      display: flex;
+      align-items: flex-start;
+      gap: 0.7rem;
+      margin-bottom: 0.5rem;
     }
+
+    .notion-callout-icon {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      width: 1.9rem;
+      height: 1.9rem;
+      flex-shrink: 0;
+      margin: 0;
+      font-size: 1.1rem;
+      line-height: 1;
+    }
+
+    .notion-callout-title {
+      margin: 0;
+      font-weight: 700;
+      color: var(--text-color);
+    }
+
+    .notion-callout-body {
+      margin: 0;
+    }
+  }
+
+  a.notion-mention,
+  .notion-mention {
+    display: inline-flex;
+    align-items: center;
+    border-radius: 999px;
+    padding: 0.15rem 0.5rem;
+    background: rgba(119, 66, 255, 0.08);
+    color: var(--link-color);
+    text-decoration: none;
+    font-size: 0.95rem;
   }
 
   .notion-indent + .notion-indent {
@@ -98,8 +127,8 @@ header {
 html[data-mode='dark'] {
   .content {
     .notion-callout {
-      border-left-color: rgb(255 191 206 / 62%);
-      background: rgb(255 191 206 / 14%);
+      border-left-color: rgba(181, 168, 255, 0.62);
+      background: rgba(181, 168, 255, 0.14);
     }
   }
 }

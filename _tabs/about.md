@@ -8,7 +8,7 @@ hide_title: true
 <div class="about-me-page">
 
   <section class="about-me-hero">
-    <h1>Hello! I'm yeowon 👩🏻‍💻</h1>
+    <p><h1>Hello! I'm yeowon </h1></p>
     <img class="about-me-avatar" src="{{ site.avatar | relative_url }}" alt="신여원 프로필">
 
     <div class="about-me-contact-card">
