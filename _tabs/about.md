@@ -34,7 +34,6 @@ hide_title: true
         <div class="about-skill-category">Back-End</div>
         <div class="about-skill-badges">
           <span class="skill-badge badge-java"><i class="fab fa-java"></i>JAVA</span>
-          <span class="skill-badge badge-spring"><i class="fas fa-seedling"></i>SPRING</span>
           <span class="skill-badge badge-boot"><i class="fas fa-leaf"></i>SPRING BOOT</span>
           <span class="skill-badge badge-jpa"><i class="fas fa-database"></i>JPA</span>
           <span class="skill-badge badge-python"><i class="fab fa-python"></i>PYTHON</span>
