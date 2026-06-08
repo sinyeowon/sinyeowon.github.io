@@ -1,8 +1,8 @@
 ---
 layout: "post"
-title: "[Python] Programmer - Word Conversion"
+title: "[Python] Programmers - Word Conversion"
 date: 2026-06-07 09:00:00 +0900
-last_modified_at: 2026-06-07 01:35:00 +0900
+last_modified_at: 2026-06-07 01:39:00 +0900
 categories: ["Programmers", "Python"]
 tags: ["Python", "programmers"]
 description: "Programmers Word Conversion Since it is a word graph problem in which two words are connected if they differ by just one letter, I thought I would solve it using BFS, which uses a queue."
@@ -94,4 +94,4 @@ I used zip() to compare two strings and check if they differ by just one alphabe
 
     `o != i` → `True -> 1`Finally, in the code, BFS checks all words at level 0 → Checks all words at level 1 → Checks all words at level 2 → … Search in order and check the shortest distances first.
 
-Therefore, the first step encountered can be the minimum number of transformations.
+Therefore, the first encountered step can be the minimum number of transformations.
