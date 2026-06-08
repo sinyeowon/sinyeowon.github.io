@@ -2,11 +2,11 @@
 layout: "post"
 title: "[Python] Programmers - Creating minimum value"
 date: 2026-05-07 09:00:00 +0900
-last_modified_at: 2026-05-07 12:02:00 +0900
+last_modified_at: 2026-06-09 01:24:00 +0900
 categories: ["Programmers", "Python"]
 tags: ["Python", "programmers"]
-description: "I wrote the following, but it doesn't pass the efficiency test:"
-description_source: "manual"
+description: "Through the programmer's minimum creation problem, we understand the principle of minimizing the sum of the products by sorting two arrays in opposite directions, and summarize how to improve efficiency by using the Python sort() method instead of bubble sort."
+description_source: "notion"
 lang: "en"
 ui_lang: "ko-KR"
 toc: true

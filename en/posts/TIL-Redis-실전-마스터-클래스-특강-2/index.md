@@ -3,11 +3,11 @@ layout: "post"
 title: "[TIL] Redis Practical Master Class 2 - Distributed Locks and Async Processing"
 title_source: "manual"
 date: 2026-05-14 09:00:00 +0900
-last_modified_at: 2026-06-04 23:26:00 +0900
+last_modified_at: 2026-06-09 01:32:00 +0900
 categories: ["Spring 단기 심화", "특강"]
 tags: ["Redis"]
-description: "Concurrency control and asynchronous communication in MSA distributed environment"
-description_source: "manual"
+description: "We understand the concurrency control method of the MSA environment through Redis distributed lock and Redisson RLock, and summarize the differences between Pub/Sub and Message Queue, asynchronous processing structure, Redlock controversy, and lock failure handling strategy."
+description_source: "notion"
 lang: "en"
 ui_lang: "ko-KR"
 toc: true
@@ -52,9 +52,9 @@ In an MSA environment, multiple servers rush to read and modify inventory data i
 
         1. **12:00:01** - Just as server A is trying to call `EXPIRE lock:sneakers 5`... **Server A loses power! and leaves.**
 
-        2. **12:00:02** - Since the server died without setting the expiration time, the `lock:sneakers` key will remain in Redis forever.3. **Result**: All other servers will be in **Deadlock** waiting forever for this lock to be released, and no one will be able to get Snickers.
+        2. **12:00:02** - Since the server died without setting the expiration time, the `lock:sneakers` key will remain in Redis forever.3. **Result**: All other servers will be in **Deadlock** waiting forever for this lock to be released, and no one will be able to get Sneakers.
 
-    → To prevent such disasters, starting from Redis version 2.6.12, lock acquisition and expiration time setting are **completely combined into one atomic command**.
+    → To prevent such disasters, starting with Redis version 2.6.12, lock acquisition and expiration time setting are **completely combined into one atomic command**.
 
     ```javascript
     SET lock:sneakers "server-A-uuid" NX EX 5
@@ -95,7 +95,7 @@ In an MSA environment, multiple servers rush to read and modify inventory data i
   | --- | --- | --- | --- | --- |
   | **principle** | `SELECT FOR UPDATE` | Check the Version column | Single Threaded Spinlock | Pub/Sub based event queuing |
   | **Performance (Throughput)** | **Very Low** | **High** (when no collisions) | **Medium~High** | **Very High** |
-  | **Dadlock Risk** | height | doesn't exist | Low (TTL defense) | Low (built-in Watchdog) |
+  | **Deadlock Risk** | height | doesn't exist | Low (TTL defense) | Low (built-in Watchdog) |
   | **Implementation Difficulty** | facility | commonly | **Very difficult** | facility |
   | **Representative Scenario** | financial core | Edit member information | Light concurrency control | **First come first served coupon, time sale** |
 
@@ -194,8 +194,8 @@ In an MSA environment, multiple servers rush to read and modify inventory data i
   | Compare items | Redis Pub/Sub (broadcasting station) | Kafka (Post Office) |
   | --- | --- | --- |
   | **Whether to store the message** | ❌ Do not store (volatilizes immediately) | ⭕ Keep queues on disk/memory |
-  | **Receipt confirmation (Ack)** | ❌ Do not confirm | ⭕ Consumer sends Ack to remove from queue |
-  | **Processing Assurance Level** | Low (high probability of loss) | **Very high (guaranteed at least once, etc.)** |
+  | **Receipt confirmation (Ack)** | ❌ No confirmation | ⭕ Consumer sends Ack to remove from queue |
+  | **Level of Processing Assurance** | Low (high probability of loss) | **Very high (guaranteed at least once, etc.)** |
   | **Performance (Speed)** | **Extreme speed** (latency < 1ms) | High (heavier than Redis due to disk I/O) |
   | **Operational Complexity** | very low | very high |
   | **Typical usage scenario** | Real-time chat, stock price updates | Payment completion event, **data stream that must never be lost** |
@@ -232,7 +232,7 @@ In an MSA environment, multiple servers rush to read and modify inventory data i
 
 - **Convert to asynchronous mode without data loss: Olive Young first-come, first-served coupon**
     - [Case 3] Olive Young: Issuance of coupons on a first-come, first-served basis (reverse idea of Pub/Sub)
-        - **① Business background**: During the All Young Sale period, coupons will be issued to the first 10,000 people on a first-come, first-served basis at 12 o'clock every night.
+        - **① Business background**: During the All Young Sale period, coupons will be issued to the first 10,000 people on a first-come-first-served basis at 12 o'clock every night.
 
         - **② Technical problem**: Hundreds of thousands of issuance requests were received at 12 o'clock sharp, occupying 100% of the main DB's connection pool, and a failure occurred that paralyzed the entire Olive Young site.
 
@@ -242,10 +242,10 @@ In an MSA environment, multiple servers rush to read and modify inventory data i
 
         - **⑤ Result after introduction**: The overall site processing speed improved by 2.2 times by isolating the main DB load.
 
-#### Distributed lock pitfalls and alternatives
+#### Pitfalls and alternatives to distributed locks
 
 > **Q The user pressed the button to reserve tickets for a popular concert, but it failed because it was already locked. At this time, should 1) keep loading in circles and retry, or 2) should an error be immediately displayed saying, “The seat has already been selected”**
-> - Since this is a concert ticket, it is correct to immediately pop up an error window and let you choose a different seat.
+> - Since it is a concert ticket, it is correct to immediately display an error window and let you choose a different seat.
 >
 > → Unconditional retry (Spin/Retry) is not the answer. The strategy must be completely different depending on the nature of the business.
 
@@ -255,13 +255,13 @@ In an MSA environment, multiple servers rush to read and modify inventory data i
     - For slightly more complex logic, if you throw the entire **Lua script**, which is supported starting from Redis 2.6, on the server, it will be executed atomically in a single-threaded environment, allowing perfect control without locking.
 
 2. **"The Redlock Algorithm Controversy" (Beyond the Limits of a Single Node)**<br>
-> **Q I placed a lock on a single Redis Master node, but what happens if the Master dies right before the lock information is synchronized to the Slave?**
+> **Q I set a lock on a single Redis Master node, but what happens if the Master dies right before the lock information is synchronized to the Slave?**
 > → Since there is no lock on the newly promoted Slave, a situation occurs where another client acquires the lock again.
 
     - To prevent this, the founder of Redis proposed an algorithm called **Redlock**.
         - A method that requests a lock from an odd number of independent Redis nodes of 5 or more and recognizes it only when a majority (3) or more is obtained.
 
-        - 🚨 **Academic Controversy**: Please note that Redlock has also been the subject of active debate in academic circles. Martin Kleppmann, a distributed systems researcher, criticized Redlock's strong dependence on system clock synchronization in an article titled 'How to do distributed locking' in 2016, and Salvatore Sanfilippo, the founder of Redis, immediately refuted this.
+        - 🚨 **Academic Controversy**: For your information, Redlock has also been the subject of active debate in academic circles. Martin Kleppmann, a distributed systems researcher, criticized Redlock's strong dependence on system clock synchronization in an article titled 'How to do distributed locking' in 2016, and Salvatore Sanfilippo, the founder of Redis, immediately refuted this.
 
         - 💡 **Conclusion**: In areas where strict distributed consensus is required, such as financial transactions that must never be lost, database transactions or specialized consensus algorithms such as Zookeeper may be more secure than Redlock.
 
@@ -285,7 +285,7 @@ It is a “no one should access it until I finish the work” method. It locks t
 It is used in situations where consistency is most important, such as financial transactions.
 
 - **DB Optimistic Lock**
-It is the “let’s edit together first and check for conflicts at the end” approach. Check for conflicts using the `version` column, and if there are few conflicts, the performance is good.
+The method is “Let’s edit together first and check for conflicts at the end.” Check for conflicts using the `version` column, and if there are few conflicts, the performance is good.
 Used in cases where simultaneous modification is unlikely, such as modifying member information.
 
 - **Redis basic distributed locking**
@@ -399,7 +399,7 @@ For example:
 
 In this situation, because the new Master has no lock information, another client can acquire the same lock again.
 
-In other words, the lock was originally supposed to be held by only one person, but due to a server failure, a problem arose where two people could act as if they had the lock at the same time.
+In other words, the lock was originally supposed to be held by only one person, but due to server failure, a problem arose where two people could act as if they had the lock at the same time.
 
 To solve this problem, the founder of Redis proposed the Redlock algorithm.
 

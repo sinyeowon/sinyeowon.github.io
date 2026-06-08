@@ -3,11 +3,11 @@ layout: "post"
 title: "[TIL] Spring Advanced - JWT authentication and role management"
 title_source: "manual"
 date: 2026-05-10 09:00:00 +0900
-last_modified_at: 2026-05-11 11:33:00 +0900
+last_modified_at: 2026-06-09 01:27:00 +0900
 categories: ["Spring 단기 심화", "Spring 강의"]
 tags: ["Spring", "TIL", "내일배움캠프"]
-description: "set jwt.secret.key to application.properties"
-description_source: "manual"
+description: "By summarizing the flow of implementing JWT authentication in Spring, we learned how to create tokens, store cookies, process bearer tokens, verify, extract claims, and manage permissions using UserRoleEnum through JwtUtil."
+description_source: "notion"
 lang: "en"
 ui_lang: "ko-KR"
 toc: true
@@ -301,7 +301,7 @@ We plan to create a class called JwtUtil with JWT-related functions to perform J
     }
     ```
 
-    - Use StringUtils.hasText to check for blanks and nulls, and startsWith to check if the starting value of the token is Bearer.- If correct, truncate the Bearer using substring to return a pure JWT.
+    - Use StringUtils.hasText to check for blank and null, and startsWith to check if the starting value of the token is Bearer.- If correct, truncate the Bearer using substring to return a pure JWT.
 
 4. JWT verification
 

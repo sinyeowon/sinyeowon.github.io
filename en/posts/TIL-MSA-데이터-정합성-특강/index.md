@@ -2,11 +2,11 @@
 layout: "post"
 title: "[TIL] Special lecture on MSA data consistency"
 date: 2026-06-06 09:00:00 +0900
-last_modified_at: 2026-06-07 00:19:00 +0900
+last_modified_at: 2026-06-09 01:14:00 +0900
 categories: ["Spring 단기 심화", "특강"]
 tags: ["Saga", "MSA"]
-description: "(1) Transactions in monolithic vs. problems in microservices"
-description_source: "excerpt"
+description: "We understand distributed transaction problems and data consistency issues that occur in the MSA environment, and summarize the concepts of Saga pattern, compensation transaction, Orchestration/Choreography method, and Outbox pattern to solve them."
+description_source: "notion"
 lang: "en"
 ui_lang: "ko-KR"
 toc: true
@@ -127,7 +127,7 @@ In **Choreography-based Saga**, each service publishes and subscribes to **event
 
 ![image](/assets/img/notion/TIL-MSA-데이터-정합성-특강/04-cd49619c2c.png)
 
-- **Atomic (Atomic) Guarantee**: Outbox table technique can be used to bundle “DB change” and “event issuance” into one local transaction.
+- **Atomic (Atomic) Guarantee**: Outbox table technique can be used to bundle “DB change” and “event issue” into one local transaction.
 
     - For example, when an order service creates an order, it must store order data in the DB and send events to a message broker such as Kafka.
         - The problem is that these two may succeed separately → Then, there is an order in the DB, but other services do not receive the ‘order created’ event, so they do not know that an order has been created, and the delivery service may not create the delivery.
@@ -145,17 +145,20 @@ In **Choreography-based Saga**, each service publishes and subscribes to **event
         - Later, a separate process reads the outbox table and issues an event to Kafka → if successful, changes the outbox status to SENT (from PENDING)
 
         <div class="notion-callout" markdown="1">
+        <div class="notion-callout-heading" markdown="1">
         <span class="notion-callout-icon">📍</span>
-
-        **Issue 2: When the database does not support transactions, such as NoSQL DB**
-
-                The core of the Transaction Outbox pattern is to ensure atomicity and single transaction of the entity table and outbox table.
-
-                There may be cases where the ordering service cannot support transactions using NoSQL DB.
+        <div class="notion-callout-title" markdown="1">
+        Issue 2: When the database does not support transactions, such as NoSQL DB
+        </div>
+        </div>
+        <div class="notion-callout-body" markdown="1">
+        The core of the Transaction Outbox pattern is to ensure atomicity and single transaction of the entity table and outbox table.There may be cases where the ordering service cannot support transactions using NoSQL DB.
 
                 ![image](/assets/img/notion/TIL-MSA-데이터-정합성-특강/05-4bcbf43388.png)
 
-                In this case, you can add a property containing the message content to the object containing the order information and send the message to the message broker.Adding event information to be issued to a NoSQL DB can also be said to be atomic.
+                In this case, you can add a property containing the message content to the object containing the order information and send the message to the message broker.
+
+                Adding event information to be issued to a NoSQL DB can also be said to be atomic.
 
                 ```plaintext
                 {
@@ -177,7 +180,7 @@ In **Choreography-based Saga**, each service publishes and subscribes to **event
                 The message relay service periodically queries records in the database to find outbox properties and delivers them to the message broker.
 
                 You can use the transactional outbox pattern even if you use a NoSQL DB that does not support transactions by deleting the Outbox attribute in the record at the end.
-
+        </div>
         </div>
 
 - **Correlation IDs**: Events include common identifiers such as `orderId`, allowing other services to determine which transaction/order the event is associated with.
@@ -188,37 +191,43 @@ In **Choreography-based Saga**, each service publishes and subscribes to **event
     - For example, in order flow, orderId can be used as Correlation Id.
 
         <div class="notion-callout" markdown="1">
+        <div class="notion-callout-heading" markdown="1">
         <span class="notion-callout-icon">📍</span>
+        <div class="notion-callout-title" markdown="1">
+        Issue 1: Duplication of events
+        </div>
+        </div>
+        <div class="notion-callout-body" markdown="1">
+        ![image](/assets/img/notion/TIL-MSA-데이터-정합성-특강/06-cc16b40608.png)
 
-        **Issue 1: Duplication of events**
-                ![image](/assets/img/notion/TIL-MSA-데이터-정합성-특강/06-cc16b40608.png)
-
-                If an error occurs while the message relay service reads message data from the Outbox table and delivers it to the message broker,
-
-                If an instance of another message relay service delivers the Outbox table back to the message broker, a situation may arise where the same message is delivered twice.
+                If an error occurs while the message relay service reads message data from the Outbox table and delivers it to the message broker,If an instance of another message relay service delivers the Outbox table back to the message broker, a situation may arise where the same message is delivered twice.
 
                 A problem occurs that slows down product quantity twice and creates two delivery lists.
 
                 → This problem can be solved by developing product services and delivery services to ensure idempotence. (The result remains the same even if the same request is sent multiple times)
 
-                When the Outbox table stores message information, an ID value is assigned to each message, and when the message relay service assigns the corresponding ID value to an event that occurs as a message broker,The product or delivery service that received the message can compare this ID value to know that it is an already processed event or a duplicate event and ignore it.
+                When the Outbox table stores message information, an ID value is assigned to each message, and when the message relay service assigns the corresponding ID value to an event that occurs as a message broker,
 
+                The product or delivery service that received the message can compare this ID value to know that it is an already processed event or a duplicate event and ignore it.
+        </div>
         </div>
 
     <div class="notion-callout" markdown="1">
+    <div class="notion-callout-heading" markdown="1">
     <span class="notion-callout-icon">📍</span>
-
-    **Issue 3: Message Order**
-        If a user cancels a product immediately after ordering it, the message relay service periodically monitors the outbox table and finds two messages: order creation and order cancellation.
+    <div class="notion-callout-title" markdown="1">
+    Issue 3: Message order
+    </div>
+    </div>
+    <div class="notion-callout-body" markdown="1">
+    If a user cancels a product immediately after ordering it, the message relay service periodically monitors the outbox table and finds two messages: order creation and order cancellation.
 
         Without understanding the order of business, the order cancellation event may be issued before the order creation event.
 
         In this case, the delivery service must receive an order cancellation event and delete the already added delivery information, but since there is no information, it is ignored. If an order event is received and delivery information is created later,
 
-        Although the order has been cancelled, problems may still occur in the delivery list.
-
-        This problem can be solved by assigning a sequential ID to each message in the outbox table, so when issuing events, sort them by ID to match the order.
-
+        Although the order has been cancelled, problems may still occur in the delivery list.This problem can be solved by assigning a sequential ID to each message in the outbox table, and sorting by ID when issuing events to ensure order.
+    </div>
     </div>
 
 #### (3) Choreography Advantages/Disadvantages
@@ -234,7 +243,7 @@ In **Choreography-based Saga**, each service publishes and subscribes to **event
     - **Event flow distribution**
         - The entire business logic is divided into multiple service events, increasing the difficulty of debugging/management.
 
-    - **Event order, overlap, cycle**
+    - **Event sequence, overlap, cycle**
         - Ensure order, logic to avoid processing the same event multiple times, circular references, etc. must be carefully designed.
 
 ### 5. Orchestration vs. Choreography: Comparison from Saga Perspective
@@ -253,7 +262,9 @@ In **Choreography-based Saga**, each service publishes and subscribes to **event
 3) 이벤트 흐름이 복잡해지면 관리/디버깅 어려움
 ```
 
-Both methods are representative techniques for implementing the Saga pattern in a microservice environment, and can be appropriately selected or mixed depending on **organizational culture or system scale**.### 6. Orchestration vs. Choreography: Application across microservice collaboration models
+Both methods are representative techniques for implementing the Saga pattern in a microservice environment, and can be appropriately selected or mixed depending on **organizational culture or system scale**.
+
+### 6. Orchestration vs. Choreography: Application across microservice collaboration models
 
 Beyond Saga, an **overall** comparison of two approaches, **Orchestration** and **Choreography**, when microservices collaborate (including general inter-service collaboration patterns in addition to microservice transactions)
 
@@ -272,9 +283,7 @@ Beyond Saga, an **overall** comparison of two approaches, **Orchestration** and 
 #### (2) Real-life examples such as Netflix Conductor
 
 - **Netflix Conductor**:
-    - Microservice orchestration tool released as open source by Netflix
-
-    - Centrally define/control the execution flow (workflow) of multiple microservices
+    - Microservice orchestration tool released as open source by Netflix- Centrally define/control the execution flow (workflow) of multiple microservices
 
 In addition, there are various Orchestrator tools such as **Camunda, Zeebe, and AWS Step Functions**, and each has differences in performance/operability/failure response methods.
 
@@ -290,7 +299,9 @@ Here we'll simply mock it up inside **one Spring Boot application**, just to giv
 
 Execution flow summary
 
-1. User calls POST /orders?productName=AAA&quantity=2&price=100002. OrderService: Save Order (status = PAYMENT_PENDING) in DB and issue OrderCreatedEvent(orderId, amount) → order-events topic.
+1. User calls POST /orders?productName=AAA&quantity=2&price=10000
+
+2. OrderService: Save Order (status = PAYMENT_PENDING) in DB and issue OrderCreatedEvent(orderId, amount) → order-events topic.
 
 3. (Practice) PaymentService: Subscribe to order-events → Payment attempt → Issue success/failure events (PaymentCompletedEvent, PaymentFailedEvent) to the payment-events topic.
 
@@ -304,9 +315,7 @@ When receiving PaymentFailedEvent → OrderStatus = PAYMENT_FAILED → CANCELLED
 
 When receiving ShippingCompletedEvent → OrderStatus = COMPLETED
 
-</div>
-
-> Note: The code below has been simplified as much as possible for learning purposes, and all exception handling, transactions, security, and test codes have been omitted. Please note that in practice, more elaborate design and additional settings are required.
+</div>> Note: The code below has been simplified as much as possible for learning purposes, and all exception handling, transactions, security, and test codes have been omitted. Please note that in practice, more elaborate design and additional settings are required.
 
 <details markdown="1">
 <summary>**Project Structure**</summary>
@@ -427,7 +436,9 @@ public class KafkaProducerConfig {
 </details>
 
 <details markdown="1">
-<summary>**Domain and event classes**</summary>### **3-1) Order domain (entity)**
+<summary>**Domain and event classes**</summary>
+
+### **3-1) Order domain (entity)**
 
 ```java
 package com.example.sagasample.domain;
@@ -545,9 +556,7 @@ public interface OrderRepository extends JpaRepository<Order, Long> {
 }
 ```
 
-</details>
-
-<details markdown="1">
+</details><details markdown="1">
 <summary>**Orchestrator & Service**</summary>
 
 ### **5-1) OrderService**
@@ -606,7 +615,9 @@ public interface OrderRepository extends JpaRepository<Order, Long> {
 
 ### **5-2) OrderOrchestrator (Orchestration Logic)**
 
-- Receive **PaymentCompletedEvent**, **PaymentFailedEvent**, **ShippingCompletedEvent**, etc. from Kafka Consumer, and update **Order** status accordingly or perform **compensation logic** (payment cancellation, order cancellation, etc.).- Here, **delivery logic** can be processed together, or an event can be issued as a “delivery service” if necessary.
+- Receive **PaymentCompletedEvent**, **PaymentFailedEvent**, **ShippingCompletedEvent**, etc. from Kafka Consumer, and update **Order** status accordingly or perform **compensation logic** (payment cancellation, order cancellation, etc.).
+
+- Here, **delivery logic** can be processed together, or an event can be issued as a “delivery service” if necessary.
 
     ```java
     package com.example.sagasample.service;
@@ -700,9 +711,7 @@ public class KafkaPublisher {
 }
 ```
 
-> In reality, a separate shipping service exists, and the service must receive a ShippingRequestEvent, perform shipping logic, and then issue a ShippingCompletedEvent. Here, as a sample, we simply simulated the flow of “Delivery Request → Immediately Issue Delivery Completion Event”.
-
-</details>
+> In reality, a separate shipping service exists, and the service must receive a ShippingRequestEvent, perform shipping logic, and then issue a ShippingCompletedEvent. Here, as a sample, we simply simulated the flow of “Delivery Request → Immediately Issue Delivery Completion Event”.</details>
 
 <details markdown="1">
 <summary>**Controller example**</summary>
@@ -789,7 +798,9 @@ public class PaymentServiceSimulator {
 <summary>**To summarize**</summary>
 
 - If each service is separated,
-    1. **OrderService** issues an event on topic **`order-events`**2. **PaymentService** subscribes to **`order-events`** → performs payment → issues **`payment-events`**
+    1. **OrderService** issues an event on topic **`order-events`**
+
+    2. **PaymentService** subscribes to **`order-events`** → performs payment → issues **`payment-events`**
 
     3. **OrderOrchestrator** (or Consumer within the same OrderService) subscribes to **`payment-events`** → Issues the next step (delivery event)
 
@@ -797,9 +808,7 @@ public class PaymentServiceSimulator {
 
     5. The orchestrator again receives **`ShippingCompletedEvent`** and changes the status to Final Completed.
 
-- **Compensation** examples (order cancellation, payment cancellation, inventory rollback, etc.) must additionally implement “Inventory Restore” or “Payment Cancellation API Call” at the point of **PaymentFailedEvent** or **Shipping Failure**.
-
-- **Idempotency**, **Outbox pattern**, **DLQ (Dead Letter Queue)** processing, **Retry**, etc. are essential factors to consider in actual operation.
+- **Compensation** examples (order cancellation, payment cancellation, inventory rollback, etc.) must additionally implement “Inventory Restore” or “Payment Cancellation API Call” at the point of **PaymentFailedEvent** or **Shipping Failure**.- **Idempotency**, **Outbox pattern**, **DLQ (Dead Letter Queue)** processing, **Retry**, etc. are essential factors to consider in actual operation.
 
 **In practice**:
 
@@ -825,7 +834,9 @@ We hope the example code will help you quickly try out the SAGA pattern during y
 <details markdown="1">
 <summary>**1. RabbitMQ vs Kafka, what is the difference and how should it be applied to the Saga pattern?**</summary>
 
-**Q**- How does the method of applying the SAGA pattern differ when comparing RabbitMQ and Kafka? (The lecture only covers RabbitMQ, so I am curious about the application of Kafka.)
+**Q**
+
+- How does the method of applying the SAGA pattern differ when comparing RabbitMQ and Kafka? (The lecture only covers RabbitMQ, so I am curious about the application of Kafka.)
 
 - I would like to know which of the two message brokers is best to use in which situation.
 
@@ -838,9 +849,7 @@ We hope the example code will help you quickly try out the SAGA pattern during y
 
 - **Considerations when applying Saga pattern**
     - **RabbitMQ-based**
-        - It is easy to place more emphasis on ‘consistency’ of processing rather than ensuring the ‘order’ of messages. Although consumption is done in the order entered into the queue, if the queue is not distributed, consideration must be given to single point (broker) failure.
-
-        - Compensation transactions can be processed through message retry logic and DLQ (Dead Letter Queue) settings.
+        - It is easy to place more emphasis on ‘consistency’ of processing rather than ensuring the ‘order’ of messages. Although consumption is done in the order entered into the queue, if the queue is not distributed, consideration must be given to single point (broker) failure.- Compensation transactions can be processed through message retry logic and DLQ (Dead Letter Queue) settings.
 
     - **Kafka-based**
         - Large quantities of messages can be processed scalably through partitioning.
@@ -856,7 +865,9 @@ We hope the example code will help you quickly try out the SAGA pattern during y
 
     - SAGA itself is not significantly dependent on the message broker, but Kafka has significant advantages in terms of a reprocessing mechanism to ensure **eventual consistency**, idempotency for event duplication, and a failure recovery strategy.
 
-</details><details markdown="1">
+</details>
+
+<details markdown="1">
 <summary>**2. Orchestration Saga vs Choreography Saga, when should you choose which method?**</summary>
 
 **Q**
@@ -879,20 +890,20 @@ We hope the example code will help you quickly try out the SAGA pattern during y
 - **Orchestration**
     - There is an “Orchestrator” that centrally controls the process flow.
 
-    - Each service performs tasks in the order instructed by the orchestrator and reports the results as events (or callbacks).
-
-    - As the logic becomes more complex, the role of the orchestrator becomes more important, and there is a possibility that the service may become a single point of failure.
+    - Each service performs tasks in the order instructed by the orchestrator and reports the results as events (or callbacks).- As the logic becomes more complex, the role of the orchestrator becomes more important, and there is a possibility that the service may become a single point of failure.
 
     - If the event flow is complex or has many steps, logic management can be relatively easy (since the flow is managed centrally).
 
 - **Selection criteria**
     - **Coupling between services**: Choreography can be light and fast when simply 2 or 3 services are connected. However, when five or more domains are intertwined and the number of steps increases, orchestration is advantageous for maintenance.
 
-    - **Workflow complexity**: If multiple steps are mixed sequentially/parallel and error handling logic is diverse, centralized control through Orchestration.
+    - **Workflow Complexity**: If multiple steps are mixed sequentially/parallel and error handling logic is diverse, centralized control through Orchestration.
 
     - **Development/Operation Convenience**: The difference is that Choreography requires a good understanding of events, and Orchestration requires well-designed centralized logic. Select based on team capabilities and architectural direction.
 
-</details><details markdown="1">
+</details>
+
+<details markdown="1">
 <summary>**3. How should compensation transactions be processed and reprocessed in case of failure?**</summary>
 
 **Q**
@@ -913,23 +924,23 @@ We hope the example code will help you quickly try out the SAGA pattern during y
 2. **Reprocessing when compensation transaction fails**
     - **Retry Policy**: Retry up to a certain number of times. If the number of retries is exceeded, DLQ or administrator intervention is required.
 
-    - **DLQ (Dead Letter Queue) or compensation-only topic**: If messages for compensation transactions continue to fail, operate a separate queue/topic to save for later manual confirmation.
-
-    - **Outbox pattern**: A pattern for atomically processing local transactions and event publishing. Events are first stored in the DB table (Outbox), and a separate process forwards the events in the table to the message broker to prevent inconsistencies between publish and commit.
+    - **DLQ (Dead Letter Queue) or compensation-only topic**: If messages for compensation transactions continue to fail, operate a separate queue/topic to store for later manual confirmation.- **Outbox pattern**: A pattern for atomically processing local transactions and event publishing. Events are first stored in the DB table (Outbox), and a separate process forwards the events in the table to the message broker to prevent inconsistencies between publish and commit.
 
 3. **Rollback processing for already published messages**
     - **Idempotency guaranteed**: Designed so that the message consumption side does not perform logic more than once even if the same message comes multiple times.
 
-    - **Issuing a ‘compensation’ message**: Instead of simply canceling the previous message, a new event is issued to restore the state, allowing the consumer to perform cancellation or correction logic.
+    - **Issuing a ‘compensation’ message**: Instead of simply canceling the previous message, a new event is issued to restore the state, allowing the consumer side to perform cancellation or correction logic.
 
-    - **Transaction boundary redesign**: If it is important business logic, the timing of message issuance is thoroughly synchronized with the local transaction (commit). Or consider the Outbox pattern.
+    - **Transaction boundary redesign**: If it is important business logic, thoroughly synchronize the point of issuing messages with the local transaction (commit). Or consider the Outbox pattern.
 
 </details>
 
 <details markdown="1">
 <summary>**4. How do you solve the problem of message duplication and message order guarantee?**</summary>
 
-**Q**- How do I solve the problem of receiving duplicate messages or getting the order mixed?
+**Q**
+
+- How do I solve the problem of receiving duplicate messages or getting the order mixed?
 
 - Especially in a Kafka environment, as partitioning increases, it becomes difficult to guarantee order. How do you handle this?
 
@@ -948,9 +959,7 @@ We hope the example code will help you quickly try out the SAGA pattern during y
 
     - If global order is really needed, use only one partition, or group partitions based on a specific key to ensure order only for that key.
 
-    - If it is difficult to absolutely match the order, event design should be reconsidered from the perspective of ultimate consistency (‘event-driven’ + ‘state machine’).
-
-</details>
+    - If it is difficult to absolutely match the order, event design should be reconsidered from the perspective of ultimate consistency (‘event-driven’ + ‘state machine’).</details>
 
 <details markdown="1">
 <summary>**5. Kafka partition and topic concepts are difficult. How should I understand and set it?**</summary>
@@ -968,12 +977,14 @@ We hope the example code will help you quickly try out the SAGA pattern during y
 - **Based on partition number setting**
     - **Number of consumers**: The number of partitions must be appropriately set to enable maximum parallel consumption within the consumer group (number of partitions ≥ number of consumer threads).
 
-    - **Expected Traffic**: As the number of messages to be processed per second increases, scalability (Throughput) increases by increasing the partition.
+    - **Expected traffic**: As the number of messages to be processed per second increases, scalability (Throughput) increases by increasing the partition.
 
-    - **Message order**: When increasing partitions, order is guaranteed only on a partition-by-partition basis.- **Practical Tips**
+    - **Message order**: When increasing partitions, order is guaranteed only on a partition-by-partition basis.
+
+- **Practical Tips**
     - Rather than setting the partition too small from the beginning, it is better to set it a little generously and plan for topic leader balancing (re-partitioning) during operation.
 
-    - Partition distribution varies depending on how the message key is set (Partition Key), which affects the strategy for ensuring equal distribution and order of data.
+    - Partition distribution varies depending on how the message key is set (Partition Key), which affects the strategy to ensure equal distribution and order of data.
 
 </details>
 
@@ -994,11 +1005,9 @@ We hope the example code will help you quickly try out the SAGA pattern during y
     - As the number of event handlers for each service increases, it becomes difficult to understand the flow in one place and debugging becomes difficult.
 
 - **Management Strategy**
-    - **Domain event design**: Clear definition and standardization of events issued by each domain. Strictly determine “Which event is issued under what circumstances?”
+    - **Domain event design**: Clear definition and standardization of events issued by each domain. Strictly determine “What events are issued under what circumstances?”- **Event Tracing (Logging/Tracing)**: Track the flow of events with a centralized logging/tracing system (e.g. ELK, Zipkin, etc.).
 
-    - **Event Tracing (Logging/Tracing)**: Track the flow of events with a centralized logging/tracing system (e.g. ELK, Zipkin, etc.).
-
-    - **Compensation Transaction**: Reverse event is issued again based on the event, or a separate compensation process receives the event and restores the state.
+    - **Compensation transaction**: Reverse event is issued again based on the event, or a separate compensation process receives the event and restores the state.
 
 - **When to switch to Orchestration**
     - If the number of services/domains increases and the branching of event flows becomes complicated, it is time to consider Orchestration.
@@ -1010,7 +1019,9 @@ We hope the example code will help you quickly try out the SAGA pattern during y
 <details markdown="1">
 <summary>**7. How should compensation transactions be managed when updating?**</summary>
 
-**Q**- In the case of Create/Delete, rollback is relatively simple, but for Update, rollback is possible only if the previous state is saved. Where should I store my old data?
+**Q**
+
+- In the case of Create/Delete, rollback is relatively simple, but for Update, rollback is possible only if the previous state is saved. Where should I store my old data?
 
 **A**
 
@@ -1033,9 +1044,7 @@ We hope the example code will help you quickly try out the SAGA pattern during y
 
 **Q**
 
-- Example: Order (request) → Inventory (synchronous) → Payment (asynchronous) → Delivery (asynchronous) was processed in the following order, but in case of delivery failure, the rollback order was inventory restoration (synchronous) → Order status change → Payment cancellation (asynchronous).
-
-- I wonder if there will be any problems if the rollback order is different for each service. How should SAGA determine rollback priorities?
+- Example: Order (request) → Inventory (synchronous) → Payment (asynchronous) → Delivery (asynchronous) was processed in the following order, but in case of delivery failure, the rollback order was inventory restoration (synchronous) → Order status change → Payment cancellation (asynchronous).- I wonder if there will be any problems if the rollback order is different for each service. How should SAGA determine rollback priorities?
 
 **A**
 
@@ -1044,10 +1053,12 @@ We hope the example code will help you quickly try out the SAGA pattern during y
 - **Key Considerations**
     1. **Business importance**: If the requirement that “inventory” be restored first makes business sense, it is correct to restore inventory first.
 
-    2. **Data Consistency**: If other services are rolled back before a specific service is rolled back, other errors or logical conflicts may occur in the intermediate state (a payment has been canceled but inventory has not yet been restored, which may affect other orders).3. When controlling this order in an orchestrator** or **individual service**, thoroughly design retry logic in case of failure.
+    2. **Data Consistency**: If other services are rolled back before a specific service is rolled back, other errors or logical conflicts may occur in the intermediate state (a payment has been canceled but inventory has not yet been restored, which may affect other orders).
+
+    3. When controlling this order in an orchestrator** or **individual service**, thoroughly design retry logic in case of failure.
 
 - Clean up
-    - The order of compensation transactions does not necessarily have to be ‘the reverse of the forward order’, but ‘an order that can be safely reversed in terms of business logic’ must be considered. If an error occurs in an intermediate state, it must be retried again or separate monitoring and error handling are required.
+    - The order of compensation transactions does not necessarily have to be ‘the reverse order of the forward order’, but ‘an order that can be safely reversed in terms of business logic’ must be considered. If an error occurs in an intermediate state, it must be retried again or separate monitoring and error handling are required.
 
 </details>
 
@@ -1058,21 +1069,19 @@ We hope the example code will help you quickly try out the SAGA pattern during y
 
 - Trying to introduce CQRS (read/write separation) + Saga (distributed transaction) + event sourcing made it too complicated. To what extent is it applied in practice?
 
-- I wonder if I should make simple functions like CRUD this complicated.
+- I wonder if I should make a simple function like CRUD this complicated.
 
 **A**
 
 - **Practical application level**
     - Implementing all services with event sourcing + CQRS is burdensome.
 
-    - A mixed strategy is often used, in which CQRS & Saga is applied only to core domains (order, payment, inventory, etc.) with high business impact, and the rest consists of relatively simple CRUD.
+    - A mixed strategy is often used in which CQRS & Saga is applied only to core domains (order, payment, inventory, etc.) with high business impact, and the rest consists of relatively simple CRUD.
 
     - Introduction of ‘appropriate level’ is important. If productivity decreases due to excessive introduction of architecture, maintenance costs increase.
 
 - **Gradual introduction method**
-    1. **First, domain separation and DB separation**: Securing a certain degree of independence of individual services, which is the basic premise of MSA.
-
-    2. **Maintain loose dependencies between services through event publishing (or REST API)**: Apply Saga only where it is absolutely necessary.
+    1. **First, domain separation and DB separation**: Securing a certain degree of independence of individual services, which is the basic premise of MSA.2. **Maintain loose dependencies between services through event publishing (or REST API)**: Apply Saga only where it is absolutely necessary.
 
     3. **Partially apply CQRS depending on need**: Introduce first only for services with a high query load or when event sourcing is required.
 
@@ -1087,7 +1096,9 @@ We hope the example code will help you quickly try out the SAGA pattern during y
 
 - It seems that integration testing between services is necessary to test distributed transactions. What method do you use?
 
-**A**- **Integration Test**
+**A**
+
+- **Integration Test**
     - Launch each service and message broker (Kafka/RabbitMQ, etc.) using Docker, etc., and then proceed with scenario testing.
 
     - Normal processing scenarios, partial failure scenarios (payment failure, delivery failure, etc.), compensation transaction failure scenarios, etc. must all be included.
@@ -1114,16 +1125,16 @@ We hope the example code will help you quickly try out the SAGA pattern during y
 **A**
 
 - **Cases of major failures**
-    - **Duplicate message processing failure**: Duplicate payments/duplicate orders occur due to idempotent processing not being performed properly. → ​Resolved through **duplicate check based on transaction ID** and DB Lock/Unique restrictions.
-
-    - **Infinite compensation transaction failure**: When the payment cancellation API fails several times and DLQ accumulates, but this is missed in operation. → ​Response with **DLQ monitoring system** or periodic alarms.
+    - **Duplicate message processing failure**: Idempotence processing is not performed properly, resulting in duplicate payments/duplicate orders. → ​Resolved through **duplicate check based on transaction ID** and DB Lock/Unique restrictions.- **Infinite compensation transaction failure**: When the payment cancellation API fails several times and DLQ accumulates, but this is missed in operation. → ​Response with **DLQ monitoring system** or periodic alarms.
 
     - **Orchestrator failure**: The entire transaction flow is interrupted due to the central orchestrator service being down. → **High availability (HA) configuration** + Event reprocessing design in case of failure.
 
 - **Solutions and operational strategies**
     - **Monitoring/Alarm**: Monitor event success/failure counts at each stage, and receive real-time alerts via Slack, text, etc. when a certain threshold is exceeded.
 
-    - **Idempotent Consumer**: Prevent duplicate processing of the same event. Must apply to domains that involve monetary transactions such as payment/inventory/points.- **Replay logic**: Use Kafka offset or DB Outbox to replay compensation transactions or specific events.
+    - **Idempotent Consumer**: Prevent duplicate processing of the same event. Must apply to domains that involve monetary transactions such as payment/inventory/points.
+
+    - **Replay logic**: Use Kafka offset or DB Outbox to replay compensation transactions or specific events.
 
     - **Documentation of failure response**: Since failures occur in various aspects in a distributed environment, document failure scenarios and prepare in advance.
 
@@ -1151,9 +1162,7 @@ We hope the example code will help you quickly try out the SAGA pattern during y
 3. **Gradual improvement**
     - If you try to do everything well at once, complexity explodes.
 
-    - Introduce transaction boundaries, event issue-consumption, and compensation transaction logic step by step, gradually adding CQRS and event sourcing.
-
-</details>
+    - Introduce transaction boundaries, event issue-consumption, and compensation transaction logic step by step, gradually adding CQRS and event sourcing.</details>
 
 <details markdown="1">
 <summary>**13. What are the key points to consider when applying the Saga pattern?**</summary>
@@ -1171,7 +1180,9 @@ We hope the example code will help you quickly try out the SAGA pattern during y
     - Clearly define in advance which method, from which stage, and in which order to roll back in case of failure.
 
 3. **Orchestration vs. Choreography**
-    - Decide which method to take based on domain size, event complexity, and team capabilities.4. **Monitoring failures and exceptions**
+    - Decide which method to take based on domain size, event complexity, and team capabilities.
+
+4. **Monitoring failures and exceptions**
     - Prepare specifically how to detect and recover from failures such as DLQ, retry logic, and outbox patterns.
 
 5. **Testing and Operations Strategy**
@@ -1196,16 +1207,16 @@ The Outbox pattern is a very useful pattern for reducing message loss by atomica
 
 ### **1) Orchestrator + State Machine Management**
 
-- **Orchestration Saga** has been further strengthened so that the central orchestrator (or Saga Manager) tracks the status of each step and also manages the status of compensation transactions separately in case of failure.
-
-- Uses the concept of **state machine (or workflow) to record at what stage the current transaction was retried, how many times it was retried, and for what reason it failed.
+- **Orchestration Saga** has been further strengthened so that the central orchestrator (or Saga Manager) tracks the status of each step and also manages the status of compensation transactions separately in case of failure.- Uses the concept of **state machine (or workflow) to record at which stage the current transaction was retried, how many times it was retried, and for what reason it failed.
     - Example) By introducing external **workflow/orchestration engines** such as Camunda, Zeebe, Netflix Conductor, Temporal.io, etc., even compensation failures can be managed in detail.
 
 - If the compensation transaction continues to fail, it may finally be converted to a state requiring **human (operator) intervention** and a monitoring alarm may sound.
 
     <hr>
 
-### **2) TCC (Try-Confirm/Cancel) pattern**- **TCC** is one of the **distributed transaction guarantee techniques** similar to the Saga pattern.
+### **2) TCC (Try-Confirm/Cancel) Pattern**
+
+- **TCC** is one of the **distributed transaction guarantee techniques** similar to the Saga pattern.
     1. **Try**: Reserve resources in advance (temporarily hold them)
 
     2. **Confirm**: Actual commit
@@ -1232,15 +1243,15 @@ The Outbox pattern is a very useful pattern for reducing message loss by atomica
 
     3. **Monitoring/Alarm**: When the number of messages accumulated in DLQ increases, an alarm is sent via Slack, email, SMS, etc.
 
-    4. **Manual Intervention**: The operator checks the message and decides whether to reprocess it (Replay) or abort it completely (Manual Cancel).
-
-> Tip It is also commonly used to record the compensation transaction success/failure/number of retries by adding a “processing status” field to the Outbox table (or event table). Tracking the status within the DB has the advantage of allowing operators to directly check and attempt reprocessing through a web dashboard or SQL query.
+    4. **Manual Intervention**: The operator checks the message and decides whether to reprocess it (Replay) or abort it completely (Manual Cancel).> Tip It is also commonly used to record the compensation transaction success/failure/number of retries by adding a “processing status” field to the Outbox table (or event table). Tracking the status within the DB has the advantage of allowing operators to directly check and attempt reprocessing through a web dashboard or SQL query.
 
     <hr>
 
 ### **4) Event Sourcing + CQRS**
 
-- By recording all state changes as events through **event sourcing**, when a data consistency problem occurs due to a compensation transaction failure, you can go back to a specific point in time and attempt reprocessing (Replay) or reconstruct the problem part.- When applied together with **CQRS**, the write (command) and read (query) models are separated, and the query model can be designed in such a way that only the final consistency is required even if the compensation transaction is re-executed.
+- By recording all state changes as events through **event sourcing**, when a data consistency problem occurs due to a compensation transaction failure, you can go back to a specific point in time and attempt reprocessing (Replay) or reconstruct the problem part.
+
+- When applied together with **CQRS**, the write (command) and read (query) models are separated, and the query model can be designed in such a way that only the final consistency is required even if the compensation transaction is re-executed.
 
 - However, since event sourcing significantly increases operation and maintenance complexity, a strategy of gradually introducing it only to core domains that are absolutely necessary in actual projects is recommended.
 
@@ -1262,10 +1273,8 @@ The Outbox pattern is a very useful pattern for reducing message loss by atomica
 
 <hr>
 
-## References
+## References<a class="notion-mention" href="https://devocean.sk.com/blog/techBoardDetail.do?ID=165445&boardType=techBlog&ref=codenary">https://devocean.sk.com/blog/techBoardDetail.do?ID=165445&boardType=techBlog&ref=codenary</a>
 
-[https://devocean.sk.com/blog/techBoardDetail.do?ID=165445&boardType=techBlog&ref=codenary](https://devocean.sk.com/blog/techBoardDetail.do?ID=165445&boardType=techBlog&ref=codenary)
+<a class="notion-mention" href="https://www.youtube.com/watch?v=amTJyIE1wO0&feature=youtu.be">https://www.youtube.com/watch?v=amTJyIE1wO0&feature=youtu.be</a>
 
-[https://www.youtube.com/watch?v=amTJyIE1wO0&feature=youtu.be](https://www.youtube.com/watch?v=amTJyIE1wO0&feature=youtu.be)
-
-[https://www.youtube.com/watch?v=xpwRTu47fqY](https://www.youtube.com/watch?v=xpwRTu47fqY)
+<a class="notion-mention" href="https://www.youtube.com/watch?v=xpwRTu47fqY">https://www.youtube.com/watch?v=xpwRTu47fqY</a>

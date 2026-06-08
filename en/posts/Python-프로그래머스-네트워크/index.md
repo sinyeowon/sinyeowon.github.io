@@ -2,11 +2,11 @@
 layout: "post"
 title: "[Python] Programmers - Network"
 date: 2026-05-21 09:00:00 +0900
-last_modified_at: 2026-06-04 22:39:00 +0900
+last_modified_at: 2026-06-09 01:32:00 +0900
 categories: ["Programmers", "Python"]
 tags: ["programmers", "Python"]
-description: "Even if they are not directly connected like numbers 0 and 2 in 0번 1번 2번, if they are connected through number 1, they are on the same network."
-description_source: "manual"
+description: "Through the programmer's network problem, we understand the graph search methods of DFS and BFS, and summarize how to find the number of connected computer bundles using visited arrays."
+description_source: "notion"
 lang: "en"
 ui_lang: "ko-KR"
 toc: true
@@ -53,7 +53,7 @@ Abbreviation for Depth First Search, depth first search.
 
 ### BFS
 
-Abbreviation for Breadth First Search.
+Abbreviation for Breadth First Search, Breadth First Search
 
 - A method of visiting nodes in order, starting from the nodes closest to the current location.
 

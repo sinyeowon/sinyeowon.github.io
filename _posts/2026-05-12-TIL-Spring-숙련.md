@@ -2,11 +2,11 @@
 title: "[TIL] Spring 숙련 - 필터와 Spring Security"
 title_source: "manual"
 date: 2026-05-12 09:00:00 +0900
-last_modified_at: 2026-05-13 12:14:00 +0900
+last_modified_at: 2026-06-09 01:31:00 +0900
 categories: ["Spring 단기 심화", "Spring 강의"]
 tags: ["Spring", "TIL", "내일배움캠프"]
-description: "Filter : Web 애플리케이션에서 관리되는 영역으로 Client로부터 오는 요청과 응답에 대해 최초/최종 단계의 위치이며 이를 통해 요청과 응답의 정보를 변경하거나 부가적인 기능을 추가할 수 있음"
-description_source: "manual"
+description: "Spring Filter를 통해 요청 전후 처리와 JWT 인증/인가 흐름을 이해하고, Spring Security의 Filter Chain, CSRF, Form Login, SecurityContextHolder, Authentication 구조를 정리했다."
+description_source: "notion"
 permalink: "/posts/TIL-Spring-숙련-2026-05-12/"
 english_url: "/en/posts/TIL-Spring-숙련-2026-05-12/"
 notion_id: "35e7788a-fc66-8066-8baa-faa5874b47ea"

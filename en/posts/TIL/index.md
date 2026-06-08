@@ -3,11 +3,11 @@ layout: "post"
 title: "[TIL] MSA Transaction Consistency and Saga Pattern"
 title_source: "manual"
 date: 2026-06-04 09:00:00 +0900
-last_modified_at: 2026-06-06 22:52:00 +0900
+last_modified_at: 2026-06-09 01:42:00 +0900
 categories: ["Spring 단기 심화", "심화 주차"]
 tags: ["TIL", "Saga", "2PC", "MSA"]
-description: "In an MSA environment, one function can be handled across multiple services."
-description_source: "manual"
+description: "We understand transaction consistency issues that occur in the MSA environment, and summarize how 2PC and Saga patterns work, their pros and cons, and how to maintain consistency through compensation transactions."
+description_source: "notion"
 lang: "en"
 ui_lang: "ko-KR"
 toc: true
@@ -127,6 +127,6 @@ Each service commits its work independently, but if a failure occurs in the midd
 
 ## What I felt
 
-We learned that in MSA, we need to consider not only the success of a transaction, but also the degree of connectivity between services and failure situations.
+We learned that in MSA, we need to consider not only the success of transactions, but also the degree of connectivity between services and failure situations.
 
 2PC may be appropriate when strong consistency is required, but the Saga pattern may be used more often in MSA that values ​​service independence and scalability.

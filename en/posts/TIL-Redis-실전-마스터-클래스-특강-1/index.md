@@ -3,11 +3,11 @@ layout: "post"
 title: "[TIL] Redis Practical Master Class Lecture 1 - Core Architecture and Caching Strategies"
 title_source: "manual"
 date: 2026-05-12 09:00:00 +0900
-last_modified_at: 2026-05-15 20:57:00 +0900
+last_modified_at: 2026-06-09 01:29:00 +0900
 categories: ["Spring 단기 심화", "특강"]
 tags: ["Redis"]
-description: "Redis core architecture and fundamentals"
-description_source: "manual"
+description: "We understand Redis' in-memory structure and single-threaded architecture, and summarize how to solve traffic processing and concurrency problems through caching strategies, TTL/Jitter, major data structures, and distributed locks."
+description_source: "notion"
 lang: "en"
 ui_lang: "ko-KR"
 toc: true
@@ -166,7 +166,7 @@ Assuming a popular shopping mall, we plan to map each data structure with comman
 
     - Insertion/deletion at both ends is fast, but insertion in the middle is slow.
 
-    - Example: Recently viewed products → Whenever the user moves the page, products are placed at the front of the list, and older ones are cut out.
+    - Example: Recently viewed product → Each time the user moves the page, the product is placed at the front of the list, and older items are cut out.
 
         ```bash
         # 유저(999)가 상품(123)을 최근에 봤습니다. 리스트 맨 앞에 밀어 넣습니다.
@@ -240,7 +240,7 @@ Assuming a popular shopping mall, we plan to map each data structure with comman
         - At this time, if the system goes wrong and allocation and cancellation occur, the physical inventory quantity becomes a mess.
 
 - **Solution through Redis distributed lock**
-    - To prevent this problem, Baedal Minjok placed a **Redis distributed lock** on a per ‘transfer request’ basis.
+    - To prevent this problem, Baedal Minjok placed **Redis distributed lock** on a per ‘transfer request’ basis.
 
     - If one server first obtains a lock from Redis for transfer request number 001, the other server is blocked from changing the status of the inventory until the lock is released.
         - Through this, concurrency issues are completely controlled without even a single piece of data being distorted.![image](/assets/img/notion/TIL-Redis-실전-마스터-클래스-특강-1/15-78f8b7ac3c.png)
@@ -267,7 +267,7 @@ Assuming a popular shopping mall, we plan to map each data structure with comman
 
 **Q I heard that existing disk-based DBs require locks and are slow because they are multi-threaded, but why does Redis use distributed locks since it is single-threaded?**
 
-- Redis’ single thread refers to **Redis** **internally** **how commands are processed**
+- Redis' single thread refers to **Redis** **internally** **how commands are processed**
     - In other words, because Redis processes only one command at a time in order, there are fewer conflicts that occur when multiple threads modify the same memory data at the same time.
 
     - Redis commands themselves are executed atomically.

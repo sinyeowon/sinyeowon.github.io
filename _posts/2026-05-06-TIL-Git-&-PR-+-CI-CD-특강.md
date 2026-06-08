@@ -1,10 +1,10 @@
 ---
 title: "[TIL] Git & PR + CI/CD 특강"
 date: 2026-05-06 09:00:00 +0900
-last_modified_at: 2026-05-06 15:09:00 +0900
+last_modified_at: 2026-06-09 01:21:00 +0900
 categories: ["Spring 단기 심화", "특강"]
 tags: ["Git", "CI/CD"]
-description: "브랜치 전략이 없다면, 내 작업이 동료 작업을 덮어쓰거나 / 배포 직전인데 미완성 코드가 섞이거나 / 롤백하고 싶은데 기준점이 없는 등의 사고가 발생할 수 있음"
+description: "Git 브랜치 전략과 PR 기반 협업 흐름을 정리하고, Merge/Rebase 차이와 충돌 해결 방법, GitHub Actions를 활용한 CI/CD 자동화의 기본 개념을 학습했다."
 description_source: "notion"
 english_url: "/en/posts/TIL-Git-&-PR-+-CI-CD-특강/"
 notion_id: "3587788a-fc66-8089-892a-dad32b993e3a"
@@ -192,7 +192,7 @@ notion_lang: "ko"
     <div class="notion-callout-heading" markdown="1">
     <span class="notion-callout-icon">📍</span>
     <div class="notion-callout-title" markdown="1">
-    `git push --force-with-lease` 를 사용하면 원격이 내 예상과 다를 때 실패시킴
+    git push --force-with-lease` 를 사용하면 원격이 내 예상과 다를 때 실패시킴
     </div>
     </div>
     <div class="notion-callout-body" markdown="1">

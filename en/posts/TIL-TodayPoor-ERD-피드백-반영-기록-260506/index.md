@@ -3,11 +3,11 @@ layout: "post"
 title: "[TIL] Applying TodayPoor ERD feedback"
 title_source: "manual"
 date: 2026-05-06 09:00:00 +0900
-last_modified_at: 2026-06-04 22:53:00 +0900
+last_modified_at: 2026-06-09 01:24:00 +0900
 categories: ["GDGoC KNU", "0 to Product"]
 tags: ["project"]
-description: "In the initial design, we focused on quickly reflecting the functionality, but today we re-examined whether each table and field is really necessary,"
-description_source: "manual"
+description: "Based on TodayPoor ERD feedback, we separated table roles, removed duplicate data, reorganized the AI/OCR result storage structure, and organized data design standards suitable for MVP."
+description_source: "notion"
 lang: "en"
 ui_lang: "ko-KR"
 toc: true

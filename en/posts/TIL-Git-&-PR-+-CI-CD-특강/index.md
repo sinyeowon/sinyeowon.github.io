@@ -2,10 +2,10 @@
 layout: "post"
 title: "[TIL] Special lecture on Git & PR + CI/CD"
 date: 2026-05-06 09:00:00 +0900
-last_modified_at: 2026-05-06 15:09:00 +0900
+last_modified_at: 2026-06-09 01:21:00 +0900
 categories: ["Spring 단기 심화", "특강"]
 tags: ["Git", "CI/CD"]
-description: "Without a branching strategy, accidents can occur such as your work overwriting your colleague's work,"
+description: "We summarized Git branch strategy and PR-based collaboration flow, learned Merge/Rebase differences and conflict resolution methods, and basic concepts of CI/CD automation using GitHub Actions."
 description_source: "notion"
 lang: "en"
 ui_lang: "ko-KR"
@@ -19,7 +19,7 @@ notion_lang: "en"
 
 ### **Git Flow branching strategy**
 
-Without a branching strategy, accidents can occur such as your work overwriting your colleague's work, unfinished code mixed in when you're about to deploy, or you wanting to roll back but having no reference point.
+Without a branching strategy, accidents can occur, such as your work overwriting a colleague's work, unfinished code mixed in when you're about to deploy, or you wanting to roll back but having no reference point.
 
 → Branch strategy = accident prevention device
 
@@ -157,7 +157,7 @@ Without a branching strategy, accidents can occur such as your work overwriting 
 
     - No merge commits - remove noise
 
-    - Existing commits are replaced with new commits - Collaboration is destroyed if done on a shared branch.
+    - Existing commits are replaced by new commits - Collaboration is destroyed if done on a shared branch
 
 - When to use what (Merge & Rebase)
 
@@ -193,7 +193,7 @@ Without a branching strategy, accidents can occur such as your work overwriting 
     <div class="notion-callout-heading" markdown="1">
     <span class="notion-callout-icon">📍</span>
     <div class="notion-callout-title" markdown="1">
-    Using `git push --force-with-lease` causes it to fail when the remote is not what I expected.
+    Using git push --force-with-lease` causes it to fail when the remote is not what I expected.
     </div>
     </div>
     <div class="notion-callout-body" markdown="1">
