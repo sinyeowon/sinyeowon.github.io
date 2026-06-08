@@ -2021,6 +2021,30 @@ function splitLongText(text, maxLength = TRANSLATE_CHUNK_SIZE) {
 }
 
 function createDescription(markdown, title = "") {
+  // Prefer the first meaningful paragraph if available
+  const firstParagraph = (() => {
+    const withoutCode = String(markdown || "")
+      .replace(/```[\s\S]*?```/g, "\n")
+      .replace(/!\[[^\]]*]\([^)]*\)/g, "\n")
+      .trim();
+
+    const paragraphs = withoutCode.split(/\n\s*\n+/).map((p) => p.trim());
+
+    for (const p of paragraphs) {
+      const cleaned = cleanDescriptionLine(p);
+      if (!cleaned) continue;
+      if (cleaned.length >= 40 && !isGenericDescriptionHeading(cleaned)) {
+        return cleaned;
+      }
+    }
+
+    return null;
+  })();
+
+  if (firstParagraph) {
+    return trimDescription(firstParagraph);
+  }
+
   const candidates = descriptionCandidates(markdown, title);
   const selected = [];
 
