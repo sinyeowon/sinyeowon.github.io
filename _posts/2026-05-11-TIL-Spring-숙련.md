@@ -5,7 +5,7 @@ date: 2026-05-11 09:00:00 +0900
 last_modified_at: 2026-05-12 12:34:00 +0900
 categories: ["Spring 단기 심화", "Spring 강의"]
 tags: ["Spring", "TIL", "내일배움캠프"]
-description: "@Enumerated(value = EnumType.STRING) - EnumType을 DB 컬럼에 저장할 때 사용하는 애너테이션입니다."
+description: "@Enumerated(value = EnumType.STRING) EnumType을 DB 컬럼에 저장할 때 사용하는 애너테이션입니다."
 description_source: "manual"
 permalink: "/posts/TIL-Spring-숙련-2026-05-11/"
 english_url: "/en/posts/TIL-Spring-숙련-2026-05-11/"

@@ -5,7 +5,7 @@ date: 2026-04-05 20:28:46 +0900
 last_modified_at: 2026-04-25 23:38:20 +0900
 categories: ["BaekJoon", "Python"]
 tags: ['baekjoon', 'Python']
-description: "Result of map - It is a map object, not a list ex) - Therefore, you need to wrap it in list() and make it into a list."
+description: "It is a map object, not a list ex) Therefore, you need to wrap it in list() and make it into a list."
 lang: "en"
 ui_lang: "ko-KR"
 toc: true

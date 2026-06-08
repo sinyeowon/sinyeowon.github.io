@@ -6,7 +6,7 @@ date: 2026-05-04 09:00:00 +0900
 last_modified_at: 2026-06-04 22:53:00 +0900
 categories: ["GDGoC KNU", "0 to Product"]
 tags: ["project"]
-description: "Drafting a plan and drafting a meeting agenda - Creating a basic framework for an idea-based plan"
+description: "Drafting a plan and drafting a meeting agenda Creating a basic framework for an idea-based plan"
 description_source: "manual"
 lang: "en"
 ui_lang: "ko-KR"

@@ -5,7 +5,7 @@ date: 2026-04-15 16:11:38 +0900
 last_modified_at: 2026-05-03 05:34:06 +0900
 categories: ["Spring 단기 심화", "과제"]
 tags: ['Java', 'Spring', 'TIL', '과제', '내일배움캠프']
-description: "@Entity annotation - Indicates that this class is a class that maps to a DB table."
+description: "@Entity annotation Indicates that this class is a class that maps to a DB table."
 lang: "en"
 ui_lang: "ko-KR"
 toc: true

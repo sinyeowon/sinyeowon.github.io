@@ -6,7 +6,7 @@ date: 2026-05-14 09:00:00 +0900
 last_modified_at: 2026-05-14 15:09:00 +0900
 categories: ["Programmers", "Java"]
 tags: ["Java", "programmers"]
-description: "Main method - push(): Adds a value to the stack."
+description: "Main method push(): Adds a value to the stack."
 description_source: "manual"
 lang: "en"
 ui_lang: "ko-KR"

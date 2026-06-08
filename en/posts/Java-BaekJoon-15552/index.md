@@ -5,7 +5,7 @@ date: 2026-04-05 16:09:50 +0900
 last_modified_at: 2026-04-22 08:31:14 +0900
 categories: ["BaekJoon", "Java"]
 tags: ['Java', 'baekjoon']
-description: "많은 수의 입력과 출력이 있을 때 in Java - In Java, it is better than the previously used Scanner and System.out.print."
+description: "In Java, it is better than the previously used Scanner and System.out.print."
 lang: "en"
 ui_lang: "ko-KR"
 toc: true

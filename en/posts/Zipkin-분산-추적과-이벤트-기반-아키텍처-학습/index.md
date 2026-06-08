@@ -5,7 +5,7 @@ date: 2026-06-08 09:00:00 +0900
 last_modified_at: 2026-06-08 14:38:00 +0900
 categories: ["Spring 단기 심화", "심화 주차"]
 tags: ["TIL", "Zipkin"]
-description: "Concepts learned today Distributed tracking using Zipkin"
+description: "Zipkin distributed tracing and request flow analysis"
 description_source: "excerpt"
 lang: "en"
 ui_lang: "ko-KR"

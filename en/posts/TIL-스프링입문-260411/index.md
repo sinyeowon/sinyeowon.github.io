@@ -6,7 +6,7 @@ date: 2026-04-12 16:14:24 +0900
 last_modified_at: 2026-04-30 16:11:57 +0900
 categories: ["Spring 단기 심화", "Spring 강의"]
 tags: ['Spring', 'TIL', '내일배움캠프']
-description: "What I studied ### IoC Containers and Beans - To use DI, object creation must take priority. - But when, where and who creates objects?"
+description: "IoC Containers and Beans To use DI, object creation must take priority. But when, where and who creates objects?"
 lang: "en"
 ui_lang: "ko-KR"
 toc: true

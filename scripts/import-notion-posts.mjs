@@ -2020,36 +2020,108 @@ function splitLongText(text, maxLength = TRANSLATE_CHUNK_SIZE) {
   return chunks;
 }
 
-function createDescription(markdown, title = "") {
-  // Prefer the first meaningful paragraph if available
-  const firstParagraph = (() => {
-    const withoutCode = String(markdown || "")
-      .replace(/```[\s\S]*?```/g, "\n")
-      .replace(/!\[[^\]]*]\([^)]*\)/g, "\n")
-      .trim();
+function normalizeDescriptionText(line) {
+  return String(line || "")
+    .trim()
+    .replace(/^(공부한 내용|오늘 학습한 개념|학습한 내용|학습 내용|문제|오류|해결|회고|정리|개요|참고|느낀 점)\s*[:\-–—]?\s*/i, "")
+    .replace(/\s+/g, " ")
+    .trim();
+}
 
-    const paragraphs = withoutCode.split(/\n\s*\n+/).map((p) => p.trim());
+function generateTitleDescription(title = "") {
+  const value = String(title || "").trim();
+  if (!value) return "";
 
-    for (const p of paragraphs) {
-      const cleaned = cleanDescriptionLine(p);
-      if (!cleaned) continue;
-      if (cleaned.length >= 40 && !isGenericDescriptionHeading(cleaned)) {
-        return cleaned;
-      }
-    }
-
-    return null;
-  })();
-
-  if (firstParagraph) {
-    return trimDescription(firstParagraph);
+  if (/TIL/i.test(value)) {
+    return `${value.replace(/TIL[-–—]?\s*/i, "").trim()}에 대한 학습 내용을 정리한 글입니다.`;
   }
 
-  const candidates = descriptionCandidates(markdown, title);
+  if (/프로그래머스|BaekJoon|BOJ|Problem/i.test(value)) {
+    return `${value} 문제 풀이 및 학습 기록입니다.`;
+  }
+
+  return `${value}에 대한 정리입니다.`;
+}
+
+function splitDescriptionBlocks(markdown) {
+  const withoutCode = String(markdown || "")
+    .replace(/```[\s\S]*?```/g, "\n")
+    .replace(/!\[[^\]]*]\([^)]*\)/g, "\n")
+    .trim();
+
+  const blocks = [];
+  let current = [];
+
+  for (const rawLine of withoutCode.split("\n")) {
+    if (!rawLine.trim()) {
+      if (current.length) {
+        blocks.push(current);
+        current = [];
+      }
+      continue;
+    }
+
+    current.push(rawLine);
+  }
+
+  if (current.length) {
+    blocks.push(current);
+  }
+
+  return blocks;
+}
+
+function isListLine(rawLine) {
+  const value = String(rawLine || "").trim();
+  return /^([-*+]|\d+\.)\s+/.test(value) || /^\[[ xX]]\s+/.test(value);
+}
+
+function summarizeDescriptionBlock(block, title = "") {
+  const titleText = cleanDescriptionLine(title);
+  let lines = block
+    .map((line) => cleanDescriptionLine(line))
+    .filter(Boolean)
+    .filter((line) => !isGenericDescriptionHeading(line));
+
+  if (!lines.length) {
+    return null;
+  }
+
+  const rawFirstLine = String(block[0] || "").trim();
+  const firstIsHeading = /^#{1,6}\s*/.test(rawFirstLine);
+  if (firstIsHeading && lines.length > 1) {
+    lines = lines.slice(1);
+  }
+
+  const filteredLines = lines.filter((line) => line !== titleText);
+  if (filteredLines.length) {
+    lines = filteredLines;
+  }
+
+  if (lines.length === 1) {
+    return lines[0];
+  }
+
+  return lines.join(' ');
+}
+
+function createDescription(markdown, title = "") {
+  const blocks = splitDescriptionBlocks(markdown);
+
+  for (const block of blocks) {
+    const summary = summarizeDescriptionBlock(block, title);
+    if (!summary) continue;
+    const cleaned = normalizeDescriptionText(summary);
+    if (!cleaned || isGenericDescriptionHeading(cleaned) || cleaned.length < 40) continue;
+    return trimDescription(cleaned);
+  }
+
+  const candidates = descriptionCandidates(markdown, title).map(normalizeDescriptionText);
   const selected = [];
 
   for (const candidate of candidates) {
-    const next = [...selected, candidate].join(" ");
+    if (!candidate) continue;
+    const next = [...selected, candidate].join(' ');
     if (next.length > 150 && selected.length) {
       break;
     }
@@ -2061,7 +2133,7 @@ function createDescription(markdown, title = "") {
     }
   }
 
-  return trimDescription(selected.join(" ") || title);
+  return trimDescription(selected.join(' ') || generateTitleDescription(title));
 }
 
 function descriptionCandidates(markdown, title = "") {

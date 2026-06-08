@@ -4,7 +4,7 @@ date: 2026-05-04 23:59:00 +0900
 last_modified_at: 2026-05-05 01:30:40 +0900
 categories: ["Programmers", "Python"]
 tags: ['programmers', 'Python']
-description: "문장 속 단어의 첫글자가 알파벳이든 숫자이든, 단어의 두번째 글자부터는 소문자 적용! - 처음에는 .isalpha()를 통해 첫글자가 알파벳인지 확인하거나 알파벳이 아니라면 으로 적용해서 코드가 길었는데 단축됨 - 연속 공백이 존재하는 함정 - 이 함정 때문에 계속…"
+description: "문장 속 단어의 첫글자가 알파벳이든 숫자이든, 단어의 두번째 글자부터는 소문자 적용! 처음에는 .isalpha()를 통해 첫글자가 알파벳인지 확인하거나 알파벳이 아니라면 으로 적용해서 코드가 길었는데 단축됨 연속 공백이 존재하는 함정 이 함정 때문에 계속 테스트 케이…"
 english_url: "/en/posts/Python-Programmers-JadenCase/"
 ---
 [Programmers JadenCase 문자열 만들기](https://school.programmers.co.kr/learn/courses/30/lessons/12951?language=python3)

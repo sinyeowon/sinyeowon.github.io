@@ -5,7 +5,7 @@ date: 2026-04-05 16:14:22 +0900
 last_modified_at: 2026-05-04 02:07:34 +0900
 categories: ["BaekJoon", "Python"]
 tags: ['baekjoon', 'Python']
-description: "많은 수의 입력이 있을 때 in Python - In Python, it is better than the previously used input()."
+description: "In Python, it is better than the previously used input(). Better to use readline() readline() Faster input than input() Use: import sys Default: a =…"
 lang: "en"
 ui_lang: "ko-KR"
 toc: true

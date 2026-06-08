@@ -6,7 +6,7 @@ date: 2026-04-08 23:38:16 +0900
 last_modified_at: 2026-04-09 23:53:21 +0900
 categories: ["Spring 단기 심화", "Spring 강의"]
 tags: ['Spring', 'TIL', '내일배움캠프']
-description: "What I studied #### @Controller - Enables the class to perform the role of Controller - Spring MVC creates a Front Controller pattern for efficient A…"
+description: "@Controller Enables the class to perform the role of Controller Spring MVC creates a Front Controller pattern for efficient API processing."
 lang: "en"
 ui_lang: "ko-KR"
 toc: true

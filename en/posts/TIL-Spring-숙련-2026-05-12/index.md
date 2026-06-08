@@ -6,7 +6,7 @@ date: 2026-05-12 09:00:00 +0900
 last_modified_at: 2026-05-13 12:14:00 +0900
 categories: ["Spring 단기 심화", "Spring 강의"]
 tags: ["Spring", "TIL", "내일배움캠프"]
-description: "Filter >: This is an area managed in the web application and is the first/final stage for requests and responses from clients. Through this,"
+description: "Filter : This is an area managed in the web application and is the first/final stage for requests and responses from clients. Through this,"
 description_source: "manual"
 lang: "en"
 ui_lang: "ko-KR"

@@ -4,7 +4,7 @@ date: 2026-04-05 16:14:22 +0900
 last_modified_at: 2026-05-04 02:07:34 +0900
 categories: ["BaekJoon", "Python"]
 tags: ['baekjoon', 'Python']
-description: "Python에서 많은 수의 입력이 있을 때 - Python에서는 기존에 사용하던 input() 보다 - readline()을 사용하는 게 나음 #### readline() - input() 보다 빠른 입력 - 사용: import sys - 기본: a = sys."
+description: "Python에서는 기존에 사용하던 input() 보다 readline()을 사용하는 게 나음 readline() input() 보다 빠른 입력 사용: import sys 기본: a = sys.stdin."
 english_url: "/en/posts/Python-BaekJoon-15552/"
 ---
 [BaekJoon 15552](https://www.acmicpc.net/problem/15552)

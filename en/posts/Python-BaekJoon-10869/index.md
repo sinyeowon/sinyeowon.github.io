@@ -5,7 +5,7 @@ date: 2026-04-05 15:20:39 +0900
 last_modified_at: 2026-04-23 00:17:21 +0900
 categories: ["BaekJoon", "Python"]
 tags: ['baekjoon', 'Python']
-description: "Using string formatting (% operator) \"문자열\" % (값들): The values following the same placeholder as %d, %f in the string are entered in order."
+description: "\"문자열\" % (값들): The values following the same placeholder as %d, %f in the string are entered in order."
 lang: "en"
 ui_lang: "ko-KR"
 toc: true

@@ -6,7 +6,7 @@ date: 2026-04-10 15:58:53 +0900
 last_modified_at: 2026-04-11 12:15:33 +0900
 categories: ["Spring 단기 심화", "Spring 강의"]
 tags: ['Spring', 'TIL', '내일배움캠프']
-description: "DTO > DTO (Data Transfer Object) : Object created for data transmission and movement - Used when processing data sent from the client as an object -…"
+description: "DTO (Data Transfer Object) : Object created for data transmission and movement Used when processing data sent from the client as an object Used to mo…"
 lang: "en"
 ui_lang: "ko-KR"
 toc: true

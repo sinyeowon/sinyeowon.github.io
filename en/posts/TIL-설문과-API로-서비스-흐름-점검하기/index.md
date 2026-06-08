@@ -6,7 +6,7 @@ date: 2026-05-13 09:00:00 +0900
 last_modified_at: 2026-06-04 22:53:00 +0900
 categories: ["GDGoC KNU", "0 to Product"]
 tags: ["project"]
-description: "Create and distribute pre-survey Google form - We reflected the feedback that it would be good to conduct a preliminary survey to check whether the a…"
+description: "Create and distribute pre-survey Google form We reflected the feedback that it would be good to conduct a preliminary survey to check whether the act…"
 description_source: "manual"
 lang: "en"
 ui_lang: "ko-KR"

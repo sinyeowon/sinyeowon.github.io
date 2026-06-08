@@ -6,7 +6,7 @@ date: 2026-04-13 12:09:01 +0900
 last_modified_at: 2026-04-29 12:51:58 +0900
 categories: ["Spring 단기 심화", "Spring 강의"]
 tags: ['Spring', 'TIL', '내일배움캠프']
-description: "What I studied ### Query Methods > Query Methods : Spring Data JPA provides the Query Methods function that can generate SQL with method names."
+description: "Query Methods Query Methods : Spring Data JPA provides the Query Methods function that can generate SQL with method names."
 lang: "en"
 ui_lang: "ko-KR"
 toc: true

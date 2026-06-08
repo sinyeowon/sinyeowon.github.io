@@ -5,7 +5,7 @@ date: 2026-04-05 20:00:02 +0900
 last_modified_at: 2026-04-23 00:31:51 +0900
 categories: ["BaekJoon", "Python"]
 tags: ['baekjoon', 'Python']
-description: "for line in sys.stdin: - Repeats the entire input and stores the entire input in line - Can be used when the number of inputs is not fixed - a,"
+description: "for line in sys.stdin: Repeats the entire input and stores the entire input in line Can be used when the number of inputs is not fixed a, b = map(int,"
 lang: "en"
 ui_lang: "ko-KR"
 toc: true

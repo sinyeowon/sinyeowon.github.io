@@ -6,7 +6,7 @@ date: 2026-04-13 10:10:15 +0900
 last_modified_at: 2026-04-26 00:22:28 +0900
 categories: ["Spring 단기 심화", "Spring 강의"]
 tags: ['Spring', 'TIL', '내일배움캠프']
-description: "What I studied ### Apply JPA Auditing #### Timestamped - Spring Data JPA provides JPA Auditing, a function that automatically enters time values."
+description: "Apply JPA Auditing Timestamped Spring Data JPA provides JPA Auditing, a function that automatically enters time values."
 lang: "en"
 ui_lang: "ko-KR"
 toc: true

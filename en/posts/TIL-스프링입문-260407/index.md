@@ -6,7 +6,7 @@ date: 2026-04-07 13:40:30 +0900
 last_modified_at: 2026-04-25 03:01:54 +0900
 categories: ["Spring 단기 심화", "Spring 강의"]
 tags: ['Spring', 'TIL', '내일배움캠프']
-description: "What I did today - Introduction to Spring"
+description: "Test code bug bug Software produces unexpected results"
 lang: "en"
 ui_lang: "ko-KR"
 toc: true

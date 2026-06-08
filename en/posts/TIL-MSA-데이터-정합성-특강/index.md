@@ -5,7 +5,7 @@ date: 2026-06-06 09:00:00 +0900
 last_modified_at: 2026-06-07 00:19:00 +0900
 categories: ["Spring 단기 심화", "특강"]
 tags: ["Saga", "MSA"]
-description: "Complexity of distributed transactions (1) Transactions in monolithic vs. problems in microservices"
+description: "(1) Transactions in monolithic vs. problems in microservices"
 description_source: "excerpt"
 lang: "en"
 ui_lang: "ko-KR"

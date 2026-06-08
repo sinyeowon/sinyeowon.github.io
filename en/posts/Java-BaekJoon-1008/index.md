@@ -5,7 +5,7 @@ date: 2026-04-05 15:16:38 +0900
 last_modified_at: 2026-04-22 15:08:07 +0900
 categories: ["BaekJoon", "Java"]
 tags: ['Java', 'baekjoon']
-description: "/ division operation in Java - 정수 / 정수: The result is int, i.e. returns only the quotient. - To return the entire division result,"
+description: "정수 / 정수: The result is int, i.e. returns only the quotient. To return the entire division result, including real numbers,"
 lang: "en"
 ui_lang: "ko-KR"
 toc: true

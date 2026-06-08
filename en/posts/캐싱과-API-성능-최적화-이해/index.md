@@ -5,7 +5,7 @@ date: 2026-06-06 09:00:00 +0900
 last_modified_at: 2026-06-06 23:11:00 +0900
 categories: ["Spring 단기 심화", "심화 주차"]
 tags: ["TIL", "Cache"]
-description: "Concepts learned today: Caching"
+description: "In web services, the basic method is to always access the database whenever a user requests it. However, if all requests reach the DB every time,"
 description_source: "excerpt"
 lang: "en"
 ui_lang: "ko-KR"

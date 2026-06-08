@@ -6,7 +6,7 @@ date: 2026-04-09 23:27:21 +0900
 last_modified_at: 2026-04-11 12:20:16 +0900
 categories: ["Spring 단기 심화", "Spring 강의"]
 tags: ['Spring', 'TIL', '내일배움캠프']
-description: "What I studied #### Path Variable and Request Param - When sending an HTTP request from the client (browser) to the server, data can be sent together."
+description: "Path Variable and Request Param When sending an HTTP request from the client (browser) to the server, data can be sent together."
 lang: "en"
 ui_lang: "ko-KR"
 toc: true

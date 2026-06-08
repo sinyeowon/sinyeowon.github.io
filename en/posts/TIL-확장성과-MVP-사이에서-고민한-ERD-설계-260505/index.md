@@ -6,7 +6,7 @@ date: 2026-05-05 09:00:00 +0900
 last_modified_at: 2026-06-04 22:53:00 +0900
 categories: ["GDGoC KNU", "0 to Product"]
 tags: ["project"]
-description: "Project basic settings - Folder structure"
+description: "Compare the draft with the service features of the PRD plan"
 description_source: "manual"
 lang: "en"
 ui_lang: "ko-KR"

@@ -4,7 +4,7 @@ date: 2026-04-05 20:28:46 +0900
 last_modified_at: 2026-04-25 23:38:20 +0900
 categories: ["BaekJoon", "Python"]
 tags: ['baekjoon', 'Python']
-description: "map의 결과 - list가 아니라 map 객체임 ex) - 따라서 list()로 감싸서 list로 만들어줘야함"
+description: "list가 아니라 map 객체임 ex) 따라서 list()로 감싸서 list로 만들어줘야함"
 english_url: "/en/posts/Python-BaekJoon-10807/"
 ---
 [BaekJoon 10807](https://www.acmicpc.net/problem/10807)

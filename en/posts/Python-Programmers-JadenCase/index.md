@@ -5,7 +5,7 @@ date: 2026-05-04 23:59:00 +0900
 last_modified_at: 2026-05-05 01:30:40 +0900
 categories: ["Programmers", "Python"]
 tags: ['programmers', 'Python']
-description: "Whether the first letter of a word in a sentence is an alphabet or a number, the second letter of the word is lowercase! - At first,"
+description: "Whether the first letter of a word in a sentence is an alphabet or a number, the second letter of the word is lowercase! At first,"
 lang: "en"
 ui_lang: "ko-KR"
 toc: true

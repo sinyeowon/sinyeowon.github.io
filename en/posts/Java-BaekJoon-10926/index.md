@@ -5,7 +5,7 @@ date: 2026-04-05 15:33:33 +0900
 last_modified_at: 2026-04-25 15:57:56 +0900
 categories: ["BaekJoon", "Java"]
 tags: ['Java', 'baekjoon']
-description: "Strings in Java - Receive string input using String class"
+description: "When inputting a string in Java, input can be received through .next() and .nextLine() from the String class. ."
 lang: "en"
 ui_lang: "ko-KR"
 toc: true

@@ -5,7 +5,7 @@ date: 2026-06-07 09:00:00 +0900
 last_modified_at: 2026-06-07 01:39:00 +0900
 categories: ["Programmers", "Python"]
 tags: ["Python", "programmers"]
-description: "Programmers Word Conversion Since it is a word graph problem in which two words are connected if they differ by just one letter, I thought I would solve it using BFS, which uses a queue."
+description: "Since it is a word graph problem in which two words are connected by only one letter difference, I thought I would solve it using BFS,"
 description_source: "excerpt"
 lang: "en"
 ui_lang: "ko-KR"
