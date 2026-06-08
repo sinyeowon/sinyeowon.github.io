@@ -6,7 +6,7 @@ date: 2026-05-14 09:00:00 +0900
 last_modified_at: 2026-05-14 14:54:00 +0900
 categories: ["Programmers", "Python"]
 tags: ["Python", "programmers"]
-description: "This post solves the pair-removal problem in Python by using a list as a stack to remove adjacent equal characters."
+description: "Insert one alphabet into the stack, bring in the next alphabet, and if it matches the previously inserted alphabet,"
 description_source: "manual"
 lang: "en"
 ui_lang: "ko-KR"
@@ -16,7 +16,7 @@ original_url: "/posts/Python-프로그래머스-짝지어-제거하기/"
 notion_id: "3607788a-fc66-80b8-aed9-d90b25d0091c"
 notion_lang: "en"
 ---
-[Programmers 짝지어 제거하기](https://school.programmers.co.kr/learn/courses/30/lessons/12973)
+<a class="notion-mention" href="https://school.programmers.co.kr/learn/courses/30/lessons/12973">Programmers pairing and eliminating</a>
 
 ## Solution
 

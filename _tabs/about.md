@@ -8,7 +8,7 @@ hide_title: true
 <div class="about-me-page">
 
   <section class="about-me-hero">
-    <p><h1>Hello! I'm yeowon </h1></p>
+    <p><h1>Hello! I'm yeowon</h1></p>
     <img class="about-me-avatar" src="{{ site.avatar | relative_url }}" alt="신여원 프로필">
 
     <div class="about-me-contact-card">
@@ -19,7 +19,7 @@ hide_title: true
   </section>
 
   <section class="about-me-section">
-    <h2>👩🏻‍💻 About Me</h2>
+    <h2>About Me</h2>
     <p class="about-me-statement">"기록으로 배움을 쌓고, 사용자에게 자연스럽게 닿는 흐름을 고민하는 개발자 신여원입니다."</p>
     <ul class="about-me-list">
       <li><strong>Experience:</strong> Java/Spring 기반 백엔드 학습과 프로젝트 기록을 꾸준히 정리하고 있습니다.</li>
@@ -29,7 +29,7 @@ hide_title: true
   </section>
 
   <section class="about-me-section">
-    <h2>🤔 Skill Set</h2>
+    <h2>Skill Set</h2>
     <div class="about-skill-table">
       <div class="about-skill-row">
         <div class="about-skill-category">Back-End</div>

@@ -4,7 +4,7 @@ date: 2026-05-29 09:00:00 +0900
 last_modified_at: 2026-06-05 15:13:00 +0900
 categories: ["GDGoC KNU", "0 to Product"]
 tags: ["project"]
-description: "크루 생성과 크루원 가입 기능을 구현하면서, 단순히 테이블을 만드는 것보다 “어떤 값은 저장하고, 어떤 값은 계산할 것인지”를 먼저 정리하는 것이 중요하다는 것을 느꼈다."
+description: "우리 서비스에서는 사용자가 크루를 생성하면, 해당 크루에 참여할 수 있는 초대코드가 자동으로 발급된다."
 description_source: "notion"
 english_url: "/en/posts/TIL-Crew와-CrewMember-구현하며-정리한-엔티티-설계-기준/"
 notion_id: "3767788a-fc66-800a-b8ad-d6c8039f7fe4"
@@ -26,7 +26,7 @@ notion_lang: "ko"
 
 - @Builder 사용 여부와 정적 팩토리 메서드 사용 방향 정리
 
-<hr>
+    <hr>
 
 ## 크루 생성 시 초대코드 자동 발급
 

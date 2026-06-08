@@ -6,7 +6,7 @@ date: 2026-05-05 09:00:00 +0900
 last_modified_at: 2026-06-04 22:53:00 +0900
 categories: ["GDGoC KNU", "0 to Product"]
 tags: ["project"]
-description: "This post records how the TodayPoor ERD draft was compared with the PRD and adjusted around POOR_TITLE, visibility scope, category handling, and AI result storage for the MVP scope."
+description: "Project basic settings - Folder structure"
 description_source: "manual"
 lang: "en"
 ui_lang: "ko-KR"
@@ -194,7 +194,7 @@ notion_lang: "en"
 
 - The biggest thing I felt through this meeting was that a good design is not necessarily a complicated design.
 
-- At first, we thought about maximizing scalability by separating categories into separate tables, adding AI prompt tables, and managing booleans for notes or not, but as we discussed it, we felt that it was more important to make decisions based on `“지금 실제로 필요한 기능인가?”` at the MVP stage.
+- At first, we thought about maximizing scalability, such as separating categories into separate tables, adding AI prompt tables, and managing booleans for notes or not, but as we discussed it, we felt that it was more important to make decisions based on `“지금 실제로 필요한 기능인가?”` at the MVP stage.
 
 - I also learned that we need to think not only about functional implementation, but also about data duplication, separation of responsibilities, roles of front and back end, and balance between scalability and current complexity.
 

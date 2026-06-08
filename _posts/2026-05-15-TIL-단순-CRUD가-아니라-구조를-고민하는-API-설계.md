@@ -4,7 +4,7 @@ date: 2026-05-15 09:00:00 +0900
 last_modified_at: 2026-05-15 19:29:00 +0900
 categories: ["Spring 단기 심화", "숙련 프로젝트"]
 tags: ["project"]
-description: "물류/배송 플랫폼 SA 문서를 작성하며 API 명세서 정리와 함께 MSA 서비스 구조, 서비스 경계, FK 사용 범위, UUID 기반 참조 방식에 대해 고민한 기록입니다."
+description: "특히 DeliveryRoute API를 작성하면서 생성 시점과 수정 시점의 데이터 차이를 고려해야 한다는 점이 인상 깊었다."
 description_source: "notion"
 english_url: "/en/posts/TIL-단순-CRUD가-아니라-구조를-고민하는-API-설계/"
 notion_id: "3617788a-fc66-80dc-b5b8-ec836e895c06"
@@ -18,7 +18,7 @@ notion_lang: "ko"
 
 - ERD 도메인 분리
 
-<hr>
+    <hr>
 
 ## API 명세서 마무리
 

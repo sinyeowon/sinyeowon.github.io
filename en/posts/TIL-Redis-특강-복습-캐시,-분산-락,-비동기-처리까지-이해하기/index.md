@@ -5,7 +5,7 @@ date: 2026-06-05 09:00:00 +0900
 last_modified_at: 2026-06-05 15:58:00 +0900
 categories: ["Spring 단기 심화", "심화 주차"]
 tags: ["Redis"]
-description: "I knew Redis as a simple cache storage, but while reviewing the special lecture notes, I summarized how Redis is used in caching, distributed locking, first-come-first-served event processing, and asynchronous structure."
+description: "Comparison of Redis and Kafka in first-come-first-served coupon issuance example"
 description_source: "notion"
 lang: "en"
 ui_lang: "ko-KR"
@@ -35,7 +35,7 @@ notion_lang: "en"
 
 - Limitations of Redis Master/Slave structure and Redlock algorithm
 
-<hr>
+    <hr>
 
 ## Redis and Memcached
 
@@ -65,12 +65,12 @@ For example, settling orders every night at 12 o'clock or generating statistical
 Worker is a background worker that takes out tasks accumulated in a queue or message broker and actually processes them.- Example: First-come-first-served coupon issuance<br>
     The API server does not store user requests directly in the DB, but stores them in Redis List or Kafka. Afterwards, the Worker takes out the requests one by one and performs the actual coupon issuance processing.
 
-```plaintext
-API 서버 = 요청 접수 담당
-Redis List / Kafka = 작업 대기열
-Worker = 실제 처리 담당
-DB = 최종 저장소
-```
+    ```plaintext
+    API 서버 = 요청 접수 담당
+    Redis List / Kafka = 작업 대기열
+    Worker = 실제 처리 담당
+    DB = 최종 저장소
+    ```
 
 → By separating roles in this way, the API server can quickly receive requests, and the actual heavy work can be handled reliably by the worker.
 
@@ -128,16 +128,16 @@ On the other hand, the asynchronous method does not wait for the other service t
 - Example<br>
     The Order Service issues an order creation event to Kafka, and the Delivery Service subscribes to the event and creates delivery. This ensures that delivery service failures do not directly impact the order creation flow.
 
-```java
-동기 = 지금 바로 결과가 필요할 때
-비동기 = 나중에 처리돼도 괜찮을 때
-```
+    ```java
+    동기 = 지금 바로 결과가 필요할 때
+    비동기 = 나중에 처리돼도 괜찮을 때
+    ```
 
 However, asynchronous methods are not always better. The synchronous method is suitable for functions where the user needs to know the success/failure results immediately, such as logging in, verifying permissions, and approving payment. On the other hand, asynchronous methods are suitable for functions that can tolerate some delay, such as sending notifications, collecting statistics, and creating deliveries.
 
 ## What is Kafka?
 
-Kafka is a large-capacity event streaming platform. The structure is such that when a producer publishes a message to a topic, the consumer subscribes to it and processes it.
+Kafka is a large-capacity event streaming platform. The structure is such that when the producer publishes a message to the topic, the consumer subscribes to it and processes it.
 
 - Producer → Kafka Topic → Consumer
 
@@ -147,12 +147,11 @@ In an MSA environment, Kafka can be used to reduce direct dependencies between s
 
 ### Example of first-come-first-served coupon issuance
 
-If first-come-first-served coupon issuance is processed in a synchronous manner, the coupon quantity must be searched in the DB each time a user request is received, the issuance details saved, and the coupon quantity deducted.
+If first-come-first-served coupon issuance is processed in a synchronous manner, the coupon quantity must be searched in the DB, the issuance details saved, and the coupon quantity deducted each time a user request is made.
 
 However, if hundreds of thousands of people make requests at the same time, the load on the DB may increase, and problems such as lock waiting and connection pool depletion may occur. Additionally, if multiple requests attempt to issue the same coupon quantity at the same time, over-issuance problems may occur.
 
 To improve this, you can switch to an asynchronous method.
-
 ```plaintext
 사용자 요청
 → Redis 또는 Kafka에 발급 요청 저장
@@ -226,7 +225,7 @@ The problem is when the Master suddenly dies when using Redis as a distributed l
 
 ```
 
-→ As a result, a situation may arise where Client A and Client B think they have the same lock at the same time.To compensate for this, the founder of Redis proposed the Redlock algorithm. Redlock does not lock only one Redis node, but requests a lock from multiple independent Redis nodes and acknowledges the lock only when more than half of them succeed in obtaining the lock.
+→ As a result, a situation may arise where Client A and Client B think they have the same lock at the same time.To compensate for this, the founder of Redis proposed the Redlock algorithm. Redlock does not lock only one Redis node, but requests a lock from multiple independent Redis nodes and recognizes the lock only when more than half of them succeed in obtaining the lock.
 
 For example, the lock is determined to be obtained only when lock acquisition is successful in at least 3 out of 5 Redis nodes.
 
@@ -238,7 +237,7 @@ However, Redlock is not a perfect solution either. In distributed systems, netwo
 
 Redis is not simply a tool used as a cache, but is an in-memory storage that can implement distributed locks, first-come-first-served event processing, and even queue-like structures using various data structures and atomic operations.
 
-However, Redis does not solve all problems. Since Redis Pub/Sub does not store messages, there is a risk of loss if used to transmit important data, and Redis-based distributed locks also have limitations in situations of master failure or replication delay.
+However, Redis does not solve all problems. Since Redis Pub/Sub does not store messages, there is a risk of loss when used to transmit important data, and Redis-based distributed locks also have limitations in situations of master failure or replication delay.
 
 Although Kafka is heavier than Redis, it can reliably store and reprocess messages, making it suitable for event-based asynchronous processing. On the other hand, Redis is suitable for situations that require fast atomic operations and lightweight structures.
 

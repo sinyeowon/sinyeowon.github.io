@@ -5,7 +5,7 @@ date: 2026-05-18 09:00:00 +0900
 last_modified_at: 2026-05-21 01:22:00 +0900
 categories: ["Spring 단기 심화", "숙련 프로젝트"]
 tags: ["project", "MSA"]
-description: "This is a record of the initial setup of the repo at the start of the MSA project, the differences between PostgreSQL's schema separation and logical DB separation, GitHub collaboration rules, and Gradle multi-module structure."
+description: "Organized PostgreSQL's schema separation and logical DB separation methods based on SA feedback"
 description_source: "notion"
 lang: "en"
 ui_lang: "ko-KR"
@@ -35,7 +35,7 @@ notion_lang: "en"
 
 - Summary of Gradle multi-module structure and `build.gradle` role for each root/module
 
-<hr>
+    <hr>
 
 ## What I Learned
 
@@ -91,13 +91,13 @@ Order Service → order_db만 접근
 Slack Service → slack_db만 접근
 ```
 
-- This makes it difficult to directly join tables from other services, and each service becomes responsible only for its own data.
+- If you do this, it becomes difficult to directly join tables from other services, and each service becomes responsible only for its own data.
 
 </div>
 
 ### UUID is only an identifier and does not separate the DB structure.
 
-At first, there was a question: “Isn’t it okay to refer to it by UUID even if it is in the same DB or schema?”
+At first, there was a question, “Isn’t it okay to refer to it by UUID even if it is in the same DB or schema?”
 
 - Functionally it is possible.
 
@@ -118,7 +118,7 @@ UUID = 데이터를 식별하는 방법
 
 </div>
 
-### Internal tables within the same service can be referenced.
+### Tables within the same service can be referenced
 
 Logical DB separation is intended to prevent direct references to DBs of other services, but does not prevent references between tables within the same service.
 
@@ -160,7 +160,7 @@ Therefore, we decided that using the Gradle multi-module structure was a natural
 
     - On the other hand, `build.gradle` of each module separately manages the dependencies required for the service.
 
-<hr>
+    <hr>
 
 ## Troubleshooting and concerns
 

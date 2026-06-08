@@ -5,7 +5,7 @@ date: 2026-06-05 09:00:00 +0900
 last_modified_at: 2026-06-06 22:46:00 +0900
 categories: ["Spring 단기 심화", "심화 주차"]
 tags: ["TIL", "Docker"]
-description: "By studying the basic concepts of Docker and how to manage containers, I understood the reason for maintaining a consistent application execution environment."
+description: "Docker: A tool that manages application execution environments by grouping them into containers."
 description_source: "notion"
 lang: "en"
 ui_lang: "ko-KR"
@@ -51,7 +51,7 @@ This concept was also important in problem solving. Deleting a container does no
 
 For example, if there are Service A and Service B, and Service A needs to call Service B, it is not enough to run the two containers separately. The two containers must be on the same network, and they must also decide what names to call each other.
 
-You can use the `docker run` command directly, but the more containers there are, the longer the command becomes and the easier it is to make mistakes. This is because port mapping, environment variables, network connections, execution order, etc. must be manually entered each time. Using Docker Compose, you can organize these settings in a single YAML file and run multiple containers with a single `docker compose up` command.
+You can also use the `docker run` command directly, but the more containers there are, the longer the command becomes and the easier it is to make mistakes. This is because port mapping, environment variables, network connections, execution order, etc. must be manually entered each time. Using Docker Compose, you can organize these settings in a single YAML file and run multiple containers with a single `docker compose up` command.
 
 In this respect, I felt that Docker Compose is not simply a convenient execution tool, but a tool that documents and makes the development environment reproducible. If team members use the Compose file together, they can run containers under the same conditions, which is a great advantage for collaboration.
 

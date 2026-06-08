@@ -4,7 +4,7 @@ date: 2026-06-03 09:00:00 +0900
 last_modified_at: 2026-06-05 15:45:00 +0900
 categories: ["GDGoC KNU", "0 to Product"]
 tags: ["project"]
-description: "크루 정보 수정 API를 구현하면서, PATCH 요청에서는 ‘필드를 보내지 않은 것’과 ‘null로 수정하려는 것’을 구분해야 한다는 점을 배웠다."
+description: "크루 정보 수정 API를 구현하면서 description 필드 때문에 문제가 생겼다."
 description_source: "notion"
 english_url: "/en/posts/TIL-PATCH-요청에서-null과-미전달을-구분하는-방법/"
 notion_id: "3767788a-fc66-808d-8dee-c8b66e899d4d"
@@ -24,7 +24,7 @@ notion_lang: "ko"
 
 - `maxMemberCount` 수정 검증 기준 정리
 
-<hr>
+    <hr>
 
 ## PATCH 요청에서 생긴 문제
 

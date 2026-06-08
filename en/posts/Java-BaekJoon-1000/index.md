@@ -5,7 +5,7 @@ date: 2026-04-05 15:09:27 +0900
 last_modified_at: 2026-04-21 13:56:30 +0900
 categories: ["BaekJoon", "Java"]
 tags: ['Java', 'baekjoon']
-description: "This article summarizes the basic input/output solution for adding two integers received in Java."
+description: "Scanner 클래스 - Import the Scanner class to receive input."
 lang: "en"
 ui_lang: "ko-KR"
 toc: true

@@ -6,7 +6,7 @@ date: 2026-04-14 16:08:22 +0900
 last_modified_at: 2026-05-01 16:34:06 +0900
 categories: ["Spring 단기 심화", "Spring 강의"]
 tags: ['Spring', 'TIL', '내일배움캠프']
-description: "This is a TIL that summarizes the concept of JWT, reasons for use, and authentication flow from a Spring learning perspective."
+description: "What I studied ###JWT > JWT (Json Web Token) : Claim-based Web Token that stores user properties using JSON format - Typically stores JWT using cooki…"
 lang: "en"
 ui_lang: "ko-KR"
 toc: true

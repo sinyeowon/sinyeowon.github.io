@@ -5,7 +5,7 @@ date: 2026-05-15 09:00:00 +0900
 last_modified_at: 2026-05-15 19:29:00 +0900
 categories: ["Spring 단기 심화", "숙련 프로젝트"]
 tags: ["project"]
-description: "This is a record of my thoughts on MSA service structure, service boundary, FK usage scope, and UUID-based reference method along with organizing API specifications while writing a logistics/delivery platform SA document."
+description: "We proceeded to fill in the blank parts in the API specification."
 description_source: "notion"
 lang: "en"
 ui_lang: "ko-KR"
@@ -23,7 +23,7 @@ notion_lang: "en"
 
 - ERD domain separation
 
-<hr>
+    <hr>
 
 ## Finalizing API specification
 
@@ -105,7 +105,7 @@ For example, when creating an order:
 
 ```
 
-It is designed to operate in the same flow.
+It was designed to operate in the same flow.
 
 It was interesting that in practice, FK is not used unconditionally, but is used selectively, taking into account service independence, operating structure, and deployment environment.
 

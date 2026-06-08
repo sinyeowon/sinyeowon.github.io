@@ -5,7 +5,7 @@ date: 2026-04-05 15:20:39 +0900
 last_modified_at: 2026-04-23 00:17:21 +0900
 categories: ["BaekJoon", "Python"]
 tags: ['baekjoon', 'Python']
-description: "We have summarized the solution for outputting the results of four arithmetic operations using Python's arithmetic operations and string formatting."
+description: "Using string formatting (% operator) \"문자열\" % (값들): The values following the same placeholder as %d, %f in the string are entered in order."
 lang: "en"
 ui_lang: "ko-KR"
 toc: true

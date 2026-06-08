@@ -5,7 +5,7 @@ date: 2026-05-14 09:00:00 +0900
 last_modified_at: 2026-05-15 19:18:00 +0900
 categories: ["Spring 단기 심화", "숙련 프로젝트"]
 tags: ["project"]
-description: "This is a record of my thoughts on MSA service boundaries, table ownership, FK usage scope, and logical reference method while writing a logistics/delivery platform SA document."
+description: "Start writing logistics management and delivery system SA documents"
 description_source: "notion"
 lang: "en"
 ui_lang: "ko-KR"
@@ -19,7 +19,7 @@ notion_lang: "en"
 
 - Start writing logistics management and delivery system SA documents
 
-- Creating domain definitions and table statements
+- Create domain definition and table statement
 
 - Discussion of MSA service boundary separation
 
@@ -65,7 +65,7 @@ It was decided to separate the project into five services as follows:
 
 - p_ai_message
 
-<hr>
+    <hr>
 
 ## **Why separate services?**
 

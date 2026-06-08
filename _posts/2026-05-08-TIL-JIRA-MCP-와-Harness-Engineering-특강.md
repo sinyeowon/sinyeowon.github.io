@@ -5,7 +5,7 @@ date: 2026-05-08 09:00:00 +0900
 last_modified_at: 2026-05-10 22:27:00 +0900
 categories: ["Spring 단기 심화", "특강"]
 tags: ["MCP", "GitOps", "Harness Engineering"]
-description: "JIRA MCP와 Harness Engineering 특강을 바탕으로 MCP 표준, AI 에이전트 작업 환경, GitOps와 가시성의 중요성을 정리한 글입니다."
+description: "LLM은 똑똑하지만, 혼자서는 아무것도 못 함 → 이 문제를 해결하려면 AI ↔ 외부 도구를 연결해야 하는데, 도구마다 API가 제각각임"
 description_source: "manual"
 english_url: "/en/posts/TIL-JIRA-MCP-와-Harness-Engineering-특강/"
 notion_id: "35a7788a-fc66-807c-a149-fbf49dee905e"
@@ -72,7 +72,7 @@ LLM은 똑똑하지만, 혼자서는 아무것도 못 함
   | **첫 공식 파트너** | Anthropic Claude |
 
     - 요즘에는 플러그인으로 많이 사용함<br>
-        [https://claude.com/plugins/atlassian](https://claude.com/plugins/atlassian)
+        <a class="notion-mention" href="https://claude.com/plugins/atlassian">https://claude.com/plugins/atlassian</a>
 
 ### Harness Engineering - AI 에이전트의 작업 환경 설계
 
@@ -83,10 +83,15 @@ LLM은 똑똑하지만, 혼자서는 아무것도 못 함
 
 이전에는 AI 활용에 대한 논의가 ‘어떤 모델을 쓸까’, ‘프롬프트를 어떻게 쓸까’에 집중했다면, Harness Engineering은 시선을 한 단계 위로 옮겨 ‘에이전트가 일하는 환경을 어떻게 설계할까’가 됨
 
-[https://openai.com/ko-KR/index/harness-engineering/](https://openai.com/ko-KR/index/harness-engineering/)
-  > **우리는 소프트웨어 엔지니어링 팀의 주된 업무가 더 이상 코드 작성에서 벗어나 환경을 설계하고, 의도를 명시하며, Codex 에이전트가 안정적인 작업을 수행할 수 있도록 피드백 루프를 구축하는 것으로 바뀔 때 어떤 변화가 발생하는지 이해해야 했습니다.**
+<a class="notion-mention" href="https://openai.com/ko-KR/index/harness-engineering/">https://openai.com/ko-KR/index/harness-engineering/</a>
 
-  > **현재 가장 어려운 과제는 에이전트가 우리의 목표인 복잡하고 안정적인 소프트웨어를 대규모로 구축하고 유지관리하는 데 도움이 되는 환경, 피드백 루프, 제어 시스템을 설계하는 것입니다**.
+<div class="notion-indent" markdown="1">
+
+> **우리는 소프트웨어 엔지니어링 팀의 주된 업무가 더 이상 코드 작성에서 벗어나 환경을 설계하고, 의도를 명시하며, Codex 에이전트가 안정적인 작업을 수행할 수 있도록 피드백 루프를 구축하는 것으로 바뀔 때 어떤 변화가 발생하는지 이해해야 했습니다.**
+
+> **현재 가장 어려운 과제는 에이전트가 우리의 목표인 복잡하고 안정적인 소프트웨어를 대규모로 구축하고 유지관리하는 데 도움이 되는 환경, 피드백 루프, 제어 시스템을 설계하는 것입니다**.
+
+</div>
 
 - **Harness를 구성하는 요소**
 
@@ -101,7 +106,7 @@ LLM은 똑똑하지만, 혼자서는 아무것도 못 함
     <details markdown="1">
     <summary>Andrej Kapathy 스킬</summary>
 
-        [https://github.com/forrestchang/andrej-karpathy-skills](https://github.com/forrestchang/andrej-karpathy-skills)
+        <a class="notion-mention" href="https://github.com/forrestchang/andrej-karpathy-skills">https://github.com/forrestchang/andrej-karpathy-skills</a>
 
         ```java
         LLM의 일반적인 코딩 실수를 줄이기 위한 행동 지침이다. 프로젝트별 지침이 있을 경우 본 가이드라인과 병합하여 사용한다.

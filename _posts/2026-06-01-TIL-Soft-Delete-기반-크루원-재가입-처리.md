@@ -4,7 +4,7 @@ date: 2026-06-01 09:00:00 +0900
 last_modified_at: 2026-06-05 15:23:00 +0900
 categories: ["GDGoC KNU", "0 to Product"]
 tags: ["project"]
-description: "크루원 가입과 탈퇴를 구현하면서, 단순 삭제보다 soft delete 정책이 서비스 데이터 정합성에 더 적합하다는 것을 정리했다."
+description: "@SQLRestriction(\"deletedat IS NULL\") 사용 시 주의점 정리"
 description_source: "notion"
 english_url: "/en/posts/TIL-Soft-Delete-기반-크루원-재가입-처리/"
 notion_id: "3767788a-fc66-8030-8e55-cf4ae4a7b3ce"
@@ -24,7 +24,7 @@ notion_lang: "ko"
 
 - 크루 삭제 시 연관 데이터 처리 방향 고민
 
-<hr>
+    <hr>
 
 ## Soft Delete를 사용하는 이유
 

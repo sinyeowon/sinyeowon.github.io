@@ -5,7 +5,7 @@ date: 2026-04-05 15:16:38 +0900
 last_modified_at: 2026-04-22 15:08:07 +0900
 categories: ["BaekJoon", "Java"]
 tags: ['Java', 'baekjoon']
-description: "We summarized how to solve the A/B problem in Java using integer division and real number conversion."
+description: "/ division operation in Java - 정수 / 정수: The result is int, i.e. returns only the quotient. - To return the entire division result,"
 lang: "en"
 ui_lang: "ko-KR"
 toc: true

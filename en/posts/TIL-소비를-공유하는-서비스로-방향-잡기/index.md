@@ -6,7 +6,7 @@ date: 2026-05-11 09:00:00 +0900
 last_modified_at: 2026-06-04 22:53:00 +0900
 categories: ["GDGoC KNU", "0 to Product"]
 tags: ["project"]
-description: "This note uses feedback on TodayPoor to shift the service from habit correction to social spending sharing, then narrows the MVP scope and privacy rules."
+description: "Discussion of direction for planning and supplementation"
 description_source: "manual"
 lang: "en"
 ui_lang: "ko-KR"
@@ -41,11 +41,11 @@ notion_lang: "en"
 - Therefore, what differentiates TodayPoor is not simply recognizing consumption details through OCR;
     - Friends-based consumption sharing
 
-    - 랜덤 소비 주제
+    - Random consumption topics
 
     - AI roasting/upward feedback
 
-    - MVP 선정
+    - MVP selection
 
     - Continuity of records through social pressure and fun
 
@@ -65,7 +65,7 @@ notion_lang: "en"
 
     3. Create a daily consumption feed
 
-    4. 랜덤 주제 참여
+    4. Random topic participation
 
     5. AI roasting/consolation feedback and MVP selection within the group
 
@@ -86,7 +86,7 @@ notion_lang: "en"
 
 ### What I learned about ERD
 
-- Currently, AI functions have two main roles, but it was not clear in ERD where personal feedback connects.
+- Currently, AI functions have two main roles, but in ERD it was not clear where personal feedback connects.
     1. AI results for MVP selection
 
     2. AI feedback on personal consumption history
@@ -101,7 +101,7 @@ notion_lang: "en"
 
 - In addition, compared to similar services, it is concluded that the structure of sharing consumption with friends and AI providing interesting feedback is a more important differentiator than the OCR function itself.
 
-- In the future, the following information must be supplemented in the plan.
+- In the future, the following information must be supplemented in the plan:
     - Clarification of service purpose
 
     - Persona specification

@@ -5,7 +5,7 @@ date: 2026-05-29 09:00:00 +0900
 last_modified_at: 2026-06-05 15:13:00 +0900
 categories: ["GDGoC KNU", "0 to Product"]
 tags: ["project"]
-description: "While implementing the crew creation and crew member registration functions, I felt that it was important to first organize “which values ​​to store and which values ​​to calculate” rather than simply creating a table."
+description: "Structure of automatic issuance of invitation code when creating a crew"
 description_source: "notion"
 lang: "en"
 ui_lang: "ko-KR"
@@ -31,7 +31,7 @@ notion_lang: "en"
 
 - Whether to use @Builder and the direction of using static factory methods
 
-<hr>
+    <hr>
 
 ## Invitation code is automatically issued when creating a crew
 
@@ -108,7 +108,7 @@ I thought that using @Builder would be good for readability because it allows yo
 
 However, for entities with creation rules, such as CrewMember, leaving the Builder open may result in objects in the wrong state being created.
 
-For example, crew creators must have the OWNER role, and general subscribers must have the MEMBER role.
+For example, crew creators must have the OWNER role, and regular subscribers must have the MEMBER role.
 
 Rather than inserting these rules directly in the service code every time, we decided that it would be safer to limit them to static factory methods inside the entity.
 

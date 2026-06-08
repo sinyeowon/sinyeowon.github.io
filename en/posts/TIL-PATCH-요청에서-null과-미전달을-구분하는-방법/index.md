@@ -5,7 +5,7 @@ date: 2026-06-03 09:00:00 +0900
 last_modified_at: 2026-06-05 15:45:00 +0900
 categories: ["GDGoC KNU", "0 to Product"]
 tags: ["project"]
-description: "While implementing the crew information modification API, I learned that in PATCH requests, you need to distinguish between ‘not sending a field’ and ‘trying to modify it as null’."
+description: "Summary of crew information modification API implementation direction"
 description_source: "notion"
 lang: "en"
 ui_lang: "ko-KR"
@@ -29,7 +29,7 @@ notion_lang: "en"
 
 - Summary of `maxMemberCount` modification verification criteria
 
-<hr>
+    <hr>
 
 ## Problem with PATCH request
 
@@ -150,7 +150,7 @@ Since this policy must be shared with the front desk, the corresponding content 
 
 If you have not modified the description on the front page, you should not send the `description` field at all, and if you want to delete the description, you must explicitly send `"description": null`.
 
-## Modification logic exampleSince `description` uses `JsonNullable`, it first checks whether it is included in the request and then reflects the value.
+## Example of modification logicSince `description` uses `JsonNullable`, it first checks whether it is included in the request and then reflects the value.
 
 ```java
 String description = crew.getDescription();

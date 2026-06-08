@@ -5,7 +5,7 @@ date: 2026-04-05 16:27:07 +0900
 last_modified_at: 2026-04-15 12:45:59 +0900
 categories: ["BaekJoon", "Java"]
 tags: ['Java', 'baekjoon']
-description: "I've outlined how to output multiple test cases in a formatted manner using BufferedReader and StringTokenizer in Java."
+description: "StringTokenizer location - Need to create a new line for each line - If you do not put it inside the loop,"
 lang: "en"
 ui_lang: "ko-KR"
 toc: true

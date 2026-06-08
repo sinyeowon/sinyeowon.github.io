@@ -5,7 +5,7 @@ date: 2026-05-12 09:00:00 +0900
 last_modified_at: 2026-05-13 12:14:00 +0900
 categories: ["Spring 단기 심화", "Spring 강의"]
 tags: ["Spring", "TIL", "내일배움캠프"]
-description: "Servlet Filter와 Filter Chain으로 요청 로깅, 인증·인가 흐름을 구현하고 Spring Security 적용 방식까지 정리한 글입니다."
+description: "Filter > : Web 애플리케이션에서 관리되는 영역으로 Client로부터 오는 요청과 응답에 대해 최초/최종 단계의 위치이며 이를 통해 요청과 응답의 정보를 변경하거나 부가적인 기능을 추가할 수 있음 > >"
 description_source: "manual"
 permalink: "/posts/TIL-Spring-숙련-2026-05-12/"
 english_url: "/en/posts/TIL-Spring-숙련-2026-05-12/"
@@ -347,7 +347,7 @@ notion_lang: "ko"
 
     - 인증되지 않은 사용자가 인증이 필요한 URL에 접근하면, Spring Security가 기본 로그인 form 페이지(`/login`)로 리다이렉트하게 함
 
-    ![image](/assets/img/notion/TIL-Spring-숙련/03-5a3a610c5e.png)
+        ![image](/assets/img/notion/TIL-Spring-숙련/03-5a3a610c5e.png)
 
     - Username: **user**
 
@@ -360,7 +360,7 @@ notion_lang: "ko"
 
         - **이때, 각 요청에 대해서 공통적으로 처리해야할 필요가 있을 때 DispatcherServlet 이전에 단계가 필요하며 이것이 FIlter임**
 
-        ![image](/assets/img/notion/TIL-Spring-숙련/05-f1d160b229.png)
+            ![image](/assets/img/notion/TIL-Spring-숙련/05-f1d160b229.png)
 
         - Spring Security도 인증 및 인가를 처리하기 위해 Filter를 사용하는데
             - Spring Security는 FilterChainProxy를 통해서 상세로직을 구현하고 있음
@@ -393,12 +393,12 @@ notion_lang: "ko"
 > - SecurityContext는 SecurityContextHolder로 접근할 수 있음
 >
 > ```java
->             // 예시코드
->             SecurityContext context = SecurityContextHolder.createEmptyContext();
->             Authentication authentication = new UsernamePasswordAuthenticationToken(principal, credentials, authorities);
->             context.setAuthentication(authentication); // SecurityContext 에 인증 객체 Authentication 를 저장합니다.
+>                 // 예시코드
+>                 SecurityContext context = SecurityContextHolder.createEmptyContext();
+>                 Authentication authentication = new UsernamePasswordAuthenticationToken(principal, credentials, authorities);
+>                 context.setAuthentication(authentication); // SecurityContext 에 인증 객체 Authentication 를 저장합니다.
 >
->             SecurityContextHolder.setContext(context);
+>                 SecurityContextHolder.setContext(context);
 > ```
 
 > **Authentication**

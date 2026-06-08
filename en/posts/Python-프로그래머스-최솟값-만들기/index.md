@@ -5,7 +5,7 @@ date: 2026-05-07 09:00:00 +0900
 last_modified_at: 2026-05-07 12:02:00 +0900
 categories: ["Programmers", "Python"]
 tags: ["Python", "programmers"]
-description: "This post solves the minimum value problem by sorting two arrays in opposite directions and replacing bubble sort with Python sort()."
+description: "I wrote the following, but it doesn't pass the efficiency test:"
 description_source: "manual"
 lang: "en"
 ui_lang: "ko-KR"
@@ -15,7 +15,7 @@ original_url: "/posts/Python-프로그래머스-최솟값-만들기/"
 notion_id: "3597788a-fc66-8021-b2bb-e883d8047388"
 notion_lang: "en"
 ---
-[Programmers 최솟값 만들기](https://school.programmers.co.kr/learn/courses/30/lessons/12941)
+<a class="notion-mention" href="https://school.programmers.co.kr/learn/courses/30/lessons/12941">Programmers Creating the Minimum</a>
 
 ## Solution
 
@@ -37,33 +37,33 @@ def solution(A,B):
 
 - At first
 
-```python
-def solution(A,B):
-    answer = 0
+    ```python
+    def solution(A,B):
+        answer = 0
 
-    cnt = len(A)
-    for i in range(len(A)-1):
-        cnt -= 1
-        for j in range(cnt):
-            if A[j] > A[j+1]:
-                A[j], A[j+1] = A[j+1], A[j]
+        cnt = len(A)
+        for i in range(len(A)-1):
+            cnt -= 1
+            for j in range(cnt):
+                if A[j] > A[j+1]:
+                    A[j], A[j+1] = A[j+1], A[j]
 
-    cnt = len(B)
-    for i in range(len(B)-1):
-        cnt -= 1
-        for j in range(cnt):
-            if B[j] < B[j+1]:
-                B[j], B[j+1] = B[j+1], B[j]
+        cnt = len(B)
+        for i in range(len(B)-1):
+            cnt -= 1
+            for j in range(cnt):
+                if B[j] < B[j+1]:
+                    B[j], B[j+1] = B[j+1], B[j]
 
-    for i in range(len(A)):
-        answer += A[i] * B[i]
+        for i in range(len(A)):
+            answer += A[i] * B[i]
 
-    return answer
-```
+        return answer
+    ```
 
 I wrote the following, but it doesn't pass the efficiency test:
 
-- In Python, you can simply sort through the `sort()` function without using bubble sort separately.
+- In Python, bubble sort is not used separately, but can be sorted simply through the `sort()` function.
 
 `sort()`
 

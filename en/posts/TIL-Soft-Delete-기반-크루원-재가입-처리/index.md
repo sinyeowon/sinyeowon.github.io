@@ -5,7 +5,7 @@ date: 2026-06-01 09:00:00 +0900
 last_modified_at: 2026-06-05 15:23:00 +0900
 categories: ["GDGoC KNU", "0 to Product"]
 tags: ["project"]
-description: "While implementing crew member membership and withdrawal, it was established that the soft delete policy is more suitable for service data consistency than simple deletion."
+description: "Summary of re-enrollment processing method after withdrawal"
 description_source: "notion"
 lang: "en"
 ui_lang: "ko-KR"
@@ -29,7 +29,7 @@ notion_lang: "en"
 
 - Consideration on how to process related data when deleting a crew
 
-<hr>
+    <hr>
 
 ## Why use Soft Delete
 
@@ -75,7 +75,7 @@ Since one user cannot join the same crew multiple times, the following unique co
 
 By placing this restriction, you can prevent multiple rows of the same user from being created in the same crew.
 
-## Problem rejoining after leaving the crew
+## Problem rejoining after leaving crew
 
 One problem arises when unique restrictions are applied.
 

@@ -6,7 +6,7 @@ date: 2026-05-08 09:00:00 +0900
 last_modified_at: 2026-05-10 22:27:00 +0900
 categories: ["Spring 단기 심화", "특강"]
 tags: ["MCP", "GitOps", "Harness Engineering"]
-description: "This post summarizes JIRA MCP, Harness Engineering, GitOps, and visibility based on a special lecture about designing AI-agent-friendly engineering environments."
+description: "LLM is smart, but can't do anything alone → To solve this problem, AI ↔ external tools must be connected, but each tool has a different API."
 description_source: "manual"
 lang: "en"
 ui_lang: "ko-KR"
@@ -77,19 +77,24 @@ LLM is smart, but can't do anything alone
   | **First Official Partner** | Anthropic Claude |
 
     - These days, it is widely used as a plug-in<br>
-        [https://claude.com/plugins/atlassian](https://claude.com/plugins/atlassian)
+        <a class="notion-mention" href="https://claude.com/plugins/atlassian">https://claude.com/plugins/atlassian</a>
 
 ### Harness Engineering - Designing the work environment of AI agents
 
 > **Harness**
-> : Refers to the entire system of constraints and feedback surrounding the AI agent, like a device that controls the power of speech and guides it in the desired direction.
+> : Refers to the entire system of constraints and feedback surrounding the AI agent, like a device that controls the power of speech and guides it in the desired direction.This concept was formalized in Harness Engineering published by OpenAI in 2025.
 
-This concept was formalized in Harness Engineering published by OpenAI in 2025.Previously, discussions on AI utilization focused on ‘what model to use’ and ‘how to use prompts,’ but Harness Engineering moved the focus one level higher to ‘how to design the environment in which agents work.’
+Previously, discussions on AI utilization focused on ‘what model to use’ and ‘how to use prompts,’ but Harness Engineering moved the focus one level higher to ‘how to design the environment in which agents work.’
 
-[https://openai.com/ko-KR/index/harness-engineering/](https://openai.com/ko-KR/index/harness-engineering/)
-  > **We needed to understand what happens when a software engineering team's primary job is no longer writing code, but rather designing the environment, specifying intent, and building a feedback loop to ensure Codex agents can do their work reliably.**
+<a class="notion-mention" href="https://openai.com/ko-KR/index/harness-engineering/">https://openai.com/ko-KR/index/harness-engineering/</a>
 
-  > **The most difficult challenge today is to design environments, feedback loops, and control systems that help agents achieve our goal of building and maintaining complex, reliable software at scale**.
+<div class="notion-indent" markdown="1">
+
+> **We needed to understand what happens when a software engineering team's primary job is no longer writing code, but rather designing the environment, specifying intent, and building a feedback loop to ensure Codex agents can do their work reliably.**
+
+> **The most difficult challenge today is to design environments, feedback loops, and control systems that help agents achieve our goal of building and maintaining complex, reliable software at scale**.
+
+</div>
 
 - **Elements that make up Harness**
 
@@ -99,12 +104,12 @@ This concept was formalized in Harness Engineering published by OpenAI in 2025.P
   | **Architectural Constraints** | Dependency layering, module boundary rules |
   | **Feedback Loop** | Linter, type checker, test suite, pre-commit hook |
   | **Life cycle management** | CI/CD pipeline, PR verification automation |
-  | **Observability** | Pathway through which agents can access logs/metrics/traces |
+  | **Observability** | Pathway for agents to access logs/metrics/traces |
 
     <details markdown="1">
     <summary>Andrej Kapathy skills</summary>
 
-        [https://github.com/forrestchang/andrej-karpathy-skills](https://github.com/forrestchang/andrej-karpathy-skills)
+        <a class="notion-mention" href="https://github.com/forrestchang/andrej-karpathy-skills">https://github.com/forrestchang/andrej-karpathy-skills</a>
 
         ```java
         LLM의 일반적인 코딩 실수를 줄이기 위한 행동 지침이다. 프로젝트별 지침이 있을 경우 본 가이드라인과 병합하여 사용한다.
@@ -182,9 +187,8 @@ This concept was formalized in Harness Engineering published by OpenAI in 2025.P
         - From the agent's perspective, information that is not in the context is the same as not existing<br>
             ex) Design documents organized in Google Docs? → The agent cannot see / Decisions shared by Slcak? → I can’t see
 
-        - **Project rules and knowledge must be transferred into a machine-readable format in the repository**
+        - **Project rules and knowledge must be transferred into a machine-readable format in the repository**  | scattered knowledge | In the form of a repo |
 
-  | scattered knowledge | In the form of a repo |
   | --- | --- |
   | Guide to Slack’s build process | Build command section for `AGENTS.md` |
   | Wiki's API specification | API contract defined in code (OpenAPI/Pydantic) |
@@ -203,11 +207,13 @@ This concept was formalized in Harness Engineering published by OpenAI in 2025.P
 
         - As the number of choices decreases, the probability of finding the right answer increases.
 
-        - These **rules are not reviewed by humans but are mechanically verified using structural tests or linters**3. Entropy Management - Entropy Management
+        - These **rules are not reviewed by humans but are mechanically verified using structural tests or linters**
+
+    3. Entropy Management - Entropy Management
         - As the agent generates more code, the entropy of the code base increases.<br>
             ex) The document and code do not match, duplicate codes with similar functions increase, and unused imports pile up.
 
-        - If left unattended, the quality of the agent's next work will continue to deteriorate → **Separate cleaning agent must be installed**
+        - If left unattended, the quality of the agent's next work will continue to deteriorate → **Separate cleaning agent must be appointed**
 
         - What a clearance agent does<br>
             <hr>
@@ -249,9 +255,7 @@ This concept was formalized in Harness Engineering published by OpenAI in 2025.P
 
     - OpenAI recommends keeping `AGENTS.md` as a table of contents of about 100 lines.
 
-    - It only serves as a map showing the overall picture, and actual knowledge is divided and organized into the `docs/` directory.
-
-    - Recommended structure
+    - It only serves as a map showing the overall picture, and actual knowledge is divided and organized into the `docs/` directory.- Recommended structure
 
         ```markdown
         # 프로젝트 컨텍스트
@@ -277,9 +281,11 @@ This concept was formalized in Harness Engineering published by OpenAI in 2025.P
     - It is similar to human code review, but the difference is that it automates parts that can be mechanically verified.
         - When the linter warns, the agent automatically corrects it.
 
-        - If the test fails, the agent retries- Repeat until criteria are met
+        - If the test fails, the agent retries
 
-    - It can already be implemented with tools such as GitHub Actions, and an example is a workflow in which an automatic code review is run when a PR is posted, and an agent creates a modified PR when a mention such as `@Claude` is added to the issue.
+        - Repeat until criteria are met
+
+    - It can already be implemented with tools such as GitHub Actions, and an example is a workflow in which an automatic code review is performed when a PR is posted, and an agent creates a modified PR when a mention such as `@Claude` is added to the issue.
 
 - **Observability - Agents must also see logs**
 
@@ -339,7 +345,7 @@ All settings in the operating environment must be in Git, and when Git changes, 
 
     - After - declarative
 
-        ```bash
+```bash
         # Git에 commit된 desired-state.yaml
         apiVersion: apps/v1
         kind: Deployment
@@ -389,7 +395,7 @@ All settings in the operating environment must be in Git, and when Git changes, 
                                   [Reconcile / Drift Correct]
     ```
 
-- Scenario example
+    - Scenario example
 
   | action | result |
   | --- | --- |
@@ -452,9 +458,7 @@ The role of engineers is shifting from someone who writes code directly to **a p
 
 - [OpenAI — Unlocking the Codex Harness](https://openai.com/index/unlocking-the-codex-harness/)
 
-- [OpenAI — Unrolling the Codex Agent Loop](https://openai.com/index/unrolling-the-codex-agent-loop/)
-
-- [AGENTS.md 작성 가이드 (Dale Seo)](https://daleseo.com/agents-md/)
+- [OpenAI — Unrolling the Codex Agent Loop](https://openai.com/index/unrolling-the-codex-agent-loop/)-[AGENTS.md 작성 가이드 (Dale Seo)](https://daleseo.com/agents-md/)
 
 - [CLAUDE.md 작성 가이드 (Dale Seo)](https://daleseo.com/claude-code-claude-md/)
 
@@ -476,7 +480,9 @@ The role of engineers is shifting from someone who writes code directly to **a p
 
 - [mcp-atlassian — 커뮤니티 구현체](https://github.com/sooperset/mcp-atlassian)
 
-### GitOps-[OpenGitOps — 4가지 원칙 정의](https://opengitops.dev/)
+### GitOps
+
+- [OpenGitOps — 4가지 원칙 정의](https://opengitops.dev/)
 
 - [Argo CD 공식 문서](https://argo-cd.readthedocs.io/)
 

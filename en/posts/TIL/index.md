@@ -6,7 +6,7 @@ date: 2026-06-04 09:00:00 +0900
 last_modified_at: 2026-06-06 22:52:00 +0900
 categories: ["Spring 단기 심화", "심화 주차"]
 tags: ["TIL", "Saga", "2PC", "MSA"]
-description: "A summary of how 2PC and the Saga pattern handle distributed transaction consistency in MSA, including their flow, tradeoffs, and practical use cases."
+description: "In an MSA environment, one function can be handled across multiple services."
 description_source: "manual"
 lang: "en"
 ui_lang: "ko-KR"
@@ -34,7 +34,7 @@ An important issue at this time is how to maintain data consistency across multi
 
 2PC stands for Two-Phase Commit, and is literally a distributed transaction method that commits in two stages.
 
-When multiple services or databases participate in a transaction, it first checks whether all participants are ready to perform the task, and then performs the final commit only when all are ready.
+When multiple services or databases participate in one transaction, it first checks whether all participants are ready to perform the task, and then performs the final commit only when all are ready.
 
 - How it works
     1. Preparation stage

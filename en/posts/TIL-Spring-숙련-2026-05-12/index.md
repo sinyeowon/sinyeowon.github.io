@@ -6,7 +6,7 @@ date: 2026-05-12 09:00:00 +0900
 last_modified_at: 2026-05-13 12:14:00 +0900
 categories: ["Spring 단기 심화", "Spring 강의"]
 tags: ["Spring", "TIL", "내일배움캠프"]
-description: "This post covers Servlet Filter and Filter Chain for request logging, authentication and authorization flow, and the basics of applying Spring Security."
+description: "Filter >: This is an area managed in the web application and is the first/final stage for requests and responses from clients. Through this,"
 description_source: "manual"
 lang: "en"
 ui_lang: "ko-KR"
@@ -21,9 +21,9 @@ notion_lang: "en"
 ### filter
 
 > **Filter**
->: This is an area managed in a web application and is the first/final stage for requests and responses from clients. Through this, information in requests and responses can be changed or additional functions can be added.
+>: This is an area managed in the web application and is the first/final stage for requests and responses from clients. Through this, information in requests and responses can be changed or additional functions can be added.
 >
-> ![image](/assets/img/notion/TIL-Spring-숙련/01-86d9426f4e.png)
+>![image](/assets/img/notion/TIL-Spring-숙련/01-86d9426f4e.png)
 
 - Mainly used for general-purpose tasks, such as logging and security processing.
     - It can also handle logic related to authentication and authorization.
@@ -194,7 +194,7 @@ notion_lang: "en"
     implementation 'org.springframework.boot:spring-boot-starter-security'
     ```
 
-- Apply Spring Security
+- Spring Security applied
 
     - Activate Spring Security
 
@@ -347,7 +347,7 @@ notion_lang: "en"
 
     - When an unauthenticated user accesses a URL that requires authentication, Spring Security redirects to the default login form page (`/login`)
 
-    ![image](/assets/img/notion/TIL-Spring-숙련/03-5a3a610c5e.png)
+        ![image](/assets/img/notion/TIL-Spring-숙련/03-5a3a610c5e.png)
 
     - Username: **user**- Password: <u>S</u><u>*Check pring log*</u> (Changes every time the server starts)
         ![image](/assets/img/notion/TIL-Spring-숙련/04-79c613a5e1.png)
@@ -358,7 +358,7 @@ notion_lang: "en"
 
         - **At this time, when it is necessary to process each request in common, a step is required before DispatcherServlet and this is FIlter**
 
-        ![image](/assets/img/notion/TIL-Spring-숙련/05-f1d160b229.png)
+            ![image](/assets/img/notion/TIL-Spring-숙련/05-f1d160b229.png)
 
         - Spring Security also uses Filter to process authentication and authorization.
             - Spring Security implements detailed logic through FilterChainProxy.
@@ -384,23 +384,23 @@ notion_lang: "en"
 > : Stores the detailed information (Authentication) of the user who has completed authentication.
 >
 >
-> ![image](/assets/img/notion/TIL-Spring-숙련/08-e3debd73e9.png)
+>![image](/assets/img/notion/TIL-Spring-숙련/08-e3debd73e9.png)
 >
 > - SecurityContext can be accessed through SecurityContextHolder
 >
 >```java
->             // 예시코드
->             SecurityContext context = SecurityContextHolder.createEmptyContext();
->             Authentication authentication = new UsernamePasswordAuthenticationToken(principal, credentials, authorities);
->             context.setAuthentication(authentication); // SecurityContext 에 인증 객체 Authentication 를 저장합니다.
+>                 // 예시코드
+>                 SecurityContext context = SecurityContextHolder.createEmptyContext();
+>                 Authentication authentication = new UsernamePasswordAuthenticationToken(principal, credentials, authorities);
+>                 context.setAuthentication(authentication); // SecurityContext 에 인증 객체 Authentication 를 저장합니다.
 >
->             SecurityContextHolder.setContext(context);
+>                 SecurityContextHolder.setContext(context);
 > ```
 
 > **Authentication**
 > : Indicates the currently authenticated user.
 >
-> ![image](/assets/img/notion/TIL-Spring-숙련/09-d4aaa3f322.png)
+>![image](/assets/img/notion/TIL-Spring-숙련/09-d4aaa3f322.png)
 >
 > - Can be retrieved from SecurityContext
 >

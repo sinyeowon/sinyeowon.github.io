@@ -5,7 +5,7 @@ date: 2026-05-06 09:00:00 +0900
 last_modified_at: 2026-06-04 22:53:00 +0900
 categories: ["GDGoC KNU", "0 to Product"]
 tags: ["project"]
-description: "OCR 결과 분리, AI 프롬프트 테이블 제거, 랭킹 결과 구조 변경 등 TodayPoor ERD 피드백을 반영하며 설계를 정리한 글입니다."
+description: "초기 설계에서는 기능을 빠르게 반영하는 데 집중했다면, 오늘은 각 테이블과 필드가 정말 필요한지, 중복 데이터는 없는지, MVP 단계에서 과한 설계는 아닌지를 중심으로 다시 점검함"
 description_source: "manual"
 english_url: "/en/posts/TIL-TodayPoor-ERD-피드백-반영-기록-260506/"
 notion_id: "3587788a-fc66-80b9-9579-d2a2d632a991"

@@ -6,7 +6,7 @@ date: 2026-05-13 09:00:00 +0900
 last_modified_at: 2026-05-13 10:32:00 +0900
 categories: ["Programmers", "Python"]
 tags: ["Python", "programmers"]
-description: "This post solves the Fibonacci number problem with an iterative approach and explains why the recursive solution fails efficiency tests by recalculating the same values."
+description: "Because it is added in the same way as above, it could be expressed as a, b = b, a+b."
 description_source: "manual"
 lang: "en"
 ui_lang: "ko-KR"
@@ -16,7 +16,7 @@ original_url: "/posts/Python-프로그래머스-피보나치-수/"
 notion_id: "35f7788a-fc66-8064-8cdf-ef83dd3a90dc"
 notion_lang: "en"
 ---
-[Programmers 피보나치 수](https://school.programmers.co.kr/learn/courses/30/lessons/12945?language=python3)
+<a class="notion-mention" href="https://school.programmers.co.kr/learn/courses/30/lessons/12945?language=python3">Programmers Fibonacci numbers</a>
 
 ## Solution
 

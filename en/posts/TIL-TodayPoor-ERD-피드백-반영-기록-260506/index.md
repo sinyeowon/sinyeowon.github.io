@@ -6,7 +6,7 @@ date: 2026-05-06 09:00:00 +0900
 last_modified_at: 2026-06-04 22:53:00 +0900
 categories: ["GDGoC KNU", "0 to Product"]
 tags: ["project"]
-description: "This post summarizes how TodayPoor ERD feedback was reflected by separating OCR results, removing the AI prompt table, and revising the ranking-result relationship structure."
+description: "In the initial design, we focused on quickly reflecting the functionality, but today we re-examined whether each table and field is really necessary,"
 description_source: "manual"
 lang: "en"
 ui_lang: "ko-KR"

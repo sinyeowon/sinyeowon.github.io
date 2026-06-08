@@ -1,11 +1,11 @@
 ---
 layout: "post"
-title: "[TIL] Git & PR + CI/CD Special Lecture"
+title: "[TIL] Special lecture on Git & PR + CI/CD"
 date: 2026-05-06 09:00:00 +0900
 last_modified_at: 2026-05-06 15:09:00 +0900
 categories: ["Spring 단기 심화", "특강"]
 tags: ["Git", "CI/CD"]
-description: "This article summarizes what I studied after attending a special lecture on Git & PR + CI/CD."
+description: "Without a branching strategy, accidents can occur such as your work overwriting your colleague's work,"
 description_source: "notion"
 lang: "en"
 ui_lang: "ko-KR"
@@ -46,7 +46,14 @@ Without a branching strategy, accidents can occur such as your work overwriting 
   | Compatibility with distribution | Not compatible with rapid distribution (CD) | PR Merge = Immediate Deployment |
   | prerequisites | — | Automated testing is an essential premise |
 
-> Most startups/web services start with Github Flow and expand to Git Flow as they grow.
+    <div class="notion-callout" markdown="1">
+    <div class="notion-callout-heading" markdown="1">
+    <span class="notion-callout-icon">📍</span>
+    <div class="notion-callout-title" markdown="1">
+    Most startups/web services start with Github Flow and expand to Git Flow as they grow.
+    </div>
+    </div>
+    </div>
 
 ### **PR Workflow and Code Review**
 
@@ -126,9 +133,7 @@ Without a branching strategy, accidents can occur such as your work overwriting 
         - Praise the things you did well
 
     - As an author,
-        - Explain your intentions without being defensive.
-
-        - If you agree, reflect, if you disagree, discuss based on the evidence.
+        - Explain your intentions without being defensive.- If you agree, reflect, if you disagree, discuss based on the evidence.
 
         - Reviews will be responded to within 24 hours
 
@@ -141,7 +146,9 @@ Without a branching strategy, accidents can occur such as your work overwriting 
 
     - Preservation of history - who worked on which branch remains intact
 
-    - Safe - existing commits are never changed- History becomes complicated - As merge commits accumulate, git log becomes complicated.
+    - Safe - existing commits are never changed
+
+    - History becomes complicated - As merge commits accumulate, git log becomes complicated.
 
 - Rebase: Paste my commit at the end of main
     ![image](/assets/img/notion/TIL-Git-&-PR-+-CI-CD-특강/03-e678a100d5.png)
@@ -150,7 +157,7 @@ Without a branching strategy, accidents can occur such as your work overwriting 
 
     - No merge commits - remove noise
 
-    - Existing commits are replaced by new commits - Collaboration is destroyed if done on a shared branch
+    - Existing commits are replaced with new commits - Collaboration is destroyed if done on a shared branch.
 
 - When to use what (Merge & Rebase)
 
@@ -182,10 +189,17 @@ Without a branching strategy, accidents can occur such as your work overwriting 
 
         - Merged PR branch
 
-        - Branch with release tag
-
-> Using `git push --force-with-lease` causes it to fail when the remote is not what I expected
-> → If force push is necessary, definitely `--force-with-lease`
+        - Branch with release tag<div class="notion-callout" markdown="1">
+    <div class="notion-callout-heading" markdown="1">
+    <span class="notion-callout-icon">📍</span>
+    <div class="notion-callout-title" markdown="1">
+    Using `git push --force-with-lease` causes it to fail when the remote is not what I expected.
+    </div>
+    </div>
+    <div class="notion-callout-body" markdown="1">
+    → If force push is required, always use `--force-with-lease`
+    </div>
+    </div>
 
 ### **Conflict resolution**
 
@@ -194,11 +208,11 @@ Conflicts occur when two branches modify the same line in the same file differen
 - Conflict markers that Git leaves in files
 
     ```bash
-    # <<<<<<< HEAD
+    <<<<<<< HEAD
       private final int TIMEOUT = 3000;       // 내 변경 (현재 브랜치)
-    # =======
+    =======
       private final int TIMEOUT = 5000;       // 들어오는 변경 (다른 브랜치)
-    # >>>>>>> feature/api
+>>>>>>> feature/api
     ```
 
     → Conflicts are not errors, but Git is requesting my judgment.
@@ -220,7 +234,7 @@ Conflicts occur when two branches modify the same line in the same file differen
         # 머지 진행 중 상태가 종료됨
         ```
 
-5. Test + Push
+    5. Test + Push
 
         ```bash
         npm test       # 충돌 해결로 깨진 곳이 없는지 반드시 확인
@@ -250,9 +264,7 @@ Conflicts occur when two branches modify the same line in the same file differen
 
         - Number of distributions ↑ / Accidents ↓
 
-- CI/CD pipeline flow
-
-    ![image](/assets/img/notion/TIL-Git-&-PR-+-CI-CD-특강/05-b54ee9d439.png)
+- CI/CD pipeline flow![image](/assets/img/notion/TIL-Git-&-PR-+-CI-CD-특강/05-b54ee9d439.png)
 
   | step | what to do |
   | --- | --- |
@@ -263,13 +275,21 @@ Conflicts occur when two branches modify the same line in the same file differen
 
     → If even one step fails, it stops immediately + notification / broken builds never advance to the next step
 
-> **CI/CD Terminology**
->
-> | Abbreviation | Full name | Meaning |
-> | --- | --- | --- |
-> | CI | Continuous **Integration** | Frequent code integration and automatic verification |
-> | CD | Continuous **Delivery** | Stay deployable at any time (manual approval) |
-> | CD | Continuous **Deployment** | If passed, automatically distributed to operation |
+    <div class="notion-callout" markdown="1">
+    <div class="notion-callout-heading" markdown="1">
+    <span class="notion-callout-icon">📍</span>
+    <div class="notion-callout-title" markdown="1">
+    CI/CD Glossary
+    </div>
+    </div>
+    <div class="notion-callout-body" markdown="1">
+  | abbreviation | full name | meaning |
+  | --- | --- | --- |
+  | C.I. | Continuous **Integration** | Frequent code integration and automatic verification |
+  | CD | Continuous **Delivery** | Stay deployable at any time (manual approval) |
+  | CD | Continuous **Deployment** | If passed, automatically distributed to operation |
+    </div>
+    </div>
 
 - Get started in 30 lines with Github Actions<br>
     ### `.github/workflows/ci.yml`
@@ -352,13 +372,13 @@ Conflicts occur when two branches modify the same line in the same file differen
 
         - `needs: test` — If the test fails, it will not be distributed
 
-        - `if: github.ref == 'refs/heads/main'` — only during main merge- `secrets.*` — Sensitive information is stored in GitHub Secrets
+        - `if: github.ref == 'refs/heads/main'` — only during main merge
+
+        - `secrets.*` — Sensitive information is stored in GitHub Secrets
 
 ## Problems & Errors
 
-Q. Should I use Squash merge / Rebase merge / Merge commit?
-
-> There is no right answer. **The answer is to set a team convention and go consistently**
+Q. Should I use Squash merge / Rebase merge / Merge commit?> There is no right answer. **The answer is to set a team convention and go consistently**
 > - **Squash merge**: compresses PR into 1 commit / cleanest history (most used)
 >
 > - **Rebase merge**: Attach PR commits in a row to main / Enable track of commit units
@@ -367,7 +387,7 @@ Q. Should I use Squash merge / Rebase merge / Merge commit?
 
 Q. Merge & Rebase
 
-> ![image](/assets/img/notion/TIL-Git-&-PR-+-CI-CD-특강/06-dae5302fb1.png)
+>![image](/assets/img/notion/TIL-Git-&-PR-+-CI-CD-특강/06-dae5302fb1.png)
 
 ![image](/assets/img/notion/TIL-Git-&-PR-+-CI-CD-특강/07-c13ae95793.png)
 

@@ -5,7 +5,7 @@ date: 2026-04-05 20:19:06 +0900
 last_modified_at: 2026-04-11 12:39:42 +0900
 categories: ["BaekJoon", "Java"]
 tags: ['Java', 'baekjoon']
-description: "We have summarized how to handle the A+B problem with an undetermined number of inputs using Java's hasNext()."
+description: "EOF in class Scanner - Using hasNext() method - Returns true if there is an entered token, otherwise returns false."
 lang: "en"
 ui_lang: "ko-KR"
 toc: true

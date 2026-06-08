@@ -5,7 +5,7 @@ date: 2026-04-05 15:44:08 +0900
 last_modified_at: 2026-04-30 15:30:23 +0900
 categories: ["BaekJoon", "Python"]
 tags: ['baekjoon', 'Python']
-description: "We have summarized the solution that implements the leap year determination condition using Python's and/or conditional expression."
+description: "In Python, unlike Java or C, you must use the || or && operators as or and and."
 lang: "en"
 ui_lang: "ko-KR"
 toc: true

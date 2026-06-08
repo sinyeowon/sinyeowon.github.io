@@ -6,7 +6,7 @@ date: 2026-05-14 09:00:00 +0900
 last_modified_at: 2026-06-04 23:26:00 +0900
 categories: ["Spring 단기 심화", "특강"]
 tags: ["Redis"]
-description: "A summary of Redis distributed locks, SETNX and SET NX EX atomic locking, TTL and UUID validation, Redisson RLock, Pub/Sub waiting, and why Redis was used for asynchronous processing."
+description: "Concurrency control and asynchronous communication in MSA distributed environment"
 description_source: "manual"
 lang: "en"
 ui_lang: "ko-KR"
@@ -45,16 +45,16 @@ In an MSA environment, multiple servers rush to read and modify inventory data i
             - If successful, 1 (lock acquired), if failed, 0 (lock acquired failed) is returned.
 
 > **Q Why** **`SET key value NX EX`** **format all at once? (Disaster Scenario)**
-> ![image](/assets/img/notion/TIL-Redis-실전-마스터-클래스-특강-2/02-49ecffa5dd.png)
+>![image](/assets/img/notion/TIL-Redis-실전-마스터-클래스-특강-2/02-49ecffa5dd.png)
 
     - In the past, a lock was set and an expiration time (TTL) was set separately to prevent the bathroom door from being permanently locked.
         - **12:00:00** - Server A succeeds in `SETNX lock:sneakers 1` (lock acquired!)
 
         1. **12:00:01** - Just as server A is trying to call `EXPIRE lock:sneakers 5`... **Server A loses power! and leaves.**
 
-        2. **12:00:02** - Since the server died without setting the expiration time, the `lock:sneakers` key will remain in Redis forever.3. **Result**: All other servers will be in **Deadlock** waiting forever for this lock to be released, and no one will be able to get Sneakers.
+        2. **12:00:02** - Since the server died without setting the expiration time, the `lock:sneakers` key will remain in Redis forever.3. **Result**: All other servers will be in **Deadlock** waiting forever for this lock to be released, and no one will be able to get Snickers.
 
-    → To prevent such disasters, starting with Redis version 2.6.12, lock acquisition and expiration time setting are **completely combined into one atomic command**.
+    → To prevent such disasters, starting from Redis version 2.6.12, lock acquisition and expiration time setting are **completely combined into one atomic command**.
 
     ```javascript
     SET lock:sneakers "server-A-uuid" NX EX 5
@@ -79,29 +79,27 @@ In an MSA environment, multiple servers rush to read and modify inventory data i
 
             - **Users will see a payment error window** for an entire minute
 
-        > **Q If the TTL is 3 seconds, but the payment logic takes 5 seconds and the lock is released in the middle,
-        > even if no other server happens to come in, what absurd thing can happen if the payment logic finishes and deletes the lock with `DEL lock:sneakers`?**
-        > - It may delete a newly acquired lock held by another server, not its own lock.
-        >
-        > After 3 seconds, my lock has already expired naturally; at 4 seconds, server B acquires a new lock; then when my job finishes at 5 seconds, I delete server B's lock.
-        >
-        > ![image](/assets/img/notion/TIL-Redis-실전-마스터-클래스-특강-2/03-9008952e17.png)
-        >
-        > Therefore, **a unique value such as a UUID must be stored in the lock value, and deletion must verify that the UUID matches before removing the lock.**
+> **Q If the TTL is 3 seconds, but the payment logic takes 5 seconds and the lock is released in the middle,
+> Even if you are lucky and no other server comes in, what kind of absurd thing will happen if the payment logic is completed and the lock is erased with `DEL lock:sneakers`**
+> - Delete the newly acquired lock by another server, not your own lock.
+>
+> → After 3 seconds, my lock was already naturally destroyed, and after 4 seconds, server B acquired a new lock, and when I finished after 5 seconds, I erased server B's lock.
+>
+>![image](/assets/img/notion/TIL-Redis-실전-마스터-클래스-특강-2/03-9008952e17.png)
+>
+> ⇒ So, **put a unique value such as UUID in the value of the lock, and when erasing, verification logic such as ‘Erase only if it matches my UUID!’ is absolutely necessary**
 
-2. **Concurrency control technology comparison**
+2. **Comparison of concurrency control technologies**
 
   | Compare items | DB Pessimistic Rock | DB optimistic lock | Redis basic distributed locking | Redisson (RLock) |
   | --- | --- | --- | --- | --- |
   | **principle** | `SELECT FOR UPDATE` | Check the Version column | Single Threaded Spinlock | Pub/Sub based event queuing |
   | **Performance (Throughput)** | **Very Low** | **High** (when no collisions) | **Medium~High** | **Very High** |
-  | **Deadlock Risk** | height | doesn't exist | Low (TTL defense) | Low (built-in Watchdog) |
+  | **Dadlock Risk** | height | doesn't exist | Low (TTL defense) | Low (built-in Watchdog) |
   | **Implementation Difficulty** | facility | commonly | **Very difficult** | facility |
-  | **Representative Scenario** | financial core | Edit member information | Light concurrency control | **First-come-first-served coupon, time sale** |
+  | **Representative Scenario** | financial core | Edit member information | Light concurrency control | **First come first served coupon, time sale** |
 
-3. **Limited quantity coupon issued on a first-come, first-served basis (actual code Deep Dive)**
-
-    - ❌ [Version 1] Redis distributed lock implemented directly (full of risk factors!)
+3. **Limited quantity coupon issued on a first-come, first-served basis (actual code Deep Dive)**- ❌ [Version 1] Redis distributed lock implemented directly (full of risk factors!)
 
         ```java
         public void issueCouponDirect(String userId, String couponId) {
@@ -174,7 +172,7 @@ In an MSA environment, multiple servers rush to read and modify inventory data i
 
 #### Postman between services: Redis Pub/Sub vs Message Queue
 
-> **Q When the customer completes the payment, the ordering service must send a ‘payment completion notification’ to the shipping service. What is the crucial reason why Redis Pub/Sub should not be used in this case?**
+> **Q When the customer completes the payment, the ordering service must send a ‘payment completion notification’ to the shipping service. What is the critical reason why Redis Pub/Sub should not be used in this case?**
 > - Message may be lost midway
 >
 > → Payment notifications are key data that must arrive 100% of the time.
@@ -196,7 +194,7 @@ In an MSA environment, multiple servers rush to read and modify inventory data i
   | Compare items | Redis Pub/Sub (broadcasting station) | Kafka (Post Office) |
   | --- | --- | --- |
   | **Whether to store the message** | ❌ Do not store (volatilizes immediately) | ⭕ Keep queues on disk/memory |
-  | **Receipt confirmation (Ack)** | ❌ Do not confirm | ⭕ Consumer sends Ack to clear from queue |
+  | **Receipt confirmation (Ack)** | ❌ Do not confirm | ⭕ Consumer sends Ack to remove from queue |
   | **Processing Assurance Level** | Low (high probability of loss) | **Very high (guaranteed at least once, etc.)** |
   | **Performance (Speed)** | **Extreme speed** (latency < 1ms) | High (heavier than Redis due to disk I/O) |
   | **Operational Complexity** | very low | very high |
@@ -207,9 +205,9 @@ In an MSA environment, multiple servers rush to read and modify inventory data i
 - **How Redis supports tens of thousands of people with one employee**
     - Thanks to Event Loop, tens of thousands of connections can be processed simultaneously with just one thread.
 
-    - However, only one instruction is executed at a time, ensuring perfect atomicity.- Therefore, by entering only a short command that will end soon, continuous service without delay is possible, even for one employee.
+    - However, only one instruction is executed at a time, ensuring perfect atomicity.
 
-- **Use the atomicity of single threads: concurrency control and distributed locking**
+    - Therefore, by entering only a short command that will end soon, continuous service without delay is possible, even for one employee.- **Use the atomicity of single threads: concurrency control and distributed locking**
     - [Case 1] Woowa Brothers (Baemin B Mart): Warehouse logistics concurrency control
         - **① Business background**: B-Mart operates a warehouse management system (WMS) that endlessly transfers product inventory from the distribution center (DC) to the regional base (PPC).
 
@@ -228,9 +226,9 @@ In an MSA environment, multiple servers rush to read and modify inventory data i
 
         - **② Technical problem that occurred**: A situation may occur where 'direct currency exchange', 'automatic collection', and overseas direct purchase 'card payment' are simultaneously credited to the same account in 0.1 seconds.
 
-        - **③ Decision to introduce Redis**: Due to the nature of financial data, excessive withdrawal is fatal. DB lock alone was not enough to completely and quickly process distributed transactions in a multi-server environment.- **④ Specific implementation method**: Using Redisson, concurrency was primarily controlled by placing a distributed lock on the basis of **'account number', and then secondary verification of whether transactions were possible through locking at the MySQL DB level was performed.
+        - **③ Decision to introduce Redis**: Due to the nature of financial data, excessive withdrawal is fatal. DB lock alone was not enough to completely and quickly process distributed transactions in a multi-server environment.
 
-        - **⑤ Result after introduction**: Completely blocks balance discrepancies and negative bank accounts due to concurrency errors.
+        - **④ Specific implementation method**: Using Redisson, concurrency was primarily controlled by placing a distributed lock on the basis of **'account number', and then secondary verification of whether transactions were possible through locking at the MySQL DB level was performed.- **⑤ Result after introduction**: Completely blocks balance discrepancies and negative bank accounts due to concurrency errors.
 
 - **Convert to asynchronous mode without data loss: Olive Young first-come, first-served coupon**
     - [Case 3] Olive Young: Issuance of coupons on a first-come, first-served basis (reverse idea of Pub/Sub)
@@ -244,15 +242,15 @@ In an MSA environment, multiple servers rush to read and modify inventory data i
 
         - **⑤ Result after introduction**: The overall site processing speed improved by 2.2 times by isolating the main DB load.
 
-#### Pitfalls and alternatives to distributed locks
+#### Distributed lock pitfalls and alternatives
 
 > **Q The user pressed the button to reserve tickets for a popular concert, but it failed because it was already locked. At this time, should 1) keep loading in circles and retry, or 2) should an error be immediately displayed saying, “The seat has already been selected”**
 > - Since this is a concert ticket, it is correct to immediately pop up an error window and let you choose a different seat.
 >
-> → Unconditional retry (Spin/Retry) is not the answer. The strategy must be completely different depending on the nature of the business.1. **Is distributed locking really always the answer? (How to control concurrency without locking)**
-    - The lock requires three network round trips: acquisition, operation, and release.
+> → Unconditional retry (Spin/Retry) is not the answer. The strategy must be completely different depending on the nature of the business.
 
-    - For simple counting or inventory deduction, it is much faster to use Redis' atomic commands (`INCR`, `DECR`) without locking.
+1. **Is distributed locking really always the answer? (How to control concurrency without locking)**
+    - The lock requires three network round trips: acquisition, operation, and release.- For simple counting or inventory deduction, it is much faster to use Redis' atomic commands (`INCR`, `DECR`) without locking.
 
     - For slightly more complex logic, if you throw the entire **Lua script**, which is supported starting from Redis 2.6, on the server, it will be executed atomically in a single-threaded environment, allowing perfect control without locking.
 
@@ -270,9 +268,9 @@ In an MSA environment, multiple servers rush to read and modify inventory data i
 3. **‘Handling strategy when lock acquisition fails’ (harmony between business and UX)**
     1. **Fail-Fast**: This method has the lowest system load as there is no waiting like in concert reservations.
 
-    2. **Spin/Blocking Wait**: Used when it must be processed sequentially even if there is a delay, such as a bank transfer. (Maximum waiting time setting required!)3. **Queuing**: Like taking orders during heavy rain in a delivery app, all requests are received, pushed into the queue, and processed sequentially asynchronously.
+    2. **Spin/Blocking Wait**: Used when it must be processed sequentially even if there is a delay, such as a bank transfer. (Maximum waiting time setting required!)
 
-<hr>
+    3. **Queuing**: Like taking orders during heavy rain in a delivery app, all requests are received, pushed into the queue, and processed sequentially asynchronously.<hr>
 
 ## Questions & Errors
 
@@ -321,9 +319,9 @@ Here, Pub/Sub means the following, respectively:
 
 - **Sub(Subscribe)**: Subscribe and wait for messages
 
-To put it simply, it is similar to **group chat room notification**.Just as when someone sends a message to a group chat room, the people in the room immediately receive the message, in Redis, when an event occurs, a message can be delivered to the subscribed target.
+To put it simply, it is similar to **group chat room notification**.
 
-Redisson lock uses this structure to wait without continuously checking whether the lock has been released.
+Just as when someone sends a message to a group chat room, the people in the room immediately receive the message, in Redis, when an event occurs, a message can be delivered to the subscribed target.Redisson lock uses this structure to wait without continuously checking whether the lock has been released.
 
 When the request holding the lock finishes its work and releases the lock, Redis notifies the waiting request that “the lock has been released.”
 
@@ -349,7 +347,7 @@ However, in an environment where thousands of inventory movement requests occur 
 
 - In severe cases, there is a risk that the entire logistics system will slow down or stop.
 
-So, we first used Redis distributed locks instead of DB to control the request order.
+So, we used Redis distributed locks instead of DB to first control the request order.
 
 Redis is memory-based, so it can handle locks much faster and more lightly than DB.
 
@@ -371,9 +369,9 @@ If you process it in a synchronous way, which stores it in the DB immediately ev
 
 So, we changed the structure by first storing requests in Redis rather than storing them in the DB right away.
 
-- User requests are stored in the Redis List. (`RPUSH`)- Pub/Sub is used only to notify the Worker, “Start processing!”
+- User requests are stored in the Redis List. (`RPUSH`)
 
-- Worker pulls out data one by one from the Redis List (`LPOP`) and stores it in the DB.
+- Pub/Sub is used only to notify the Worker, “Start processing!”- Worker pulls out data one by one from the Redis List (`LPOP`) and stores it in the DB.
 
 In other words, the request was changed to an asynchronous method that does not process the request immediately, but queues it in Redis for a while and processes it later.
 
@@ -401,7 +399,7 @@ For example:
 
 In this situation, because the new Master has no lock information, another client can acquire the same lock again.
 
-In other words, the lock was originally supposed to be held by only one person, but due to server failure, a problem arose where two people could act as if they had the lock at the same time.
+In other words, the lock was originally supposed to be held by only one person, but due to a server failure, a problem arose where two people could act as if they had the lock at the same time.
 
 To solve this problem, the founder of Redis proposed the Redlock algorithm.
 
@@ -433,7 +431,9 @@ In other words, he argued, “It may be dangerous in truly important financial t
 
 So now it is used differently depending on the situation.
 
-- General services such as first-come-first-served coupons and inventory processing → Redlock available- Financial transactions, a system where data errors cannot occur → Use a stronger consensus system such as Zookeeper
+- General services such as first-come-first-served coupons and inventory processing → Redlock available
+
+- Financial transactions, a system where data errors cannot occur → Use a stronger consensus system such as Zookeeper
 
 You can understand this as follows.
 

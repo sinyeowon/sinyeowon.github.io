@@ -5,7 +5,7 @@ date: 2026-04-05 15:48:16 +0900
 last_modified_at: 2026-05-03 16:23:24 +0900
 categories: ["BaekJoon", "Python"]
 tags: ['baekjoon', 'Python']
-description: "We have summarized the solution for calculating the prize money of three dice using Python conditional statements and max()."
+description: "max() function - Used to find the maximum value - Can be obtained without using loops"
 lang: "en"
 ui_lang: "ko-KR"
 toc: true

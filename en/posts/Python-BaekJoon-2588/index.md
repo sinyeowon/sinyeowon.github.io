@@ -5,7 +5,7 @@ date: 2026-04-05 15:38:27 +0900
 last_modified_at: 2026-04-23 13:23:48 +0900
 categories: ["BaekJoon", "Python"]
 tags: ['baekjoon', 'Python']
-description: "We have organized a solution in Python that separates each digit and outputs the intermediate multiplication result and final value."
+description: "Unlike before, the input is not in the form of \"345 678\", but in the form of \"345\\n678\", The list format split() cannot be used,"
 lang: "en"
 ui_lang: "ko-KR"
 toc: true

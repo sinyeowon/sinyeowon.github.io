@@ -5,7 +5,7 @@ date: 2026-04-05 15:53:10 +0900
 last_modified_at: 2026-04-22 08:30:43 +0900
 categories: ["BaekJoon", "Java"]
 tags: ['Java', 'baekjoon']
-description: "We have summarized the solution for calculating the prize money of three dice using Java conditional statements and Math.max."
+description: "Math.max - A function that returns the larger of two values. - Finding the maximum value among three values using a conditional statement becomes com…"
 lang: "en"
 ui_lang: "ko-KR"
 toc: true

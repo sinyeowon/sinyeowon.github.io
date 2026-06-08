@@ -6,7 +6,7 @@ date: 2026-05-12 09:00:00 +0900
 last_modified_at: 2026-05-15 20:57:00 +0900
 categories: ["Spring 단기 심화", "특강"]
 tags: ["Redis"]
-description: "This post summarizes Redis' in-memory architecture, single-threaded event loop, cache patterns, and TTL strategies from a practical service perspective."
+description: "Redis core architecture and fundamentals"
 description_source: "manual"
 lang: "en"
 ui_lang: "ko-KR"
@@ -27,7 +27,7 @@ notion_lang: "en"
 - Redis is like placing a frequently read book on a small bookshelf next to your desk and taking it out in just one second.
 
 > **Q If the shopping mall becomes a hit and 100,000 customers access the main page per second, what will happen to the server if only the existing DBMS is used?**
-> ![image](/assets/img/notion/TIL-Redis-실전-마스터-클래스-특강-1/02-321db45700.png)
+>![image](/assets/img/notion/TIL-Redis-실전-마스터-클래스-특강-1/02-321db45700.png)
 >
 > - The server crashed due to too many queries in the DB.
 >
@@ -35,7 +35,7 @@ notion_lang: "en"
 >
 > → To prevent servers from crashing and provide smooth services, Redis, a fast and stable cache system, has become essential in the backend architecture.
 
-![image](/assets/img/notion/TIL-Redis-실전-마스터-클래스-특강-1/03-8722d1764d.png)
+    ![image](/assets/img/notion/TIL-Redis-실전-마스터-클래스-특강-1/03-8722d1764d.png)
 
 #### What is Redis & Comparison of Competing Technologies
 
@@ -71,14 +71,14 @@ notion_lang: "en"
 
 > **Q Multi-threading seems to be the best, but why did Redis choose to have only one worker**
 >
-> ![image](/assets/img/notion/TIL-Redis-실전-마스터-클래스-특강-1/04-e2d8e2bd23.png)
+>![image](/assets/img/notion/TIL-Redis-실전-마스터-클래스-특강-1/04-e2d8e2bd23.png)
 >
 > - If multiple threads access data at the same time, the data may become entangled, so this is done to prevent that.
 >
 > → Multi-threading causes context switching overhead and lock contention problems as multiple threads fight to take over the lock.
 > ⇒ Since Redis' memory operation itself is so fast, we decided that it would be better to process it like crazy alone rather than locking it and waiting.
 >
-> ![image](/assets/img/notion/TIL-Redis-실전-마스터-클래스-특강-1/05-4f15daf468.png)
+>![image](/assets/img/notion/TIL-Redis-실전-마스터-클래스-특강-1/05-4f15daf468.png)
 
 - **Understanding event loop-based multiplexing**
     - If compared to a waiter at a restaurant
@@ -100,16 +100,14 @@ _We will see a strategy for caching this 20%_
 - **Look-Aside (Cache-Aside) Pattern**
     - The most popular strategy is to first look at the cache when the application is looking for data, and if not, retrieve it from the DB and push it into the cache.
 
-    - Suitable for services with many reads
+    - Suitable for services with many reads![image](/assets/img/notion/TIL-Redis-실전-마스터-클래스-특강-1/08-41e1a841a6.png)
 
-    ![image](/assets/img/notion/TIL-Redis-실전-마스터-클래스-특강-1/08-41e1a841a6.png)
-
-      - **Write-Back Pattern**
+- **Write-Back Pattern**
     - A strategy of first putting all data into Redis, which is extremely fast, then collecting it periodically and writing it to the DB at once (batch)
 
     - Prevents the DB from exploding in the event of a huge write request, such as a flood of ‘likes’ on YouTube live broadcasts.
 
-    ![image](/assets/img/notion/TIL-Redis-실전-마스터-클래스-특강-1/09-0dff169683.png)
+        ![image](/assets/img/notion/TIL-Redis-실전-마스터-클래스-특강-1/09-0dff169683.png)
 
 - **When and how is cache invalidation performed?**
     ![image](/assets/img/notion/TIL-Redis-실전-마스터-클래스-특강-1/10-5ab95edce3.png)
@@ -126,18 +124,25 @@ _We will see a strategy for caching this 20%_
 > **Q If I cache the shopping mall’s ‘Terms of Use’ page and the ‘Bitcoin Real-time Price’ page, what should be the TTL for each**?
 > - Since the terms and conditions do not change much, it should be long, and since the Bitcoin price keeps changing, it should be very short.
 >
-> ![image](/assets/img/notion/TIL-Redis-실전-마스터-클래스-특강-1/11-197eb1663a.png)
+>![image](/assets/img/notion/TIL-Redis-실전-마스터-클래스-특강-1/11-197eb1663a.png)
 >
 > **→ TTL must be taken differently depending on the data update cycle (volatility)**
 
 - **Cache Stampede Phenomenon - Deadly Trap**
     ![image](/assets/img/notion/TIL-Redis-실전-마스터-클래스-특강-1/12-f0c7b7caff.png)
 
-    - What would happen if the cache TTL of 100 products displayed on the main page were set to 12 PM sharp?
-        - The moment 12 o'clock strikes, 100 caches disappear at the same time.- At this time, if 10,000 users are connected per second, 10,000 requests rush into the DB with a cache miss at the same time → the DB goes down at that moment.
+  - What would happen if the cache TTL of 100 products displayed on the main page were set to 12 PM sharp?
+        - The moment 12 o'clock strikes, 100 caches disappear at the same time.
+
+        - At this time, if 10,000 users are connected per second, 10,000 requests rush into the DB with a cache miss at the same time → the DB goes down at that moment.
 
     → Therefore, in practice, **when setting TTL for a large amount of data, a random number (Jitter) between 1 and 5 minutes must be added to the basic TTL value.**
-      - This will distribute the cache expiration time and prevent the load from being concentrated on the DB at once.
+
+    <div class="notion-indent" markdown="1">
+
+    - This will distribute the cache expiration time and prevent the load from being concentrated on the DB at once.
+
+    </div>
 
 #### Practical examples of 5 types of data structures
 
@@ -150,9 +155,9 @@ Assuming a popular shopping mall, we plan to map each data structure with comman
 > → By using the atomic instruction `INCR`, perfect counting is possible without concurrency problems.
 >
 >```bash
->     # 새로운 방문자가 올 때마다 방문자 수를 1씩 증가시킵니다.
->     redis> INCR today_visitors
->     (integer) 1
+>         # 새로운 방문자가 올 때마다 방문자 수를 1씩 증가시킵니다.
+>         redis> INCR today_visitors
+>         (integer) 1
 > ```
 
 2. List
@@ -191,9 +196,7 @@ Assuming a popular shopping mall, we plan to map each data structure with comman
 
         - Pitfall to watch out for: When millions of data are accumulated, if you lose `SMEMBERS`, which retrieves all items at once, the entire system stops → You must retrieve them separately as `SSCAN`.
 
-4. Sorted Set (ZSET)
-
-    - Core data structure that automatically sorts in score order by adding the concept of ‘Score’ to Set
+4. Sorted Set (ZSET)- Core data structure that automatically sorts in score order by adding the concept of ‘Score’ to Set
 
     - Example: Real-time purchasing ranking → Real-time ranking is created using the user’s cumulative purchase amount as the score.
 
@@ -203,7 +206,7 @@ Assuming a popular shopping mall, we plan to map each data structure with comman
         "50000"
         ```
 
-- Pitfall to be aware of: Score is stored as a Double → If you enter a large integer such as the maximum value of Java's Long, a precision error may occur and the number may change, so be very careful.
+    - Pitfall to be aware of: Score is stored as a Double → If you enter a large integer such as the maximum value of Java's Long, a precision error may occur and the number may change, so be very careful.
 
 5. Hash
 
@@ -222,7 +225,7 @@ Assuming a popular shopping mall, we plan to map each data structure with comman
 
 > Q What happens if there is only 1 limited edition shoe left in a shopping mall, and 100 people press the payment button at the same time without an error of 0.1 second?
 >
-> ![image](/assets/img/notion/TIL-Redis-실전-마스터-클래스-특강-1/13-b0f0b6eeaf.png)
+>![image](/assets/img/notion/TIL-Redis-실전-마스터-클래스-특강-1/13-b0f0b6eeaf.png)
 >
 > - There is only one item in stock, but the payment is processed at the same time, so it is sold to multiple people (overselling phenomenon)
 >
@@ -240,14 +243,12 @@ Assuming a popular shopping mall, we plan to map each data structure with comman
     - To prevent this problem, Baedal Minjok placed a **Redis distributed lock** on a per ‘transfer request’ basis.
 
     - If one server first obtains a lock from Redis for transfer request number 001, the other server is blocked from changing the status of the inventory until the lock is released.
-        - Through this, concurrency issues are completely controlled without even a single piece of data being distorted.
-
-        ![image](/assets/img/notion/TIL-Redis-실전-마스터-클래스-특강-1/15-78f8b7ac3c.png)
+        - Through this, concurrency issues are completely controlled without even a single piece of data being distorted.![image](/assets/img/notion/TIL-Redis-실전-마스터-클래스-특강-1/15-78f8b7ac3c.png)
 
     - What if there was no Redis?
         ![image](/assets/img/notion/TIL-Redis-실전-마스터-클래스-특강-1/16-29a2934345.png)
 
-      - If you were trying to handle inventory processing of this huge traffic only with the locking function of existing MySQL (RDBMS) without Redis' distributed locking,
+        - If you were trying to handle inventory processing of this huge traffic only with the locking function of existing MySQL (RDBMS) without Redis' distributed locking,
             - As numerous inventory allocation/cancellation requests poured into the DB, each other would have been clamoring to lock the row.
 
             - In the end, numerous queries would be in a blocking state, the DB connection pool would be depleted, and in the worst case, a catastrophe would have occurred in which the entire B-Mart logistics system would have been paralyzed due to deadlock in which each party was holding on to each other's locks.
@@ -260,13 +261,13 @@ Assuming a popular shopping mall, we plan to map each data structure with comman
 
 3. **Beyond simple data storage, it acts as essential middleware for MSA architecture, such as distributed locks that solve concurrency problems in distributed systems.**
 
-<hr>
+    <hr>
 
 ## Questions & Errors
 
-**Q I heard that existing disk-based DBs require locks and are slow because they are multi-threaded, but Redis is single-threaded, so why does it use distributed locks again?**
+**Q I heard that existing disk-based DBs require locks and are slow because they are multi-threaded, but why does Redis use distributed locks since it is single-threaded?**
 
-- Redis' single thread refers to **Redis** **internally** **how commands are processed**
+- Redis’ single thread refers to **Redis** **internally** **how commands are processed**
     - In other words, because Redis processes only one command at a time in order, there are fewer conflicts that occur when multiple threads modify the same memory data at the same time.
 
     - Redis commands themselves are executed atomically.
@@ -282,19 +283,17 @@ Assuming a popular shopping mall, we plan to map each data structure with comman
 
     → As a result, there may be more orders than inventory.
 
-- To prevent this problem, use **Distributed Lock**
+- To prevent this problem, use **Distributed Lock**- Distributed locks play a role in limiting “only one server can perform this task now.”
 
-    - Distributed locks play a role in limiting “only one server can perform this task now.”
-
-    ```plaintext
-    서버 A: 락 획득 성공
-    서버 B: 락 획득 실패 → 대기
-    서버 A:
-    	- 재고 확인
-    	- 주문 생성
-    	- 재고 감소
-    작업 완료 후 락 반납
-    ```
+        ```plaintext
+        서버 A: 락 획득 성공
+        서버 B: 락 획득 실패 → 대기
+        서버 A:
+        	- 재고 확인
+        	- 주문 생성
+        	- 재고 감소
+        작업 완료 후 락 반납
+        ```
 
 - Key Differences
 

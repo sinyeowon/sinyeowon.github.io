@@ -5,7 +5,7 @@ date: 2026-04-05 20:41:45 +0900
 last_modified_at: 2026-04-23 01:15:24 +0900
 categories: ["BaekJoon", "Python"]
 tags: ['baekjoon', 'Python']
-description: "We have summarized the solution to finding the minimum and maximum values ​​of a list using loop statements and initial value settings in Python."
+description: "To use arr[i] = ... in Python, you must have a list that already has size. -> Therefore, if it is an empty list, the list must be filled with arr."
 lang: "en"
 ui_lang: "ko-KR"
 toc: true

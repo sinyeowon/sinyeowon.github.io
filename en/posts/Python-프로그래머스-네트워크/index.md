@@ -5,7 +5,7 @@ date: 2026-05-21 09:00:00 +0900
 last_modified_at: 2026-06-04 22:39:00 +0900
 categories: ["Programmers", "Python"]
 tags: ["programmers", "Python"]
-description: "A solution to the Programmers Network problem that traverses computer connections and counts the number of connected components."
+description: "Even if they are not directly connected like numbers 0 and 2 in 0번 1번 2번, if they are connected through number 1, they are on the same network."
 description_source: "manual"
 lang: "en"
 ui_lang: "ko-KR"
@@ -15,7 +15,7 @@ original_url: "/posts/Python-프로그래머스-네트워크/"
 notion_id: "3677788a-fc66-805c-abdb-cbf869d5703e"
 notion_lang: "en"
 ---
-[Programmers 네트워크](https://school.programmers.co.kr/learn/courses/30/lessons/43162)
+<a class="notion-mention" href="https://school.programmers.co.kr/learn/courses/30/lessons/43162">Programmers Network</a>
 
 ## Solution
 
@@ -41,7 +41,7 @@ def solution(n, computers):
 
 ###Understand
 
-Even if it is not directly connected like number 0 and number 2 in `0번 <-> 1번 <-> 2번`, if it is connected through number 1, it is the same network
+Even if they are not directly connected like numbers 0 and 2 in `0번 <-> 1번 <-> 2번`, if they are connected through number 1, they are on the same network.
 
 ### DFS
 
@@ -53,7 +53,7 @@ Abbreviation for Depth First Search, depth first search.
 
 ### BFS
 
-Abbreviation for Breadth First Search, Breadth First Search
+Abbreviation for Breadth First Search.
 
 - A method of visiting nodes in order, starting from the nodes closest to the current location.
 

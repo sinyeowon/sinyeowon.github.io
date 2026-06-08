@@ -6,7 +6,7 @@ date: 2026-04-17 09:00:00 +0900
 last_modified_at: 2026-05-12 12:15:00 +0900
 categories: ["Spring 단기 심화", "특강"]
 tags: ["Spring"]
-description: "This post reviews core Spring concepts from a basic quiz, including DispatcherServlet, @RestController, @RequestBody, dependency injection, and singleton scope."
+description: "DispatcherServlet: Receives all requests first, finds the appropriate Controller, and connects to it."
 description_source: "manual"
 lang: "en"
 ui_lang: "ko-KR"

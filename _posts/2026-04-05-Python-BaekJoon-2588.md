@@ -4,7 +4,7 @@ date: 2026-04-05 15:38:27 +0900
 last_modified_at: 2026-04-23 13:23:48 +0900
 categories: ["BaekJoon", "Python"]
 tags: ['baekjoon', 'Python']
-description: 'Python에서 각 자리수를 분리해 곱셈 중간 결과와 최종 값을 출력하는 풀이를 정리했습니다.'
+description: "입력이 기존과 다르게 \"345 678\" 형태가 아니라 \"345\\n678\" 같은 형태이므로, 리스트 형식인 split()을 사용할 수 없고, 따로 input()으로 입력을 받았다."
 english_url: "/en/posts/Python-BaekJoon-2588/"
 ---
 [BaekJoon 2588](https://www.acmicpc.net/problem/2588)

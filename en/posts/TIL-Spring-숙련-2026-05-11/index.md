@@ -6,7 +6,7 @@ date: 2026-05-11 09:00:00 +0900
 last_modified_at: 2026-05-12 12:34:00 +0900
 categories: ["Spring 단기 심화", "Spring 강의"]
 tags: ["Spring", "TIL", "내일배움캠프"]
-description: "This article summarizes the member entity, permission enum, administrator sign-up token, PasswordEncoder-based password encryption, and member sign-up API implementation flow."
+description: "Implement @Entity class mapped to member DB"
 description_source: "manual"
 lang: "en"
 ui_lang: "ko-KR"
@@ -81,10 +81,17 @@ notion_lang: "en"
                 Implemented like this:
 
 - **Understanding Password Encryption**<br>
-> When registering as a member, the ‘password’ must not be registered in the DB exactly as it was entered by the user.
-> Password encryption is mandatory under the ‘Information and Communications Network Act and Personal Information Protection Act’
-
-    - After encryption, password storage is required.
+    <div class="notion-callout" markdown="1">
+    <div class="notion-callout-heading" markdown="1">
+    <span class="notion-callout-icon">📍</span>
+    <div class="notion-callout-title" markdown="1">
+    When registering as a member, the ‘password’ must not be registered in the DB exactly as it is entered by the user.
+    </div>
+    </div>
+    <div class="notion-callout-body" markdown="1">
+    Password encryption is mandatory under the ‘Information and Communications Network Act and Personal Information Protection Act’.
+    </div>
+    </div>- After encryption, password storage is required.
         - Plaintext → (Encryption algorithm) → Ciphertext
 ex) “nobodynobody” → “$2a$10$..”
 
@@ -92,7 +99,9 @@ ex) “nobodynobody” → “$2a$10$..”
 
         - Therefore, decryption is impossible **one-way algorithm must be used**
             - **One-way encryption algorithm**
-                - Encryption: Plaintext → (Encryption algorithm) → Ciphertext- Decryption: **Not possible** ~~(ciphertext → (encryption algorithm) → plaintext)~~
+                - Encryption: Plaintext → (Encryption algorithm) → Ciphertext
+
+                - Decryption: **Not possible** ~~(ciphertext → (encryption algorithm) → plaintext)~~
 
                 - **Then, does the user have to remember the encrypted password when logging in?**
                     - Password confirmation procedure
@@ -104,10 +113,17 @@ ex) “nobodynobody” → “$2a$10$..”
                         2. **Check whether it matches the “ID, password (ciphertext)” stored in the DB**
 
     - Password Matching<br>
-> Use the password encryption function provided by a framework called Spring Security.
-> PasswordEncoder, which we saw as an example of manual bean registration, is a password encryption method provided by the security.
->
-> It is also widely used as it has a function that compares the password entered by the user with the encrypted and stored password to check whether it matches.
+        <div class="notion-callout" markdown="1">
+        <div class="notion-callout-heading" markdown="1">
+        <span class="notion-callout-icon">📍</span>
+        <div class="notion-callout-title" markdown="1">
+        Use the password encryption function provided by a framework called Spring Security.
+        </div>
+        </div>
+        <div class="notion-callout-body" markdown="1">
+        PasswordEncoder, which we saw as an example of manual bean registration, is a password encryption method provided by the security.It is also widely used as it has a function that compares the password entered by the user with the encrypted and stored password to check whether it matches.
+        </div>
+        </div>
 
         ```java
         // 사용예시
@@ -268,7 +284,9 @@ ex) “nobodynobody” → “$2a$10$..”
         }
         ```
 
-### Login implementation- Login API design
+### Login implementation
+
+- Login API design
     ![image](/assets/img/notion/TIL-Spring-숙련/03-b2faf6d8de.png)
 
 - LoginRequestDto
