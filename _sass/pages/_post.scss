@@ -71,7 +71,7 @@ header {
 
     .notion-callout-heading {
       display: flex;
-      align-items: flex-start;
+      align-items: center;
       gap: 0.7rem;
       margin-bottom: 0.5rem;
     }
@@ -80,12 +80,14 @@ header {
       display: inline-flex;
       align-items: center;
       justify-content: center;
-      width: 1.9rem;
-      height: 1.9rem;
+      width: 1.85rem;
+      height: 1.85rem;
       flex-shrink: 0;
       margin: 0;
-      font-size: 1.1rem;
+      font-size: 1.05rem;
       line-height: 1;
+      background: rgba(181, 168, 255, 0.12);
+      border-radius: 50%;
     }
 
     .notion-callout-title {

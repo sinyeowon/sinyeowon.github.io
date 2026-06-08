@@ -998,18 +998,29 @@ function notionCalloutIcon(block) {
 function calloutMarkdown(markdown, icon = "💡") {
   const content = normalizeCalloutContent(markdown);
   const { title, body } = splitCalloutContent(content);
+  const normalizedTitle = normalizeCalloutTitle(title);
+
+  if (process.env.NOTION_DEBUG_CALLOUT === "true") {
+    try {
+      console.log(`[DEBUG_CALLOUT] raw:${JSON.stringify(String(markdown||""))}`);
+      console.log(`[DEBUG_CALLOUT] content:${JSON.stringify(String(content||""))}`);
+      console.log(`[DEBUG_CALLOUT] title:${JSON.stringify(String(title||""))}`);
+      console.log(`[DEBUG_CALLOUT] normalizedTitle:${JSON.stringify(String(normalizedTitle||""))}`);
+      console.log(`[DEBUG_CALLOUT] body:${JSON.stringify(String(body||""))}`);
+    } catch (e) {
+      console.log('[DEBUG_CALLOUT] failed to stringify callout debug data', e && e.message);
+    }
+  }
   const lines = [
     '<div class="notion-callout" markdown="1">',
     '<div class="notion-callout-heading" markdown="1">',
     `<span class="notion-callout-icon">${escapeHtml(icon)}</span>`
   ];
 
-  if (title) {
+  if (normalizedTitle) {
     lines.push(
       '<div class="notion-callout-title" markdown="1">',
-      "",
-      title,
-      "",
+      normalizedTitle,
       "</div>"
     );
   }
@@ -1019,9 +1030,7 @@ function calloutMarkdown(markdown, icon = "💡") {
   if (body) {
     lines.push(
       '<div class="notion-callout-body" markdown="1">',
-      "",
       body,
-      "",
       "</div>"
     );
   }
@@ -1032,9 +1041,42 @@ function calloutMarkdown(markdown, icon = "💡") {
 }
 
 function normalizeCalloutContent(markdown) {
-  return unwrapAccidentalCalloutPlaintextBlocks(
-    String(markdown || "").trim()
-  ).trim();
+  const text = String(markdown || "").trim();
+  const unwrapped = unwrapAccidentalCalloutPlaintextBlocks(text);
+  const dedented = dedentCalloutContent(unwrapped);
+
+  // Remove any surrounding ```plaintext``` fences leftover and trim
+  const body = String(dedented || "").replace(/```(?:plain\s*text|plaintext|plain|text)\n([\s\S]*?)\n```/gi, (_, inner) => inner.trim());
+
+  return String(body || "").trim();
+}
+
+function dedentCalloutContent(markdown) {
+  const lines = String(markdown || "").split("\n");
+  const trimmed = trimEmptyLines(lines);
+  const indentLengths = trimmed
+    .filter((line) => line.trim())
+    .map((line) => line.match(/^\s*/)[0].length);
+  const minIndent = indentLengths.length ? Math.min(...indentLengths) : 0;
+
+  return trimmed
+    .map((line) => (minIndent ? line.slice(minIndent) : line))
+    .join("\n");
+}
+
+function trimEmptyLines(lines) {
+  let start = 0;
+  let end = lines.length;
+
+  while (start < end && !lines[start].trim()) {
+    start += 1;
+  }
+
+  while (end > start && !lines[end - 1].trim()) {
+    end -= 1;
+  }
+
+  return lines.slice(start, end);
 }
 
 function splitCalloutContent(markdown) {
@@ -1051,6 +1093,24 @@ function splitCalloutContent(markdown) {
       .join("\n")
       .trim()
   };
+}
+
+function normalizeCalloutTitle(title) {
+  let t = String(title || "").trim();
+
+  // strip surrounding backticks or fences
+  t = t.replace(/^`+|`+$/g, "");
+
+  // common markdown wrappers
+  t = t.replace(/\*\*([^*]+)\*\*/g, "$1");
+  t = t.replace(/\*([^*]+)\*/g, "$1");
+  t = t.replace(/__([^_]+)__/g, "$1");
+  t = t.replace(/_([^_]+)_/g, "$1");
+
+  // remove accidental leftover literal markers at edges
+  t = t.replace(/^\*+|\*+$/g, "").replace(/^_+|_+$/g, "").trim();
+
+  return t;
 }
 
 function unwrapAccidentalCalloutPlaintextBlocks(markdown) {
