@@ -18,17 +18,21 @@
   }
 
   .about-me-hero {
-    display: flex;
-    align-items: center;
-    gap: 2rem;
+    display: block;
     text-align: left;
   }
 
   .about-me-hero h1 {
-    margin-bottom: 1.25rem;
+    margin-bottom: 1rem;
     color: var(--heading-color);
     font-size: 2rem;
     font-weight: 700;
+  }
+
+  .about-me-contact-card {
+    margin-top: 1rem;
+    padding-left: 0;
+    border-left: none;
   }
 
   .about-me-avatar {
