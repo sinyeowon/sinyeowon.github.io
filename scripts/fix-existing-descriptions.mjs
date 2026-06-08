@@ -117,16 +117,29 @@ function normalizeDescriptionText(line) {
     .trim();
 }
 
+function normalizeTitleForDescription(title = '') {
+  return normalizeDescriptionText(
+    String(title || '')
+      .replace(/^\[?TIL\]?\s*[-–—]?\s*/i, '')
+      .replace(/-\d{6,8}$/, '')
+      .replace(/[-_]+/g, ' ')
+  );
+}
+
 function generateTitleDescription(title = '') {
-  const value = String(title || '').trim();
+  const value = normalizeTitleForDescription(title);
   if (!value) return '';
 
-  if (/TIL/i.test(value)) {
-    return `${value.replace(/TIL[-–—]?\s*/i, '').trim()}에 대한 학습 내용을 정리한 글입니다.`;
+  if (/프로그래머스|Programmers/i.test(title)) {
+    return `${value} 문제 풀이 과정을 정리한 글입니다.`;
   }
 
-  if (/프로그래머스|BaekJoon|BOJ|Problem/i.test(value)) {
-    return `${value} 문제 풀이 및 학습 기록입니다.`;
+  if (/BaekJoon|BOJ/i.test(title)) {
+    return `${value} 문제 풀이 과정을 정리한 글입니다.`;
+  }
+
+  if (/TIL/i.test(title)) {
+    return `${value}에 대한 학습 내용을 정리한 글입니다.`;
   }
 
   return `${value}에 대한 정리입니다.`;
@@ -195,14 +208,9 @@ function summarizeDescriptionBlock(block, title = '') {
 }
 
 function createDescription(markdown, title = '') {
-  const blocks = splitDescriptionBlocks(markdown);
-
-  for (const block of blocks) {
-    const summary = summarizeDescriptionBlock(block, title);
-    if (!summary) continue;
-    const cleaned = normalizeDescriptionText(summary);
-    if (!cleaned || isGenericDescriptionHeading(cleaned) || cleaned.length < 40) continue;
-    return trimDescription(cleaned);
+  const titleDescription = generateTitleDescription(title);
+  if (titleDescription) {
+    return trimDescription(titleDescription);
   }
 
   const candidates = descriptionCandidates(markdown, title).map(normalizeDescriptionText);
@@ -216,7 +224,7 @@ function createDescription(markdown, title = '') {
     if (next.length >= 80 || selected.length >= 2) break;
   }
 
-  return trimDescription(selected.join(' ') || generateTitleDescription(title));
+  return trimDescription(selected.join(' ') || titleDescription);
 }
 
 function descriptionCandidates(markdown, title = '') {

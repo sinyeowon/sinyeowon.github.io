@@ -416,9 +416,32 @@ function normalizeDescriptionText(line) {
     .trim();
 }
 
+function normalizeTitleForDescription(title = '') {
+  return normalizeDescriptionText(
+    String(title || '')
+      .replace(/^[\[\(]?TIL[\]\)]?\s*[-–—]?\s*/i, '')
+      .replace(/-\d{6,8}$/, '')
+      .replace(/[-_]+/g, ' ')
+  );
+}
+
 function generateTitleDescription(title = '') {
-  const value = String(title || '').trim();
-  return value ? `${value}에 대한 정리입니다.` : '';
+  const value = normalizeTitleForDescription(title);
+  if (!value) return '';
+
+  if (/프로그래머스|Programmers/i.test(title)) {
+    return `${value} 문제 풀이 과정을 정리한 글입니다.`;
+  }
+
+  if (/BaekJoon|BOJ/i.test(title)) {
+    return `${value} 문제 풀이 과정을 정리한 글입니다.`;
+  }
+
+  if (/TIL/i.test(title)) {
+    return `${value}에 대한 학습 내용을 정리한 글입니다.`;
+  }
+
+  return `${value}에 대한 정리입니다.`;
 }
 
 function splitDescriptionBlocks(markdown) {
@@ -484,6 +507,11 @@ function summarizeDescriptionBlock(block, title = '') {
 }
 
 function createDescription(markdown, title = '') {
+  const titleDescription = generateTitleDescription(title);
+  if (titleDescription) {
+    return trimDescription(titleDescription);
+  }
+
   const blocks = splitDescriptionBlocks(markdown);
   for (const block of blocks) {
     const summary = summarizeDescriptionBlock(block, title);
@@ -509,7 +537,7 @@ function createDescription(markdown, title = '') {
     }
   }
 
-  return trimDescription(selected.join(' ') || generateTitleDescription(title));
+  return trimDescription(selected.join(' ') || titleDescription);
 }
 
 function descriptionCandidates(markdown, title = '') {
