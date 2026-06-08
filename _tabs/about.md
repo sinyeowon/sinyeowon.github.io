@@ -44,8 +44,8 @@ hide_title: true
       <div class="about-skill-row">
         <div class="about-skill-category">Database</div>
         <div class="about-skill-badges">
-          <span class="skill-badge badge-oracle"><i class="fas fa-database"></i>ORACLE</span>
           <span class="skill-badge badge-mysql"><i class="fas fa-database"></i>MYSQL</span>
+          <span class="skill-badge badge-oracle"><i class="fas fa-database"></i>ORACLE</span>
           <span class="skill-badge badge-redis"><i class="fas fa-bolt"></i>REDIS</span>
         </div>
       </div>
@@ -58,11 +58,9 @@ hide_title: true
         </div>
       </div>
       <div class="about-skill-row">
-        <div class="about-skill-category">Tools</div>
+        <div class="about-skill-category">DevOps</div>
         <div class="about-skill-badges">
-          <span class="skill-badge badge-git"><i class="fab fa-git-alt"></i>GIT</span>
-          <span class="skill-badge badge-github"><i class="fab fa-github"></i>GITHUB</span>
-          <span class="skill-badge badge-notion"><i class="fas fa-sticky-note"></i>NOTION</span>
+          <span class="skill-badge badge-docker"><i class="fab fa-docker"></i>DOCKER</span>
         </div>
       </div>
     </div>
