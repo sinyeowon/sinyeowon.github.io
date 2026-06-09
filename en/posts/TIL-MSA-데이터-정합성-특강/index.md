@@ -152,32 +152,32 @@ In **Choreography-based Saga**, each service publishes and subscribes to **event
 
 The core of the Transaction Outbox pattern is to ensure atomicity and single transaction of the entity table and outbox table.There may be cases where the ordering service cannot support transactions using NoSQL DB.
 
-                ![image](/assets/img/notion/TIL-MSA-데이터-정합성-특강/05-4bcbf43388.png)
+![image](/assets/img/notion/TIL-MSA-데이터-정합성-특강/05-4bcbf43388.png)
 
-                In this case, you can add a property containing the message content to the object containing the order information and send the message to the message broker.
+In this case, you can add a property containing the message content to the object containing the order information and send the message to the message broker.
 
-                Adding event information to be issued to a NoSQL DB can also be said to be atomic.
+Adding event information to be issued to a NoSQL DB can also be said to be atomic.
 
-                ```plaintext
-                {
-                    order_id: "20231108019",
-                    buyer: {
-                                id: 10003,
-                                email: "abcd@sk.com",
-                                address: "SK U Tower"
-                           },
-                    item: {
-                                id: 13035,
-                                name: "Wireless Keyboard",
-                                quantity: 1
-                           },
-                    <span style="color: #ff0000">outbox: [...]</span>
-                }
-                ```
+```plaintext
+{
+order_id: "20231108019",
+buyer: {
+id: 10003,
+email: "abcd@sk.com",
+address: "SK U Tower"
+},
+item: {
+id: 13035,
+name: "Wireless Keyboard",
+quantity: 1
+},
+<span style="color: #ff0000">outbox: [...]</span>
+}
+```
 
-                The message relay service periodically queries records in the database to find outbox properties and delivers them to the message broker.
+The message relay service periodically queries records in the database to find outbox properties and delivers them to the message broker.
 
-                You can use the transactional outbox pattern even if you use a NoSQL DB that does not support transactions by deleting the Outbox attribute in the record at the end.
+You can use the transactional outbox pattern even if you use a NoSQL DB that does not support transactions by deleting the Outbox attribute in the record at the end.
 
 </div>
 
@@ -196,15 +196,15 @@ The core of the Transaction Outbox pattern is to ensure atomicity and single tra
 
 ![image](/assets/img/notion/TIL-MSA-데이터-정합성-특강/06-cc16b40608.png)
 
-                If an error occurs while the message relay service reads message data from the Outbox table and delivers it to the message broker,If an instance of another message relay service delivers the Outbox table back to the message broker, a situation may arise where the same message is delivered twice.
+If an error occurs while the message relay service reads message data from the Outbox table and delivers it to the message broker,If an instance of another message relay service delivers the Outbox table back to the message broker, a situation may arise where the same message is delivered twice.
 
-                A problem occurs that slows down product quantity twice and creates two delivery lists.
+A problem occurs that slows down product quantity twice and creates two delivery lists.
 
-                → This problem can be solved by developing product services and delivery services to ensure idempotence. (The result remains the same even if the same request is sent multiple times)
+→ This problem can be solved by developing product services and delivery services to ensure idempotence. (The result remains the same even if the same request is sent multiple times)
 
-                When the Outbox table stores message information, an ID value is assigned to each message, and when the message relay service assigns the corresponding ID value to an event that occurs as a message broker,
+When the Outbox table stores message information, an ID value is assigned to each message, and when the message relay service assigns the corresponding ID value to an event that occurs as a message broker,
 
-                The product or delivery service that received the message can compare this ID value to know that it is an already processed event or a duplicate event and ignore it.
+The product or delivery service that received the message can compare this ID value to know that it is an already processed event or a duplicate event and ignore it.
 
 </div>
 
@@ -216,11 +216,11 @@ The core of the Transaction Outbox pattern is to ensure atomicity and single tra
 
 If a user cancels a product immediately after ordering it, the message relay service periodically monitors the outbox table and finds two messages: order creation and order cancellation.
 
-        Without understanding the order of business, the order cancellation event may be issued before the order creation event.
+Without understanding the order of business, the order cancellation event may be issued before the order creation event.
 
-        In this case, the delivery service must receive an order cancellation event and delete the already added delivery information, but since there is no information, it is ignored. If an order event is received and delivery information is created later,
+In this case, the delivery service must receive an order cancellation event and delete the already added delivery information, but since there is no information, it is ignored. If an order event is received and delivery information is created later,
 
-        Although the order has been cancelled, problems may still occur in the delivery list.This problem can be solved by assigning a sequential ID to each message in the outbox table, and sorting by ID when issuing events to ensure order.
+Although the order has been cancelled, problems may still occur in the delivery list.This problem can be solved by assigning a sequential ID to each message in the outbox table, and sorting by ID when issuing events to ensure order.
 
 </div>
 

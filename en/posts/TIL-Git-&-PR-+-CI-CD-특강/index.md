@@ -279,10 +279,10 @@ Conflicts occur when two branches modify the same line in the same file differen
 </div>
 
 | abbreviation | full name | meaning |
-  | --- | --- | --- |
-  | C.I. | Continuous **Integration** | Frequent code integration and automatic verification |
-  | CD | Continuous **Delivery** | Stay deployable at any time (manual approval) |
-  | CD | Continuous **Deployment** | If passed, automatically distributed to operation |
+| --- | --- | --- |
+| C.I. | Continuous **Integration** | Frequent code integration and automatic verification |
+| CD | Continuous **Delivery** | Stay deployable at any time (manual approval) |
+| CD | Continuous **Deployment** | If passed, automatically distributed to operation |
 
 </div>
 

@@ -247,62 +247,51 @@ html[data-mode='dark'] {
 }
 
 .post-navigation {
-  @include bp.lt(bp.get(lg)) {
-    @include mx.pl-pr(0);
-    @include mx.ml-mr(-0.5rem);
+  border-top: 1px solid var(--main-border-color);
+  padding-top: 2rem;
+  margin-top: 3rem;
+
+  .post-nav-label {
+    @extend %text-xs;
+
+    color: var(--text-muted-color);
+    margin-bottom: 0.5rem;
+    text-transform: uppercase;
+    font-weight: 600;
   }
 
-  .btn {
-    @extend %-btn-post-nav;
-
-    &:not(:hover) {
-      color: var(--link-color);
-    }
+  .card {
+    border-color: var(--main-border-color);
+    transition: transform 0.2s ease-in-out, border-color 0.2s ease-in-out;
+    background: var(--card-bg);
 
     &:hover {
-      &:not(.disabled)::before {
-        color: whitesmoke;
-      }
+      border-color: var(--link-color);
+      transform: translateY(-2px);
     }
 
-    &.disabled {
-      @extend %-btn-post-nav;
-
-      pointer-events: auto;
-      cursor: not-allowed;
-      background: none;
-      color: gray;
+    .card-body {
+      padding: 1rem 1.25rem;
     }
 
-    &.btn-outline-primary.disabled:focus {
-      box-shadow: none;
-    }
+    h4 {
+      font-size: 1rem;
+      margin: 0;
+      color: var(--text-color);
+      line-height: 1.4;
 
-    &::before {
-      color: var(--text-muted-color);
-      font-size: 0.65rem;
-      text-transform: uppercase;
-      content: attr(aria-label);
-    }
-
-    &:first-child {
-      border-radius: v.$radius-lg 0 0 v.$radius-lg;
-      left: 0.5px;
-    }
-
-    &:last-child {
-      border-radius: 0 v.$radius-lg v.$radius-lg 0;
-      right: 0.5px;
+      @extend %text-clip;
     }
   }
 
-  p {
-    font-size: 1.1rem;
-    line-height: 1.5rem;
-    margin-top: 0.3rem;
-    white-space: normal;
+  .nav-prev {
+    text-align: left;
   }
-} /* .post-navigation */
+
+  .nav-next {
+    text-align: right;
+  }
+}
 
 @media (hover: hover) {
   .post-navigation {
@@ -573,6 +562,26 @@ html[data-mode='dark'] {
 
 .share-label {
   @include mx.label(inherit, 400, inherit);
+
+  &::after {
+    content: ':';
+  }
+}
+
+.content > p > img {
+  @include bp.lte(bp.get(md)) {
+    max-width: calc(100% + 1rem);
+  }
+}
+
+h2,
+h3,
+h4 {
+  @include bp.xl {
+    scroll-margin-top: 2rem;
+  }
+}
+bel(inherit, 400, inherit);
 
   &::after {
     content: ':';

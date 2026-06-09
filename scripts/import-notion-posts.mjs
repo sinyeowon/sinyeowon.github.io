@@ -1027,7 +1027,11 @@ function normalizeCalloutContent(markdown) {
   // Remove any surrounding ```plaintext``` fences leftover and trim
   const body = String(dedented || "").replace(/```(?:plain\s*text|plaintext|plain|text)\n([\s\S]*?)\n```/gi, (_, inner) => inner.trim());
 
-  return String(body || "").trim();
+  return String(body || "")
+    .split("\n")
+    .map((line) => line.trimStart()) // Aggressively remove leading spaces
+    .join("\n")
+    .trim();
 }
 
 function dedentCalloutContent(markdown) {

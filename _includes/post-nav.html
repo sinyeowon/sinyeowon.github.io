@@ -1,8 +1,8 @@
 <!-- Navigation buttons at the bottom of the post. -->
 
-<nav class="post-navigation d-flex justify-content-between" aria-label="Post Navigation">
-  {% assign previous = site.data.locales[include.lang].post.button.previous %}
-  {% assign next = site.data.locales[include.lang].post.button.next %}
+<nav class="post-navigation row g-4" aria-label="Post Navigation">
+  {% assign previous_label = site.data.locales[include.lang].post.button.previous %}
+  {% assign next_label = site.data.locales[include.lang].post.button.next %}
 
   {% assign source_page = page %}
   {% if page.lang == 'en' %}
@@ -81,31 +81,25 @@
     {% endif %}
   {% endif %}
 
-  {% if previous_post.url %}
-    <a
-      href="{{ site.baseurl }}{{ previous_post.url }}"
-      class="btn btn-outline-primary"
-      aria-label="{{ previous }}"
-    >
-      <p>{{ previous_post.title }}</p>
-    </a>
-  {% else %}
-    <div class="btn btn-outline-primary disabled" aria-label="{{ previous }}">
-      <p>-</p>
-    </div>
-  {% endif %}
+  <div class="col-12 col-md-6 nav-prev">
+    {% if previous_post.url %}
+      <div class="post-nav-label">{{ previous_label }}</div>
+      <a href="{{ site.baseurl }}{{ previous_post.url }}" class="card h-100 shadow-sm text-decoration-none">
+        <div class="card-body">
+          <h4 class="card-title">{{ previous_post.title }}</h4>
+        </div>
+      </a>
+    {% endif %}
+  </div>
 
-  {% if next_post.url %}
-    <a
-      href="{{ site.baseurl }}{{ next_post.url }}"
-      class="btn btn-outline-primary"
-      aria-label="{{ next }}"
-    >
-      <p>{{ next_post.title }}</p>
-    </a>
-  {% else %}
-    <div class="btn btn-outline-primary disabled" aria-label="{{ next }}">
-      <p>-</p>
-    </div>
-  {% endif %}
+  <div class="col-12 col-md-6 nav-next">
+    {% if next_post.url %}
+      <div class="post-nav-label">{{ next_label }}</div>
+      <a href="{{ site.baseurl }}{{ next_post.url }}" class="card h-100 shadow-sm text-decoration-none">
+        <div class="card-body">
+          <h4 class="card-title">{{ next_post.title }}</h4>
+        </div>
+      </a>
+    {% endif %}
+  </div>
 </nav>

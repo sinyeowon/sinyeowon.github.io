@@ -280,10 +280,10 @@ notion_lang: "ko"
 </div>
 
 | 약자 | 풀네임 | 의미 |
-  | --- | --- | --- |
-  | CI | Continuous **Integration** | 코드를 자주 통합하고 자동 검증 |
-  | CD | Continuous **Delivery** | 언제든 배포 가능한 상태 유지 (수동 승인) |
-  | CD | Continuous **Deployment** | 통과하면 자동으로 운영까지 배포 |
+| --- | --- | --- |
+| CI | Continuous **Integration** | 코드를 자주 통합하고 자동 검증 |
+| CD | Continuous **Delivery** | 언제든 배포 가능한 상태 유지 (수동 승인) |
+| CD | Continuous **Deployment** | 통과하면 자동으로 운영까지 배포 |
 
 </div>
 
