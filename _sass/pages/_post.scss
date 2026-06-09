@@ -542,6 +542,7 @@ html[data-mode='dark'] {
     h4 {
       font-size: 1rem;
       line-height: 1.4;
+
       @extend %text-clip;
     }
   }
