@@ -112,7 +112,7 @@ layout: default
                   <span class="categories">
                     {% for category in post.categories %}
                       {{ category }}
-                      {%- unless forloop.last -%},{%- endunless -%}
+                      {%- unless forloop.last -%}<span class="mx-1">&gt;</span>{%- endunless -%}
                     {% endfor %}
                   </span>
                 {% endif %}
