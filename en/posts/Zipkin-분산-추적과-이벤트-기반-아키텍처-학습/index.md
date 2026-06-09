@@ -2,7 +2,7 @@
 layout: "post"
 title: "Zipkin distributed tracing and event-based architecture learning"
 date: 2026-06-08 09:00:00 +0900
-last_modified_at: 2026-06-09 01:45:00 +0900
+last_modified_at: 2026-06-09 14:50:00 +0900
 categories: ["Spring 단기 심화", "심화 주차"]
 tags: ["TIL", "Zipkin"]
 description: "Distributed tracing with Zipkin, Trace/Span roles, and message queue-based event architecture for asynchronous processing and traffic buffering"

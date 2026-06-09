@@ -1,11 +1,11 @@
 ---
 title: "[TIL] PATCH 요청에서 null과 미전달을 구분하는 방법"
 date: 2026-06-03 09:00:00 +0900
-last_modified_at: 2026-06-05 15:45:00 +0900
+last_modified_at: 2026-06-09 14:50:00 +0900
 categories: ["GDGoC KNU", "0 to Product"]
 tags: ["project"]
 description: "PATCH 요청의 필드 미전달과 명시적 null 전달 차이, JsonNullable 활용 선택적 필드 수정 방법"
-description_source: "notion"
+description_source: "manual"
 english_url: "/en/posts/TIL-PATCH-요청에서-null과-미전달을-구분하는-방법/"
 notion_id: "3767788a-fc66-808d-8dee-c8b66e899d4d"
 notion_lang: "ko"

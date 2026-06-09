@@ -2,7 +2,7 @@
 layout: "post"
 title: "[TIL] How to distinguish between null and undelivered in PATCH requests"
 date: 2026-06-03 09:00:00 +0900
-last_modified_at: 2026-06-05 15:45:00 +0900
+last_modified_at: 2026-06-09 14:50:00 +0900
 categories: ["GDGoC KNU", "0 to Product"]
 tags: ["project"]
 description: "Distinguishing 'missing field' and 'explicit null' in PATCH requests, and selective field updates using JsonNullable"
@@ -71,7 +71,7 @@ In this case, both of the following situations appear to be null in Java objects
 
 The first means that the description will not be modified at all, and the second means that the description will be changed to null.
 
-However, since both come in the same `null`, the two situations cannot be distinguished using the general `String` type alone.
+However, since both come in as the same `null`, the two situations cannot be distinguished using only the general `String` type.
 
 ## 3 states of PATCH request
 

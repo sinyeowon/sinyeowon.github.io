@@ -1,11 +1,11 @@
 ---
 title: "Docker와 컨테이너 관리 능력"
 date: 2026-06-05 09:00:00 +0900
-last_modified_at: 2026-06-06 22:46:00 +0900
+last_modified_at: 2026-06-09 14:50:00 +0900
 categories: ["Spring 단기 심화", "심화 주차"]
 tags: ["TIL", "Docker"]
 description: "Docker Compose 개념, 다중 컨테이너 통합 설정 파일 실행 및 관리 방법"
-description_source: "notion"
+description_source: "manual"
 english_url: "/en/posts/TIL-Docker와-컨테이너-관리-능력/"
 notion_id: "3767788a-fc66-805f-b246-ffcc7f2ee6fc"
 notion_lang: "ko"

@@ -2,7 +2,7 @@
 layout: "post"
 title: "[Python] Programmers - Overtime Index"
 date: 2026-06-08 09:00:00 +0900
-last_modified_at: 2026-06-09 01:10:00 +0900
+last_modified_at: 2026-06-09 14:50:00 +0900
 categories: ["Programmers", "Python"]
 tags: ["Python", "programmers"]
 description: "Inefficiency of sorting iterations in the overtime index problem, and efficiency improvement using max heap"

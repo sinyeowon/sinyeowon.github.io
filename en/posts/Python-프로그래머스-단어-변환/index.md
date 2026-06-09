@@ -2,7 +2,7 @@
 layout: "post"
 title: "[Python] Programmers - Word Conversion"
 date: 2026-06-07 09:00:00 +0900
-last_modified_at: 2026-06-09 01:15:00 +0900
+last_modified_at: 2026-06-09 14:50:00 +0900
 categories: ["Programmers", "Python"]
 tags: ["Python", "programmers"]
 description: "Shortest conversion calculation using BFS, and Python data structures like deque, set, tuple, and zip()"
@@ -94,4 +94,4 @@ I used zip() to compare two strings and check if they differ by just one alphabe
 
 Finally, in the code, BFS checks all words at level 0 → Checks all words at level 1 → Checks all words at level 2 → … Search in order and check the shortest distances first.
 
-Therefore, the first encountered step can be the minimum number of transformations.
+Therefore, the first step encountered can be the minimum number of transformations.

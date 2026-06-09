@@ -2,7 +2,7 @@
 layout: "post"
 title: "Understand caching and API performance optimization"
 date: 2026-06-06 09:00:00 +0900
-last_modified_at: 2026-06-09 01:13:00 +0900
+last_modified_at: 2026-06-09 14:50:00 +0900
 categories: ["Spring 단기 심화", "심화 주차"]
 tags: ["TIL", "Cache"]
 description: "Caching and Redis concepts, Cache Hit/Miss, TTL, cache invalidation strategies, and API performance optimization considerations"
