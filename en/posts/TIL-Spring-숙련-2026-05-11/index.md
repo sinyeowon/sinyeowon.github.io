@@ -81,13 +81,13 @@ notion_lang: "en"
                 Implemented like this:
 
 - **Understanding Password Encryption**<br>
-    
-
 <div class="notion-callout" markdown="1">
 
 <div class="notion-callout-heading">
-<span class="notion-callout-icon">📍</span> <span class="notion-callout-title"></span>
+<span class="notion-callout-icon">📍</span> <span class="notion-callout-title">When registering as a member, the ‘password’ must not be registered in the DB exactly as it is entered by the user.</span>
 </div>
+
+Password encryption is mandatory under the ‘Information and Communications Network Act and Personal Information Protection Act’.
 
 </div>- After encryption, password storage is required.
         - Plaintext → (Encryption algorithm) → Ciphertext
@@ -111,13 +111,13 @@ ex) “nobodynobody” → “$2a$10$..”
                         2. **Check whether it matches the “ID, password (ciphertext)” stored in the DB**
 
     - Password Matching<br>
-        
-
 <div class="notion-callout" markdown="1">
 
 <div class="notion-callout-heading">
-<span class="notion-callout-icon">📍</span> <span class="notion-callout-title"></span>
+<span class="notion-callout-icon">📍</span> <span class="notion-callout-title">Use the password encryption function provided by a framework called Spring Security.</span>
 </div>
+
+PasswordEncoder, which we saw as an example of manual bean registration, is a password encryption method provided by the security.It is also widely used as it has a function that compares the password entered by the user with the encrypted and stored password to check whether it matches.
 
 </div>
 

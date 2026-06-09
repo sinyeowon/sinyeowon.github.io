@@ -46,12 +46,10 @@ Without a branching strategy, accidents can occur, such as your work overwriting
   | Compatibility with distribution | Not compatible with rapid distribution (CD) | PR Merge = Immediate Deployment |
   | prerequisites | — | Automated testing is an essential premise |
 
-    
-
 <div class="notion-callout" markdown="1">
 
 <div class="notion-callout-heading">
-<span class="notion-callout-icon">📍</span> <span class="notion-callout-title"></span>
+<span class="notion-callout-icon">📍</span> <span class="notion-callout-title">Most startups/web services start with Github Flow and expand to Git Flow as they grow.</span>
 </div>
 
 </div>
@@ -190,13 +188,13 @@ Without a branching strategy, accidents can occur, such as your work overwriting
 
         - Merged PR branch
 
-        - Branch with release tag
-
-<div class="notion-callout" markdown="1">
+        - Branch with release tag<div class="notion-callout" markdown="1">
 
 <div class="notion-callout-heading">
-<span class="notion-callout-icon">📍</span> <span class="notion-callout-title"></span>
+<span class="notion-callout-icon">📍</span> <span class="notion-callout-title">Using git push --force-with-lease` causes it to fail when the remote is not what I expected.</span>
 </div>
+
+→ If force push is required, always use `--force-with-lease`
 
 </div>
 
@@ -274,13 +272,17 @@ Conflicts occur when two branches modify the same line in the same file differen
 
     → If even one step fails, it stops immediately + notification / broken builds never advance to the next step
 
-    
-
 <div class="notion-callout" markdown="1">
 
 <div class="notion-callout-heading">
-<span class="notion-callout-icon">📍</span> <span class="notion-callout-title"></span>
+<span class="notion-callout-icon">📍</span> <span class="notion-callout-title">CI/CD Glossary</span>
 </div>
+
+| abbreviation | full name | meaning |
+  | --- | --- | --- |
+  | C.I. | Continuous **Integration** | Frequent code integration and automatic verification |
+  | CD | Continuous **Delivery** | Stay deployable at any time (manual approval) |
+  | CD | Continuous **Deployment** | If passed, automatically distributed to operation |
 
 </div>
 
