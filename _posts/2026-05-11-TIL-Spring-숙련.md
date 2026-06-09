@@ -81,25 +81,11 @@ notion_lang: "ko"
 
 <div class="notion-callout" markdown="1">
 
-    <div class="notion-callout-heading" markdown="1">
+<div class="notion-callout-heading">
+<span class="notion-callout-icon">📍</span> <span class="notion-callout-title"></span>
+</div>
 
-    <span class="notion-callout-icon">📍</span>
-
-    <div class="notion-callout-title" markdown="1">
-
-    회원 등록 시, ‘비밀번호’는 사용자가 입력한 문자 그대로 DB에 등록하면 안됨
-
-    </div>
-
-    </div>
-
-    <div class="notion-callout-body" markdown="1">
-
-    ‘정보통신망법, 개인정보보호법’에 의해 비밀번호 암호화(Encryption)가 의무임
-
-    </div>
-
-    </div>
+</div>
 
     - 암호화 후, 패스워드 저장이 필요함
         - 평문 → (암호화 알고리즘) → 암호문
@@ -127,27 +113,11 @@ ex) “nobodynobody” → “$2a$10$..”
 
 <div class="notion-callout" markdown="1">
 
-        <div class="notion-callout-heading" markdown="1">
+<div class="notion-callout-heading">
+<span class="notion-callout-icon">📍</span> <span class="notion-callout-title"></span>
+</div>
 
-        <span class="notion-callout-icon">📍</span>
-
-        <div class="notion-callout-title" markdown="1">
-
-        Spring Security라는 프레임워크에서 제공하는 비밀번호 암호화 기능을 사용
-
-        </div>
-
-        </div>
-
-        <div class="notion-callout-body" markdown="1">
-
-        Bean 수동등록 예제로 봤던 PasswordEncoder가 해당 Security에서 제공하는 비밀번호 암호화 메서드임
-
-                사용자가 입력한 비밀번호가 암호화되어 저장된 비밀번호와 비교하여 일치여부를 확인해주는 기능도 가지고 있어 많이 사용됨
-
-        </div>
-
-        </div>
+</div>
 
         ```java
         // 사용예시

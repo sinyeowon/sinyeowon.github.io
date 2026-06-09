@@ -45,19 +45,11 @@ notion_lang: "ko"
 
 <div class="notion-callout" markdown="1">
 
-    <div class="notion-callout-heading" markdown="1">
+<div class="notion-callout-heading">
+<span class="notion-callout-icon">📍</span> <span class="notion-callout-title"></span>
+</div>
 
-    <span class="notion-callout-icon">📍</span>
-
-    <div class="notion-callout-title" markdown="1">
-
-    대부분의 스타트업/웹 서비스는 Github Flow로 시작하고, 규모가 커지면 Git Flow로 확장함
-
-    </div>
-
-    </div>
-
-    </div>
+</div>
 
 ### **PR 워크플로우와 코드 리뷰**
 
@@ -201,25 +193,11 @@ notion_lang: "ko"
 
 <div class="notion-callout" markdown="1">
 
-    <div class="notion-callout-heading" markdown="1">
+<div class="notion-callout-heading">
+<span class="notion-callout-icon">📍</span> <span class="notion-callout-title"></span>
+</div>
 
-    <span class="notion-callout-icon">📍</span>
-
-    <div class="notion-callout-title" markdown="1">
-
-    git push --force-with-lease` 를 사용하면 원격이 내 예상과 다를 때 실패시킴
-
-    </div>
-
-    </div>
-
-    <div class="notion-callout-body" markdown="1">
-
-    → Force push가 필요하면 무조건 `--force-with-lease`
-
-    </div>
-
-    </div>
+</div>
 
 ### **충돌(Conflict) 해결**
 
@@ -301,29 +279,11 @@ notion_lang: "ko"
 
 <div class="notion-callout" markdown="1">
 
-    <div class="notion-callout-heading" markdown="1">
+<div class="notion-callout-heading">
+<span class="notion-callout-icon">📍</span> <span class="notion-callout-title"></span>
+</div>
 
-    <span class="notion-callout-icon">📍</span>
-
-    <div class="notion-callout-title" markdown="1">
-
-    CI/CD 용어 정리
-
-    </div>
-
-    </div>
-
-    <div class="notion-callout-body" markdown="1">
-
-  | 약자 | 풀네임 | 의미 |
-  | --- | --- | --- |
-  | CI | Continuous **Integration** | 코드를 자주 통합하고 자동 검증 |
-  | CD | Continuous **Delivery** | 언제든 배포 가능한 상태 유지 (수동 승인) |
-  | CD | Continuous **Deployment** | 통과하면 자동으로 운영까지 배포 |
-
-    </div>
-
-    </div>
+</div>
 
 - Github Actions로 30줄 안에 시작하기<br>
     ### `.github/workflows/ci.yml`

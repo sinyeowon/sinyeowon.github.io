@@ -59,11 +59,13 @@ header {
   .notion-callout {
     margin: 1.75rem 0;
     padding: 1.25rem 1.35rem;
-    border-left: 4px solid #ffb3c1;
+    border-left: 4px solid #ffc2d1;
     background: #fff0f3;
     color: var(--text-color);
     font-weight: 500;
     line-height: 1.85;
+    overflow-wrap: break-word;
+    word-break: break-word;
 
     > :last-child {
       margin-bottom: 0;
@@ -87,7 +89,7 @@ header {
       font-size: 1.05rem;
       line-height: 1;
       font-family: 'Apple Color Emoji', 'Segoe UI Emoji', 'Segoe UI Symbol', sans-serif;
-      background: rgb(255 179 193 / 12%);
+      background: rgb(255 194 209 / 20%);
       border-radius: 50%;
     }
 
@@ -95,10 +97,6 @@ header {
       margin: 0;
       font-weight: 700;
       color: var(--text-color);
-    }
-
-    .notion-callout-body {
-      margin: 0;
     }
   }
 
@@ -134,8 +132,8 @@ header {
 html[data-mode='dark'] {
   .content {
     .notion-callout {
-      border-left-color: rgb(255 179 193 / 62%);
-      background: rgb(255 179 193 / 14%);
+      border-left-color: rgb(255 194 209 / 60%);
+      background: rgb(255 194 209 / 12%);
     }
   }
 }

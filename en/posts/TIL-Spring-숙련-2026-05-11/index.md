@@ -85,25 +85,11 @@ notion_lang: "en"
 
 <div class="notion-callout" markdown="1">
 
-    <div class="notion-callout-heading" markdown="1">
+<div class="notion-callout-heading">
+<span class="notion-callout-icon">📍</span> <span class="notion-callout-title"></span>
+</div>
 
-    <span class="notion-callout-icon">📍</span>
-
-    <div class="notion-callout-title" markdown="1">
-
-    When registering as a member, the ‘password’ must not be registered in the DB exactly as it is entered by the user.
-
-    </div>
-
-    </div>
-
-    <div class="notion-callout-body" markdown="1">
-
-    Password encryption is mandatory under the ‘Information and Communications Network Act and Personal Information Protection Act’.
-
-    </div>
-
-    </div>- After encryption, password storage is required.
+</div>- After encryption, password storage is required.
         - Plaintext → (Encryption algorithm) → Ciphertext
 ex) “nobodynobody” → “$2a$10$..”
 
@@ -127,27 +113,13 @@ ex) “nobodynobody” → “$2a$10$..”
     - Password Matching<br>
         
 
-        <div class="notion-callout" markdown="1">
+<div class="notion-callout" markdown="1">
 
-        <div class="notion-callout-heading" markdown="1">
+<div class="notion-callout-heading">
+<span class="notion-callout-icon">📍</span> <span class="notion-callout-title"></span>
+</div>
 
-        <span class="notion-callout-icon">📍</span>
-
-        <div class="notion-callout-title" markdown="1">
-
-        Use the password encryption function provided by a framework called Spring Security.
-
-        </div>
-
-        </div>
-
-        <div class="notion-callout-body" markdown="1">
-
-        PasswordEncoder, which we saw as an example of manual bean registration, is a password encryption method provided by the security.It is also widely used as it has a function that compares the password entered by the user with the encrypted and stored password to check whether it matches.
-
-        </div>
-
-        </div>
+</div>
 
         ```java
         // 사용예시

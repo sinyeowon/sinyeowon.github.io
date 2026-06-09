@@ -1002,50 +1002,18 @@ function calloutMarkdown(markdown, icon = "💡") {
   const { title, body } = splitCalloutContent(content);
   const normalizedTitle = normalizeCalloutTitle(title);
 
-  if (process.env.NOTION_DEBUG_CALLOUT === "true") {
-    try {
-      console.log(`[DEBUG_CALLOUT] raw:${JSON.stringify(String(markdown||""))}`);
-      console.log(`[DEBUG_CALLOUT] content:${JSON.stringify(String(content||""))}`);
-      console.log(`[DEBUG_CALLOUT] title:${JSON.stringify(String(title||""))}`);
-      console.log(`[DEBUG_CALLOUT] normalizedTitle:${JSON.stringify(String(normalizedTitle||""))}`);
-      console.log(`[DEBUG_CALLOUT] body:${JSON.stringify(String(body||""))}`);
-    } catch (e) {
-      console.log('[DEBUG_CALLOUT] failed to stringify callout debug data', e && e.message);
-    }
-  }
   const lines = [
     '<div class="notion-callout" markdown="1">',
     '',
-    '<div class="notion-callout-heading" markdown="1">',
+    '<div class="notion-callout-heading">',
+    `<span class="notion-callout-icon">${escapeHtml(icon)}</span>` +
+      (normalizedTitle ? ` <span class="notion-callout-title">${normalizedTitle}</span>` : ""),
+    '</div>',
     '',
-    `<span class="notion-callout-icon">${escapeHtml(icon)}</span>`,
-    ''
+    body,
+    '',
+    "</div>"
   ];
-
-  if (normalizedTitle) {
-    lines.push(
-      '<div class="notion-callout-title" markdown="1">',
-      '',
-      normalizedTitle,
-      '',
-      "</div>"
-    );
-  }
-
-  lines.push("", "</div>");
-
-  if (body) {
-    lines.push(
-      '',
-      '<div class="notion-callout-body" markdown="1">',
-      '',
-      body,
-      '',
-      "</div>"
-    );
-  }
-
-  lines.push("", "</div>");
 
   return lines.join("\n");
 }
