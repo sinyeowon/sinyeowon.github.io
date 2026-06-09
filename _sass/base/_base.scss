@@ -151,7 +151,7 @@ main {
       cursor: zoom-in;
     }
 
-    &:not(.img-link):not(.card-header):not(.post-preview) {
+    &:not(.img-link):not(.card-header):not(.post-preview):not(.notion-mention):not(.post-tag) {
       @extend %link-underline;
 
       &:hover {
