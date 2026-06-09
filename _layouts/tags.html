@@ -5,10 +5,7 @@ layout: page
 
 {% include lang.html %}
 
-{% assign HEAD_PREFIX = 'h_tag_' %}
-{% assign LIST_PREFIX = 'l_tag_' %}
-
-<div id="tags" class="tag-list taxonomy-list">
+<div id="tags">
   {% assign tags = '' | split: '' %}
   {% for t in site.tags %}
     {% assign tags = tags | push: t[0] %}
@@ -16,44 +13,17 @@ layout: page
 
   {% assign sorted_tags = tags | sort_natural %}
 
-  {% for t in sorted_tags %}
-    {% assign posts = site.tags[t] | sort: 'date' | reverse %}
-    {% capture tag_url %}/tags/{{ t | slugify | url_encode }}/{% endcapture %}
-    {% assign tag_list_id = LIST_PREFIX | append: forloop.index0 %}
-
-    <section class="taxonomy-group">
-      <div class="taxonomy-row taxonomy-group-header">
-        <a href="{{ tag_url | relative_url }}" class="taxonomy-main">
-          <i class="fa fa-tag fa-fw"></i>
-          <span class="taxonomy-title">{{ t }}</span>
-        </a>
-
-        <span class="taxonomy-count">
-          {{ posts | size }}
-          {{ site.data.locales[lang].categories.post_measure }}
-        </span>
-
-        <a
-          href="#{{ tag_list_id }}"
-          data-bs-toggle="collapse"
-          aria-expanded="false"
-          aria-label="{{ HEAD_PREFIX }}{{ forloop.index0 }}-trigger"
-          class="taxonomy-trigger"
-        >
-          <i class="fas fa-fw fa-angle-down rotate"></i>
-        </a>
-      </div>
-
-      <div id="{{ tag_list_id }}" class="collapse taxonomy-posts">
-        {% for post in posts %}
-          <a href="{{ post.url | relative_url }}" class="taxonomy-post">
-            <span class="taxonomy-post-title">{{ post.title }}</span>
-            <span class="taxonomy-post-date">
-              {% include datetime.html date=post.date lang=lang %}
-            </span>
-          </a>
-        {% endfor %}
-      </div>
-    </section>
-  {% endfor %}
+  <div class="post-tags mt-4">
+    {% for t in sorted_tags %}
+      {% assign posts = site.tags[t] %}
+      {% capture tag_url %}/tags/{{ t | slugify | url_encode }}/{% endcapture %}
+      
+      <a
+        href="{{ tag_url | relative_url }}"
+        class="post-tag no-text-decoration"
+      >
+        {{ t }} <span class="text-muted" style="font-size: 0.8em; margin-left: 2px;">({{ posts | size }})</span>
+      </a>
+    {% endfor %}
+  </div>
 </div>
