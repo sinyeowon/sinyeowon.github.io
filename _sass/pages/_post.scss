@@ -99,28 +99,26 @@ header {
       color: var(--text-color);
     }
   }
+a.notion-mention,
+.notion-mention {
+  display: inline-flex;
+  align-items: center;
+  padding: 0 0.15rem;
+  color: var(--text-muted-color);
+  text-decoration: none;
+  font-size: 0.95rem;
+  font-weight: 500;
+  background: none !important;
+  box-shadow: none !important;
+  transition: all 0.2s ease-in-out;
 
-  a.notion-mention,
-  .notion-mention {
-    display: inline-flex;
-    align-items: center;
-    padding: 0 0.15rem;
-    color: var(--link-color);
-    text-decoration: none;
-    font-size: 0.95rem;
-    font-weight: 500;
+  &:hover {
     background: none !important;
     box-shadow: none !important;
-    transition: font-weight 0.2s ease-in-out;
-
-    &:hover {
-      background: none !important;
-      box-shadow: none !important;
-      font-weight: 700;
-      color: var(--link-color);
-    }
+    font-weight: 600;
+    color: var(--text-color);
   }
-
+}
   .notion-indent + .notion-indent {
     margin-top: 0.5rem;
   }
