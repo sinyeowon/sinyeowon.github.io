@@ -104,8 +104,9 @@ header {
     display: inline-flex;
     align-items: center;
     padding: 0 0.15rem;
-    color: var(--text-muted-color);
-    text-decoration: none;
+    color: var(--text-muted-color) !important;
+    text-decoration: none !important;
+    border-bottom: none !important;
     font-size: 0.95rem;
     font-weight: 500;
     background: none !important;
@@ -115,8 +116,9 @@ header {
     &:hover {
       background: none !important;
       box-shadow: none !important;
+      border-bottom: none !important;
       font-weight: 600;
-      color: var(--text-color);
+      color: var(--text-color) !important;
     }
   }
 
