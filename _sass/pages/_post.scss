@@ -104,15 +104,20 @@ header {
   .notion-mention {
     display: inline-flex;
     align-items: center;
-    border-radius: 999px;
-    padding: 0.15rem 0.5rem;
+    padding: 0 0.15rem;
     color: var(--link-color);
     text-decoration: none;
     font-size: 0.95rem;
-    transition: background-color 0.2s ease-in-out;
+    font-weight: 500;
+    background: none !important;
+    box-shadow: none !important;
+    transition: font-weight 0.2s ease-in-out;
 
     &:hover {
-      background: rgb(119 66 255 / 12%);
+      background: none !important;
+      box-shadow: none !important;
+      font-weight: 700;
+      color: var(--link-color);
     }
   }
 
