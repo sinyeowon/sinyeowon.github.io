@@ -4,7 +4,7 @@ date: 2026-04-15 16:11:38 +0900
 last_modified_at: 2026-05-03 05:34:06 +0900
 categories: ["Spring 단기 심화", "과제"]
 tags: ['Java', 'Spring', 'TIL', '과제', '내일배움캠프']
-description: "@Entity 어노테이션 이 클래스는 DB 테이블이랑 매핑되는 클래스 라는 것을 알려줌 JPA 의존성을 추가해줘야함 -> JPA를 통해 이 클래스를 테이블로 인식함 implementation 'org.springframework."
+description: "Spring Boot와 JPA를 활용한 CRUD 구현의 기초인 Entity와 DTO의 개념을 정리하고, 각 어노테이션의 역할과 데이터 전송 및 매핑 흐름을 학습했다."
 english_url: "/en/posts/TIL-CRUD-Code-Shadowing-1/"
 ---
 ## Entity

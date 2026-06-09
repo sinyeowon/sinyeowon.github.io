@@ -4,7 +4,7 @@ date: 2026-06-03 09:00:00 +0900
 last_modified_at: 2026-06-05 15:45:00 +0900
 categories: ["GDGoC KNU", "0 to Product"]
 tags: ["project"]
-description: "크루 정보 수정 API를 구현하면서 description 필드 때문에 문제가 생겼다."
+description: "PATCH 요청 시 '필드 미전달'과 '명시적 null 전달'의 차이를 이해하고, JsonNullable을 활용해 선택적 필드 수정을 정확하게 처리하는 방법을 정리했다."
 description_source: "notion"
 english_url: "/en/posts/TIL-PATCH-요청에서-null과-미전달을-구분하는-방법/"
 notion_id: "3767788a-fc66-808d-8dee-c8b66e899d4d"

@@ -5,7 +5,7 @@ date: 2026-04-05 16:27:07 +0900
 last_modified_at: 2026-04-15 12:45:59 +0900
 categories: ["BaekJoon", "Java"]
 tags: ['Java', 'baekjoon']
-description: "Need to create a new line for each line If you do not put it inside the loop,"
+description: "Solved BaekJoon 11021 using Java, focusing on the correct usage of BufferedReader and StringTokenizer, specifically why tokens must be refreshed inside a loop, and how to handle IOException."
 lang: "en"
 ui_lang: "ko-KR"
 toc: true
