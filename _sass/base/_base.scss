@@ -244,6 +244,10 @@ main {
   &:not(:last-child) {
     margin-right: 0.2rem;
   }
+
+  &:hover {
+    @extend %tag-hover;
+  }
 }
 
 .rounded-10 {
