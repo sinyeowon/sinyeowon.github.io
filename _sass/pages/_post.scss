@@ -99,26 +99,28 @@ header {
       color: var(--text-color);
     }
   }
-a.notion-mention,
-.notion-mention {
-  display: inline-flex;
-  align-items: center;
-  padding: 0 0.15rem;
-  color: var(--text-muted-color);
-  text-decoration: none;
-  font-size: 0.95rem;
-  font-weight: 500;
-  background: none !important;
-  box-shadow: none !important;
-  transition: all 0.2s ease-in-out;
 
-  &:hover {
+  a.notion-mention,
+  .notion-mention {
+    display: inline-flex;
+    align-items: center;
+    padding: 0 0.15rem;
+    color: var(--text-muted-color);
+    text-decoration: none;
+    font-size: 0.95rem;
+    font-weight: 500;
     background: none !important;
     box-shadow: none !important;
-    font-weight: 600;
-    color: var(--text-color);
+    transition: all 0.2s ease-in-out;
+
+    &:hover {
+      background: none !important;
+      box-shadow: none !important;
+      font-weight: 600;
+      color: var(--text-color);
+    }
   }
-}
+
   .notion-indent + .notion-indent {
     margin-top: 0.5rem;
   }
@@ -560,26 +562,6 @@ html[data-mode='dark'] {
 
 .share-label {
   @include mx.label(inherit, 400, inherit);
-
-  &::after {
-    content: ':';
-  }
-}
-
-.content > p > img {
-  @include bp.lte(bp.get(md)) {
-    max-width: calc(100% + 1rem);
-  }
-}
-
-h2,
-h3,
-h4 {
-  @include bp.xl {
-    scroll-margin-top: 2rem;
-  }
-}
-bel(inherit, 400, inherit);
 
   &::after {
     content: ':';
