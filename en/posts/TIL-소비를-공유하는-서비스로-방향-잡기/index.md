@@ -95,7 +95,7 @@ notion_lang: "en"
 
 - We also decided that it would be a good idea to add the `mode` column to `AI_RESULT` to distinguish between good AI and bad AI modes.
 
-## **Team discussion results**
+## Team discussion results
 
 - Based on feedback, we defined TodayPoor as closer to a **consumption-based social game/SNS** than a **consumption habit improvement app**.
 

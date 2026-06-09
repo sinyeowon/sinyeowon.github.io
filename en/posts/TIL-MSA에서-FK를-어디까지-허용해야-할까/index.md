@@ -29,7 +29,7 @@ notion_lang: "en"
 
 <hr>
 
-## **Domain and service separation**
+## Domain and service separation
 
 It was decided to separate the project into five services as follows:
 
@@ -67,7 +67,7 @@ It was decided to separate the project into five services as follows:
 
     <hr>
 
-## **Why separate services?**
+## Why separate services?
 
 At first, I thought MSA was simply a “structure that divides services into multiple services.”
 
@@ -91,7 +91,7 @@ For example, since the delivery creation flow after order creation is closely co
 
 <hr>
 
-## **FK concerns in MSA environment**
+## FK concerns in MSA environment
 
 In the MSA structure, each service must own its own data.
 
@@ -105,7 +105,7 @@ Data inquiry between services is handled through API calls or event-based method
 
 <hr>
 
-## **Is it necessary to use FK even within the same service?**
+## Is it necessary to use FK even within the same service?
 
 At first, I thought it was natural to use FK within the same service, but I learned that in practice, there are cases where FK is not used due to operational complexity and performance issues.
 
@@ -121,7 +121,7 @@ For the same reason, consistency is also managed at the application level.
 
 <hr>
 
-## **User table design concerns**
+## User table design concerns
 
 I was impressed by the fact that company_id or hub_id had to be saved depending on the user's role.
 
@@ -135,7 +135,7 @@ We had to consider a structure in which the reference object varies depending on
 
 <hr>
 
-## **Delivery manager design concerns**
+## Delivery manager design concerns
 
 I was wondering what kind of relationship the delivery person should have with the user entity.
 

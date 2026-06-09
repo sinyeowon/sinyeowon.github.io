@@ -766,16 +766,16 @@ async function renderBlock(block, context, depth = 0, listNumber = 1) {
       output = markdownInline(value.rich_text, context);
       break;
     case "heading_1":
-      output = `# ${markdownInline(value.rich_text, context)}`;
+      output = `# ${markdownInline(value.rich_text, context).replace(/^\*\*(.*)\*\*$/, "$1")}`;
       break;
     case "heading_2":
-      output = `## ${markdownInline(value.rich_text, context)}`;
+      output = `## ${markdownInline(value.rich_text, context).replace(/^\*\*(.*)\*\*$/, "$1")}`;
       break;
     case "heading_3":
-      output = `### ${markdownInline(value.rich_text, context)}`;
+      output = `### ${markdownInline(value.rich_text, context).replace(/^\*\*(.*)\*\*$/, "$1")}`;
       break;
     case "heading_4":
-      output = `#### ${markdownInline(value.rich_text, context)}`;
+      output = `#### ${markdownInline(value.rich_text, context).replace(/^\*\*(.*)\*\*$/, "$1")}`;
       break;
     case "bulleted_list_item":
       output = `${indent}- ${markdownInline(value.rich_text, context)}`;
@@ -815,7 +815,8 @@ async function renderBlock(block, context, depth = 0, listNumber = 1) {
       output = await renderTable(block, depth, context);
       break;
     case "toggle": {
-      const summary = markdownInline(value.rich_text, context) || "상세 내용";
+      const summaryText = markdownInline(value.rich_text, context) || "상세 내용";
+      const summary = summaryText.replace(/\*\*([^*]+)\*\*/g, "<strong>$1</strong>");
       const children = block.has_children
         ? await renderBlocks(await getBlockChildren(block.id), context, depth)
         : "";

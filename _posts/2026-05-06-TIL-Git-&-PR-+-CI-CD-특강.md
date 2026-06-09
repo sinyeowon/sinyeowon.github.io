@@ -12,7 +12,7 @@ notion_lang: "ko"
 ---
 ## 공부한 내용
 
-### **Git Flow 브랜치 전략**
+### Git Flow 브랜치 전략
 
 브랜치 전략이 없다면, 내 작업이 동료 작업을 덮어쓰거나 / 배포 직전인데 미완성 코드가 섞이거나 / 롤백하고 싶은데 기준점이 없는 등의 사고가 발생할 수 있음
 
@@ -49,7 +49,7 @@ notion_lang: "ko"
 
 </div>
 
-### **PR 워크플로우와 코드 리뷰**
+### PR 워크플로우와 코드 리뷰
 
 - Pull Request(PR): 내 브랜치 작업을 main(또는 develop)에 합쳐주세요 라고 공식적으로 요청하는 절차
 
@@ -135,7 +135,7 @@ notion_lang: "ko"
 
         - 감사 인사
 
-### **Merge와 Rebase**
+### Merge와 Rebase
 
 - Merge: 두 히스토리를 합치는 머지 커밋
     ![image](/assets/img/notion/TIL-Git-&-PR-+-CI-CD-특강/02-ac94822e48.png)
@@ -197,7 +197,7 @@ notion_lang: "ko"
 
 </div>
 
-### **충돌(Conflict) 해결**
+### 충돌(Conflict) 해결
 
 충돌은 두 브랜치가 같은 파일의 같은 줄을 다르게 수정했을 때 발생
 
@@ -244,7 +244,7 @@ notion_lang: "ko"
         git rebase --abort  # rebase 중이면
         ```
 
-### **CI/CD 파이프라인 입문**
+### CI/CD 파이프라인 입문
 
 - 수동 배포와 자동화의 차이
     ![image](/assets/img/notion/TIL-Git-&-PR-+-CI-CD-특강/04-8f8d92b96d.png)

@@ -17,7 +17,7 @@ notion_lang: "en"
 ---
 ## What I studied
 
-### **Git Flow branching strategy**
+### Git Flow branching strategy
 
 Without a branching strategy, accidents can occur, such as your work overwriting a colleague's work, unfinished code mixed in when you're about to deploy, or you wanting to roll back but having no reference point.
 
@@ -54,7 +54,7 @@ Without a branching strategy, accidents can occur, such as your work overwriting
 
 </div>
 
-### **PR Workflow and Code Review**
+### PR Workflow and Code Review
 
 - Pull Request (PR): A formal request to merge my branch work into main (or develop)
 
@@ -138,7 +138,7 @@ Without a branching strategy, accidents can occur, such as your work overwriting
 
         - Thank you
 
-### **Merge and Rebase**
+### Merge and Rebase
 
 - Merge: Merge commit to combine two histories
     ![image](/assets/img/notion/TIL-Git-&-PR-+-CI-CD-특강/02-ac94822e48.png)
@@ -198,7 +198,7 @@ Without a branching strategy, accidents can occur, such as your work overwriting
 
 </div>
 
-### **Conflict resolution**
+### Conflict resolution
 
 Conflicts occur when two branches modify the same line in the same file differently.
 
@@ -245,7 +245,7 @@ Conflicts occur when two branches modify the same line in the same file differen
         git rebase --abort  # rebase 중이면
         ```
 
-### **CI/CD Pipeline Introduction**
+### CI/CD Pipeline Introduction
 
 - Difference between manual deployment and automation
     ![image](/assets/img/notion/TIL-Git-&-PR-+-CI-CD-특강/04-8f8d92b96d.png)

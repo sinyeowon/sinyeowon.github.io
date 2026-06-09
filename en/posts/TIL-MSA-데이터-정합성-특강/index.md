@@ -312,7 +312,7 @@ When receiving ShippingCompletedEvent → OrderStatus = COMPLETED
 </div>> Note: The code below has been simplified as much as possible for learning purposes, and all exception handling, transactions, security, and test codes have been omitted. Please note that in practice, more elaborate design and additional settings are required.
 
 <details markdown="1">
-<summary>**Project Structure**</summary>
+<summary><strong>Project Structure</strong></summary>
 
 ```javascript
 └─ src
@@ -350,7 +350,7 @@ When receiving ShippingCompletedEvent → OrderStatus = COMPLETED
 </details>
 
 <details markdown="1">
-<summary>**`application.yml`**</summary>
+<summary><strong>`application.yml`</strong></summary>
 
 ```javascript
 server:
@@ -374,7 +374,7 @@ spring:
 </details>
 
 <details markdown="1">
-<summary>**Kafka producer/consumer configuration (simple example)**</summary>
+<summary><strong>Kafka producer/consumer configuration (simple example)</strong></summary>
 
 In the example, Spring Boot's automatic configuration (Spring for Apache Kafka) is utilized to its full potential, so there is not much additional configuration.
 
@@ -430,9 +430,9 @@ public class KafkaProducerConfig {
 </details>
 
 <details markdown="1">
-<summary>**Domain and event classes**</summary>
+<summary><strong>Domain and event classes</strong></summary>
 
-### **3-1) Order domain (entity)**
+### 3-1) Order domain (entity)
 
 ```java
 package com.example.sagasample.domain;
@@ -486,7 +486,7 @@ public enum OrderStatus {
 }
 ```
 
-### **3-2) Event Object (Kafka Message Payload)**
+### 3-2) Event Object (Kafka Message Payload)
 
 - **OrderCreatedEvent**: Event notifying the order service -> payment service that “order has been created”
 
@@ -538,7 +538,7 @@ public enum OrderStatus {
 </details>
 
 <details markdown="1">
-<summary>**Repository**</summary>
+<summary><strong>Repository</strong></summary>
 
 ```javascript
 package com.example.sagasample.repository;
@@ -551,9 +551,9 @@ public interface OrderRepository extends JpaRepository<Order, Long> {
 ```
 
 </details><details markdown="1">
-<summary>**Orchestrator & Service**</summary>
+<summary><strong>Orchestrator & Service</strong></summary>
 
-### **5-1) OrderService**
+### 5-1) OrderService
 
 - When creating **Order**, save **`Order`** entity in DB, change status to **`PAYMENT_PENDING`** and issue **OrderCreatedEvent**
 
@@ -607,7 +607,7 @@ public interface OrderRepository extends JpaRepository<Order, Long> {
 
 > Note: In reality, @Transactional scope, compensation transaction when an error occurs, Outbox pattern, etc. may be more complex.
 
-### **5-2) OrderOrchestrator (Orchestration Logic)**
+### 5-2) OrderOrchestrator (Orchestration Logic)
 
 - Receive **PaymentCompletedEvent**, **PaymentFailedEvent**, **ShippingCompletedEvent**, etc. from Kafka Consumer, and update **Order** status accordingly or perform **compensation logic** (payment cancellation, order cancellation, etc.).
 
@@ -678,7 +678,7 @@ public interface OrderRepository extends JpaRepository<Order, Long> {
 
 - Since **`PaymentCompletedEvent`** and **`PaymentFailedEvent`** come from the same topic (**`payment-events`**), they can actually be distinguished using container settings or message fields (T-type separators).
 
-### **5-3) Simple KafkaPublisher example**
+### 5-3) Simple KafkaPublisher example
 
 ```java
 package com.example.sagasample.service;
@@ -708,7 +708,7 @@ public class KafkaPublisher {
 > In reality, a separate shipping service exists, and the service must receive a ShippingRequestEvent, perform shipping logic, and then issue a ShippingCompletedEvent. Here, as a sample, we simply simulated the flow of “Delivery Request → Immediately Issue Delivery Completion Event”.</details>
 
 <details markdown="1">
-<summary>**Controller example**</summary>
+<summary><strong>Controller example</strong></summary>
 
 ```javascript
 package com.example.sagasample.controller;
@@ -741,7 +741,7 @@ public class OrderController {
 </details>
 
 <details markdown="1">
-<summary>**Payment simulator example**</summary>
+<summary><strong>Payment simulator example</strong></summary>
 
 In reality, **`PaymentService`** should exist as a **separate microservice**.
 
@@ -789,7 +789,7 @@ public class PaymentServiceSimulator {
 </details>
 
 <details markdown="1">
-<summary>**To summarize**</summary>
+<summary><strong>To summarize</strong></summary>
 
 - If each service is separated,
     1. **OrderService** issues an event on topic **`order-events`**
@@ -826,7 +826,7 @@ We hope the example code will help you quickly try out the SAGA pattern during y
 ## Q&A
 
 <details markdown="1">
-<summary>**1. RabbitMQ vs Kafka, what is the difference and how should it be applied to the Saga pattern?**</summary>
+<summary><strong>1. RabbitMQ vs Kafka, what is the difference and how should it be applied to the Saga pattern?</strong></summary>
 
 **Q**
 
@@ -862,7 +862,7 @@ We hope the example code will help you quickly try out the SAGA pattern during y
 </details>
 
 <details markdown="1">
-<summary>**2. Orchestration Saga vs Choreography Saga, when should you choose which method?**</summary>
+<summary><strong>2. Orchestration Saga vs Choreography Saga, when should you choose which method?</strong></summary>
 
 **Q**
 
@@ -898,7 +898,7 @@ We hope the example code will help you quickly try out the SAGA pattern during y
 </details>
 
 <details markdown="1">
-<summary>**3. How should compensation transactions be processed and reprocessed in case of failure?**</summary>
+<summary><strong>3. How should compensation transactions be processed and reprocessed in case of failure?</strong></summary>
 
 **Q**
 
@@ -930,7 +930,7 @@ We hope the example code will help you quickly try out the SAGA pattern during y
 </details>
 
 <details markdown="1">
-<summary>**4. How do you solve the problem of message duplication and message order guarantee?**</summary>
+<summary><strong>4. How do you solve the problem of message duplication and message order guarantee?</strong></summary>
 
 **Q**
 
@@ -956,7 +956,7 @@ We hope the example code will help you quickly try out the SAGA pattern during y
     - If it is difficult to absolutely match the order, event design should be reconsidered from the perspective of ultimate consistency (‘event-driven’ + ‘state machine’).</details>
 
 <details markdown="1">
-<summary>**5. Kafka partition and topic concepts are difficult. How should I understand and set it?**</summary>
+<summary><strong>5. Kafka partition and topic concepts are difficult. How should I understand and set it?</strong></summary>
 
 **Q**
 
@@ -983,7 +983,7 @@ We hope the example code will help you quickly try out the SAGA pattern during y
 </details>
 
 <details markdown="1">
-<summary>**6. When implementing a complex structure using the Choreography method, how do you handle the problem of increasing dependency between services and compensation transactions in case of failure?**</summary>
+<summary><strong>6. When implementing a complex structure using the Choreography method, how do you handle the problem of increasing dependency between services and compensation transactions in case of failure?</strong></summary>
 
 **Q**
 
@@ -1011,7 +1011,7 @@ We hope the example code will help you quickly try out the SAGA pattern during y
 </details>
 
 <details markdown="1">
-<summary>**7. How should compensation transactions be managed when updating?**</summary>
+<summary><strong>7. How should compensation transactions be managed when updating?</strong></summary>
 
 **Q**
 
@@ -1034,7 +1034,7 @@ We hope the example code will help you quickly try out the SAGA pattern during y
 </details>
 
 <details markdown="1">
-<summary>**8. Are there any data consistency issues if the SAGA rollback order is arbitrarily changed?**</summary>
+<summary><strong>8. Are there any data consistency issues if the SAGA rollback order is arbitrarily changed?</strong></summary>
 
 **Q**
 
@@ -1057,7 +1057,7 @@ We hope the example code will help you quickly try out the SAGA pattern during y
 </details>
 
 <details markdown="1">
-<summary>**9. Applying CQRS and Saga together becomes too complicated. To what extent is it managed in practice?**</summary>
+<summary><strong>9. Applying CQRS and Saga together becomes too complicated. To what extent is it managed in practice?</strong></summary>
 
 **Q**
 
@@ -1084,7 +1084,7 @@ We hope the example code will help you quickly try out the SAGA pattern during y
 </details>
 
 <details markdown="1">
-<summary>**10. How to test SAGA pattern?**</summary>
+<summary><strong>10. How to test SAGA pattern?</strong></summary>
 
 **Q**
 
@@ -1108,7 +1108,7 @@ We hope the example code will help you quickly try out the SAGA pattern during y
 </details>
 
 <details markdown="1">
-<summary>**11. I am curious about the problems and solutions encountered when applying the SAGA pattern in actual service (business).**</summary>
+<summary><strong>11. I am curious about the problems and solutions encountered when applying the SAGA pattern in actual service (business).</strong></summary>
 
 **Q**
 
@@ -1135,7 +1135,7 @@ We hope the example code will help you quickly try out the SAGA pattern during y
 </details>
 
 <details markdown="1">
-<summary>**12. As the number of distributed transactions increases in MSA, there are many things to think about, such as failure response, high availability, scalability, and data consistency. What approach is best?**</summary>
+<summary><strong>12. As the number of distributed transactions increases in MSA, there are many things to think about, such as failure response, high availability, scalability, and data consistency. What approach is best?</strong></summary>
 
 **Q**
 
@@ -1159,7 +1159,7 @@ We hope the example code will help you quickly try out the SAGA pattern during y
     - Introduce transaction boundaries, event issue-consumption, and compensation transaction logic step by step, gradually adding CQRS and event sourcing.</details>
 
 <details markdown="1">
-<summary>**13. What are the key points to consider when applying the Saga pattern?**</summary>
+<summary><strong>13. What are the key points to consider when applying the Saga pattern?</strong></summary>
 
 **Q**
 
@@ -1185,7 +1185,7 @@ We hope the example code will help you quickly try out the SAGA pattern during y
 </details>
 
 <details markdown="1">
-<summary>**14. When even compensation transactions can fail, are there any additional alternatives other than the Outbox pattern?**</summary>
+<summary><strong>14. When even compensation transactions can fail, are there any additional alternatives other than the Outbox pattern?</strong></summary>
 
 **Q**
 
@@ -1199,7 +1199,7 @@ The Outbox pattern is a very useful pattern for reducing message loss by atomica
 
 <hr>
 
-### **1) Orchestrator + State Machine Management**
+### 1) Orchestrator + State Machine Management
 
 - **Orchestration Saga** has been further strengthened so that the central orchestrator (or Saga Manager) tracks the status of each step and also manages the status of compensation transactions separately in case of failure.- Uses the concept of **state machine (or workflow) to record at which stage the current transaction was retried, how many times it was retried, and for what reason it failed.
     - Example) By introducing external **workflow/orchestration engines** such as Camunda, Zeebe, Netflix Conductor, Temporal.io, etc., even compensation failures can be managed in detail.
@@ -1208,7 +1208,7 @@ The Outbox pattern is a very useful pattern for reducing message loss by atomica
 
     <hr>
 
-### **2) TCC (Try-Confirm/Cancel) Pattern**
+### 2) TCC (Try-Confirm/Cancel) Pattern
 
 - **TCC** is one of the **distributed transaction guarantee techniques** similar to the Saga pattern.
     1. **Try**: Reserve resources in advance (temporarily hold them)
@@ -1226,7 +1226,7 @@ The Outbox pattern is a very useful pattern for reducing message loss by atomica
 
     <hr>
 
-### **3) Retry + DLQ + Monitoring**
+### 3) Retry + DLQ + Monitoring
 
 - Even if the **Message Loss** problem has already been reduced with the Outbox pattern, there is a possibility of failure on the side that consumes the message (compensation transaction execution).
 
@@ -1241,7 +1241,7 @@ The Outbox pattern is a very useful pattern for reducing message loss by atomica
 
     <hr>
 
-### **4) Event Sourcing + CQRS**
+### 4) Event Sourcing + CQRS
 
 - By recording all state changes as events through **event sourcing**, when a data consistency problem occurs due to a compensation transaction failure, you can go back to a specific point in time and attempt reprocessing (Replay) or reconstruct the problem part.
 
@@ -1251,7 +1251,7 @@ The Outbox pattern is a very useful pattern for reducing message loss by atomica
 
     <hr>
 
-### **5) Special EndPoint or Administrator tools for reprocessing**
+### 5) Special EndPoint or Administrator tools for reprocessing
 
 - There may be situations where you want to **reprocess** (Replay) an event that has already been issued or a reward failure event.
     - Example) “Delivery Cancellation” transaction continues to fail due to network failure -> Accumulated in DLQ -> This message must be processed again after the failure is resolved.
