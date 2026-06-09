@@ -2,11 +2,11 @@
 title: "[TIL] TodayPoor ERD 피드백 반영 기록"
 title_source: "manual"
 date: 2026-05-06 09:00:00 +0900
-last_modified_at: 2026-06-04 22:53:00 +0900
+last_modified_at: 2026-06-09 01:24:00 +0900
 categories: ["GDGoC KNU", "0 to Product"]
 tags: ["project"]
-description: "초기 설계에서는 기능을 빠르게 반영하는 데 집중했다면, 오늘은 각 테이블과 필드가 정말 필요한지, 중복 데이터는 없는지, MVP 단계에서 과한 설계는 아닌지를 중심으로 다시 점검함"
-description_source: "manual"
+description: "TodayPoor ERD 피드백을 바탕으로 테이블 역할 분리, 중복 데이터 제거, AI/OCR 결과 저장 구조를 재정리하고, MVP에 맞는 데이터 설계 기준을 정리했다."
+description_source: "notion"
 english_url: "/en/posts/TIL-TodayPoor-ERD-피드백-반영-기록-260506/"
 notion_id: "3587788a-fc66-80b9-9579-d2a2d632a991"
 notion_lang: "ko"

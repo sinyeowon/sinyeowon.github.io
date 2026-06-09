@@ -2,11 +2,11 @@
 layout: "post"
 title: "[Python] Programmers - Word Conversion"
 date: 2026-06-07 09:00:00 +0900
-last_modified_at: 2026-06-07 01:39:00 +0900
+last_modified_at: 2026-06-09 01:15:00 +0900
 categories: ["Programmers", "Python"]
 tags: ["Python", "programmers"]
-description: "Since it is a word graph problem in which two words are connected by only one letter difference, I thought I would solve it using BFS,"
-description_source: "excerpt"
+description: "By solving the word conversion problem with BFS, I understood the principle of calculating the shortest number of conversions, and summarized the Python data structures and grammar used in the solution, such as deque, set, tuple, and zip()."
+description_source: "notion"
 lang: "en"
 ui_lang: "ko-KR"
 toc: true
@@ -15,7 +15,7 @@ original_url: "/posts/Python-프로그래머스-단어-변환/"
 notion_id: "3777788a-fc66-80ea-872b-d6b3d5e882c2"
 notion_lang: "en"
 ---
-[Programmers 단어 변환](https://school.programmers.co.kr/learn/courses/30/lessons/43163?language=python3)
+<a class="notion-mention" href="https://school.programmers.co.kr/learn/courses/30/lessons/43163?language=python3">Programmers word conversion</a>
 
 ## code
 
@@ -88,10 +88,10 @@ I used zip() to compare two strings and check if they differ by just one alphabe
     → Take out the zipped letter pairs one by one and write them
 
 - `diff_cnt = sum(c1 != c2 for c1, c2 in zip(word, current_word))`<br>
-    → Compare word and current_word one letter at a time to count the number of different letters
+    → Compare word and current_word one letter at a time to count the number of different letters`h == h` → `False -> 0`
 
-    `h == h` → `False -> 0`
+    `o != i` → `True -> 1`
 
-    `o != i` → `True -> 1`Finally, in the code, BFS checks all words at level 0 → Checks all words at level 1 → Checks all words at level 2 → … Search in order and check the shortest distances first.
+Finally, in the code, BFS checks all words at level 0 → Checks all words at level 1 → Checks all words at level 2 → … Search in order and check the shortest distances first.
 
 Therefore, the first encountered step can be the minimum number of transformations.

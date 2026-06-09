@@ -3,11 +3,11 @@ layout: "post"
 title: "[Python] Programmers - Pair Removal"
 title_source: "manual"
 date: 2026-05-14 09:00:00 +0900
-last_modified_at: 2026-05-14 14:54:00 +0900
+last_modified_at: 2026-06-09 01:33:00 +0900
 categories: ["Programmers", "Python"]
 tags: ["Python", "programmers"]
-description: "Insert one alphabet into the stack, bring in the next alphabet, and if it matches the previously inserted alphabet,"
-description_source: "manual"
+description: "Through the pair removal problem, we understand how to remove identical adjacent characters using the push/pop operation of the stack, and summarize a more efficient approach than directly cutting the string."
+description_source: "notion"
 lang: "en"
 ui_lang: "ko-KR"
 toc: true

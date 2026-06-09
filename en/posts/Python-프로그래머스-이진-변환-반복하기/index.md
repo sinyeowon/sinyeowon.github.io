@@ -1,12 +1,12 @@
 ---
 layout: "post"
-title: "[Python] Programmers - Repeating binary conversion"
+title: "[Python] Programmer - Repeating binary conversion"
 date: 2026-05-08 09:00:00 +0900
-last_modified_at: 2026-05-08 15:20:00 +0900
+last_modified_at: 2026-06-09 01:24:00 +0900
 categories: ["Programmers", "Python"]
 tags: ["Python", "programmers"]
-description: "At first, the while statement in the binary conversion part within the while statement was written as while num//2 != 0:,"
-description_source: "manual"
+description: "Through the problem of repeating binary conversion, we understood the process of removing 0 from a string and converting the length to binary, organized loop conditions and string conversion mistakes, and learned how to use the bin() function."
+description_source: "notion"
 lang: "en"
 ui_lang: "ko-KR"
 toc: true

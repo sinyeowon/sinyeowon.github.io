@@ -2,11 +2,11 @@
 layout: "post"
 title: "[Python] Programmer - Integer Triangle"
 date: 2026-05-18 09:00:00 +0900
-last_modified_at: 2026-06-04 22:19:00 +0900
+last_modified_at: 2026-06-09 01:43:00 +0900
 categories: ["Programmers", "Python"]
 tags: ["Python", "programmers"]
-description: "A method of dividing a big problem into smaller problems and saving the answers to the smaller problems that have already been found to use them again."
-description_source: "manual"
+description: "Through the programmer's integer triangle problem, we understand the DP method of storing and calculating the maximum sum of each cell, and summarize how to implement it with the same logic in Python and Java."
+description_source: "notion"
 lang: "en"
 ui_lang: "ko-KR"
 toc: true

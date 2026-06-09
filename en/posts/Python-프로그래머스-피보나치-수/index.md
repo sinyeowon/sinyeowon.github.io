@@ -3,11 +3,11 @@ layout: "post"
 title: "[Python] Programmers - Fibonacci numbers"
 title_source: "manual"
 date: 2026-05-13 09:00:00 +0900
-last_modified_at: 2026-05-13 10:32:00 +0900
+last_modified_at: 2026-06-09 01:31:00 +0900
 categories: ["Programmers", "Python"]
 tags: ["Python", "programmers"]
-description: "Because it is added in the same way as above, it could be expressed as a, b = b, a+b."
-description_source: "manual"
+description: "Through the Fibonacci number problem, we confirmed the double calculation problem in the recursive solution, and summarized how to efficiently obtain the value by updating the previous two values ​​with a loop and how to handle the remaining operations."
+description_source: "notion"
 lang: "en"
 ui_lang: "ko-KR"
 toc: true

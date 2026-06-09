@@ -3,11 +3,11 @@ layout: "post"
 title: "[TIL] Checking the service flow through surveys and API discussion"
 title_source: "manual"
 date: 2026-05-13 09:00:00 +0900
-last_modified_at: 2026-06-04 22:53:00 +0900
+last_modified_at: 2026-06-09 01:43:00 +0900
 categories: ["GDGoC KNU", "0 to Product"]
 tags: ["project"]
-description: "Create and distribute pre-survey Google form We reflected the feedback that it would be good to conduct a preliminary survey to check whether the act…"
-description_source: "manual"
+description: "While preparing a preliminary survey and draft API specifications, we inspected the service structure based on user flow and summarized the impact of AI result disclosure scope and feed structure on API and ERD design."
+description_source: "notion"
 lang: "en"
 ui_lang: "ko-KR"
 toc: true

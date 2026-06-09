@@ -2,11 +2,11 @@
 layout: "post"
 title: "Zipkin distributed tracing and event-based architecture learning"
 date: 2026-06-08 09:00:00 +0900
-last_modified_at: 2026-06-08 14:38:00 +0900
+last_modified_at: 2026-06-09 01:45:00 +0900
 categories: ["Spring 단기 심화", "심화 주차"]
 tags: ["TIL", "Zipkin"]
-description: "Zipkin distributed tracing and request flow analysis"
-description_source: "excerpt"
+description: "We understand the concept of distributed tracing using Zipkin and the role of Trace/Span, and summarize how the message queue-based event architecture is used for asynchronous processing and traffic buffering."
+description_source: "notion"
 lang: "en"
 ui_lang: "ko-KR"
 toc: true
@@ -47,7 +47,7 @@ Through this, you can quickly determine which service is experiencing a bottlene
 
 ## Event-based architecture and message queues
 
-Event-based architecture works by issuing events and subscribing to them by services, rather than having services directly call each other.
+Event-based architecture works by publishing events and subscribing to them, rather than having services directly call each other.
 
 For example, when an order is created, the order service issues an “order created” event, and the notification service or inventory service can receive this event and perform their own actions.
 

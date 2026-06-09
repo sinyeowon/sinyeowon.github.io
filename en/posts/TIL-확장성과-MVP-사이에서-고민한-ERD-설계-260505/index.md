@@ -3,11 +3,11 @@ layout: "post"
 title: "[TIL] ERD design between scalability and MVP"
 title_source: "manual"
 date: 2026-05-05 09:00:00 +0900
-last_modified_at: 2026-06-04 22:53:00 +0900
+last_modified_at: 2026-06-09 01:24:00 +0900
 categories: ["GDGoC KNU", "0 to Product"]
 tags: ["project"]
-description: "Compare the draft with the service features of the PRD plan"
-description_source: "manual"
+description: "During the ERD design process, we considered table separation, personal information processing, and AI/OCR data storage methods, and organized appropriate design criteria between scalability and MVP implementation scope."
+description_source: "notion"
 lang: "en"
 ui_lang: "ko-KR"
 toc: true
@@ -176,7 +176,7 @@ notion_lang: "en"
             - Fast MVP development possible / Convenient integration with front-end / Many cases of combination with Flutter / Advantages such as provision of authentication/DB functions- problem
                 - However, the backend team members had more Spring Boot + JPA experience.
 
-                - Also, this project is not just about creating services:
+                - Also, this project is not just about creating a service:
                     - It was also an important goal to directly implement and experience backend structure design / API design / ERD design / service hierarchy / JPA relationship, etc.
 
                 In other words, it was judged that “designing and experiencing the back-end structure directly” was more important than rapid development.
@@ -194,11 +194,11 @@ notion_lang: "en"
 
 - The biggest thing I felt through this meeting was that a good design is not necessarily a complicated design.
 
-- At first, we thought about maximizing scalability, such as separating categories into separate tables, adding AI prompt tables, and managing booleans for notes or not, but as we discussed it, we felt that it was more important to make decisions based on `“지금 실제로 필요한 기능인가?”` at the MVP stage.
+- At first, we thought about maximizing scalability by separating categories into separate tables, adding AI prompt tables, and managing booleans for notes or not, but as we discussed it, we felt that it was more important to make decisions based on `“지금 실제로 필요한 기능인가?”` at the MVP stage.
 
 - I also learned that we need to think not only about functional implementation, but also about data duplication, separation of responsibilities, roles of front and back end, and balance between scalability and current complexity.
 
-- I was particularly impressed by `“숨기는 것”과 “실제로 접근을 제한하는 것”은 다르다` in terms of privacy processing. I learned that it is not just simple UI processing, but also the need to consider what form the data will be sent from the backend.- `AI를 사용한다고 해서 모든 것을 AI 전용 테이블로 관리할 필요는 없다` was also felt in the AI ​​design area. Choosing an appropriate structure for the current service phase was more important than a technically feasible structure.
+- I was particularly impressed by `“숨기는 것”과 “실제로 접근을 제한하는 것”은 다르다` in terms of privacy processing. I learned that it is not just simple UI processing, but also the need to consider what form the data will be sent from the backend.- I also felt `AI를 사용한다고 해서 모든 것을 AI 전용 테이블로 관리할 필요는 없다` in the AI ​​design part. Choosing an appropriate structure for the current service phase was more important than a technically feasible structure.
 
 - Through this meeting, I was able to learn that a design that can explain `왜 이런 구조를 선택했는가` is more important than simply “implementing functions.”
 

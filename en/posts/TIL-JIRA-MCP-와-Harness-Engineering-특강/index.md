@@ -3,11 +3,11 @@ layout: "post"
 title: "[TIL] Special Lecture on JIRA MCP and Harness Engineering"
 title_source: "manual"
 date: 2026-05-08 09:00:00 +0900
-last_modified_at: 2026-05-10 22:27:00 +0900
+last_modified_at: 2026-06-09 01:25:00 +0900
 categories: ["Spring 단기 심화", "특강"]
 tags: ["MCP", "GitOps", "Harness Engineering"]
-description: "LLM is smart, but can't do anything alone → To solve this problem, AI ↔ external tools must be connected, but each tool has a different API."
-description_source: "manual"
+description: "We understand how AI and external tools are connected through MCP, and summarized how to design a development environment and feedback loop where AI agents can work stably from a Harness Engineering and GitOps perspective."
+description_source: "notion"
 lang: "en"
 ui_lang: "ko-KR"
 toc: true
@@ -213,7 +213,7 @@ Previously, discussions on AI utilization focused on ‘what model to use’ and
         - As the agent generates more code, the entropy of the code base increases.<br>
             ex) The document and code do not match, duplicate codes with similar functions increase, and unused imports pile up.
 
-        - If left unattended, the quality of the agent's next work will continue to deteriorate → **Separate cleaning agent must be appointed**
+        - If left unattended, the quality of the agent's next work will continue to deteriorate → **Separate cleaning agent must be installed**
 
         - What a clearance agent does<br>
             <hr>
@@ -304,7 +304,7 @@ Previously, discussions on AI utilization focused on ‘what model to use’ and
   | mistake | why is it a problem | what should i do |
   | --- | --- | --- |
   | Write AGENTS.md ambiguously | “Maintain code quality” → Agent does not know what to do | **Testable rules** such as “Functions must have less than 50 lines, JSDoc required for public functions” |
-  | No feedback loop | The agent assumes that he is correct and proceeds. | Test/linter/type checker automation required |
+  | No feedback loop | The agent assumes he is correct and proceeds. | Test/linter/type checker automation required |
   | Neglecting tacit knowledge | As “you know it all” piles up, agent mistakes increase dramatically. | State the rules in your head as code/documentation |
   | Control all actions with scripts | If you kill too much autonomy, the agent's strengths disappear. | **Only provide direction** and delegate execution |
   | Harness made once and left unattended | The model/project evolves, but only the harness remains static. | Regularly inspected and updated |
@@ -436,7 +436,7 @@ All settings in the operating environment must be in Git, and when Git changes, 
   | side | Visibility makes a difference |
   | --- | --- |
   | **Onboarding Speed** | New team members can self-learn by following the code/document/issue/deployment flow |
-  | **Incident Response Time** | From occurrence of failure → trace the cause → rollback, shortened to minutes |
+  | **Incident Response Time** | From occurrence of failure → trace cause → rollback reduced to minutes |
   | **AI Utilization** | Enhances quality of results by allowing agents to take context |
   | **Decision-making speed** | No need to agree on “where are we now” every time we meet. |
 

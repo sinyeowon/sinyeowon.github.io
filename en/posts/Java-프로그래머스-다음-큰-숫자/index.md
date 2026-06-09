@@ -3,11 +3,11 @@ layout: "post"
 title: "[Java] Programmers - Next Big Number"
 title_source: "manual"
 date: 2026-05-12 09:00:00 +0900
-last_modified_at: 2026-05-12 12:10:00 +0900
+last_modified_at: 2026-06-09 01:30:00 +0900
 categories: ["Programmers", "Java"]
 tags: ["Java", "programmers"]
-description: "I continued to solve the problem using different solving methods, but it was difficult to pass the accuracy test but not the efficiency test."
-description_source: "manual"
+description: "Through Programmer's Next Big Number Problem, we understand the conditions for finding a larger number with the same number of 1s in a binary number, and summarize how to solve it efficiently using Java's Integer.bitCount()."
+description_source: "notion"
 lang: "en"
 ui_lang: "ko-KR"
 toc: true

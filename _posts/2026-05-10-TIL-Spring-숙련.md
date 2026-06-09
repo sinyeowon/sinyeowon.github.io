@@ -2,11 +2,11 @@
 title: "[TIL] 스프링 숙련 - JWT 인증과 권한 관리"
 title_source: "manual"
 date: 2026-05-10 09:00:00 +0900
-last_modified_at: 2026-05-11 11:33:00 +0900
+last_modified_at: 2026-06-09 01:27:00 +0900
 categories: ["Spring 단기 심화", "Spring 강의"]
 tags: ["Spring", "TIL", "내일배움캠프"]
-description: "application.properties에 jwt.secret.key 설정"
-description_source: "manual"
+description: "Spring에서 JWT 인증을 구현하는 흐름을 정리하며 JwtUtil을 통한 토큰 생성, 쿠키 저장, Bearer 토큰 처리, 검증, Claims 추출 방법과 UserRoleEnum을 활용한 권한 관리 방식을 학습했다."
+description_source: "notion"
 english_url: "/en/posts/TIL-Spring-숙련/"
 notion_id: "35c7788a-fc66-805b-b95d-efebac969913"
 notion_lang: "ko"

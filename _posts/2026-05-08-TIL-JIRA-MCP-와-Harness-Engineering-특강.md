@@ -2,11 +2,11 @@
 title: "[TIL] JIRA MCP와 Harness Engineering 특강"
 title_source: "manual"
 date: 2026-05-08 09:00:00 +0900
-last_modified_at: 2026-05-10 22:27:00 +0900
+last_modified_at: 2026-06-09 01:25:00 +0900
 categories: ["Spring 단기 심화", "특강"]
 tags: ["MCP", "GitOps", "Harness Engineering"]
-description: "LLM은 똑똑하지만, 혼자서는 아무것도 못 함 → 이 문제를 해결하려면 AI ↔ 외부 도구를 연결해야 하는데, 도구마다 API가 제각각임"
-description_source: "manual"
+description: "MCP를 통해 AI와 외부 도구가 연결되는 방식을 이해하고, Harness Engineering과 GitOps 관점에서 AI 에이전트가 안정적으로 일할 수 있는 개발 환경과 피드백 루프를 설계하는 방법을 정리했다."
+description_source: "notion"
 english_url: "/en/posts/TIL-JIRA-MCP-와-Harness-Engineering-특강/"
 notion_id: "35a7788a-fc66-807c-a149-fbf49dee905e"
 notion_lang: "ko"

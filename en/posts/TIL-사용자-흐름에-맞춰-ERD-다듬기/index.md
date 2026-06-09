@@ -3,11 +3,11 @@ layout: "post"
 title: "[TIL] Refining the ERD around the user flow"
 title_source: "manual"
 date: 2026-05-12 09:00:00 +0900
-last_modified_at: 2026-06-04 22:53:00 +0900
+last_modified_at: 2026-06-09 01:35:00 +0900
 categories: ["GDGoC KNU", "0 to Product"]
 tags: ["project"]
-description: "Write the final plan Reflection of feedback from management"
-description_source: "manual"
+description: "Based on TodayPoor planning feedback and wireframes, the ERD structure was modified, and data responsibility separation and AI/OCR result management methods tailored to user flow were organized."
+description_source: "notion"
 lang: "en"
 ui_lang: "ko-KR"
 toc: true
@@ -38,7 +38,7 @@ notion_lang: "en"
 
     ![image](/assets/img/notion/TIL-사용자-흐름에-맞춰-ERD-다듬기/01-171908815a.png)
 
-  | **Change Items** | **Existing structure** | **Change Structure** | **Reason for change** |
+  | **Change Items** | **Existing structure** | **Change structure** | **Reason for change** |
   | --- | --- | --- | --- |
   | Change group terminology | GROUP, GROUP_MEMBER | CREW, CREW_MEMBER | Since the term “crew” is used in the front wireframe, the FE/BE/plan terminology was changed to unify it. |
   | Change group FK name | group_id | crew_id | Since the table name was changed to CREW, the FK name was also modified to be consistent. |
@@ -50,7 +50,7 @@ notion_lang: "en"
   | Add prompt version | doesn't exist | Add prompt_version | Added to keep track of which version of the prompt resulted in the result, even if the prompt is managed in code. |
   | Add AI call status | doesn't exist | Add status | Added to store AI call success/failure |
   | Add AI error code | doesn't exist | Add error_code | Added to track and debug the cause when AI call fails |
-  | Change OCR relationships | OCR_RESULT.expense_id | EXPENSE.ocr_result_id | The OCR results are generated first, and the final consumption data modified/confirmed by the user is stored in EXPENSE, so EXPENSE is changed to refer to the OCR results. |
+  | Change OCR relationship | OCR_RESULT.expense_id | EXPENSE.ocr_result_id | The OCR results are generated first, and the final consumption data modified/confirmed by the user is stored in EXPENSE, so EXPENSE is changed to refer to the OCR results. |
   | Add OCR extracted value | Save only OCR_RESULT.raw_text | Add extracted_merchant, extracted_amount | Added to allow comparison between the merchant/amount initially recognized by OCR and the final value modified by the user |
   | Remove image URL | EXPENSE.image_url | delete | After OCR recognition, the original image is no longer needed, so it is removed to avoid saving it to the DB. |
   | Consumer-crew relationship becomes essential | crew_id is nullable | EXPENSE.crew_id NOT NULL | It is set as a required value because the policy is that users must register consumption records while joining the crew. |
@@ -67,13 +67,13 @@ notion_lang: "en"
 
     ![image](/assets/img/notion/TIL-사용자-흐름에-맞춰-ERD-다듬기/02-cba4234997.png)
 
-  | **Change Items** | **Existing structure** | **Change Structure** | **Reason for change** |
+  | **Change Items** | **Existing structure** | **Change structure** | **Reason for change** |
   | --- | --- | --- | --- |
   | Add ranking type | There is no ranking type distinction in RANKING_RESULT | Add ranking_type | Added to distinguish between date-based ranking results and random topic-based ranking results |
-  | Ranking type enum definition | doesn't exist | DAILY, RANDOM_TOPIC | Front wireframe shows both daily and random topic results, clearly distinguishing between result types |
+  | Ranking type enum definition | doesn't exist | DAILY, RANDOM_TOPIC | Front wireframe shows both daily and random topic results to clearly distinguish between result types |
   | Add consent to member information | No consent to USER | Add is_agreeed | Added to store personal information and consent regarding service use when registering as a member |
   | Add AI mode for each crew | AI mode exists only in result table | Add CREW.ai_mode | Added to allow setting AI feedback mood/intensity for each crew |
-  | Maintain AI Results Mode | AI_RESULT.mode exists | stay the same | Maintain a record of what mode the AI ​​results were created in |
+  | Stay in AI Results Mode | AI_RESULT.mode exists | stay the same | Maintain a record of what mode the AI ​​results were created in |
   | Specify enum value | Displays only the type like enum provider and enum visibility | Specify enum candidate values ​​as strings in Mermaid | Added to help you understand which enum values ​​are used just by looking at the ERD |
 
     - additionally
@@ -92,4 +92,4 @@ notion_lang: "en"
 
 - We found that a proper ERD can be created by not only drawing tables, but also considering actual user flow, FE screen structure, data responsibility, AI result management, operation and debugging, and future expansion possibilities.- At first, it seemed like the more tables you created, the better, but I felt that a clear structure with clear responsibility and flow of data was more important.
 
-- Based on what we discussed today, we will have to consider connecting API design and actual service flow in the future.
+- Based on what we discussed today, we will have to think about connecting API design and actual service flow in the future.
