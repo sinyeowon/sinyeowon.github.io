@@ -540,6 +540,8 @@ html[data-mode='dark'] {
 
   .card {
     h4 {
+      font-size: 1rem;
+      line-height: 1.4;
       @extend %text-clip;
     }
   }
