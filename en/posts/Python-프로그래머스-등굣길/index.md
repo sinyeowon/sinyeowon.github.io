@@ -5,7 +5,7 @@ date: 2026-06-09 09:00:00 +0900
 last_modified_at: 2026-06-09 11:53:00 +0900
 categories: ["Programmers", "Python"]
 tags: ["Python", "programmers"]
-description: "Through the school route problem, we summarized the DP approach, which calculates the number of paths to each location from the results of the previous cell."
+description: "DP approach for path calculation, and dynamic programming based on previous cell results"
 description_source: "notion"
 lang: "en"
 ui_lang: "ko-KR"

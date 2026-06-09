@@ -5,7 +5,7 @@ date: 2026-05-18 09:00:00 +0900
 last_modified_at: 2026-05-21 01:22:00 +0900
 categories: ["Spring 단기 심화", "숙련 프로젝트"]
 tags: ["project", "MSA"]
-description: "Analyzed the architectural trade-offs between schema separation and logical database separation in PostgreSQL for MSA, and established a Gradle multi-module project structure for efficient team collaboration."
+description: "Architectural trade-offs of PostgreSQL schema and logical database separation in MSA, and Gradle multi-module project structure"
 description_source: "notion"
 lang: "en"
 ui_lang: "ko-KR"

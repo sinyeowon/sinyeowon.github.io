@@ -6,7 +6,7 @@ date: 2026-05-12 09:00:00 +0900
 last_modified_at: 2026-06-09 01:35:00 +0900
 categories: ["GDGoC KNU", "0 to Product"]
 tags: ["project"]
-description: "Based on TodayPoor planning feedback and wireframes, the ERD structure was modified, and data responsibility separation and AI/OCR result management methods tailored to user flow were organized."
+description: "ERD structure modification based on user flow, data responsibility separation, and AI/OCR result management methods"
 description_source: "notion"
 lang: "en"
 ui_lang: "ko-KR"

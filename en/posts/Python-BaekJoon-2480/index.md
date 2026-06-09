@@ -5,7 +5,7 @@ date: 2026-04-05 15:48:16 +0900
 last_modified_at: 2026-05-03 16:23:24 +0900
 categories: ["BaekJoon", "Python"]
 tags: ['baekjoon', 'Python']
-description: "Used to find the maximum value Can be obtained without using loops"
+description: "Maximum value calculation in Python, and loop-less data processing"
 lang: "en"
 ui_lang: "ko-KR"
 toc: true

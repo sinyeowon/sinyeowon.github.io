@@ -6,7 +6,7 @@ date: 2026-05-06 09:00:00 +0900
 last_modified_at: 2026-06-09 01:24:00 +0900
 categories: ["GDGoC KNU", "0 to Product"]
 tags: ["project"]
-description: "Based on TodayPoor ERD feedback, we separated table roles, removed duplicate data, reorganized the AI/OCR result storage structure, and organized data design standards suitable for MVP."
+description: "TodayPoor ERD feedback based table role separation, duplicate data removal, AI/OCR result storage reorganization, and MVP data design standards"
 description_source: "notion"
 lang: "en"
 ui_lang: "ko-KR"

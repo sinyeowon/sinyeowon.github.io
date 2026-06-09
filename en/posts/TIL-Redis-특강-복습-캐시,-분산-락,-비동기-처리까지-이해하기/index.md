@@ -5,7 +5,7 @@ date: 2026-06-05 09:00:00 +0900
 last_modified_at: 2026-06-05 15:58:00 +0900
 categories: ["Spring 단기 심화", "심화 주차"]
 tags: ["Redis"]
-description: "Comparison of Redis and Kafka in first-come-first-served coupon issuance example"
+description: "Comparison of Redis and Kafka in first-come-first-served coupon issuance"
 description_source: "notion"
 lang: "en"
 ui_lang: "ko-KR"

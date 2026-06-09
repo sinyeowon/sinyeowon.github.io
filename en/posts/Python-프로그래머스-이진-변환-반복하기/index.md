@@ -5,7 +5,7 @@ date: 2026-05-08 09:00:00 +0900
 last_modified_at: 2026-06-09 01:24:00 +0900
 categories: ["Programmers", "Python"]
 tags: ["Python", "programmers"]
-description: "Through the problem of repeating binary conversion, we understood the process of removing 0 from a string and converting the length to binary, organized loop conditions and string conversion mistakes, and learned how to use the bin() function."
+description: "String zero removal and length binary conversion process, loop condition setting, and bin() function usage"
 description_source: "notion"
 lang: "en"
 ui_lang: "ko-KR"

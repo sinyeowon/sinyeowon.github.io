@@ -5,7 +5,7 @@ date: 2026-04-05 16:27:07 +0900
 last_modified_at: 2026-04-15 12:45:59 +0900
 categories: ["BaekJoon", "Java"]
 tags: ['Java', 'baekjoon']
-description: "Solved BaekJoon 11021 using Java, focusing on the correct usage of BufferedReader and StringTokenizer, specifically why tokens must be refreshed inside a loop, and how to handle IOException."
+description: "Usage of Java BufferedReader and StringTokenizer, token refresh within loops, and IOException handling"
 lang: "en"
 ui_lang: "ko-KR"
 toc: true

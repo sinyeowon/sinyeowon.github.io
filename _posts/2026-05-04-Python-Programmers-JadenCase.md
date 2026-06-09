@@ -4,7 +4,7 @@ date: 2026-05-04 23:59:00 +0900
 last_modified_at: 2026-05-05 01:30:40 +0900
 categories: ["Programmers", "Python"]
 tags: ['programmers', 'Python']
-description: "JadenCase 문자열 만들기 문제를 풀며 연속 공백 처리의 중요성과 .split(' '), .join()을 활용해 효율적으로 문자열을 가공하는 방법을 정리했다."
+description: "JadenCase 문자열 변환 시 연속 공백 처리, split과 join을 활용한 효율적인 문자열 가공 방법"
 english_url: "/en/posts/Python-Programmers-JadenCase/"
 ---
 [Programmers JadenCase 문자열 만들기](https://school.programmers.co.kr/learn/courses/30/lessons/12951?language=python3)

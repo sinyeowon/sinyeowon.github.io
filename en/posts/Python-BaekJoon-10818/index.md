@@ -5,7 +5,7 @@ date: 2026-04-05 20:41:45 +0900
 last_modified_at: 2026-04-23 01:15:24 +0900
 categories: ["BaekJoon", "Python"]
 tags: ['baekjoon', 'Python']
-description: "Explored efficient ways to find minimum and maximum values in Python using both iterative loops and built-in functions while managing dynamic list allocation in Baekjoon 10818."
+description: "Efficient minimum and maximum value search in Python, iterative loops vs built-in functions, and dynamic list allocation"
 lang: "en"
 ui_lang: "ko-KR"
 toc: true

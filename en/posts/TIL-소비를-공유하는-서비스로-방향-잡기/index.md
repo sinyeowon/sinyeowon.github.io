@@ -6,7 +6,7 @@ date: 2026-05-11 09:00:00 +0900
 last_modified_at: 2026-06-09 01:35:00 +0900
 categories: ["GDGoC KNU", "0 to Product"]
 tags: ["project"]
-description: "Based on TodayPoor planning feedback, we redefined the service purpose and core experience, and organized the MVP scope and personal information protection direction in line with the social loop centered on consumption sharing and AI feedback rather than OCR."
+description: "Redefined service purpose and core experience, social loop centered on consumption sharing and AI feedback, and MVP scope design"
 description_source: "notion"
 lang: "en"
 ui_lang: "ko-KR"

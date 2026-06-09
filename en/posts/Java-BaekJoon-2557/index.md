@@ -5,7 +5,7 @@ date: 2026-04-05 14:50:05 +0900
 last_modified_at: 2026-04-21 13:57:07 +0900
 categories: ["BaekJoon", "Java"]
 tags: ['Java', 'baekjoon']
-description: "You should write the main method as follows: The main method operates first when running a Java application (main),"
+description: "Java main method structure, and application execution fundamentals"
 lang: "en"
 ui_lang: "ko-KR"
 toc: true

@@ -6,7 +6,7 @@ date: 2026-05-12 09:00:00 +0900
 last_modified_at: 2026-06-09 01:29:00 +0900
 categories: ["Spring 단기 심화", "특강"]
 tags: ["Redis"]
-description: "We understand Redis' in-memory structure and single-threaded architecture, and summarize how to solve traffic processing and concurrency problems through caching strategies, TTL/Jitter, major data structures, and distributed locks."
+description: "Redis in-memory structure and single-threaded architecture, caching strategies, distributed locks, and concurrency problem resolution"
 description_source: "notion"
 lang: "en"
 ui_lang: "ko-KR"

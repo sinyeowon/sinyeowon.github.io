@@ -6,7 +6,7 @@ date: 2026-04-14 14:36:44 +0900
 last_modified_at: 2026-04-25 09:04:08 +0900
 categories: ["Spring 단기 심화", "Spring 강의"]
 tags: ['Spring', 'TIL', '내일배움캠프']
-description: "Learned how to manually register Spring Beans and manage DI priorities using @Primary and @Qualifier, and explored the core principles of cookie and session-based web authentication."
+description: "Manual Spring Bean registration, DI priority management with @Primary and @Qualifier, and cookie and session-based web authentication principles"
 lang: "en"
 ui_lang: "ko-KR"
 toc: true

@@ -5,7 +5,7 @@ date: 2026-05-14 09:00:00 +0900
 last_modified_at: 2026-05-15 19:18:00 +0900
 categories: ["Spring 단기 심화", "숙련 프로젝트"]
 tags: ["project"]
-description: "Explored service boundaries and data ownership in MSA, discussing the pros and cons of physical FKs versus logical references for maintaining data consistency."
+description: "Service boundaries and data ownership in MSA, and physical FKs versus logical references for data consistency"
 description_source: "notion"
 lang: "en"
 ui_lang: "ko-KR"

@@ -4,7 +4,7 @@ date: 2026-04-05 15:05:12 +0900
 last_modified_at: 2026-04-23 00:17:55 +0900
 categories: ["BaekJoon", "Python"]
 tags: ['baekjoon', 'Python']
-description: "Python의 input() 함수와 map() 함수를 활용해 사용자 입력을 처리하는 방법을 익히고, 리스트와 문자열 간의 형변환 시 발생할 수 있는 오류를 백준 1000번 풀이를 통해 정리했다."
+description: "Python input() 및 map() 함수 사용자 입력 처리, 리스트와 문자열 형변환 오류 해결법"
 english_url: "/en/posts/Python-BaekJoon-1000/"
 ---
 [BaekJoon 1000](https://www.acmicpc.net/problem/1000)

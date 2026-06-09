@@ -5,7 +5,7 @@ date: 2026-06-01 09:00:00 +0900
 last_modified_at: 2026-06-05 15:23:00 +0900
 categories: ["GDGoC KNU", "0 to Product"]
 tags: ["project"]
-description: "Summary of re-enrollment processing method after withdrawal"
+description: "Re-enrollment processing method after user withdrawal, and JPA Soft Delete handling"
 description_source: "notion"
 lang: "en"
 ui_lang: "ko-KR"

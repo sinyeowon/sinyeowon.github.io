@@ -4,7 +4,7 @@ date: 2026-04-15 16:11:38 +0900
 last_modified_at: 2026-05-03 05:34:06 +0900
 categories: ["Spring 단기 심화", "과제"]
 tags: ['Java', 'Spring', 'TIL', '과제', '내일배움캠프']
-description: "Spring Boot와 JPA를 활용한 CRUD 구현의 기초인 Entity와 DTO의 개념을 정리하고, 각 어노테이션의 역할과 데이터 전송 및 매핑 흐름을 학습했다."
+description: "Spring Boot와 JPA 기반 CRUD 구현 기초, Entity와 DTO 개념, 어노테이션 역할 및 데이터 전송 매핑 흐름"
 english_url: "/en/posts/TIL-CRUD-Code-Shadowing-1/"
 ---
 ## Entity

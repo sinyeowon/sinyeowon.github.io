@@ -6,7 +6,7 @@ date: 2026-06-04 09:00:00 +0900
 last_modified_at: 2026-06-09 01:42:00 +0900
 categories: ["Spring 단기 심화", "심화 주차"]
 tags: ["TIL", "Saga", "2PC", "MSA"]
-description: "We understand transaction consistency issues that occur in the MSA environment, and summarize how 2PC and Saga patterns work, their pros and cons, and how to maintain consistency through compensation transactions."
+description: "Transaction consistency issues in MSA, 2PC and Saga pattern mechanisms, and consistency maintenance through compensation transactions"
 description_source: "notion"
 lang: "en"
 ui_lang: "ko-KR"

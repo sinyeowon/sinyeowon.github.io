@@ -4,7 +4,7 @@ date: 2026-04-05 15:48:16 +0900
 last_modified_at: 2026-05-03 16:23:24 +0900
 categories: ["BaekJoon", "Python"]
 tags: ['baekjoon', 'Python']
-description: "Python의 조건문과 max() 함수를 활용해 여러 값 중 최댓값을 구하는 방법을 익히고, 백준 2480번 주사위 문제를 효율적으로 해결하는 로직을 정리했다."
+description: "Python 조건문과 max() 함수 활용, 여러 값 중 최댓값 산출 및 효율적인 주사위 문제 해결 로직"
 english_url: "/en/posts/Python-BaekJoon-2480/"
 ---
 [BaekJoon 2480](https://www.acmicpc.net/problem/2480)

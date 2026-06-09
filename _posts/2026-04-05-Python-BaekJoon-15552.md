@@ -4,7 +4,7 @@ date: 2026-04-05 16:14:22 +0900
 last_modified_at: 2026-05-04 02:07:34 +0900
 categories: ["BaekJoon", "Python"]
 tags: ['baekjoon', 'Python']
-description: "Python에서 반복적인 대량 입력 시 발생하는 성능 저하를 해결하기 위해 sys.stdin.readline()을 활용하는 방법과 효율적인 입출력 처리 기법을 학습했다."
+description: "Python 반복적 대량 입력 성능 최적화, sys.stdin.readline() 활용 효율적인 입출력 처리 기법"
 english_url: "/en/posts/Python-BaekJoon-15552/"
 ---
 [BaekJoon 15552](https://www.acmicpc.net/problem/15552)

@@ -4,7 +4,7 @@ date: 2026-04-20 01:52:37 +0900
 last_modified_at: 2026-04-22 01:21:51 +0900
 categories: ["Spring 단기 심화", "과제"]
 tags: ['Java', 'Spring', 'TIL', '과제', '내일배움캠프']
-description: "JPA의 @ManyToOne 어노테이션을 활용한 다대일(N:1) 연관관계 설정 방법과 지연 로딩(LAZY)을 통한 성능 최적화 및 N+1 문제의 발생 원인을 학습했다."
+description: "JPA @ManyToOne 다대일 연관관계 설정, 지연 로딩(LAZY) 성능 최적화, N+1 문제 발생 원인"
 english_url: "/en/posts/TIL-CRUD-Code-Shadowing-2/"
 ---
 ## Entity

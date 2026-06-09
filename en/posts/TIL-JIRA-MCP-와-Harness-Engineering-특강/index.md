@@ -6,7 +6,7 @@ date: 2026-05-08 09:00:00 +0900
 last_modified_at: 2026-06-09 01:25:00 +0900
 categories: ["Spring 단기 심화", "특강"]
 tags: ["MCP", "GitOps", "Harness Engineering"]
-description: "We understand how AI and external tools are connected through MCP, and summarized how to design a development environment and feedback loop where AI agents can work stably from a Harness Engineering and GitOps perspective."
+description: "MCP-based AI and external tool connection, and AI agent development environment and feedback loop design from Harness Engineering and GitOps perspective"
 description_source: "notion"
 lang: "en"
 ui_lang: "ko-KR"

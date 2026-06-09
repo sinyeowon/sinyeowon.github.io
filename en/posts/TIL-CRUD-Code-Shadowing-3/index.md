@@ -5,7 +5,7 @@ date: 2026-04-22 10:16:15 +0900
 last_modified_at: 2026-04-29 18:14:42 +0900
 categories: ["Spring 단기 심화", "과제"]
 tags: ['Java', 'Spring', 'TIL', '과제', '내일배움캠프']
-description: "Organized the separation of business logic into the Service layer and learned how to optimize query performance and ensure data integrity using @Transactional(readOnly = true) in Spring."
+description: "Business logic separation in Spring Service layer, query performance optimization and data integrity using @Transactional(readOnly = true)"
 lang: "en"
 ui_lang: "ko-KR"
 toc: true

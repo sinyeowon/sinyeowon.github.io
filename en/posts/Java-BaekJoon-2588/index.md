@@ -5,7 +5,7 @@ date: 2026-04-05 15:41:03 +0900
 last_modified_at: 2026-04-25 02:59:38 +0900
 categories: ["BaekJoon", "Java"]
 tags: ['Java', 'baekjoon']
-description: "Used the remainder (%) and quotient (/) operators in Java to extract individual digits from numbers and calculate the step-by-step results of multi-digit multiplication in Baekjoon 2588."
+description: "Java remainder (%) and quotient (/) operators for digit extraction, and step-by-step multi-digit multiplication calculation"
 lang: "en"
 ui_lang: "ko-KR"
 toc: true

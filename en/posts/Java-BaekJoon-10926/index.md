@@ -5,7 +5,7 @@ date: 2026-04-05 15:33:33 +0900
 last_modified_at: 2026-04-25 15:57:56 +0900
 categories: ["BaekJoon", "Java"]
 tags: ['Java', 'baekjoon']
-description: "Analyzed the differences between next() and nextLine() in Java's Scanner class and implemented string concatenation to solve Baekjoon 10926."
+description: "Differences between Java Scanner next() and nextLine() methods, and string concatenation implementation"
 lang: "en"
 ui_lang: "ko-KR"
 toc: true

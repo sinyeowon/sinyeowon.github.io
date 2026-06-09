@@ -6,7 +6,7 @@ date: 2026-04-12 16:14:24 +0900
 last_modified_at: 2026-04-30 16:11:57 +0900
 categories: ["Spring 단기 심화", "Spring 강의"]
 tags: ['Spring', 'TIL', '내일배움캠프']
-description: "Explored the core principles of Inversion of Control (IoC) and Dependency Injection (DI) through Spring's IoC container and Bean management system."
+description: "Core principles of Inversion of Control (IoC) and Dependency Injection (DI), and Spring IoC container and Bean management"
 lang: "en"
 ui_lang: "ko-KR"
 toc: true

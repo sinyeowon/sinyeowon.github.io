@@ -5,7 +5,7 @@ date: 2026-06-03 09:00:00 +0900
 last_modified_at: 2026-06-05 15:45:00 +0900
 categories: ["GDGoC KNU", "0 to Product"]
 tags: ["project"]
-description: "Explored how to distinguish between 'missing field' and 'explicit null' in PATCH requests, and implemented selective field updates using JsonNullable."
+description: "Distinguishing 'missing field' and 'explicit null' in PATCH requests, and selective field updates using JsonNullable"
 description_source: "notion"
 lang: "en"
 ui_lang: "ko-KR"

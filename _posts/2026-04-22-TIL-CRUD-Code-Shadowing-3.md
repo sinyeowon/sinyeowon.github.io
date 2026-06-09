@@ -4,7 +4,7 @@ date: 2026-04-22 10:16:15 +0900
 last_modified_at: 2026-04-29 18:14:42 +0900
 categories: ["Spring 단기 심화", "과제"]
 tags: ['Java', 'Spring', 'TIL', '과제', '내일배움캠프']
-description: "Spring Service 계층에서 비즈니스 로직을 분리하고, @Transactional(readOnly = true) 옵션을 활용해 조회 성능을 최적화하고 데이터 변경 방지를 명시하는 방법을 정리했다."
+description: "Spring Service 비즈니스 로직 분리, @Transactional(readOnly = true) 옵션 활용 조회 성능 최적화 및 데이터 변경 방지"
 english_url: "/en/posts/TIL-CRUD-Code-Shadowing-3/"
 ---
 # Controller에서 비즈니스 로직 분리하기

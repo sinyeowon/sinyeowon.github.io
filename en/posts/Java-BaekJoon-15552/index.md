@@ -5,7 +5,7 @@ date: 2026-04-05 16:09:50 +0900
 last_modified_at: 2026-04-22 08:31:14 +0900
 categories: ["BaekJoon", "Java"]
 tags: ['Java', 'baekjoon']
-description: "Compared the performance of Scanner and System.out.print with BufferedReader and BufferedWriter for handling large-scale input/output in Java, using Baekjoon 15552 as a case study."
+description: "Performance comparison of Java Scanner and BufferedReader for large-scale input/output processing"
 lang: "en"
 ui_lang: "ko-KR"
 toc: true

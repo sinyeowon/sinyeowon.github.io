@@ -5,7 +5,7 @@ date: 2026-05-04 23:59:00 +0900
 last_modified_at: 2026-05-05 01:30:40 +0900
 categories: ["Programmers", "Python"]
 tags: ['programmers', 'Python']
-description: "Learned how to efficiently process JadenCase strings in Python by handling consecutive spaces with .split(' ') and joining results for cleaner output."
+description: "Efficient JadenCase string processing in Python, consecutive space handling with .split(' '), and cleaner output via join"
 lang: "en"
 ui_lang: "ko-KR"
 toc: true

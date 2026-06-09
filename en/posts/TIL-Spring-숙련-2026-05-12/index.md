@@ -6,7 +6,7 @@ date: 2026-05-12 09:00:00 +0900
 last_modified_at: 2026-06-09 01:31:00 +0900
 categories: ["Spring 단기 심화", "Spring 강의"]
 tags: ["Spring", "TIL", "내일배움캠프"]
-description: "Through Spring Filter, I understood the pre- and post-request processing and JWT authentication/authorization flow, and organized Spring Security's Filter Chain, CSRF, Form Login, SecurityContextHolder, and Authentication structures."
+description: "Spring Filter pre- and post-request processing, JWT authentication flow, and Spring Security Filter Chain and Authentication structures"
 description_source: "notion"
 lang: "en"
 ui_lang: "ko-KR"

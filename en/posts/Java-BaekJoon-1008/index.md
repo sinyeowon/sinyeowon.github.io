@@ -5,7 +5,7 @@ date: 2026-04-05 15:16:38 +0900
 last_modified_at: 2026-04-22 15:08:07 +0900
 categories: ["BaekJoon", "Java"]
 tags: ['Java', 'baekjoon']
-description: "Understood the characteristics of integer division in Java and learned how to use explicit casting to double or float to obtain accurate floating-point results, based on Baekjoon 1008."
+description: "Characteristics of Java integer division, and explicit casting techniques for accurate floating-point results"
 lang: "en"
 ui_lang: "ko-KR"
 toc: true

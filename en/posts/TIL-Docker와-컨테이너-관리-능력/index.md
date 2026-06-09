@@ -5,7 +5,7 @@ date: 2026-06-05 09:00:00 +0900
 last_modified_at: 2026-06-06 22:46:00 +0900
 categories: ["Spring 단기 심화", "심화 주차"]
 tags: ["TIL", "Docker"]
-description: "Docker: A tool that manages application execution environments by grouping them into containers."
+description: "Docker concept, and application execution environment management via containers"
 description_source: "notion"
 lang: "en"
 ui_lang: "ko-KR"

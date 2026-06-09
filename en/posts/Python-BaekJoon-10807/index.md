@@ -5,7 +5,7 @@ date: 2026-04-05 20:28:46 +0900
 last_modified_at: 2026-04-25 23:38:20 +0900
 categories: ["BaekJoon", "Python"]
 tags: ['baekjoon', 'Python']
-description: "Learned how to handle user input in Python using the map() function and understood why it is necessary to convert map objects to lists for indexing and output, as demonstrated in Baekjoon 10807."
+description: "Python user input handling using map(), map object to list conversion for indexing and output"
 lang: "en"
 ui_lang: "ko-KR"
 toc: true

@@ -5,7 +5,7 @@ date: 2026-06-08 09:00:00 +0900
 last_modified_at: 2026-06-09 01:10:00 +0900
 categories: ["Programmers", "Python"]
 tags: ["Python", "programmers"]
-description: "By solving the overtime index problem, we identified the inefficiency of sorting iteration solutions and learned how to improve efficiency by using a heap that can quickly retrieve the maximum value."
+description: "Inefficiency of sorting iterations in the overtime index problem, and efficiency improvement using max heap"
 description_source: "notion"
 lang: "en"
 ui_lang: "ko-KR"

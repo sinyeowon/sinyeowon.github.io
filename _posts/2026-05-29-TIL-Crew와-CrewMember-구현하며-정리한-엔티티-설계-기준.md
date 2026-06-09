@@ -4,7 +4,7 @@ date: 2026-05-29 09:00:00 +0900
 last_modified_at: 2026-06-05 15:13:00 +0900
 categories: ["GDGoC KNU", "0 to Product"]
 tags: ["project"]
-description: "우리 서비스에서는 사용자가 크루를 생성하면, 해당 크루에 참여할 수 있는 초대코드가 자동으로 발급된다."
+description: "사용자 크루 생성 시 초대코드 자동 발급 구조 및 엔티티 설계 기준"
 description_source: "notion"
 english_url: "/en/posts/TIL-Crew와-CrewMember-구현하며-정리한-엔티티-설계-기준/"
 notion_id: "3767788a-fc66-800a-b8ad-d6c8039f7fe4"

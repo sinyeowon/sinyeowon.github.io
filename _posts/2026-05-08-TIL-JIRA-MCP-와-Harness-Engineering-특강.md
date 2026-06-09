@@ -5,7 +5,7 @@ date: 2026-05-08 09:00:00 +0900
 last_modified_at: 2026-06-09 01:25:00 +0900
 categories: ["Spring 단기 심화", "특강"]
 tags: ["MCP", "GitOps", "Harness Engineering"]
-description: "MCP를 통해 AI와 외부 도구가 연결되는 방식을 이해하고, Harness Engineering과 GitOps 관점에서 AI 에이전트가 안정적으로 일할 수 있는 개발 환경과 피드백 루프를 설계하는 방법을 정리했다."
+description: "MCP 기반 AI 외부 도구 연결 방식, Harness Engineering 및 GitOps 관점의 AI 에이전트 개발 환경과 피드백 루프 설계"
 description_source: "notion"
 english_url: "/en/posts/TIL-JIRA-MCP-와-Harness-Engineering-특강/"
 notion_id: "35a7788a-fc66-807c-a149-fbf49dee905e"

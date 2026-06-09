@@ -5,7 +5,7 @@ date: 2026-04-05 15:38:27 +0900
 last_modified_at: 2026-04-23 13:23:48 +0900
 categories: ["BaekJoon", "Python"]
 tags: ['baekjoon', 'Python']
-description: "Learned how to handle multi-line inputs in Python and implemented a solution for step-by-step multiplication using string indexing and arithmetic operations in Baekjoon 2588."
+description: "Multi-line input handling in Python, and step-by-step multiplication implementation using string indexing and arithmetic operations"
 lang: "en"
 ui_lang: "ko-KR"
 toc: true

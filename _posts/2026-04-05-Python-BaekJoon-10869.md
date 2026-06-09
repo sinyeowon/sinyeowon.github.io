@@ -4,7 +4,7 @@ date: 2026-04-05 15:20:39 +0900
 last_modified_at: 2026-04-23 00:17:21 +0900
 categories: ["BaekJoon", "Python"]
 tags: ['baekjoon', 'Python']
-description: "\"문자열\" % (값들): 문자열 안의 %d, %f 같은 자리 표시자에 뒤에 있는 값들이 순서대로 들어감"
+description: "Python 문자열 포맷팅, %d 및 %f 등 자리 표시자를 활용한 순차적 값 대입 방법"
 english_url: "/en/posts/Python-BaekJoon-10869/"
 ---
 [BaekJoon 10869](https://www.acmicpc.net/problem/10869)

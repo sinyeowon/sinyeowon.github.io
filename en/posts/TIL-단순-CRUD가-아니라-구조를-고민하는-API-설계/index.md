@@ -5,7 +5,7 @@ date: 2026-05-15 09:00:00 +0900
 last_modified_at: 2026-05-15 19:29:00 +0900
 categories: ["Spring 단기 심화", "숙련 프로젝트"]
 tags: ["project"]
-description: "Learned how to design APIs by considering data creation timing and responsibility, and explored criteria for service boundary separation and transaction management in MSA."
+description: "API design considering data creation timing and responsibility, and criteria for service boundary separation and transaction management in MSA"
 description_source: "notion"
 lang: "en"
 ui_lang: "ko-KR"

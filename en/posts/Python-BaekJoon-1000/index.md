@@ -5,7 +5,7 @@ date: 2026-04-05 15:05:12 +0900
 last_modified_at: 2026-04-23 00:17:55 +0900
 categories: ["BaekJoon", "Python"]
 tags: ['baekjoon', 'Python']
-description: "When input as input(), it is saved as a string."
+description: "Python input() function characteristics, and string saving mechanics"
 lang: "en"
 ui_lang: "ko-KR"
 toc: true

@@ -5,7 +5,7 @@ date: 2026-04-05 16:36:35 +0900
 last_modified_at: 2026-04-13 04:50:17 +0900
 categories: ["BaekJoon", "Java"]
 tags: ['Java', 'baekjoon']
-description: "Learned about loop control and the strict boolean type requirements for condition expressions in Java, while solving the infinite loop problem in Baekjoon 10952."
+description: "Java loop control, strict boolean type requirements for condition expressions, and infinite loop handling"
 lang: "en"
 ui_lang: "ko-KR"
 toc: true

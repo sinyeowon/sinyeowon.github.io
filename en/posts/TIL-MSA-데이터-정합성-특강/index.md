@@ -5,7 +5,7 @@ date: 2026-06-06 09:00:00 +0900
 last_modified_at: 2026-06-09 01:14:00 +0900
 categories: ["Spring 단기 심화", "특강"]
 tags: ["Saga", "MSA"]
-description: "We understand distributed transaction problems and data consistency issues that occur in the MSA environment, and summarize the concepts of Saga pattern, compensation transaction, Orchestration/Choreography method, and Outbox pattern to solve them."
+description: "Distributed transaction and data consistency issues in MSA, Saga pattern, compensation transactions, and Outbox pattern concepts"
 description_source: "notion"
 lang: "en"
 ui_lang: "ko-KR"

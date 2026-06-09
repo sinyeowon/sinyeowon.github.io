@@ -6,7 +6,7 @@ date: 2026-05-13 09:00:00 +0900
 last_modified_at: 2026-06-09 01:31:00 +0900
 categories: ["Programmers", "Python"]
 tags: ["Python", "programmers"]
-description: "Through the Fibonacci number problem, we confirmed the double calculation problem in the recursive solution, and summarized how to efficiently obtain the value by updating the previous two values ​​with a loop and how to handle the remaining operations."
+description: "Redundant calculations in recursive Fibonacci solutions, efficient value updates via loops, and remainder operations"
 description_source: "notion"
 lang: "en"
 ui_lang: "ko-KR"

@@ -5,7 +5,7 @@ date: 2026-04-17 09:00:00 +0900
 last_modified_at: 2026-06-09 01:30:00 +0900
 categories: ["Spring 단기 심화", "특강"]
 tags: ["Spring"]
-description: "Spring MVC 요청 처리 흐름을 복습하고, 주요 어노테이션의 역할과 DI/IoC, 싱글톤 빈, 프록시 기반 트랜잭션 동작 원리를 정리했다."
+description: "Spring MVC 요청 처리 흐름, 주요 어노테이션 역할, DI/IoC, 싱글톤 빈 및 프록시 기반 트랜잭션 원리"
 description_source: "notion"
 english_url: "/en/posts/TIL-Spring-기초-퀴즈-복습/"
 notion_id: "35e7788a-fc66-80d0-8238-e7b6d699f7e3"

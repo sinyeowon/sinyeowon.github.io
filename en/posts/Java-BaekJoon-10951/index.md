@@ -5,7 +5,7 @@ date: 2026-04-05 20:19:06 +0900
 last_modified_at: 2026-04-11 12:39:42 +0900
 categories: ["BaekJoon", "Java"]
 tags: ['Java', 'baekjoon']
-description: "Understood how to detect the end of an input stream in Java using the Scanner.hasNext() method to process multiple test cases until EOF is reached in Baekjoon 10951."
+description: "Input stream end detection using Java Scanner.hasNext(), and EOF (End of File) processing techniques"
 lang: "en"
 ui_lang: "ko-KR"
 toc: true

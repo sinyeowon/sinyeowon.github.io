@@ -6,7 +6,7 @@ date: 2026-05-13 09:00:00 +0900
 last_modified_at: 2026-06-09 01:43:00 +0900
 categories: ["GDGoC KNU", "0 to Product"]
 tags: ["project"]
-description: "While preparing a preliminary survey and draft API specifications, we inspected the service structure based on user flow and summarized the impact of AI result disclosure scope and feed structure on API and ERD design."
+description: "Service structure inspection based on user flow, and the impact of AI result disclosure scope and feed structure on API and ERD design"
 description_source: "notion"
 lang: "en"
 ui_lang: "ko-KR"

@@ -6,7 +6,7 @@ date: 2026-04-17 09:00:00 +0900
 last_modified_at: 2026-06-09 01:30:00 +0900
 categories: ["Spring 단기 심화", "특강"]
 tags: ["Spring"]
-description: "We reviewed the Spring MVC request processing flow and summarized the roles of major annotations and the operating principles of DI/IoC, singleton beans, and proxy-based transactions."
+description: "Spring MVC request processing flow, roles of major annotations, and operating principles of DI/IoC, singleton beans, and proxy-based transactions"
 description_source: "notion"
 lang: "en"
 ui_lang: "ko-KR"

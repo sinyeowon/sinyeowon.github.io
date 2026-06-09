@@ -5,7 +5,7 @@ date: 2026-05-29 09:00:00 +0900
 last_modified_at: 2026-06-05 15:13:00 +0900
 categories: ["GDGoC KNU", "0 to Product"]
 tags: ["project"]
-description: "Structure of automatic issuance of invitation code when creating a crew"
+description: "Automatic invitation code issuance structure during crew creation, and entity design standards"
 description_source: "notion"
 lang: "en"
 ui_lang: "ko-KR"

@@ -6,7 +6,7 @@ date: 2026-05-14 09:00:00 +0900
 last_modified_at: 2026-06-09 01:32:00 +0900
 categories: ["Spring 단기 심화", "특강"]
 tags: ["Redis"]
-description: "We understand the concurrency control method of the MSA environment through Redis distributed lock and Redisson RLock, and summarize the differences between Pub/Sub and Message Queue, asynchronous processing structure, Redlock controversy, and lock failure handling strategy."
+description: "MSA concurrency control via Redis distributed locks and Redisson RLock, Pub/Sub vs Message Queue differences, and lock failure strategies"
 description_source: "notion"
 lang: "en"
 ui_lang: "ko-KR"

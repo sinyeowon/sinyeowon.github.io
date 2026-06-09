@@ -5,7 +5,7 @@ date: 2026-04-05 15:09:27 +0900
 last_modified_at: 2026-04-21 13:56:30 +0900
 categories: ["BaekJoon", "Java"]
 tags: ['Java', 'baekjoon']
-description: "Explored the basics of Java's Scanner class for standard input and performed basic arithmetic operations by solving Baekjoon 1000."
+description: "Java Scanner class for standard input, basic arithmetic operations"
 lang: "en"
 ui_lang: "ko-KR"
 toc: true

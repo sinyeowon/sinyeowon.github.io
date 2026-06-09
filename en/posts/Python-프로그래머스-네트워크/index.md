@@ -5,7 +5,7 @@ date: 2026-05-21 09:00:00 +0900
 last_modified_at: 2026-06-09 01:32:00 +0900
 categories: ["Programmers", "Python"]
 tags: ["programmers", "Python"]
-description: "Through the programmer's network problem, we understand the graph search methods of DFS and BFS, and summarize how to find the number of connected computer bundles using visited arrays."
+description: "DFS and BFS graph search methods, and identifying connected computer networks using visited arrays"
 description_source: "notion"
 lang: "en"
 ui_lang: "ko-KR"

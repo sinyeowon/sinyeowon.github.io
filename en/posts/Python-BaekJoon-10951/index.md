@@ -5,7 +5,7 @@ date: 2026-04-05 20:00:02 +0900
 last_modified_at: 2026-04-23 00:31:51 +0900
 categories: ["BaekJoon", "Python"]
 tags: ['baekjoon', 'Python']
-description: "Learned how to safely handle End of File (EOF) in Python using sys.stdin to read inputs when the total number of entries is not pre-defined, as shown in Baekjoon 10951."
+description: "EOF handling in Python using sys.stdin for undefined number of inputs"
 lang: "en"
 ui_lang: "ko-KR"
 toc: true

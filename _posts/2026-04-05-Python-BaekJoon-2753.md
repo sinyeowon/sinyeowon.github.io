@@ -4,7 +4,7 @@ date: 2026-04-05 15:44:08 +0900
 last_modified_at: 2026-04-30 15:30:23 +0900
 categories: ["BaekJoon", "Python"]
 tags: ['baekjoon', 'Python']
-description: "Python에서는 Java나 C와 달리, ||나 && 연산자를 or과 and로 사용해야한다."
+description: "Python 논리 연산자 or 및 and 활용, Java 및 C와의 논리 연산자 차이 비교"
 english_url: "/en/posts/Python-BaekJoon-2753/"
 ---
 [BaekJoon 2753](https://www.acmicpc.net/problem/2753)

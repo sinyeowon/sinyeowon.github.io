@@ -5,7 +5,7 @@ date: 2026-04-05 15:44:08 +0900
 last_modified_at: 2026-04-30 15:30:23 +0900
 categories: ["BaekJoon", "Python"]
 tags: ['baekjoon', 'Python']
-description: "In Python, unlike Java or C, you must use the || or && operators as or and and."
+description: "Usage of Python logical operators or and and, comparison with Java and C logical operators"
 lang: "en"
 ui_lang: "ko-KR"
 toc: true

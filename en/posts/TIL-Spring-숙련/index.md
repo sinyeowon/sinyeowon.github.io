@@ -6,7 +6,7 @@ date: 2026-05-10 09:00:00 +0900
 last_modified_at: 2026-06-09 01:27:00 +0900
 categories: ["Spring 단기 심화", "Spring 강의"]
 tags: ["Spring", "TIL", "내일배움캠프"]
-description: "By summarizing the flow of implementing JWT authentication in Spring, we learned how to create tokens, store cookies, process bearer tokens, verify, extract claims, and manage permissions using UserRoleEnum through JwtUtil."
+description: "JWT authentication flow in Spring, token creation and verification using JwtUtil, Bearer token processing, and permission management with UserRoleEnum"
 description_source: "notion"
 lang: "en"
 ui_lang: "ko-KR"

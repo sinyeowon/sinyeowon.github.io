@@ -5,7 +5,7 @@ date: 2026-06-08 09:00:00 +0900
 last_modified_at: 2026-06-09 01:45:00 +0900
 categories: ["Spring 단기 심화", "심화 주차"]
 tags: ["TIL", "Zipkin"]
-description: "We understand the concept of distributed tracing using Zipkin and the role of Trace/Span, and summarize how the message queue-based event architecture is used for asynchronous processing and traffic buffering."
+description: "Distributed tracing with Zipkin, Trace/Span roles, and message queue-based event architecture for asynchronous processing and traffic buffering"
 description_source: "notion"
 lang: "en"
 ui_lang: "ko-KR"

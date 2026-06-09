@@ -5,7 +5,7 @@ date: 2026-06-06 09:00:00 +0900
 last_modified_at: 2026-06-09 01:13:00 +0900
 categories: ["Spring 단기 심화", "심화 주차"]
 tags: ["TIL", "Cache"]
-description: "Based on the concepts of caching and Redis, we organized Cache Hit/Miss, TTL, and cache invalidation strategies, and learned what to consider when applying caching in optimizing API performance."
+description: "Caching and Redis concepts, Cache Hit/Miss, TTL, cache invalidation strategies, and API performance optimization considerations"
 description_source: "notion"
 lang: "en"
 ui_lang: "ko-KR"

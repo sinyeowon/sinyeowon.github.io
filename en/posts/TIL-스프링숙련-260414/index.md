@@ -6,7 +6,7 @@ date: 2026-04-14 16:08:22 +0900
 last_modified_at: 2026-05-01 16:34:06 +0900
 categories: ["Spring 단기 심화", "Spring 강의"]
 tags: ['Spring', 'TIL', '내일배움캠프']
-description: "JWT JWT (Json Web Token) : Claim-based Web Token that stores user properties using JSON format Typically stores JWT using cookie storage"
+description: "JWT (Json Web Token) concept, JSON format-based Claim storage, and cookie storage utilization"
 lang: "en"
 ui_lang: "ko-KR"
 toc: true

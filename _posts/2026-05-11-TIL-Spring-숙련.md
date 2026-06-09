@@ -5,7 +5,7 @@ date: 2026-05-11 09:00:00 +0900
 last_modified_at: 2026-06-09 01:28:00 +0900
 categories: ["Spring 단기 심화", "Spring 강의"]
 tags: ["Spring", "TIL", "내일배움캠프"]
-description: "Spring에서 회원가입과 로그인 기능을 구현하며 계층별 역할을 정리하고, PasswordEncoder를 활용한 비밀번호 암호화·검증과 JWT 발급 및 쿠키 저장 흐름을 학습했다."
+description: "Spring 회원가입 및 로그인 기능 구현, 계층별 역할, PasswordEncoder 암호화, JWT 발급 및 쿠키 저장 흐름"
 description_source: "notion"
 permalink: "/posts/TIL-Spring-숙련-2026-05-11/"
 english_url: "/en/posts/TIL-Spring-숙련-2026-05-11/"

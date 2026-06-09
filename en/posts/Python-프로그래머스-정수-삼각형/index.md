@@ -5,7 +5,7 @@ date: 2026-05-18 09:00:00 +0900
 last_modified_at: 2026-06-09 01:43:00 +0900
 categories: ["Programmers", "Python"]
 tags: ["Python", "programmers"]
-description: "Through the programmer's integer triangle problem, we understand the DP method of storing and calculating the maximum sum of each cell, and summarize how to implement it with the same logic in Python and Java."
+description: "DP method for calculating maximum cell sums, and integer triangle problem implementation in Python and Java"
 description_source: "notion"
 lang: "en"
 ui_lang: "ko-KR"

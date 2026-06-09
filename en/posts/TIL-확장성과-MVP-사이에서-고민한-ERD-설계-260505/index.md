@@ -6,7 +6,7 @@ date: 2026-05-05 09:00:00 +0900
 last_modified_at: 2026-06-09 01:24:00 +0900
 categories: ["GDGoC KNU", "0 to Product"]
 tags: ["project"]
-description: "During the ERD design process, we considered table separation, personal information processing, and AI/OCR data storage methods, and organized appropriate design criteria between scalability and MVP implementation scope."
+description: "ERD design considerations for table separation, personal information processing, AI/OCR data storage, and design criteria balancing scalability and MVP scope"
 description_source: "notion"
 lang: "en"
 ui_lang: "ko-KR"

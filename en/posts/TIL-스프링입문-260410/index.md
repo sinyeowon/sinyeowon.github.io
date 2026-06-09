@@ -6,7 +6,7 @@ date: 2026-04-10 15:58:53 +0900
 last_modified_at: 2026-04-11 12:15:33 +0900
 categories: ["Spring 단기 심화", "Spring 강의"]
 tags: ['Spring', 'TIL', '내일배움캠프']
-description: "Explored the role of DTOs and Spring's 3-Layer Architecture, and learned how to resolve strong coupling by implementing Inversion of Control (IoC) and Dependency Injection (DI)."
+description: "Role of DTOs, Spring 3-Layer Architecture, and resolving strong coupling via IoC and DI"
 lang: "en"
 ui_lang: "ko-KR"
 toc: true

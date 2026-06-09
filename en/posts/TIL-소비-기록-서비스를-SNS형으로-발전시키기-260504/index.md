@@ -6,7 +6,7 @@ date: 2026-05-04 09:00:00 +0900
 last_modified_at: 2026-06-09 01:25:00 +0900
 categories: ["GDGoC KNU", "0 to Product"]
 tags: ["project"]
-description: "In the process of planning the consumption record service, we identified the limitations of automatic collection of financial data and summarized the direction of differentiation between an OCR-based upload method that can be implemented and an SNS-type consumption sharing service."
+description: "Limitations of automatic financial data collection, implementable OCR-based uploads, and SNS-type consumption sharing service differentiation"
 description_source: "notion"
 lang: "en"
 ui_lang: "ko-KR"

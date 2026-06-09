@@ -6,7 +6,7 @@ date: 2026-05-11 09:00:00 +0900
 last_modified_at: 2026-06-09 01:28:00 +0900
 categories: ["Spring 단기 심화", "Spring 강의"]
 tags: ["Spring", "TIL", "내일배움캠프"]
-description: "We implemented membership registration and login functions in Spring, organized roles for each layer, and learned password encryption and verification using PasswordEncoder, JWT issuance, and cookie storage flow."
+description: "Spring membership registration and login implementation, layer roles, PasswordEncoder encryption, and JWT issuance and cookie storage flow"
 description_source: "notion"
 lang: "en"
 ui_lang: "ko-KR"

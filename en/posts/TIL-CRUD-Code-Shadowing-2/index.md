@@ -5,7 +5,7 @@ date: 2026-04-20 01:52:37 +0900
 last_modified_at: 2026-04-22 01:21:51 +0900
 categories: ["Spring 단기 심화", "과제"]
 tags: ['Java', 'Spring', 'TIL', '과제', '내일배움캠프']
-description: "@ManyToOne annotation : Relationship setting - Multiple Orders refer to one Product Order: Product = N: 1 It's confusing,"
+description: "@ManyToOne annotation for Many-to-One relationship configuration"
 lang: "en"
 ui_lang: "ko-KR"
 toc: true

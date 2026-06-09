@@ -4,7 +4,7 @@ date: 2026-05-06 09:00:00 +0900
 last_modified_at: 2026-06-09 01:21:00 +0900
 categories: ["Spring 단기 심화", "특강"]
 tags: ["Git", "CI/CD"]
-description: "Git 브랜치 전략과 PR 기반 협업 흐름을 정리하고, Merge/Rebase 차이와 충돌 해결 방법, GitHub Actions를 활용한 CI/CD 자동화의 기본 개념을 학습했다."
+description: "Git 브랜치 전략, PR 기반 협업 흐름, Merge/Rebase 차이와 Github Actions를 활용한 CI/CD 개념"
 description_source: "notion"
 english_url: "/en/posts/TIL-Git-&-PR-+-CI-CD-특강/"
 notion_id: "3587788a-fc66-8089-892a-dad32b993e3a"

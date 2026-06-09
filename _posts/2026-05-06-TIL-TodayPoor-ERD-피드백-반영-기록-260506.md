@@ -5,7 +5,7 @@ date: 2026-05-06 09:00:00 +0900
 last_modified_at: 2026-06-09 01:24:00 +0900
 categories: ["GDGoC KNU", "0 to Product"]
 tags: ["project"]
-description: "TodayPoor ERD 피드백을 바탕으로 테이블 역할 분리, 중복 데이터 제거, AI/OCR 결과 저장 구조를 재정리하고, MVP에 맞는 데이터 설계 기준을 정리했다."
+description: "TodayPoor ERD 피드백 기반 테이블 역할 분리, 중복 데이터 제거, AI/OCR 결과 저장 구조 재정리 및 MVP 데이터 설계 기준"
 description_source: "notion"
 english_url: "/en/posts/TIL-TodayPoor-ERD-피드백-반영-기록-260506/"
 notion_id: "3587788a-fc66-80b9-9579-d2a2d632a991"

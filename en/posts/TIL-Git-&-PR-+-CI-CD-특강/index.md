@@ -5,7 +5,7 @@ date: 2026-05-06 09:00:00 +0900
 last_modified_at: 2026-06-09 01:21:00 +0900
 categories: ["Spring 단기 심화", "특강"]
 tags: ["Git", "CI/CD"]
-description: "We summarized Git branch strategy and PR-based collaboration flow, learned Merge/Rebase differences and conflict resolution methods, and basic concepts of CI/CD automation using GitHub Actions."
+description: "Git branch strategy, PR-based collaboration flow, Merge/Rebase differences, and CI/CD automation with GitHub Actions"
 description_source: "notion"
 lang: "en"
 ui_lang: "ko-KR"

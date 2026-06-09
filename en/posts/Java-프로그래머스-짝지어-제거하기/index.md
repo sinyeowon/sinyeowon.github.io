@@ -6,7 +6,7 @@ date: 2026-05-14 09:00:00 +0900
 last_modified_at: 2026-06-09 01:34:00 +0900
 categories: ["Programmers", "Java"]
 tags: ["Java", "programmers"]
-description: "The programmer's matching removal problem was solved using the Java Stack, and a method for efficiently removing adjacent identical characters using push(), pop(), peek(), and isEmpty() was summarized."
+description: "Solving matching removal problems with Java Stack, and adjacent identical character removal using push(), pop(), and peek()"
 description_source: "notion"
 lang: "en"
 ui_lang: "ko-KR"
