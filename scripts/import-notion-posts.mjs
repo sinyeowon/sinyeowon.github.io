@@ -714,7 +714,9 @@ function splitInlineWhitespace(text) {
 
 function wrapMarkdownInline(text, opening, closing = opening) {
   const { leading, body, trailing } = splitInlineWhitespace(text);
-  return body ? `${leading}${opening}${body}${closing}${trailing}` : text;
+  // Ensure body is not just whitespace (including NBSP)
+  const isWhitespaceOnly = body.trim().replace(/\u00A0/g, "").length === 0;
+  return body && !isWhitespaceOnly ? `${leading}${opening}${body}${closing}${trailing}` : text;
 }
 
 function wrapMarkdownLink(text, href) {
@@ -1013,29 +1015,37 @@ function calloutMarkdown(markdown, icon = "💡") {
   }
   const lines = [
     '<div class="notion-callout" markdown="1">',
+    '',
     '<div class="notion-callout-heading" markdown="1">',
-    `<span class="notion-callout-icon">${escapeHtml(icon)}</span>`
+    '',
+    `<span class="notion-callout-icon">${escapeHtml(icon)}</span>`,
+    ''
   ];
 
   if (normalizedTitle) {
     lines.push(
       '<div class="notion-callout-title" markdown="1">',
+      '',
       normalizedTitle,
+      '',
       "</div>"
     );
   }
 
-  lines.push("</div>");
+  lines.push("", "</div>");
 
   if (body) {
     lines.push(
+      '',
       '<div class="notion-callout-body" markdown="1">',
+      '',
       body,
+      '',
       "</div>"
     );
   }
 
-  lines.push("</div>");
+  lines.push("", "</div>");
 
   return lines.join("\n");
 }

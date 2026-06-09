@@ -44,7 +44,7 @@ In an MSA environment, multiple servers rush to read and modify inventory data i
 
             - If successful, 1 (lock acquired), if failed, 0 (lock acquired failed) is returned.
 
-> **Q Why** **`SET key value NX EX`** **format all at once? (Disaster Scenario)**
+> **Q Why `SET key value NX EX` format all at once? (Disaster Scenario)**
 >![image](/assets/img/notion/TIL-Redis-실전-마스터-클래스-특강-2/02-49ecffa5dd.png)
 
     - In the past, a lock was set and an expiration time (TTL) was set separately to prevent the bathroom door from being permanently locked.
@@ -238,7 +238,7 @@ In an MSA environment, multiple servers rush to read and modify inventory data i
 
         - **③ Decision to introduce Redis**: We adopted the familiar Redis instead of the heavy Kafka and converted the synchronous method to an asynchronous method.
 
-        - **④ Specific implementation method (★Contradiction resolution point)**: Ask questions here! “Didn’t you say earlier that Pub/Sub should not be used for important logic because there is a risk of loss?” you're right! So, to prevent data loss, Olive Young safely loaded the issuance request data into the Redis List as **`RPUSH`****. And **Pub/Sub was only used as a light 'trigger' to tell asynchronous workers to "start processing!"** When the Worker receives the notification, it pulls out the data as `LPOP` from the List and records it in the Main DB.
+        - **④ Specific implementation method (★Contradiction resolution point)**: Ask questions here! “Didn’t you say earlier that Pub/Sub should not be used for important logic because there is a risk of loss?” you're right! So, to prevent data loss, Olive Young safely loaded the issuance request data into the Redis List as **`RPUSH`**. And **Pub/Sub was only used as a light 'trigger' to tell asynchronous workers to "start processing!"** When the Worker receives the notification, it pulls out the data as `LPOP` from the List and records it in the Main DB.
 
         - **⑤ Result after introduction**: The overall site processing speed improved by 2.2 times by isolating the main DB load.
 

@@ -87,14 +87,24 @@ We plan to create a class called JwtUtil with JWT-related functions to perform J
             <a class="notion-mention" href="https://docs.tosspayments.com/resources/glossary/bearer-auth">https://docs.tosspayments.com/resources/glossary/bearer-auth</a>- Logging means recording project status or operation information in chronological order while the application is running.
         - We will proceed with logging using the Logback logging framework.
 
-    <div class="notion-callout" markdown="1">
+    
+
+<div class="notion-callout" markdown="1">
+
     <div class="notion-callout-heading" markdown="1">
+
     <span class="notion-callout-icon">📍</span>
+
     <div class="notion-callout-title" markdown="1">
+
     The types of user permissions are managed using Enum.
+
     </div>
+
     </div>
+
     <div class="notion-callout-body" markdown="1">
+
     - Used to enter the user's permissions using the user's information when creating a JWT
 
             ```java
@@ -236,7 +246,9 @@ We plan to create a class called JwtUtil with JWT-related functions to perform J
                             - This is to manage permissions safely and consistently.
 
             </details>
+
     </div>
+
     </div>
 
 1. Create JWT

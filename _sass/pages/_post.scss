@@ -59,8 +59,8 @@ header {
   .notion-callout {
     margin: 1.75rem 0;
     padding: 1.25rem 1.35rem;
-    border-left: 4px solid #b5a8ff;
-    background: #f7f3ff;
+    border-left: 4px solid #ffb3c1;
+    background: #fff0f3;
     color: var(--text-color);
     font-weight: 500;
     line-height: 1.85;
@@ -87,7 +87,7 @@ header {
       font-size: 1.05rem;
       line-height: 1;
       font-family: 'Apple Color Emoji', 'Segoe UI Emoji', 'Segoe UI Symbol', sans-serif;
-      background: rgba(181, 168, 255, 0.12);
+      background: rgba(255, 179, 193, 0.12);
       border-radius: 50%;
     }
 
@@ -130,8 +130,8 @@ header {
 html[data-mode='dark'] {
   .content {
     .notion-callout {
-      border-left-color: rgba(181, 168, 255, 0.62);
-      background: rgba(181, 168, 255, 0.14);
+      border-left-color: rgba(255, 179, 193, 0.62);
+      background: rgba(255, 179, 193, 0.14);
     }
   }
 }

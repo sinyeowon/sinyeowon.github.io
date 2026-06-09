@@ -46,13 +46,22 @@ Without a branching strategy, accidents can occur, such as your work overwriting
   | Compatibility with distribution | Not compatible with rapid distribution (CD) | PR Merge = Immediate Deployment |
   | prerequisites | — | Automated testing is an essential premise |
 
-    <div class="notion-callout" markdown="1">
+    
+
+<div class="notion-callout" markdown="1">
+
     <div class="notion-callout-heading" markdown="1">
+
     <span class="notion-callout-icon">📍</span>
+
     <div class="notion-callout-title" markdown="1">
+
     Most startups/web services start with Github Flow and expand to Git Flow as they grow.
+
     </div>
+
     </div>
+
     </div>
 
 ### **PR Workflow and Code Review**
@@ -189,16 +198,28 @@ Without a branching strategy, accidents can occur, such as your work overwriting
 
         - Merged PR branch
 
-        - Branch with release tag<div class="notion-callout" markdown="1">
+        - Branch with release tag
+
+<div class="notion-callout" markdown="1">
+
     <div class="notion-callout-heading" markdown="1">
+
     <span class="notion-callout-icon">📍</span>
+
     <div class="notion-callout-title" markdown="1">
+
     Using git push --force-with-lease` causes it to fail when the remote is not what I expected.
+
     </div>
+
     </div>
+
     <div class="notion-callout-body" markdown="1">
+
     → If force push is required, always use `--force-with-lease`
+
     </div>
+
     </div>
 
 ### **Conflict resolution**
@@ -275,20 +296,32 @@ Conflicts occur when two branches modify the same line in the same file differen
 
     → If even one step fails, it stops immediately + notification / broken builds never advance to the next step
 
-    <div class="notion-callout" markdown="1">
+    
+
+<div class="notion-callout" markdown="1">
+
     <div class="notion-callout-heading" markdown="1">
+
     <span class="notion-callout-icon">📍</span>
+
     <div class="notion-callout-title" markdown="1">
+
     CI/CD Glossary
+
     </div>
+
     </div>
+
     <div class="notion-callout-body" markdown="1">
+
   | abbreviation | full name | meaning |
   | --- | --- | --- |
   | C.I. | Continuous **Integration** | Frequent code integration and automatic verification |
   | CD | Continuous **Delivery** | Stay deployable at any time (manual approval) |
   | CD | Continuous **Deployment** | If passed, automatically distributed to operation |
+
     </div>
+
     </div>
 
 - Get started in 30 lines with Github Actions<br>

@@ -267,7 +267,7 @@ Assuming a popular shopping mall, we plan to map each data structure with comman
 
 **Q I heard that existing disk-based DBs require locks and are slow because they are multi-threaded, but why does Redis use distributed locks since it is single-threaded?**
 
-- Redis' single thread refers to **Redis** **internally** **how commands are processed**
+- Redis' single thread refers to **Redis internally how commands are processed**
     - In other words, because Redis processes only one command at a time in order, there are fewer conflicts that occur when multiple threads modify the same memory data at the same time.
 
     - Redis commands themselves are executed atomically.
