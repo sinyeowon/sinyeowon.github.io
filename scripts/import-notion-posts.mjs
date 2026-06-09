@@ -1516,6 +1516,20 @@ async function buildPost(page, urlSlugPlan = new Map()) {
   const existingEnglishState = await existingGeneratedPostState(page.id, "en");
   const existingKoreanPath = existingKoreanState.filePath;
   const existingEnglishPath = existingEnglishState.filePath;
+
+  // Check if Notion sync is disabled manually in the post
+  if (existingKoreanPath) {
+    const content = await readFile(existingKoreanPath, "utf8");
+    const syncEnabled = frontMatterValue(content, "notion_sync");
+    if (syncEnabled === "false") {
+      console.log(`> Skipping Notion import for "${notionTitle}" (notion_sync: false)`);
+      return [
+        { notionId: page.id, notionLang: "ko", filePath: existingKoreanPath, skipped: true },
+        ...(GENERATE_ENGLISH ? [{ notionId: page.id, notionLang: "en", filePath: existingEnglishPath, skipped: true }] : [])
+      ];
+    }
+  }
+
   const slug = existingKoreanPath
     ? slugFromKoreanPostPath(existingKoreanPath)
     : requestedSlug;
