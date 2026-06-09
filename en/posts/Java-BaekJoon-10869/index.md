@@ -5,7 +5,7 @@ date: 2026-04-05 15:29:31 +0900
 last_modified_at: 2026-04-23 15:05:27 +0900
 categories: ["BaekJoon", "Java"]
 tags: ['Java', 'baekjoon']
-description: "When outputting from Java, if you want to use formatted output (%d, %f, etc.), you must use printf, not print."
+description: "Practiced standard arithmetic operations in Java and learned how to format multi-line output using the printf method in Baekjoon 10869."
 lang: "en"
 ui_lang: "ko-KR"
 toc: true

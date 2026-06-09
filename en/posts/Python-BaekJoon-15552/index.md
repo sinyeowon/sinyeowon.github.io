@@ -5,7 +5,7 @@ date: 2026-04-05 16:14:22 +0900
 last_modified_at: 2026-05-04 02:07:34 +0900
 categories: ["BaekJoon", "Python"]
 tags: ['baekjoon', 'Python']
-description: "In Python, it is better than the previously used input(). Better to use readline() readline() Faster input than input() Use: import sys Default: a =…"
+description: "Optimized input performance in Python for large data sets by using sys.stdin.readline() instead of the built-in input() function, as explored in Baekjoon 15552."
 lang: "en"
 ui_lang: "ko-KR"
 toc: true

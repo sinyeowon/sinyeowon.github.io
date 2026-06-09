@@ -4,7 +4,7 @@ date: 2026-04-05 15:05:12 +0900
 last_modified_at: 2026-04-23 00:17:55 +0900
 categories: ["BaekJoon", "Python"]
 tags: ['baekjoon', 'Python']
-description: "-> input().split()의 결과가 리스트 형태이기 때문에, 리스트를 int()로 감싸면 에러 발생"
+description: "Python의 input() 함수와 map() 함수를 활용해 사용자 입력을 처리하는 방법을 익히고, 리스트와 문자열 간의 형변환 시 발생할 수 있는 오류를 백준 1000번 풀이를 통해 정리했다."
 english_url: "/en/posts/Python-BaekJoon-1000/"
 ---
 [BaekJoon 1000](https://www.acmicpc.net/problem/1000)

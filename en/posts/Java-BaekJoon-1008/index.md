@@ -5,7 +5,7 @@ date: 2026-04-05 15:16:38 +0900
 last_modified_at: 2026-04-22 15:08:07 +0900
 categories: ["BaekJoon", "Java"]
 tags: ['Java', 'baekjoon']
-description: "정수 / 정수: The result is int, i.e. returns only the quotient. To return the entire division result, including real numbers,"
+description: "Understood the characteristics of integer division in Java and learned how to use explicit casting to double or float to obtain accurate floating-point results, based on Baekjoon 1008."
 lang: "en"
 ui_lang: "ko-KR"
 toc: true

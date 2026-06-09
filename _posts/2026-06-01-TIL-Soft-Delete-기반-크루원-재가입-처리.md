@@ -4,7 +4,7 @@ date: 2026-06-01 09:00:00 +0900
 last_modified_at: 2026-06-05 15:23:00 +0900
 categories: ["GDGoC KNU", "0 to Product"]
 tags: ["project"]
-description: "@SQLRestriction(\"deletedat IS NULL\") 사용 시 주의점 정리"
+description: "JPA Soft Delete 환경에서 유니크 제약 조건 충돌 문제를 분석하고, 탈퇴한 사용자의 데이터를 복구하여 재가입을 처리하는 로직과 @SQLRestriction 사용 시의 주의사항을 정리했다."
 description_source: "notion"
 english_url: "/en/posts/TIL-Soft-Delete-기반-크루원-재가입-처리/"
 notion_id: "3767788a-fc66-8030-8e55-cf4ae4a7b3ce"

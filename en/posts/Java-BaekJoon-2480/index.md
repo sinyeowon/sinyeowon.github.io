@@ -5,7 +5,7 @@ date: 2026-04-05 15:53:10 +0900
 last_modified_at: 2026-04-22 08:30:43 +0900
 categories: ["BaekJoon", "Java"]
 tags: ['Java', 'baekjoon']
-description: "A function that returns the larger of two values. Finding the maximum value among three values using a conditional statement becomes complicated as a…"
+description: "Implemented complex decision-making logic using nested conditional statements and simplified the process of finding maximum values using Math.max() while solving Baekjoon 2480."
 lang: "en"
 ui_lang: "ko-KR"
 toc: true

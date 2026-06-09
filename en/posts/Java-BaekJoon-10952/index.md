@@ -5,7 +5,7 @@ date: 2026-04-05 16:36:35 +0900
 last_modified_at: 2026-04-13 04:50:17 +0900
 categories: ["BaekJoon", "Java"]
 tags: ['Java', 'baekjoon']
-description: "In Java, while(true) is usually used, not while(1) like in Python. In Java, the conditional expression must be of type boolean. In Java, 1 is int,"
+description: "Learned about loop control and the strict boolean type requirements for condition expressions in Java, while solving the infinite loop problem in Baekjoon 10952."
 lang: "en"
 ui_lang: "ko-KR"
 toc: true

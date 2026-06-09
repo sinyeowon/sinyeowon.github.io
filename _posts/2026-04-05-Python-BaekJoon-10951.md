@@ -4,7 +4,7 @@ date: 2026-04-05 20:00:02 +0900
 last_modified_at: 2026-04-23 00:31:51 +0900
 categories: ["BaekJoon", "Python"]
 tags: ['baekjoon', 'Python']
-description: "for line in sys.stdin: 전체 입력을 반복하고, line에 그 전체 입력이 저장됨 입력 개수가 정해져있지 않을 때 사용 가능 a, b = map(int, line.split()) -> 받아온 전체 입력을 공백 기준으로 나누고, int로 저장"
+description: "Python에서 입력의 개수가 주어지지 않았을 때 sys.stdin을 활용해 파일의 끝(EOF)까지 안전하게 읽어오는 기법을 백준 10951번 풀이를 통해 정리했다."
 english_url: "/en/posts/Python-BaekJoon-10951/"
 ---
 [BaekJoon 10951](https://www.acmicpc.net/problem/10951)

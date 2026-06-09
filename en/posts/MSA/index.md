@@ -5,7 +5,7 @@ date: 2026-04-15 15:05:43 +0900
 last_modified_at: 2026-04-30 11:56:54 +0900
 categories: ["Spring 단기 심화", "아키텍처"]
 tags: ['MSA', '아키텍처']
-description: "This post is a placeholder for future summaries and core concepts of Microservices Architecture (MSA) lectures."
+description: "Summarized the core concepts of Microservices Architecture (MSA), including service decomposition, inter-service communication, and strategies for maintaining data consistency."
 lang: "en"
 ui_lang: "ko-KR"
 toc: true
