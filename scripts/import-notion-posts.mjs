@@ -1573,30 +1573,16 @@ async function buildPost(page, urlSlugPlan = new Map()) {
   const tags = propertyList(findProperty(page, propertyNames.tags)).filter(
     Boolean
   );
-  const rawDescription = propertyText(
-    findProperty(page, propertyNames.description)
-  );
-  const description = rawDescription.trim() ? rawDescription : "";
+  
   const blocks = await getBlockChildren(page.id);
   const body = normalizeMarkdown(
     await renderBlocks(blocks, { slug, assetIndex: 0, title })
   );
   const generatedDescription = createDescription(body, title);
-  const existingDescriptionState = description
-    ? { description: "", source: "" }
-    : await existingPostDescriptionState(filePath);
-  const existingDescriptionIsGenerated =
-    existingDescriptionState.description &&
-    existingDescriptionState.description === generatedDescription;
+  const existingDescriptionState = await existingPostDescriptionState(filePath);
   const existingDescription = existingDescriptionState.description;
-  const fallbackDescription =
-    description || existingDescription || generatedDescription;
-  const descriptionSource = description
-    ? "notion"
-    : existingDescription
-      ? existingDescriptionState.source ||
-        (existingDescriptionIsGenerated ? "excerpt" : "manual")
-      : "excerpt";
+  const fallbackDescription = existingDescription || generatedDescription;
+  const descriptionSource = existingDescription ? "manual" : "excerpt";
   const koreanUrl = `/posts/${urlSlug}/`;
   const englishUrl = `/en/posts/${urlSlug}/`;
 
@@ -1649,15 +1635,11 @@ async function buildPost(page, urlSlugPlan = new Map()) {
           : await translateText(title);
       const englishTitleSource =
         existingEnglishTitleState.source === "manual" ? "manual" : titleSource;
-      const existingEnglishDescriptionState = description
-        ? { description: "", source: "" }
-        : await existingPostDescriptionState(englishPath);
+      const existingEnglishDescriptionState = await existingPostDescriptionState(englishPath);
       const englishDescription =
         existingEnglishDescriptionState.description ||
         (await translateText(fallbackDescription));
-      const englishDescriptionSource = description
-        ? "notion"
-        : existingEnglishDescriptionState.description
+      const englishDescriptionSource = existingEnglishDescriptionState.description
           ? existingEnglishDescriptionState.source || descriptionSource
           : descriptionSource;
       const englishBody = normalizeMarkdown(await translateMarkdown(body));
