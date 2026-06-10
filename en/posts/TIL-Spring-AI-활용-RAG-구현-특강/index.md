@@ -2,7 +2,7 @@
 layout: "post"
 title: "[TIL] Utilizing Spring AI - Special lecture on RAG implementation"
 date: 2026-06-10 09:00:00 +0900
-last_modified_at: 2026-06-11 00:38:00 +0900
+last_modified_at: 2026-06-11 00:56:00 +0900
 categories: ["Spring 단기 심화", "특강"]
 tags: ["Spring AI", "RAG"]
 description: "This article summarizes the contents of the special lecture on RAG implementation using Spring AI."
@@ -36,7 +36,7 @@ Spring AI and RAG are concepts that are often used together, so they are easier 
 <details markdown="1">
 <summary>Example code</summary>Yes, I will show you the core flow of configuring RAG with Spring AI in code. Let’s roughly divide it into three steps: (1) dependency/setting → (2) document loading → (3) query.
 
-First of all, let's point out one thing: Spring AI's API has changed quite a bit since around 1.0 GA. Below is the 1.0 standard code, but the class name or method signature may be slightly different depending on the actual version, so we recommend checking the official documentation at the end.
+First of all, let's point out one thing: Spring AI's API has changed quite a bit since around 1.0 GA. 아래는 1.0 기준 코드인데, 실제 버전에 따라 클래스명이나 메서드 시그니처가 조금 다를 수 있으니 마지막에 공식 문서 확인을 권합니다.
 
 **1. Dependencies (Maven)**
 
@@ -72,7 +72,7 @@ spring:
         dimensions: 1536          # 임베딩 모델 차원에 맞춤
 ```
 
-At this point, the `EmbeddingModel`, `ChatModel`, and `VectorStore` beans are ready for injection with automatic configuration.
+여기까지 하면 `EmbeddingModel`, `ChatModel`, `VectorStore` 빈이 자동 설정으로 주입 준비됩니다.
 
 **3. Loading documents — splitting documents and saving them to vector database**
 
@@ -105,7 +105,7 @@ By calling `vectorStore.add()`, each chunk is converted to an embedding vector a
 
 **4. Query — RAG core part**
 
-Here, `QuestionAnswerAdvisor` automatically handles “Embedding question → Search similar documents → Insert into prompt”.
+여기서 `QuestionAnswerAdvisor`가 "질문 임베딩 → 유사 문서 검색 → 프롬프트에 끼워넣기"를 자동으로 처리합니다.
 
 ```java
 @Service
@@ -152,7 +152,7 @@ new QuestionAnswerAdvisor(
 );
 ```
 
-If you want more detailed control, you can search for `vectorStore.similaritySearch()` without using Advisor and assemble the prompt yourself.
+직접 더 세밀하게 제어하고 싶으면 Advisor를 안 쓰고 `vectorStore.similaritySearch()`로 검색한 뒤 프롬프트를 손수 조립하는 방식도 가능합니다.
 
 ```java
 List<Document> docs = vectorStore.similaritySearch(
@@ -171,6 +171,8 @@ The package path (`org.springframework.ai.chat.client...`) or builder API may va
 </details>
 
 </details>
+
+<hr>
 
 ## What I Learned
 
@@ -409,9 +411,9 @@ public class PromptedChatService {
 
 ### Structured Output conversion flow
 
-Natural language answers are easy for humans to read, but difficult for systems to process. In practical services, it does not end with just showing the AI ​​response on the screen. You need to save the response in the DB, send a notification based on risk, branch to the next logic, or determine whether to make a tool call. What is needed at this time is structured output.
+Natural language answers are easy for humans to read, but difficult for systems to process. In practical services, it does not end with just showing the AI ​​response on the screen. 응답을 DB에 저장하거나, 위험도를 기준으로 알림을 보내거나, 다음 로직을 분기하거나, Tool Calling 여부를 판단해야 한다. What is needed at this time is structured output.
 
-Spring AI's Structured Output can be understood as a flow that converts a model's text output into a structure such as a Java object or list. In the lecture, the expression “Receive AI response as DTO” is the most intuitive.
+Spring AI의 Structured Output은 모델의 텍스트 출력을 Java 객체나 리스트 같은 구조로 변환하는 흐름으로 이해하면 된다. In the lecture, the expression “Receive AI response as DTO” is the most intuitive.
 
 ```java
 분석 결과 DTO
@@ -464,7 +466,7 @@ public class InquiryAnalysisService {
 
 ### Reasons for introducing RAG
 
-The LLM-only answer relies on general knowledge that the model already knows. This method is weak for information that the model did not learn, such as company policies, latest notices, project documents, and customer-specific data. So, in practice, rather than asking the model to “speak plausibly,” you should first find and provide documents to use in the answer.
+The LLM-only answer relies on general knowledge that the model already knows. This method is weak for information that the model did not learn, such as company policies, latest notices, project documents, and customer-specific data. 그래서 실무에서는 모델에게 “그럴듯하게 말하게” 하는 것이 아니라, 답변에 사용할 문서를 먼저 찾아서 함께 제공해야 한다.
 
 RAG stands for Retrieval Augmented Generation. If you translate it into Korean, it means creating search augmentation. The key is not to retrain the model. It is a structure that searches related documents at the time of the question and generates an answer by putting the search results into context.
 
@@ -480,7 +482,7 @@ These questions are dangerous to answer using general knowledge of the model. Ev
 
 ### Naive RAG: two sequences
 
-Naive RAG is the most basic RAG structure. In lectures, Naive RAG should be explained by dividing it into “the process of storing documents as vectors” and “the process of searching related documents when asking a question.” Many students misunderstand RAG as a single API call, but in reality, the document loading sequence and question sequence are separate.
+Naive RAG is the most basic RAG structure. 강의에서는 Naive RAG를 “문서를 벡터로 저장하는 과정”과 “질문할 때 관련 문서를 검색하는 과정”으로 나누어 설명해야 한다. 많은 학생들이 RAG를 한 번의 API 호출로 오해하지만, 실제로는 문서 적재 시퀀스와 질문 시퀀스가 분리되어 있다.
 
 **Document loading sequence**
 
@@ -678,7 +680,7 @@ Naive RAG is a basic structure that must be learned, but in many cases, this str
 | chunk strategy | Does one chunk contain one unit of meaning? |
 | metadata | Did you save the department, version, date, and document type? |
 | search query | Is it enough to search user questions as is? |
-| Response validation | Is the answer based on the searched document? |
+| Response validation | Is the answer based on the search document? |
 ```java
 청크 메타데이터 예시
 Document chunk = new Document(
@@ -690,3 +692,36 @@ Document chunk = new Document(
         )
 );
 ```
+
+<hr>
+
+## Q&A
+
+**Why use Q PGVector**
+
+- **PGVector**
+    - Extensions to PostgreSQL
+
+    - It is not a separate new DB, but a plugin that adds ‘vector storage and search functions’ to PostgreSQL, a commonly used relational DB.
+
+- Why do you need separate vector storage?<br>
+    In RAG, when you convert a document into an embedding, it becomes a vector with hundreds to thousands of numbers like `[0.013, -0.072, 0.45, ...]`. And when a question comes in, we need to find “document vectors whose meaning is closest to this question vector.” However, the `WHERE` search in a general DB is specialized for checking "whether the values ​​are exactly the same," and is not suitable for quickly determining "how similar the meaning is between vectors (distance calculation)."
+
+    That is why **Vector Database** emerged. It is a storage specialized for storing vectors and quickly finding the “N closest vectors” using things like cosine similarity or Euclidean distance. PGVector puts that function into PostgreSQL.
+
+- Reasons for using PGVector<br>
+    The biggest reason is that **many are already using PostgreSQL**. There is no need to launch and operate additional new infrastructure (separate Vector DB server), just install the extension to the existing DB. Operational burden is reduced, and things like backup, monitoring, and permission management can be done within the existing PostgreSQL system. In addition, it is a great advantage in practice to be able to handle vectors and general data (e.g. document title, creation date, category) together in one table and perform conditional filtering and vector search together.
+
+    **There are other options**
+
+    PGVector is not the only answer, but some examples include:
+
+  | type | characteristic |
+  | --- | --- |
+  | **PGVector** | Utilizes existing PostgreSQL, simple to operate, suitable for small to medium-sized businesses |
+  | **Chroma** | Lightweight and convenient for local development/prototyping |
+  | **Milvus / Qdrant / Weaviate** | Dedicated DB specialized in large-scale, high-performance vector search |
+  | **Pinecone** | Managed (serverless) cloud service, low operational burden |
+  | **Redis, Elasticsearch** | Add vector function to existing infrastructure |
+
+    Since Spring AI has abstracted most of this into the same interface called `VectorStore`, the example code seen above can be replaced by PGVector → Chroma → Qdrant by simply changing the dependencies and settings. The code logic rarely changes.**To summarize**, PGVector is “a vector search function added to the already familiar PostgreSQL,” and can be considered the easiest starting point when operating a new DB separately is burdensome. When creating a RAG for the first time, it is common to start with PGVector or Chroma, and then move to a dedicated vector DB as the scale grows.

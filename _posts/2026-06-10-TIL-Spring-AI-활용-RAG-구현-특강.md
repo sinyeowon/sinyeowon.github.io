@@ -1,11 +1,11 @@
 ---
 title: "[TIL] Spring AI 활용 - RAG 구현 특강"
 date: 2026-06-10 09:00:00 +0900
-last_modified_at: 2026-06-11 00:38:00 +0900
+last_modified_at: 2026-06-11 00:56:00 +0900
 categories: ["Spring 단기 심화", "특강"]
 tags: ["Spring AI", "RAG"]
 description: "Spring AI 활용 RAG 구현 특강에 대한 학습 내용을 정리한 글입니다."
-description_source: "excerpt"
+description_source: "manual"
 english_url: "/en/posts/TIL-Spring-AI-활용-RAG-구현-특강/"
 notion_id: "37b7788a-fc66-8061-b853-e5bb66d0821b"
 notion_lang: "ko"
@@ -168,6 +168,8 @@ String context = docs.stream()
 </details>
 
 </details>
+
+<hr>
 
 ## 배운 내용
 
@@ -691,3 +693,38 @@ Document chunk = new Document(
         )
 );
 ```
+
+<hr>
+
+## QnA
+
+**Q PGVector를 사용하는 이유**
+
+- **PGVector**
+    - PostgreSQL의 확장
+
+    - 별도의 새로운 DB가 아니라, 우리가 흔히 쓰는 관계형 DB인 PostgreSQL에 ‘벡터를 저장하고 검색하는 기능’을 추가로 붙여주는 플러그인
+
+- 왜 벡터 저장이 따로 필요한가<br>
+    RAG에서는 문서를 임베딩으로 바꾸면 `[0.013, -0.072, 0.45, ...]` 처럼 숫자가 수백~수천 개 늘어선 벡터가 됩니다. 그리고 질문이 들어오면 "이 질문 벡터와 의미가 가장 가까운 문서 벡터들"을 찾아야 하죠. 그런데 일반적인 DB의 `WHERE` 검색은 "값이 정확히 같은가"를 따지는 데 특화돼 있지, "벡터끼리 의미가 얼마나 비슷한가(거리 계산)"를 빠르게 하는 데는 맞지 않습니다.
+
+    그래서 등장한 게 **벡터 데이터베이스**입니다. 벡터를 저장하고, 코사인 유사도나 유클리드 거리 같은 걸로 "가장 가까운 벡터 N개"를 빠르게 찾아주는 데 특화된 저장소예요. PGVector는 그 기능을 PostgreSQL 안에 넣어준 것이고요.
+
+- PGVector를 쓰는 이유<br>
+    가장 큰 이유는 **이미 PostgreSQL을 쓰고 있는 경우가 많다**는 점입니다. 새로운 인프라(별도 벡터 DB 서버)를 추가로 띄우고 운영할 필요 없이, 기존 DB에 확장만 설치하면 됩니다. 운영 부담이 줄고, 백업·모니터링·권한 관리 같은 걸 기존 PostgreSQL 체계 안에서 그대로 할 수 있죠. 또 벡터와 일반 데이터(예: 문서 제목, 작성일, 카테고리)를 **한 테이블에서 같이 다루며 조건 필터링과 벡터 검색을 함께** 할 수 있다는 것도 실무에서 큰 장점입니다.
+
+    **다른 선택지도 있다**
+
+    PGVector가 유일한 답은 아니고, 대표적으로 이런 것들이 있습니다.
+
+  | 종류 | 특징 |
+  | --- | --- |
+  | **PGVector** | 기존 PostgreSQL 활용, 운영 단순, 중소 규모에 적합 |
+  | **Chroma** | 가볍고 로컬 개발/프로토타이핑에 편함 |
+  | **Milvus / Qdrant / Weaviate** | 대규모·고성능 벡터 검색에 특화된 전용 DB |
+  | **Pinecone** | 관리형(서버리스) 클라우드 서비스, 운영 부담 적음 |
+  | **Redis, Elasticsearch** | 기존에 쓰던 인프라에 벡터 기능 추가 |
+
+    Spring AI는 이 대부분을 `VectorStore`라는 동일한 인터페이스로 추상화해놨기 때문에, 앞서 본 예제 코드에서 의존성과 설정만 바꾸면 PGVector → Chroma → Qdrant 식으로 갈아끼울 수 있습니다. 코드 로직은 거의 안 바뀌고요.
+
+    **정리하면**, PGVector는 "이미 익숙한 PostgreSQL에 벡터 검색 기능을 더한 것"이고, 새로운 DB를 따로 운영하기 부담스러울 때 가장 무난하게 선택하는 출발점이라고 보면 됩니다. 처음 RAG를 만들어본다면 PGVector나 Chroma로 시작해서, 규모가 커지면 전용 벡터 DB로 옮겨가는 흐름이 일반적이에요.
