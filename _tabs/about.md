@@ -50,7 +50,6 @@ hide_title: true
       <div class="about-skill-row">
         <div class="about-skill-category">Front-End</div>
         <div class="about-skill-badges">
-          <span class="skill-badge badge-js"><i class="fab fa-js-square"></i>JAVASCRIPT</span>
           <span class="skill-badge badge-ts"><i class="fas fa-code"></i>TYPESCRIPT</span>
           <span class="skill-badge badge-react"><i class="fab fa-react"></i>REACT</span>
         </div>
