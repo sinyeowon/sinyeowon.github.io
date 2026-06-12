@@ -47,8 +47,15 @@
   </nav>
 
   <div class="sidebar-bottom d-flex flex-wrap  align-items-center w-100">
-    {% if site.analytics.goatcounter.id and site.analytics.goatcounter.id != empty %}
-      <p class="site-view-stats w-100" data-goatcounter-site="{{ site.analytics.goatcounter.id }}">
+    {% assign view_stats_endpoint = site.view_stats.endpoint | default: '' %}
+    {% assign remark_host = site.comments.remark42.host | default: '' %}
+    {% if view_stats_endpoint == empty and remark_host != empty %}
+      {% capture view_stats_endpoint %}{{ remark_host }}/api/views{% endcapture %}
+      {% assign view_stats_endpoint = view_stats_endpoint | replace: '//api/views', '/api/views' %}
+    {% endif %}
+
+    {% if site.view_stats.enabled and view_stats_endpoint != empty %}
+      <p class="site-view-stats w-100" data-view-stats-endpoint="{{ view_stats_endpoint }}">
         <span>전체 조회수 <span data-view-total>-</span></span>
         <span class="view-stats-separator">/</span>
         <span>하루 조회수 <span data-view-today>-</span></span>

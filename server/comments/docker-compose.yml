@@ -33,6 +33,8 @@ services:
     environment:
       LIKES_DB: /data/likes.db
       ALLOWED_ORIGINS: ${ALLOWED_ORIGINS:?set ALLOWED_ORIGINS in .env}
+      VIEW_TOTAL_OFFSET: ${VIEW_TOTAL_OFFSET:-0}
+      VIEW_TODAY_OFFSET: ${VIEW_TODAY_OFFSET:-0}
     volumes:
       - ./likes_app:/app:ro
       - ./likes_data:/data

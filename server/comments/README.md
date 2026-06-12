@@ -33,14 +33,19 @@ post_likes:
 
 `SITE` in `.env` must match `comments.remark42.site_id`.
 If `post_likes.endpoint` is empty, the blog uses `comments.remark42.host` plus `/api/likes`.
+If `view_stats.endpoint` is empty, the blog uses `comments.remark42.host` plus `/api/views`.
+Set `VIEW_TOTAL_OFFSET` in `.env` to carry over an existing public counter total.
 
-## Test Likes API
+## Test Likes and Views API
 
 ```sh
 curl "https://comments.example.com/api/likes?url=/posts/example/"
 curl -X POST "https://comments.example.com/api/likes" \
   -H "Content-Type: application/json" \
   -d '{"url":"/posts/example/","action":"like"}'
+curl -X POST "https://comments.example.com/api/views" \
+  -H "Content-Type: application/json" \
+  -d '{"url":"/posts/example/"}'
 ```
 
 ## Apply UI CSS Changes

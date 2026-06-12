@@ -2,10 +2,11 @@ const ATTR_DISPLAY = 'sidebar-display';
 const $sidebar = document.getElementById('sidebar');
 const $trigger = document.getElementById('sidebar-trigger');
 const $mask = document.getElementById('mask');
-const $viewStats = document.querySelector('[data-goatcounter-site]');
+const $viewStats = document.querySelector('[data-view-stats-endpoint]');
 const $totalViews = document.querySelector('[data-view-total]');
 const $todayViews = document.querySelector('[data-view-today]');
 const VIEW_STATS_CACHE_KEY = 'sinyeowon:view-stats';
+const LOCAL_HOSTS = new Set(['', 'localhost', '127.0.0.1', '0.0.0.0']);
 
 class SidebarUtil {
   static #isExpanded = false;
@@ -38,20 +39,42 @@ function getKoreaDateString() {
   return `${parts.year}-${parts.month}-${parts.day}`;
 }
 
-function normalizeCount(data) {
-  const rawCount = data.count ?? data.count_unique ?? 0;
+function normalizeCount(value) {
+  const rawCount = value ?? 0;
   return Number(String(rawCount).replace(/\D/g, '')) || 0;
 }
 
-async function fetchCounter(siteCode, query = '') {
-  const url = `https://${siteCode}.goatcounter.com/counter/.json${query}`;
-  const response = await fetch(url, { cache: 'no-store' });
+async function requestViewStats(endpoint, shouldIncrement) {
+  const requestUrl = new URL(endpoint, window.location.origin);
+  const postUrl = window.location.pathname;
+  const options = {
+    cache: 'no-store',
+    headers: {
+      Accept: 'application/json'
+    }
+  };
 
-  if (!response.ok) {
-    throw new Error('Failed to fetch GoatCounter stats');
+  if (shouldIncrement) {
+    options.method = 'POST';
+    options.keepalive = true;
+    options.headers['Content-Type'] = 'application/json';
+    options.body = JSON.stringify({ url: postUrl });
+  } else {
+    requestUrl.searchParams.set('url', postUrl);
   }
 
-  return normalizeCount(await response.json());
+  const response = await fetch(requestUrl.toString(), options);
+
+  if (!response.ok) {
+    throw new Error('Failed to fetch view stats');
+  }
+
+  const data = await response.json();
+
+  return {
+    total: normalizeCount(data.total),
+    today: normalizeCount(data.today)
+  };
 }
 
 function displayCount(element, count) {
@@ -88,14 +111,15 @@ async function initViewStats() {
     return;
   }
 
-  const siteCode = $viewStats.getAttribute('data-goatcounter-site');
+  const endpoint = $viewStats.getAttribute('data-view-stats-endpoint');
 
-  if (!siteCode) {
+  if (!endpoint) {
     return;
   }
 
   const today = getKoreaDateString();
   const cachedStats = getCachedViewStats(today);
+  const shouldIncrement = !LOCAL_HOSTS.has(window.location.hostname);
 
   if (cachedStats.total !== null) {
     displayCount($totalViews, cachedStats.total);
@@ -106,34 +130,12 @@ async function initViewStats() {
   }
 
   try {
-    const [totalResult, todayResult] = await Promise.allSettled([
-      fetchCounter(siteCode),
-      fetchCounter(siteCode, `?start=${today}`)
-    ]);
+    const viewStats = await requestViewStats(endpoint, shouldIncrement);
+    const nextStats = { ...viewStats, todayDate: today };
 
-    const nextStats = {
-      total: cachedStats.total,
-      today: cachedStats.today,
-      todayDate: today
-    };
-
-    if (totalResult.status === 'fulfilled') {
-      nextStats.total = totalResult.value;
-      displayCount($totalViews, nextStats.total);
-    } else if (cachedStats.total === null) {
-      displayUnavailable($totalViews);
-    }
-
-    if (todayResult.status === 'fulfilled') {
-      nextStats.today = todayResult.value;
-      displayCount($todayViews, nextStats.today);
-    } else if (cachedStats.today === null) {
-      displayUnavailable($todayViews);
-    }
-
-    if (nextStats.total !== null || nextStats.today !== null) {
-      setCachedViewStats(nextStats);
-    }
+    displayCount($totalViews, nextStats.total);
+    displayCount($todayViews, nextStats.today);
+    setCachedViewStats(nextStats);
   } catch {
     if (cachedStats.total !== null || cachedStats.today !== null) {
       return;
