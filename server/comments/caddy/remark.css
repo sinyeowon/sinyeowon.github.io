@@ -65,7 +65,9 @@
   outline: none;
 }
 
-.syw-comment-form-awaiting-name {
+.syw-comment-form-awaiting-name textarea,
+.syw-comment-form-awaiting-name .syw-markdown-toolbar,
+.syw-comment-form-awaiting-name .syw-markdown-preview {
   display: none !important;
 }
 
