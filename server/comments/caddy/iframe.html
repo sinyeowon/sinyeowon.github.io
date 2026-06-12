@@ -142,8 +142,13 @@
             button.insertBefore(labelNode, button.firstChild);
           }
 
-          labelNode.textContent = label;
-          button.setAttribute("aria-label", label);
+          if (labelNode.textContent !== label) {
+            labelNode.textContent = label;
+          }
+
+          if (button.getAttribute("aria-label") !== label) {
+            button.setAttribute("aria-label", label);
+          }
         }
 
         function renameAuthControls() {
@@ -544,6 +549,10 @@
           }, true);
         }
 
+        var customizeScheduled = false;
+        var customizeAttempts = 0;
+        var customizeTimer = null;
+
         function customizeRemarkUi() {
           trimTimeSuffix();
           updateCommentPlaceholder();
@@ -556,9 +565,38 @@
           restorePendingComment();
         }
 
+        function scheduleCustomizeRemarkUi() {
+          if (customizeScheduled) {
+            return;
+          }
+
+          customizeScheduled = true;
+          window.requestAnimationFrame(function () {
+            customizeScheduled = false;
+            customizeRemarkUi();
+          });
+        }
+
+        function startCustomizeRetryLoop() {
+          if (customizeTimer) {
+            return;
+          }
+
+          customizeTimer = window.setInterval(function () {
+            customizeAttempts += 1;
+            customizeRemarkUi();
+
+            if (customizeAttempts >= 80) {
+              window.clearInterval(customizeTimer);
+              customizeTimer = null;
+            }
+          }, 250);
+        }
+
         document.addEventListener("DOMContentLoaded", function () {
           customizeRemarkUi();
-          new MutationObserver(customizeRemarkUi).observe(document.getElementById("remark42") || document.body, {
+          startCustomizeRetryLoop();
+          new MutationObserver(scheduleCustomizeRemarkUi).observe(document.body, {
             childList: true,
             characterData: true,
             subtree: true
