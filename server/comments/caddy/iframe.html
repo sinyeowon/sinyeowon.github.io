@@ -151,25 +151,25 @@
           var walker = document.createTreeWalker(document.body, NodeFilter.SHOW_TEXT);
           var textNode;
 
-          document.querySelectorAll(".G_P").forEach(function (comment) {
-            comment.classList.add("syw-deleted-comment-hidden");
-          });
-
           while ((textNode = walker.nextNode())) {
             var text = (textNode.nodeValue || "").replace(/\s+/g, " ").trim();
             var parent;
             var comment;
 
-            if (!deletedCommentLabels.includes(text)) {
+            if (!deletedCommentLabels.some(function (label) { return text === label || text.indexOf(label) !== -1; })) {
               continue;
             }
 
             parent = textNode.parentElement;
-            comment = parent ? parent.closest(".G_F") : null;
+            if (!parent || parent.closest("script, style, template")) {
+              continue;
+            }
+
+            comment = parent.closest(".G_F, .G_W, .G_Z, .G_R, .G_Q, .L_A, .B_C");
 
             if (comment) {
               comment.classList.add("syw-deleted-comment-hidden");
-            } else if (parent) {
+            } else {
               parent.classList.add("syw-deleted-comment-hidden");
             }
           }
