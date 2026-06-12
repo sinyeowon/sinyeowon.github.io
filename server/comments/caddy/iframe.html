@@ -39,6 +39,59 @@
     </script>
     <script>
       (function () {
+        var PENDING_COMMENT_KEY = "syw-remark-pending-comment";
+        var AUTO_SUBMITTING_KEY = "syw-remark-auto-submitting";
+
+        function storageGet(key) {
+          try {
+            return sessionStorage.getItem(key);
+          } catch (error) {
+            return null;
+          }
+        }
+
+        function storageSet(key, value) {
+          try {
+            sessionStorage.setItem(key, value);
+          } catch (error) {}
+        }
+
+        function storageRemove(key) {
+          try {
+            sessionStorage.removeItem(key);
+          } catch (error) {}
+        }
+
+        function savePendingComment(value) {
+          storageSet(PENDING_COMMENT_KEY, JSON.stringify({
+            text: value,
+            savedAt: Date.now()
+          }));
+        }
+
+        function readPendingComment() {
+          var raw = storageGet(PENDING_COMMENT_KEY);
+          var pending;
+
+          if (!raw) {
+            return "";
+          }
+
+          try {
+            pending = JSON.parse(raw);
+          } catch (error) {
+            storageRemove(PENDING_COMMENT_KEY);
+            return "";
+          }
+
+          if (!pending.text || Date.now() - pending.savedAt > 10 * 60 * 1000) {
+            storageRemove(PENDING_COMMENT_KEY);
+            return "";
+          }
+
+          return pending.text;
+        }
+
         function trimTimeSuffix() {
           document.querySelectorAll("a.G_M").forEach(function (node) {
             var text = node.textContent || "";
@@ -57,9 +110,339 @@
           });
         }
 
+        function hideMarkdownNotice() {
+          document.querySelectorAll("a, span, div, p").forEach(function (node) {
+            var text = (node.textContent || "").replace(/\s+/g, " ").trim();
+            if (text === "Markdown을 사용한 스타일링 지원") {
+              var container = node.closest(".K_J, .K_I, div") || node;
+              container.classList.add("syw-hidden");
+            }
+          });
+        }
+
+        function escapeHtml(value) {
+          return String(value || "")
+            .replace(/&/g, "&amp;")
+            .replace(/</g, "&lt;")
+            .replace(/>/g, "&gt;")
+            .replace(/"/g, "&quot;")
+            .replace(/'/g, "&#39;");
+        }
+
+        function renderInlineMarkdown(value) {
+          return escapeHtml(value)
+            .replace(/`([^`]+)`/g, "<code>$1</code>")
+            .replace(/\[([^\]]+)\]\((https?:\/\/[^)\s]+)\)/g, '<a href="$2" rel="nofollow noopener noreferrer">$1</a>')
+            .replace(/\*\*([^*]+)\*\*/g, "<strong>$1</strong>")
+            .replace(/\*([^*]+)\*/g, "<em>$1</em>");
+        }
+
+        function renderMarkdown(value) {
+          var lines = String(value || "").split(/\r?\n/);
+          var html = [];
+          var inCode = false;
+          var codeLines = [];
+          var inList = false;
+          var listType = "";
+
+          function closeList() {
+            if (inList) {
+              html.push("</" + listType + ">");
+              inList = false;
+              listType = "";
+            }
+          }
+
+          lines.forEach(function (line) {
+            var headingMatch;
+            var orderedMatch;
+            var unorderedMatch;
+
+            if (/^```/.test(line)) {
+              if (inCode) {
+                html.push("<pre><code>" + escapeHtml(codeLines.join("\n")) + "</code></pre>");
+                codeLines = [];
+                inCode = false;
+              } else {
+                closeList();
+                inCode = true;
+              }
+              return;
+            }
+
+            if (inCode) {
+              codeLines.push(line);
+              return;
+            }
+
+            if (!line.trim()) {
+              closeList();
+              return;
+            }
+
+            headingMatch = /^(#{1,3})\s+(.+)$/.exec(line);
+            if (headingMatch) {
+              closeList();
+              html.push("<h" + headingMatch[1].length + ">" + renderInlineMarkdown(headingMatch[2]) + "</h" + headingMatch[1].length + ">");
+              return;
+            }
+
+            if (/^>\s?/.test(line)) {
+              closeList();
+              html.push("<blockquote>" + renderInlineMarkdown(line.replace(/^>\s?/, "")) + "</blockquote>");
+              return;
+            }
+
+            unorderedMatch = /^\s*[-*+]\s+(.+)$/.exec(line);
+            orderedMatch = /^\s*\d+\.\s+(.+)$/.exec(line);
+            if (unorderedMatch || orderedMatch) {
+              var nextListType = unorderedMatch ? "ul" : "ol";
+              if (!inList || listType !== nextListType) {
+                closeList();
+                listType = nextListType;
+                inList = true;
+                html.push("<" + listType + ">");
+              }
+              html.push("<li>" + renderInlineMarkdown((unorderedMatch || orderedMatch)[1]) + "</li>");
+              return;
+            }
+
+            closeList();
+            html.push("<p>" + renderInlineMarkdown(line) + "</p>");
+          });
+
+          closeList();
+
+          if (inCode) {
+            html.push("<pre><code>" + escapeHtml(codeLines.join("\n")) + "</code></pre>");
+          }
+
+          return html.join("");
+        }
+
+        function dispatchTextInput(textarea) {
+          textarea.dispatchEvent(new Event("input", { bubbles: true }));
+          textarea.dispatchEvent(new Event("change", { bubbles: true }));
+        }
+
+        function insertMarkdown(textarea, before, after, placeholder) {
+          var start = textarea.selectionStart || 0;
+          var end = textarea.selectionEnd || 0;
+          var value = textarea.value || "";
+          var selected = value.slice(start, end) || placeholder || "";
+          var next = before + selected + after;
+
+          textarea.value = value.slice(0, start) + next + value.slice(end);
+          textarea.focus();
+          textarea.setSelectionRange(start + before.length, start + before.length + selected.length);
+          dispatchTextInput(textarea);
+        }
+
+        function insertLinePrefix(textarea, prefix) {
+          var start = textarea.selectionStart || 0;
+          var end = textarea.selectionEnd || 0;
+          var value = textarea.value || "";
+          var lineStart = value.lastIndexOf("\n", start - 1) + 1;
+          var selected = value.slice(lineStart, end);
+          var next = selected
+            .split("\n")
+            .map(function (line) {
+              return line ? prefix + line : prefix.trim();
+            })
+            .join("\n");
+
+          textarea.value = value.slice(0, lineStart) + next + value.slice(end);
+          textarea.focus();
+          textarea.setSelectionRange(lineStart, lineStart + next.length);
+          dispatchTextInput(textarea);
+        }
+
+        function buildToolbar(textarea, preview) {
+          var toolbar = document.createElement("div");
+          var actions = [
+            ["heading", "H", "제목"],
+            ["bold", "B", "굵게"],
+            ["italic", "i", "기울임"],
+            ["quote", "“", "인용"],
+            ["code", "<>", "코드"],
+            ["link", "🔗", "링크"],
+            ["ul", "•", "목록"],
+            ["ol", "1.", "번호 목록"]
+          ];
+
+          toolbar.className = "syw-markdown-toolbar";
+          actions.forEach(function (action) {
+            var button = document.createElement("button");
+            button.type = "button";
+            button.textContent = action[1];
+            button.title = action[2];
+            button.setAttribute("aria-label", action[2]);
+            button.addEventListener("click", function () {
+              if (action[0] === "heading") insertLinePrefix(textarea, "## ");
+              if (action[0] === "bold") insertMarkdown(textarea, "**", "**", "굵은 글씨");
+              if (action[0] === "italic") insertMarkdown(textarea, "*", "*", "기울임 글씨");
+              if (action[0] === "quote") insertLinePrefix(textarea, "> ");
+              if (action[0] === "code") insertMarkdown(textarea, "`", "`", "code");
+              if (action[0] === "link") insertMarkdown(textarea, "[", "](https://)", "링크");
+              if (action[0] === "ul") insertLinePrefix(textarea, "- ");
+              if (action[0] === "ol") insertLinePrefix(textarea, "1. ");
+              updatePreview(textarea, preview, true);
+            });
+            toolbar.appendChild(button);
+          });
+
+          var previewButton = document.createElement("button");
+          previewButton.type = "button";
+          previewButton.className = "syw-preview-toggle";
+          previewButton.textContent = "미리보기";
+          previewButton.title = "미리보기";
+          previewButton.addEventListener("click", function () {
+            preview.classList.toggle("is-visible");
+            previewButton.classList.toggle("is-active", preview.classList.contains("is-visible"));
+            updatePreview(textarea, preview, true);
+          });
+          toolbar.appendChild(previewButton);
+
+          return toolbar;
+        }
+
+        function buildPreview() {
+          var preview = document.createElement("div");
+          preview.className = "syw-markdown-preview";
+          preview.innerHTML = '<div class="syw-markdown-preview-title">미리보기</div><div class="syw-markdown-preview-body"></div>';
+          return preview;
+        }
+
+        function updatePreview(textarea, preview, forceVisible) {
+          var value = textarea.value || "";
+          var body = preview.querySelector(".syw-markdown-preview-body");
+
+          if (forceVisible || value.trim()) {
+            preview.classList.add("is-visible");
+          } else {
+            preview.classList.remove("is-visible");
+          }
+
+          body.innerHTML = value.trim() ? renderMarkdown(value) : "<p>작성 중인 댓글이 여기에 미리 표시됩니다.</p>";
+        }
+
+        function enhanceMarkdownEditors() {
+          document.querySelectorAll("textarea").forEach(function (textarea) {
+            var preview;
+            var toolbar;
+
+            if (textarea.dataset.sywMarkdownEnhanced === "true") {
+              return;
+            }
+
+            textarea.dataset.sywMarkdownEnhanced = "true";
+            preview = buildPreview();
+            toolbar = buildToolbar(textarea, preview);
+
+            textarea.parentNode.insertBefore(toolbar, textarea);
+            textarea.parentNode.insertBefore(preview, textarea.nextSibling);
+            textarea.addEventListener("input", function () {
+              updatePreview(textarea, preview, false);
+            });
+            updatePreview(textarea, preview, false);
+          });
+        }
+
+        function getActiveCommentText() {
+          var active = document.activeElement;
+          if (active && active.tagName === "TEXTAREA" && active.value.trim()) {
+            return active.value;
+          }
+
+          var textareas = Array.prototype.slice.call(document.querySelectorAll("textarea"));
+          var filled = textareas.reverse().find(function (textarea) {
+            return textarea.value.trim();
+          });
+
+          return filled ? filled.value : "";
+        }
+
+        function clickSendButton() {
+          var buttons = Array.prototype.slice.call(document.querySelectorAll("button"));
+          var sendButton = buttons.find(function (button) {
+            return (button.textContent || "").trim() === "보내기" && !button.disabled;
+          });
+
+          if (sendButton) {
+            sendButton.click();
+            return true;
+          }
+
+          return false;
+        }
+
+        function restorePendingComment() {
+          var pending = readPendingComment();
+          var autoSubmitting = storageGet(AUTO_SUBMITTING_KEY) === "true";
+          var textarea;
+
+          if (!pending || !autoSubmitting) {
+            return;
+          }
+
+          textarea = document.querySelector("textarea");
+          if (!textarea) {
+            return;
+          }
+
+          if (!textarea.value.trim()) {
+            textarea.value = pending;
+            dispatchTextInput(textarea);
+          }
+
+          storageRemove(AUTO_SUBMITTING_KEY);
+          storageRemove(PENDING_COMMENT_KEY);
+          setTimeout(clickSendButton, 120);
+        }
+
+        function installSubmitFlow() {
+          if (document.body.dataset.sywSubmitFlowInstalled === "true") {
+            return;
+          }
+
+          document.body.dataset.sywSubmitFlowInstalled = "true";
+          document.addEventListener("click", function (event) {
+            var button = event.target.closest("button");
+            var text;
+
+            if (!button || button.classList.contains("syw-preview-toggle")) {
+              return;
+            }
+
+            text = (button.textContent || "").trim();
+
+            if (text === "미리보기") {
+              event.preventDefault();
+              event.stopPropagation();
+              button.classList.add("syw-hidden");
+              return;
+            }
+
+            if (text === "보내기") {
+              var comment = getActiveCommentText();
+              if (comment.trim()) {
+                savePendingComment(comment);
+              }
+            }
+
+            if (text === "이 이름으로 남기기") {
+              storageSet(AUTO_SUBMITTING_KEY, "true");
+            }
+          }, true);
+        }
+
         function customizeRemarkUi() {
           trimTimeSuffix();
           updateCommentPlaceholder();
+          hideMarkdownNotice();
+          enhanceMarkdownEditors();
+          installSubmitFlow();
+          restorePendingComment();
         }
 
         document.addEventListener("DOMContentLoaded", function () {
