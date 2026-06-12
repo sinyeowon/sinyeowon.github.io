@@ -18,194 +18,38 @@
   </section>
 
   <script>
-    (function () {
-      var remarkFallbackFrame = null;
-
-      function getRemarkTheme() {
+    var remark_config = {
+      host: {{ remark_host | jsonify }},
+      site_id: {{ remark_site_id | jsonify }},
+      components: ['embed'],
+      url: {{ remark_page_url | jsonify }},
+      theme: (function() {
         if (window.Theme && Theme.visualState) {
           return Theme.visualState === Theme.DARK ? 'dark' : 'light';
         }
-
         return window.matchMedia && window.matchMedia('(prefers-color-scheme: dark)').matches ? 'dark' : 'light';
-      }
+      })(),
+      locale: {{ site.comments.remark42.locale | default: 'ko' | jsonify }},
+      simple_view: {{ site.comments.remark42.simple_view | default: true | jsonify }},
+      show_email_subscription: {{ site.comments.remark42.show_email_subscription | default: false | jsonify }},
+      show_rss_subscription: {{ site.comments.remark42.show_rss_subscription | default: false | jsonify }},
+      no_footer: {{ site.comments.remark42.no_footer | default: true | jsonify }}
+    };
 
-      function syncRemarkTheme() {
-        if (window.REMARK42 && typeof window.REMARK42.changeTheme === 'function') {
-          window.REMARK42.changeTheme(getRemarkTheme());
-        }
-
-        if (remarkFallbackFrame && remarkFallbackFrame.contentWindow) {
-          remarkFallbackFrame.contentWindow.postMessage({ theme: getRemarkTheme() }, '*');
-        }
-      }
-
-      function watchThemeChanges() {
-        var mediaQuery;
-
-        if (!window.matchMedia) {
-          return;
-        }
-
-        mediaQuery = window.matchMedia('(prefers-color-scheme: dark)');
-
-        if (typeof mediaQuery.addEventListener === 'function') {
-          mediaQuery.addEventListener('change', syncRemarkTheme);
-        } else if (typeof mediaQuery.addListener === 'function') {
-          mediaQuery.addListener(syncRemarkTheme);
-        }
-      }
-
-      function hasRemarkFrame() {
-        var root = document.getElementById('remark42');
-
-        return !!(root && root.querySelector('iframe'));
-      }
-
-      function buildRemarkFrameSrc() {
-        var params = new URLSearchParams();
-
-        Object.keys(window.remark_config).forEach(function (key) {
-          params.set(key, window.remark_config[key]);
-        });
-
-        return window.remark_config.host + '/web/iframe.html?' + params.toString();
-      }
-
-      function installFallbackMessageHandler() {
-        if (window.__remarkFallbackMessageHandlerInstalled) {
-          return;
-        }
-
-        window.__remarkFallbackMessageHandlerInstalled = true;
-        window.addEventListener('message', function (event) {
-          var data = event.data;
-
-          if (!remarkFallbackFrame || event.source !== remarkFallbackFrame.contentWindow) {
-            return;
-          }
-
-          if (!data || typeof data !== 'object' || Array.isArray(data)) {
-            return;
-          }
-
-          if (typeof data.height === 'number') {
-            remarkFallbackFrame.style.height = data.height + 'px';
-          }
-
-          if (typeof data.scrollTo === 'number') {
-            window.scrollTo(
-              window.pageXOffset,
-              data.scrollTo + remarkFallbackFrame.getBoundingClientRect().top + window.pageYOffset
-            );
-          }
-        });
-      }
-
-      function mountRemarkFrameFallback() {
-        var frame;
-        var root = document.getElementById('remark42');
-
-        if (!root || hasRemarkFrame()) {
-          remarkFallbackFrame = root ? root.querySelector('iframe') : remarkFallbackFrame;
-          installFallbackMessageHandler();
-          return;
-        }
-
-        frame = document.createElement('iframe');
-        frame.src = buildRemarkFrameSrc();
-        frame.name = '{}';
-        frame.tabIndex = 0;
-        frame.title = 'Comments | Remark42';
-        frame.style.width = '100%';
-        frame.style.height = '420px';
-        frame.style.border = 'none';
-        frame.style.padding = '0';
-        frame.style.margin = '0';
-        frame.style.overflow = 'hidden';
-        frame.style.colorScheme = getRemarkTheme();
-        frame.sandbox =
-          'allow-popups allow-popups-to-escape-sandbox allow-scripts allow-same-origin allow-forms allow-top-navigation allow-top-navigation-by-user-activation';
-
-        root.textContent = '';
-        root.appendChild(frame);
-        remarkFallbackFrame = frame;
-        installFallbackMessageHandler();
-      }
-
-      function loadRemarkComponent(component, attempt) {
-        var script = document.createElement('script');
-        var extension = '.js';
-        var parent = document.head || document.body;
-        var cacheKey = {{ site.time | date: '%s' | jsonify }};
-
-        if ('noModule' in script) {
-          script.type = 'module';
-          extension = '.mjs';
-        } else {
-          script.defer = true;
-        }
-
-        script.async = true;
-        script.src =
-          window.remark_config.host +
-          '/web/' +
-          component +
-          extension +
-          '?v=' +
-          cacheKey +
-          (attempt > 0 ? '-' + attempt + '-' + Date.now() : '');
-        script.onerror = function () {
-          if (attempt < 2) {
-            loadRemarkComponent(component, attempt + 1);
-          }
-        };
-        parent.appendChild(script);
-      }
-
-      function retryRemarkEmbed() {
-        if (hasRemarkFrame()) {
-          return;
-        }
-
-        if (window.REMARK42 && typeof window.REMARK42.destroy === 'function') {
-          window.REMARK42.destroy();
-        }
-
-        window.REMARK42 = undefined;
-        loadRemarkComponent('embed', 1);
-      }
-
-      window.remark_config = {
-        host: {{ remark_host | jsonify }},
-        site_id: {{ remark_site_id | jsonify }},
-        url: window.location.origin + window.location.pathname,
-        components: ['embed'],
-        theme: getRemarkTheme(),
-        locale: {{ site.comments.remark42.locale | default: 'ko' | jsonify }},
-        simple_view: {{ site.comments.remark42.simple_view | default: true | jsonify }},
-        show_email_subscription: {{ site.comments.remark42.show_email_subscription | default: false | jsonify }},
-        show_rss_subscription: {{ site.comments.remark42.show_rss_subscription | default: false | jsonify }},
-        no_footer: {{ site.comments.remark42.no_footer | default: true | jsonify }}
-      };
-
-      window.addEventListener('message', function (event) {
-        if (window.Theme && event.source === window && event.data && event.data.id === Theme.ID) {
-          syncRemarkTheme();
-        }
-      });
-
-      watchThemeChanges();
-
-      (function (components) {
-        for (var index = 0; index < components.length; index += 1) {
-          loadRemarkComponent(components[index], 0);
-        }
-
-        window.setTimeout(retryRemarkEmbed, 3000);
-        window.setTimeout(mountRemarkFrameFallback, 5000);
-        window.setTimeout(retryRemarkEmbed, 8000);
-        window.setTimeout(mountRemarkFrameFallback, 10000);
-      })(window.remark_config.components || ['embed']);
+    (function() {
+      var d = document, s = d.createElement('script');
+      s.src = remark_config.host + '/web/embed.js';
+      s.defer = true;
+      (d.head || d.body).appendChild(s);
     })();
+
+    window.addEventListener('message', function (event) {
+      if (window.Theme && event.source === window && event.data && event.data.id === Theme.ID) {
+        if (window.REMARK42 && typeof window.REMARK42.changeTheme === 'function') {
+          var theme = Theme.visualState === Theme.DARK ? 'dark' : 'light';
+          window.REMARK42.changeTheme(theme);
+        }
+      }
+    });
   </script>
 {% endif %}
