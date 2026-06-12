@@ -48,9 +48,23 @@
           });
         }
 
-        document.addEventListener("DOMContentLoaded", function () {
+        function updateCommentPlaceholder() {
+          document.querySelectorAll("textarea").forEach(function (node) {
+            var placeholder = node.getAttribute("placeholder") || "";
+            if (placeholder === "여기에 댓글 입력" || placeholder === "댓글 입력") {
+              node.setAttribute("placeholder", "댓글을 입력해주세요.");
+            }
+          });
+        }
+
+        function customizeRemarkUi() {
           trimTimeSuffix();
-          new MutationObserver(trimTimeSuffix).observe(document.getElementById("remark42") || document.body, {
+          updateCommentPlaceholder();
+        }
+
+        document.addEventListener("DOMContentLoaded", function () {
+          customizeRemarkUi();
+          new MutationObserver(customizeRemarkUi).observe(document.getElementById("remark42") || document.body, {
             childList: true,
             characterData: true,
             subtree: true
