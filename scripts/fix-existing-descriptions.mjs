@@ -49,8 +49,8 @@ function parseYamlScalar(value) {
       return raw.slice(1, -1);
     }
   }
-  if (raw.startsWith("'") && raw.endsWith("'")) {
-    return raw.slice(1, -1).replace(/''/g, "'");
+  if (raw.startsWith('\'') && raw.endsWith('\'')) {
+    return raw.slice(1, -1).replace(/''/g, '\'');
   }
   return raw;
 }
@@ -143,68 +143,6 @@ function generateTitleDescription(title = '') {
   }
 
   return `${value}에 대한 정리입니다.`;
-}
-
-function splitDescriptionBlocks(markdown) {
-  const withoutCode = String(markdown || '')
-    .replace(/```[\s\S]*?```/g, '\n')
-    .replace(/!\[[^\]]*]\([^)]*\)/g, '\n')
-    .trim();
-
-  const blocks = [];
-  let current = [];
-
-  for (const rawLine of withoutCode.split('\n')) {
-    if (!rawLine.trim()) {
-      if (current.length) {
-        blocks.push(current);
-        current = [];
-      }
-      continue;
-    }
-
-    current.push(rawLine);
-  }
-
-  if (current.length) {
-    blocks.push(current);
-  }
-
-  return blocks;
-}
-
-function isListLine(rawLine) {
-  const value = String(rawLine || '').trim();
-  return /^([-*+]|\d+\.)\s+/.test(value) || /^\[[ xX]]\s+/.test(value);
-}
-
-function summarizeDescriptionBlock(block, title = '') {
-  const titleText = cleanDescriptionLine(title);
-  let lines = block
-    .map((line) => cleanDescriptionLine(line))
-    .filter(Boolean)
-    .filter((line) => !isGenericDescriptionHeading(line));
-
-  if (!lines.length) {
-    return null;
-  }
-
-  const rawFirstLine = String(block[0] || '').trim();
-  const firstIsHeading = /^#{1,6}\s*/.test(rawFirstLine);
-  if (firstIsHeading && lines.length > 1) {
-    lines = lines.slice(1);
-  }
-
-  const filteredLines = lines.filter((line) => line !== titleText);
-  if (filteredLines.length) {
-    lines = filteredLines;
-  }
-
-  if (lines.length === 1) {
-    return lines[0];
-  }
-
-  return lines.join(' ');
 }
 
 function createDescription(markdown, title = '') {

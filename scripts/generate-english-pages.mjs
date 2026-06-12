@@ -419,7 +419,7 @@ function normalizeDescriptionText(line) {
 function normalizeTitleForDescription(title = '') {
   return normalizeDescriptionText(
     String(title || '')
-      .replace(/^[\[\(]?TIL[\]\)]?\s*[-–—]?\s*/i, '')
+      .replace(/^(?:\[|\()?TIL(?:\]|\))?\s*[-–—]?\s*/i, '')
       .replace(/-\d{6,8}$/, '')
       .replace(/[-_]+/g, ' ')
   );
@@ -470,11 +470,6 @@ function splitDescriptionBlocks(markdown) {
   }
 
   return blocks;
-}
-
-function isListLine(rawLine) {
-  const value = String(rawLine || '').trim();
-  return /^([-*+]|\d+\.)\s+/.test(value) || /^\[[ xX]]\s+/.test(value);
 }
 
 function summarizeDescriptionBlock(block, title = '') {
