@@ -339,12 +339,9 @@ html[data-mode='dark'] {
   margin-top: 3rem;
 
   .post-nav-label {
-    @extend %text-xs;
+    @include mx.label(1.1rem, 600);
 
-    color: var(--text-muted-color);
-    margin-bottom: 0.5rem;
-    text-transform: uppercase;
-    font-weight: 600;
+    margin-bottom: 1.5rem;
   }
 
   .nav-prev {
@@ -579,11 +576,8 @@ html[data-mode='dark'] {
 
 /* --- Related Posts --- */
 
-#related-posts {
-  > h3 {
-    @include mx.label(1.1rem, 600);
-  }
-
+#related-posts,
+.post-navigation {
   time {
     @extend %normal-font-style;
     @extend %text-xs;
@@ -609,6 +603,12 @@ html[data-mode='dark'] {
 
       @extend %text-clip;
     }
+  }
+}
+
+#related-posts {
+  > h3 {
+    @include mx.label(1.1rem, 600);
   }
 }
 
