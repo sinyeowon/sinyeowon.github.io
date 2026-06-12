@@ -222,6 +222,96 @@ html[data-mode='dark'] {
   }
 }
 
+.post-like {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 0.5rem;
+  margin: 3rem 0 1rem;
+  padding: 2rem 0;
+  border-top: 1px solid var(--main-border-color);
+  border-bottom: 1px solid var(--main-border-color);
+
+  .post-like-button {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    gap: 0.55rem;
+    min-width: 8rem;
+    min-height: 2.75rem;
+    padding: 0.55rem 1.15rem;
+    border: 1px solid var(--btn-border-color);
+    border-radius: v.$radius-lg;
+    color: var(--text-muted-color);
+    background: var(--button-bg);
+    font-weight: 600;
+    line-height: 1;
+    transition: border-color 0.2s ease, color 0.2s ease, background 0.2s ease;
+
+    &:hover,
+    &:focus-visible {
+      color: #d6336c;
+      border-color: rgb(214 51 108 / 35%);
+      background: rgb(214 51 108 / 7%);
+    }
+
+    &:disabled {
+      cursor: wait;
+      opacity: 0.7;
+    }
+
+    &.is-liked {
+      color: #d6336c;
+      border-color: rgb(214 51 108 / 38%);
+      background: rgb(214 51 108 / 10%);
+    }
+
+    i {
+      font-size: 1rem;
+    }
+
+    strong {
+      min-width: 1.5rem;
+      text-align: left;
+      color: inherit;
+      font-weight: 700;
+    }
+  }
+
+  .post-like-status {
+    min-height: 1.2rem;
+    margin: 0;
+    color: var(--text-muted-color);
+    font-size: 0.85rem;
+  }
+}
+
+.remark42-comments {
+  margin-top: 3rem;
+  padding-top: 2rem;
+  border-top: 1px solid var(--main-border-color);
+
+  .remark42-comments-header {
+    margin-bottom: 1.5rem;
+
+    h2 {
+      margin-bottom: 0.4rem;
+      font-size: 1.35rem;
+    }
+
+    p {
+      margin: 0;
+      color: var(--text-muted-color);
+      font-size: 0.95rem;
+      line-height: 1.7;
+    }
+  }
+
+  .remark42-comments-embed {
+    min-height: 10rem;
+  }
+}
+
 .share-mastodon {
   /* See: https://github.com/justinribeiro/share-to-mastodon#properties */
   --wc-stm-font-family: #{v.$font-family-base};

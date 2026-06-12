@@ -26,6 +26,13 @@ package-lock.json
 _sass/vendors
 assets/js/dist
 assets/img/IMG_4472.JPG
+__pycache__/
+*.pyc
+server/comments/.env
+server/comments/caddy_config
+server/comments/caddy_data
+server/comments/likes_data
+server/comments/var
 
 # Hidden system files
 *~

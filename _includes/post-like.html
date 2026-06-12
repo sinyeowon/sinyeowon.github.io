@@ -1,0 +1,24 @@
+{% assign like_endpoint = site.post_likes.endpoint | default: '' %}
+{% assign remark_host = site.comments.remark42.host | default: '' %}
+
+{% if like_endpoint == empty and remark_host != empty %}
+  {% capture like_endpoint %}{{ remark_host }}/api/likes{% endcapture %}
+  {% assign like_endpoint = like_endpoint | replace: '//api/likes', '/api/likes' %}
+{% endif %}
+
+{% if site.post_likes.enabled and like_endpoint != empty %}
+  <section
+    class="post-like"
+    data-post-like
+    data-post-url="{{ page.url | relative_url }}"
+    data-like-endpoint="{{ like_endpoint }}"
+    aria-label="포스트 좋아요"
+  >
+    <button class="post-like-button" type="button" aria-pressed="false" data-post-like-button>
+      <i class="far fa-heart" aria-hidden="true" data-post-like-icon></i>
+      <span>좋아요</span>
+      <strong data-post-like-count>0</strong>
+    </button>
+    <p class="post-like-status" data-post-like-status aria-live="polite"></p>
+  </section>
+{% endif %}

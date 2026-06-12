@@ -1,0 +1,70 @@
+{% assign remark_host = site.comments.remark42.host | default: '' %}
+{% assign remark_site_id = site.comments.remark42.site_id | default: site.github.username | default: site.title %}
+
+{% if remark_host != empty %}
+  <section class="remark42-comments" aria-labelledby="remark42-comments-title">
+    <div class="remark42-comments-header">
+      <h2 id="remark42-comments-title">댓글</h2>
+      <p>궁금한 점이나 오류 제보를 남겨 주세요. 익명 댓글도 가능합니다.</p>
+    </div>
+
+    <div id="remark42" class="remark42-comments-embed">댓글을 불러오는 중입니다.</div>
+  </section>
+
+  <script>
+    (function () {
+      function getRemarkTheme() {
+        if (window.Theme && Theme.visualState) {
+          return Theme.visualState === Theme.DARK ? 'dark' : 'light';
+        }
+
+        return window.matchMedia && window.matchMedia('(prefers-color-scheme: dark)').matches ? 'dark' : 'light';
+      }
+
+      function syncRemarkTheme() {
+        if (window.REMARK42 && typeof window.REMARK42.changeTheme === 'function') {
+          window.REMARK42.changeTheme(getRemarkTheme());
+        }
+      }
+
+      window.remark_config = {
+        host: {{ remark_host | jsonify }},
+        site_id: {{ remark_site_id | jsonify }},
+        url: window.location.origin + window.location.pathname,
+        components: ['embed'],
+        theme: getRemarkTheme(),
+        locale: {{ site.comments.remark42.locale | default: 'ko' | jsonify }},
+        no_footer: {{ site.comments.remark42.no_footer | default: true | jsonify }}
+      };
+
+      window.addEventListener('message', function (event) {
+        if (window.Theme && event.source === window && event.data && event.data.id === Theme.ID) {
+          syncRemarkTheme();
+        }
+      });
+
+      if (window.matchMedia) {
+        window.matchMedia('(prefers-color-scheme: dark)').addEventListener('change', syncRemarkTheme);
+      }
+
+      (function (components, document) {
+        for (var index = 0; index < components.length; index += 1) {
+          var script = document.createElement('script');
+          var extension = '.js';
+          var parent = document.head || document.body;
+
+          if ('noModule' in script) {
+            script.type = 'module';
+            extension = '.mjs';
+          } else {
+            script.async = true;
+            script.defer = true;
+          }
+
+          script.src = window.remark_config.host + '/web/' + components[index] + extension;
+          parent.appendChild(script);
+        }
+      })(window.remark_config.components || ['embed'], document);
+    })();
+  </script>
+{% endif %}

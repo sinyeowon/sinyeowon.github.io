@@ -1,0 +1,11 @@
+{$COMMENTS_DOMAIN} {
+  encode gzip zstd
+
+  @remark_web path /web/*
+  header @remark_web Cache-Control "no-store, no-cache, must-revalidate, max-age=0"
+
+  @likes_api path /api/likes /api/likes/*
+  reverse_proxy @likes_api likes-api:8090
+
+  reverse_proxy remark42:8080
+}

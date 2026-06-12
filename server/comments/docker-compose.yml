@@ -1,0 +1,56 @@
+services:
+  remark42:
+    image: ghcr.io/umputun/remark42:latest
+    container_name: sinyeowon-remark42
+    restart: unless-stopped
+    environment:
+      REMARK_URL: ${REMARK_URL:?set REMARK_URL in .env}
+      SITE: ${SITE:?set SITE in .env}
+      SECRET: ${SECRET:?set SECRET in .env}
+      AUTH_ANON: ${AUTH_ANON:-true}
+      ADMIN_PASSWD: ${ADMIN_PASSWD:-}
+      TIME_ZONE: ${TIME_ZONE:-Asia/Seoul}
+      AUTH_GITHUB_CID: ${AUTH_GITHUB_CID:-}
+      AUTH_GITHUB_CSEC: ${AUTH_GITHUB_CSEC:-}
+      ADMIN_SHARED_ID: ${ADMIN_SHARED_ID:-}
+      NOTIFY_ADMINS: ${NOTIFY_ADMINS:-}
+      TELEGRAM_TOKEN: ${TELEGRAM_TOKEN:-}
+      NOTIFY_TELEGRAM_CHAN: ${NOTIFY_TELEGRAM_CHAN:-}
+      STORE_BOLT_PATH: /srv/var
+      BACKUP_PATH: /srv/var/backup
+    volumes:
+      - ./var:/srv/var
+
+  likes-api:
+    image: python:3.12-alpine
+    container_name: sinyeowon-likes-api
+    restart: unless-stopped
+    command: python /app/likes_api.py
+    environment:
+      LIKES_DB: /data/likes.db
+      ALLOWED_ORIGINS: ${ALLOWED_ORIGINS:?set ALLOWED_ORIGINS in .env}
+    volumes:
+      - ./likes_app:/app:ro
+      - ./likes_data:/data
+    healthcheck:
+      test: ["CMD", "python", "-c", "import urllib.request; urllib.request.urlopen('http://127.0.0.1:8090/healthz', timeout=2)"]
+      interval: 30s
+      timeout: 5s
+      retries: 3
+
+  caddy:
+    image: caddy:2
+    container_name: sinyeowon-comments-caddy
+    restart: unless-stopped
+    depends_on:
+      - remark42
+      - likes-api
+    environment:
+      COMMENTS_DOMAIN: ${COMMENTS_DOMAIN:?set COMMENTS_DOMAIN in .env}
+    ports:
+      - "80:80"
+      - "443:443"
+    volumes:
+      - ./Caddyfile:/etc/caddy/Caddyfile:ro
+      - ./caddy_data:/data
+      - ./caddy_config:/config

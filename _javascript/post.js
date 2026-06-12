@@ -6,7 +6,8 @@ import {
   initLocaleDatetime,
   initClipboard,
   initToc,
-  loadMermaid
+  loadMermaid,
+  initPostLike
 } from './modules/components';
 
 loadImg();
@@ -15,6 +16,7 @@ imgPopup();
 initSidebar();
 initLocaleDatetime();
 initClipboard();
+initPostLike();
 initTopbar();
 loadMermaid();
 basic();
