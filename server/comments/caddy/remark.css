@@ -1,15 +1,5 @@
 @import url('/web-orig/remark.css');
 
-/* Make the anonymous nickname step clearer. */
-.S_O {
-  font-size: 0 !important;
-}
-
-.S_O::after {
-  content: "이 이름으로 남기기";
-  font-size: 16px;
-}
-
 /* Hide per-comment voting score and reclaim its reserved space. */
 .N_A {
   display: none !important;
@@ -19,7 +9,63 @@
   padding-right: 0 !important;
 }
 
+.auth-button {
+  font-size: 0 !important;
+}
+
+.auth-button .syw-auth-label {
+  font-size: 14px;
+}
+
+.auth-submit {
+  font-size: 0 !important;
+}
+
+.auth-submit .syw-auth-submit-label {
+  font-size: 16px;
+}
+
 .syw-hidden {
+  display: none !important;
+}
+
+.syw-name-setup-panel {
+  align-items: center;
+  background: rgba(var(--primary-color), 0.06);
+  border: 1px solid var(--line-color);
+  border-radius: 6px;
+  box-sizing: border-box;
+  display: flex;
+  justify-content: space-between;
+  margin: 0 0 16px;
+  padding: 12px;
+}
+
+.syw-name-setup-button {
+  align-items: center;
+  background: rgb(var(--primary-color));
+  border: 1px solid transparent;
+  border-radius: 4px;
+  color: rgb(var(--white-color));
+  display: inline-flex;
+  font-size: 15px;
+  font-weight: 700;
+  height: 38px;
+  justify-content: center;
+  padding: 0 14px;
+}
+
+.syw-name-setup-button:hover,
+.syw-name-setup-button:focus-visible {
+  background: rgb(var(--primary-brighter-color));
+}
+
+.syw-name-setup-button:focus-visible {
+  box-shadow: 0 0 0 2px rgba(var(--primary-color), 0.35);
+  outline: none;
+}
+
+.syw-comment-form-awaiting-name {
   display: none !important;
 }
 

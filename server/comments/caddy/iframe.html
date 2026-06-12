@@ -128,6 +128,125 @@
           });
         }
 
+        function setButtonLabel(button, className, label) {
+          var labelNode;
+
+          if (!button) {
+            return;
+          }
+
+          labelNode = button.querySelector("." + className);
+          if (!labelNode) {
+            labelNode = document.createElement("span");
+            labelNode.className = className;
+            button.insertBefore(labelNode, button.firstChild);
+          }
+
+          labelNode.textContent = label;
+          button.setAttribute("aria-label", label);
+        }
+
+        function renameAuthControls() {
+          document.querySelectorAll(".auth-button").forEach(function (button) {
+            setButtonLabel(button, "syw-auth-label", "이름 설정");
+          });
+
+          document.querySelectorAll(".auth-submit").forEach(function (button) {
+            if (!button.disabled) {
+              setButtonLabel(button, "syw-auth-submit-label", "이 이름으로 남기기");
+            }
+          });
+
+          document.querySelectorAll(".auth-input-username").forEach(function (input) {
+            input.setAttribute("placeholder", "표시할 이름");
+            input.setAttribute("aria-label", "표시할 이름");
+          });
+        }
+
+        function getAuthButton() {
+          return document.querySelector(".auth-button");
+        }
+
+        function getMainCommentForm() {
+          var textarea = document.querySelector(".B_B textarea.K_F") || document.querySelector("textarea.K_F");
+          return textarea ? textarea.closest("form, .K_A") : null;
+        }
+
+        function focusUsernameInput() {
+          var input = document.querySelector(".auth-input-username");
+          if (input) {
+            input.focus();
+          }
+        }
+
+        function openNameSetup() {
+          var authButton = getAuthButton();
+          var dropdown = document.querySelector(".auth-dropdown");
+
+          if (!authButton) {
+            return;
+          }
+
+          if (!dropdown) {
+            authButton.click();
+          }
+
+          setTimeout(focusUsernameInput, 80);
+        }
+
+        function buildNameSetupPanel() {
+          var panel = document.createElement("div");
+          var button = document.createElement("button");
+
+          panel.className = "syw-name-setup-panel";
+          panel.dataset.sywNameSetupPanel = "true";
+          button.type = "button";
+          button.className = "syw-name-setup-button";
+          button.textContent = "이름 설정하고 댓글 쓰기";
+          button.addEventListener("click", openNameSetup);
+          panel.appendChild(button);
+
+          return panel;
+        }
+
+        function syncNameSetupPanel() {
+          var authButton = getAuthButton();
+          var mainForm = getMainCommentForm();
+          var panel = document.querySelector("[data-syw-name-setup-panel]");
+          var root = document.querySelector("#remark42 .B_A") || document.getElementById("remark42");
+          var container;
+
+          if (!root) {
+            return;
+          }
+
+          if (!authButton) {
+            if (panel) {
+              panel.remove();
+            }
+            if (mainForm) {
+              mainForm.classList.remove("syw-comment-form-awaiting-name");
+            }
+            return;
+          }
+
+          if (mainForm) {
+            mainForm.classList.add("syw-comment-form-awaiting-name");
+          }
+
+          if (!panel) {
+            panel = buildNameSetupPanel();
+          }
+
+          container = mainForm && mainForm.parentNode ? mainForm.parentNode : root;
+
+          if (mainForm && (panel.parentNode !== container || panel.nextSibling !== mainForm)) {
+            container.insertBefore(panel, mainForm);
+          } else if (!mainForm && panel.parentNode !== container) {
+            container.insertBefore(panel, container.firstChild);
+          }
+        }
+
         function escapeHtml(value) {
           return String(value || "")
             .replace(/&/g, "&amp;")
@@ -419,7 +538,7 @@
               }
             }
 
-            if (text === "이 이름으로 남기기") {
+            if (text === "이 이름으로 남기기" || button.classList.contains("auth-submit")) {
               storageSet(AUTO_SUBMITTING_KEY, "true");
             }
           }, true);
@@ -430,6 +549,8 @@
           updateCommentPlaceholder();
           hideMarkdownNotice();
           hidePreviewButtons();
+          renameAuthControls();
+          syncNameSetupPanel();
           enhanceMarkdownEditors();
           installSubmitFlow();
           restorePendingComment();
