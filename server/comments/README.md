@@ -6,7 +6,7 @@ This folder contains the self-hosted pieces for anonymous comments and shared po
 
 1. Copy `.env.example` to `.env`.
 2. Change `COMMENTS_DOMAIN`, `REMARK_URL`, `SECRET`, `ADMIN_PASSWD`, and `ALLOWED_ORIGINS`.
-   Keep `AUTH_SAME_SITE=none` because the blog and comment server use different domains.
+   Keep `AUTH_SAME_SITE=none` and `AUTH_SEND_JWT_HEADER=true` because the blog and comment server use different domains.
 3. Point the `comments` DNS A record to the server.
 4. Open ports `80` and `443`.
 5. Run:

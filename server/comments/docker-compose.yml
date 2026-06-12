@@ -9,6 +9,7 @@ services:
       SECRET: ${SECRET:?set SECRET in .env}
       AUTH_ANON: ${AUTH_ANON:-true}
       AUTH_SAME_SITE: ${AUTH_SAME_SITE:-none}
+      AUTH_SEND_JWT_HEADER: ${AUTH_SEND_JWT_HEADER:-true}
       ADMIN_PASSWD: ${ADMIN_PASSWD:-}
       TIME_ZONE: ${TIME_ZONE:-Asia/Seoul}
       ALLOWED_HOSTS: ${ALLOWED_HOSTS:-}
