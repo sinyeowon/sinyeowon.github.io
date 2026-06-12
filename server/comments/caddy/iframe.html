@@ -16,7 +16,7 @@
           } catch (o) {}
         }()
     </script>
-    <link href="remark.css?v=20260612-name-flow" rel="stylesheet">
+    <link href="remark.css?v=20260612-submit-flow" rel="stylesheet">
   </head>
   <body>
     <div id="remark42">
@@ -39,8 +39,6 @@
     </script>
     <script>
       (function () {
-        console.log("[SYW-Debug] iframe.html loaded. host param:", remark_config.host, "document.referrer:", document.referrer);
-        
         var PENDING_COMMENT_KEY = "syw-remark-pending-comment";
         var AUTO_SUBMITTING_KEY = "syw-remark-auto-submitting";
 
@@ -109,6 +107,12 @@
             if (placeholder === "여기에 댓글 입력" || placeholder === "댓글 입력") {
               node.setAttribute("placeholder", "댓글을 입력해주세요.");
             }
+            if (!node.getAttribute("name")) {
+              node.setAttribute("name", "comment");
+            }
+            if (!node.getAttribute("autocomplete")) {
+              node.setAttribute("autocomplete", "off");
+            }
           });
         }
 
@@ -118,6 +122,14 @@
             if (text === "Markdown을 사용한 스타일링 지원") {
               var container = node.closest(".K_J, .K_I, div") || node;
               container.classList.add("syw-hidden");
+            }
+          });
+        }
+
+        function renameAnonymousTitle() {
+          document.querySelectorAll(".auth-form-title").forEach(function (title) {
+            if ((title.textContent || "").trim().toLowerCase() === "anonymous") {
+              title.textContent = "익명 이름 설정";
             }
           });
         }
@@ -195,11 +207,8 @@
         function focusUsernameInput() {
           var input = document.querySelector(".auth-input-username");
           if (input) {
-            console.log("[SYW-Debug] Focusing username input");
             input.focus();
             input.scrollIntoView({ behavior: 'smooth', block: 'center' });
-          } else {
-            console.warn("[SYW-Debug] Username input not found for focus");
           }
         }
 
@@ -207,15 +216,11 @@
           var authButton = getAuthButton();
           var dropdown = document.querySelector(".auth-dropdown");
 
-          console.log("[SYW-Debug] openNameSetup called. authButton:", authButton, "dropdown:", dropdown);
-
           if (!authButton) {
-            console.error("[SYW-Debug] Neither auth button nor anonymous input found in openNameSetup");
             return;
           }
 
           if (authButton.isAnonymous) {
-            console.log("[SYW-Debug] Anonymous mode detected, focusing input directly");
             document.body.classList.add("syw-name-setup-open");
             focusUsernameInput();
             return;
@@ -224,10 +229,7 @@
           document.body.classList.add("syw-name-setup-open");
 
           if (!dropdown) {
-            console.log("[SYW-Debug] Clicking auth button");
             authButton.click();
-          } else {
-            console.log("[SYW-Debug] Dropdown already open");
           }
 
           setTimeout(focusUsernameInput, 150);
@@ -262,10 +264,11 @@
           // If there's no auth button AND no anonymous input field, the user is likely already logged in.
           if (!authButton) {
             if (panel) {
-              console.log("[SYW-Debug] Removing panel because user seems logged in (no auth triggers)");
               panel.remove();
             }
             document.body.classList.remove("syw-name-setup-open");
+            storageRemove(AUTO_SUBMITTING_KEY);
+            storageRemove(PENDING_COMMENT_KEY);
             if (mainForm) {
               mainForm.classList.remove("syw-comment-form-awaiting-name");
             }
@@ -277,7 +280,6 @@
           }
 
           if (!panel) {
-            console.log("[SYW-Debug] Creating name setup panel. isAnonymous:", !!authButton.isAnonymous);
             panel = buildNameSetupPanel();
           }
 
@@ -575,14 +577,19 @@
             text = (button.textContent || "").trim();
 
             if (text === "보내기") {
-              var comment = getActiveCommentText();
-              if (comment.trim()) {
-                savePendingComment(comment);
-              }
+              storageRemove(AUTO_SUBMITTING_KEY);
+              storageRemove(PENDING_COMMENT_KEY);
             }
 
             if (text === "이 이름으로 남기기" || button.classList.contains("auth-submit")) {
-              storageSet(AUTO_SUBMITTING_KEY, "true");
+              var pending = getActiveCommentText() || readPendingComment();
+              if (pending.trim()) {
+                savePendingComment(pending);
+                storageSet(AUTO_SUBMITTING_KEY, "true");
+              } else {
+                storageRemove(AUTO_SUBMITTING_KEY);
+                storageRemove(PENDING_COMMENT_KEY);
+              }
             }
           }, true);
         }
@@ -597,6 +604,7 @@
           hideMarkdownNotice();
           hidePreviewButtons();
           renameAuthControls();
+          renameAnonymousTitle();
           syncNameSetupPanel();
           enhanceMarkdownEditors();
           installSubmitFlow();
