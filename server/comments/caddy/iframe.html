@@ -180,6 +180,10 @@
           if (!button) {
             button = document.querySelector('button[aria-label="로그인"]');
           }
+          // If no auth button, check if we're in anonymous mode by looking for the username input
+          if (!button && document.querySelector(".auth-input-username")) {
+            return { isAnonymous: true };
+          }
           return button;
         }
 
@@ -193,6 +197,7 @@
           if (input) {
             console.log("[SYW-Debug] Focusing username input");
             input.focus();
+            input.scrollIntoView({ behavior: 'smooth', block: 'center' });
           } else {
             console.warn("[SYW-Debug] Username input not found for focus");
           }
@@ -205,7 +210,13 @@
           console.log("[SYW-Debug] openNameSetup called. authButton:", authButton, "dropdown:", dropdown);
 
           if (!authButton) {
-            console.error("[SYW-Debug] Auth button not found in openNameSetup");
+            console.error("[SYW-Debug] Neither auth button nor anonymous input found in openNameSetup");
+            return;
+          }
+
+          if (authButton.isAnonymous) {
+            console.log("[SYW-Debug] Anonymous mode detected, focusing input directly");
+            focusUsernameInput();
             return;
           }
 
@@ -245,9 +256,10 @@
             return;
           }
 
+          // If there's no auth button AND no anonymous input field, the user is likely already logged in.
           if (!authButton) {
             if (panel) {
-              console.log("[SYW-Debug] Removing panel because authButton is gone");
+              console.log("[SYW-Debug] Removing panel because user seems logged in (no auth triggers)");
               panel.remove();
             }
             if (mainForm) {
@@ -261,7 +273,7 @@
           }
 
           if (!panel) {
-            console.log("[SYW-Debug] Creating name setup panel");
+            console.log("[SYW-Debug] Creating name setup panel. isAnonymous:", !!authButton.isAnonymous);
             panel = buildNameSetupPanel();
           }
 
