@@ -8,8 +8,11 @@ services:
       SITE: ${SITE:?set SITE in .env}
       SECRET: ${SECRET:?set SECRET in .env}
       AUTH_ANON: ${AUTH_ANON:-true}
+      AUTH_SAME_SITE: ${AUTH_SAME_SITE:-none}
       ADMIN_PASSWD: ${ADMIN_PASSWD:-}
       TIME_ZONE: ${TIME_ZONE:-Asia/Seoul}
+      ALLOWED_HOSTS: ${ALLOWED_HOSTS:-}
+      UPDATE_LIMIT: ${UPDATE_LIMIT:-5}
       AUTH_GITHUB_CID: ${AUTH_GITHUB_CID:-}
       AUTH_GITHUB_CSEC: ${AUTH_GITHUB_CSEC:-}
       ADMIN_SHARED_ID: ${ADMIN_SHARED_ID:-}
