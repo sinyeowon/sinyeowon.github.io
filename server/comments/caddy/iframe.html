@@ -16,7 +16,7 @@
           } catch (o) {}
         }()
     </script>
-    <link href="remark.css?v=20260612-preview-reset" rel="stylesheet">
+    <link href="remark.css?v=20260612-hide-deleted" rel="stylesheet">
   </head>
   <body>
     <div id="remark42">
@@ -140,6 +140,39 @@
               button.classList.add("syw-hidden");
             }
           });
+        }
+
+        function hideDeletedComments() {
+          var deletedCommentLabels = [
+            "이 댓글은 삭제되었습니다",
+            "This comment was deleted",
+            "Deleted comment"
+          ];
+          var walker = document.createTreeWalker(document.body, NodeFilter.SHOW_TEXT);
+          var textNode;
+
+          document.querySelectorAll(".G_P").forEach(function (comment) {
+            comment.classList.add("syw-deleted-comment-hidden");
+          });
+
+          while ((textNode = walker.nextNode())) {
+            var text = (textNode.nodeValue || "").replace(/\s+/g, " ").trim();
+            var parent;
+            var comment;
+
+            if (!deletedCommentLabels.includes(text)) {
+              continue;
+            }
+
+            parent = textNode.parentElement;
+            comment = parent ? parent.closest(".G_F") : null;
+
+            if (comment) {
+              comment.classList.add("syw-deleted-comment-hidden");
+            } else if (parent) {
+              parent.classList.add("syw-deleted-comment-hidden");
+            }
+          }
         }
 
         function setButtonLabel(button, className, label) {
@@ -626,6 +659,7 @@
           updateCommentPlaceholder();
           hideMarkdownNotice();
           hidePreviewButtons();
+          hideDeletedComments();
           renameAuthControls();
           renameAnonymousTitle();
           syncNameSetupPanel();

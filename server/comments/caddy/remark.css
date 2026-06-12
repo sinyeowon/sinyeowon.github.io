@@ -29,6 +29,10 @@
   display: none !important;
 }
 
+.syw-deleted-comment-hidden {
+  display: none !important;
+}
+
 .syw-name-setup-panel {
   align-items: center;
   background: rgb(var(--primary-background-color));
