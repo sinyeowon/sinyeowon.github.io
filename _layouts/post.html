@@ -145,9 +145,9 @@ tail_includes:
     {{ content }}
   </div>
 
-  {% include post-like.html %}
-
   <div class="post-tail-wrapper text-muted">
+    {% include post-like.html %}
+
     <!-- categories -->
     {% if page.categories.size > 0 %}
       <div class="post-meta mb-3">

@@ -225,12 +225,10 @@ html[data-mode='dark'] {
 .post-like {
   display: flex;
   flex-direction: column;
-  align-items: center;
+  align-items: flex-start;
   gap: 0.5rem;
-  margin: 3rem 0 1rem;
-  padding: 2rem 0;
-  border-top: 1px solid var(--main-border-color);
-  border-bottom: 1px solid var(--main-border-color);
+  margin: 0 0 2rem;
+  padding: 0;
 
   .post-like-button {
     display: inline-flex;
