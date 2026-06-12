@@ -15,9 +15,9 @@
     </div>
 
     <div id="remark42" class="remark42-comments-embed"></div>
-  </section>
+    </section>
 
-  <script>
+    <script>
     var remark_config = {
       host: {{ remark_host | jsonify }},
       site_id: {{ remark_site_id | jsonify }},
@@ -44,6 +44,117 @@
       (d.head || d.body).appendChild(s);
     })();
 
+    (function() {
+      function getAuthButton() {
+        var root = document.getElementById('remark42');
+        if (!root) return null;
+        var button = root.querySelector(".auth-button") || 
+                     root.querySelector('button[aria-label="이름 설정"]') || 
+                     root.querySelector('button[aria-label="로그인"]');
+        if (!button && root.querySelector(".auth-input-username")) {
+          return { isAnonymous: true };
+        }
+        return button;
+      }
+
+      function getMainCommentForm() {
+        var root = document.getElementById('remark42');
+        if (!root) return null;
+        var textarea = root.querySelector("textarea");
+        return textarea ? textarea.closest("form") || textarea.parentNode : null;
+      }
+
+      function focusUsernameInput() {
+        var root = document.getElementById('remark42');
+        var input = root ? root.querySelector(".auth-input-username") : null;
+        if (input) {
+          input.focus();
+          input.scrollIntoView({ behavior: 'smooth', block: 'center' });
+        }
+      }
+
+      function openNameSetup() {
+        var authButton = getAuthButton();
+        var root = document.getElementById('remark42');
+        var dropdown = root ? root.querySelector(".auth-dropdown") : null;
+
+        if (!authButton) return;
+
+        if (authButton.isAnonymous) {
+          focusUsernameInput();
+          return;
+        }
+
+        if (!dropdown) {
+          authButton.click();
+        }
+        setTimeout(focusUsernameInput, 150);
+      }
+
+      function syncNameSetupPanel() {
+        var root = document.getElementById('remark42');
+        if (!root) return;
+
+        var authButton = getAuthButton();
+        var mainForm = getMainCommentForm();
+        var panel = root.querySelector("[data-syw-name-setup-panel]");
+
+        if (!authButton) {
+          if (panel) panel.remove();
+          if (mainForm) mainForm.classList.remove("syw-comment-form-awaiting-name");
+          return;
+        }
+
+        if (mainForm) mainForm.classList.add("syw-comment-form-awaiting-name");
+
+        if (!panel) {
+          panel = document.createElement("div");
+          panel.className = "syw-name-setup-panel";
+          panel.dataset.sywNameSetupPanel = "true";
+          var button = document.createElement("button");
+          button.type = "button";
+          button.className = "syw-name-setup-button";
+          button.textContent = "이름 설정하고 댓글 쓰기";
+          button.addEventListener("click", openNameSetup);
+          panel.appendChild(button);
+        }
+
+        var container = mainForm && mainForm.parentNode ? mainForm.parentNode : root;
+        if (mainForm && (panel.parentNode !== container || panel.nextSibling !== mainForm)) {
+          container.insertBefore(panel, mainForm);
+        } else if (!mainForm && panel.parentNode !== container) {
+          container.insertBefore(panel, container.firstChild);
+        }
+      }
+
+      function customizeRemarkUi() {
+        syncNameSetupPanel();
+        // Additional UI tweaks like renaming controls can be added here
+        var root = document.getElementById('remark42');
+        if (!root) return;
+
+        root.querySelectorAll(".auth-button").forEach(function(btn) {
+          if (!btn.querySelector(".syw-auth-label")) {
+            var label = document.createElement("span");
+            label.className = "syw-auth-label";
+            label.textContent = "이름 설정";
+            btn.appendChild(label);
+          }
+        });
+      }
+
+      var observer = new MutationObserver(function() {
+        customizeRemarkUi();
+      });
+
+      window.addEventListener('load', function() {
+        var root = document.getElementById('remark42');
+        if (root) {
+          observer.observe(root, { childList: true, subtree: true });
+        }
+      });
+    })();
+
     window.addEventListener('message', function (event) {
       if (window.Theme && event.source === window && event.data && event.data.id === Theme.ID) {
         if (window.REMARK42 && typeof window.REMARK42.changeTheme === 'function') {
@@ -52,5 +163,6 @@
         }
       }
     });
-  </script>
+    </script>
+    {% endif %}
 {% endif %}
