@@ -56,6 +56,6 @@ services:
       - "443:443"
     volumes:
       - ./Caddyfile:/etc/caddy/Caddyfile:ro
-      - ./caddy/remark.css:/srv/remark-custom/remark.css:ro
+      - ./caddy:/srv/remark-custom:ro
       - ./caddy_data:/data
       - ./caddy_config:/config

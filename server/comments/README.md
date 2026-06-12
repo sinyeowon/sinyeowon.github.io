@@ -45,8 +45,8 @@ curl -X POST "https://comments.example.com/api/likes" \
 
 ## Apply UI CSS Changes
 
-The comment widget runs inside a Remark42 iframe, so UI tweaks are served through Caddy's `/web/remark.css` override.
-After changing `Caddyfile`, `docker-compose.yml`, or `caddy/remark.css`, update the server files and run:
+The comment widget runs inside a Remark42 iframe, so UI tweaks are served through Caddy's `/web/remark.css` and `/web/iframe.html` overrides.
+After changing `Caddyfile`, `docker-compose.yml`, or files in `caddy/`, update the server files and run:
 
 ```sh
 docker compose up -d

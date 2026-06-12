@@ -1,6 +1,12 @@
 {$COMMENTS_DOMAIN} {
   encode gzip zstd
 
+  handle /web/iframe.html {
+    root * /srv/remark-custom
+    rewrite * /iframe.html
+    file_server
+  }
+
   handle /web/remark.css {
     root * /srv/remark-custom
     rewrite * /remark.css
