@@ -138,6 +138,7 @@ comments:
     host: https://sinyeowon-comments.duckdns.org
     site_id: sinyeowon
     locale: ko
+    simple_view: true
     show_email_subscription: false
     show_rss_subscription: false
     no_footer: true

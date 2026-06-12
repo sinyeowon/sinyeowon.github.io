@@ -1,6 +1,17 @@
 {$COMMENTS_DOMAIN} {
   encode gzip zstd
 
+  handle /web/remark.css {
+    root * /srv/remark-custom
+    rewrite * /remark.css
+    file_server
+  }
+
+  handle /web-orig/* {
+    uri replace /web-orig /web
+    reverse_proxy remark42:8080
+  }
+
   @remark_web path /web/*
   header @remark_web Cache-Control "no-store, no-cache, must-revalidate, max-age=0"
 

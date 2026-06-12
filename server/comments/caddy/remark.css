@@ -1,0 +1,8 @@
+@import url('/web-orig/remark.css');
+
+/* Keep the comment form minimal for readers. */
+.K_D,
+.K_I .K_K,
+.K_I > div:first-child > .K_J:first-child {
+  display: none !important;
+}
