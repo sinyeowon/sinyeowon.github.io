@@ -13,6 +13,8 @@
 
   <script>
     (function () {
+      var remarkFallbackFrame = null;
+
       function getRemarkTheme() {
         if (window.Theme && Theme.visualState) {
           return Theme.visualState === Theme.DARK ? 'dark' : 'light';
@@ -24,6 +26,10 @@
       function syncRemarkTheme() {
         if (window.REMARK42 && typeof window.REMARK42.changeTheme === 'function') {
           window.REMARK42.changeTheme(getRemarkTheme());
+        }
+
+        if (remarkFallbackFrame && remarkFallbackFrame.contentWindow) {
+          remarkFallbackFrame.contentWindow.postMessage({ theme: getRemarkTheme() }, '*');
         }
       }
 
@@ -47,6 +53,73 @@
         var root = document.getElementById('remark42');
 
         return !!(root && root.querySelector('iframe'));
+      }
+
+      function buildRemarkFrameSrc() {
+        var params = new URLSearchParams();
+
+        Object.keys(window.remark_config).forEach(function (key) {
+          params.set(key, window.remark_config[key]);
+        });
+
+        return window.remark_config.host + '/web/iframe.html?' + params.toString();
+      }
+
+      function installFallbackMessageHandler() {
+        if (window.__remarkFallbackMessageHandlerInstalled) {
+          return;
+        }
+
+        window.__remarkFallbackMessageHandlerInstalled = true;
+        window.addEventListener('message', function (event) {
+          var data = event.data;
+
+          if (!remarkFallbackFrame || event.source !== remarkFallbackFrame.contentWindow) {
+            return;
+          }
+
+          if (!data || typeof data !== 'object' || Array.isArray(data)) {
+            return;
+          }
+
+          if (typeof data.height === 'number') {
+            remarkFallbackFrame.style.height = data.height + 'px';
+          }
+
+          if (typeof data.scrollTo === 'number') {
+            window.scrollTo(
+              window.pageXOffset,
+              data.scrollTo + remarkFallbackFrame.getBoundingClientRect().top + window.pageYOffset
+            );
+          }
+        });
+      }
+
+      function mountRemarkFrameFallback() {
+        var frame;
+        var root = document.getElementById('remark42');
+
+        if (!root || hasRemarkFrame()) {
+          return;
+        }
+
+        frame = document.createElement('iframe');
+        frame.src = buildRemarkFrameSrc();
+        frame.name = '{}';
+        frame.tabIndex = 0;
+        frame.title = 'Comments | Remark42';
+        frame.style.width = '100%';
+        frame.style.height = '420px';
+        frame.style.border = 'none';
+        frame.style.padding = '0';
+        frame.style.margin = '0';
+        frame.style.overflow = 'hidden';
+        frame.style.colorScheme = getRemarkTheme();
+
+        root.textContent = '';
+        root.appendChild(frame);
+        remarkFallbackFrame = frame;
+        installFallbackMessageHandler();
       }
 
       function loadRemarkComponent(component, attempt) {
@@ -119,7 +192,9 @@
         }
 
         window.setTimeout(retryRemarkEmbed, 3000);
+        window.setTimeout(mountRemarkFrameFallback, 5000);
         window.setTimeout(retryRemarkEmbed, 8000);
+        window.setTimeout(mountRemarkFrameFallback, 10000);
       })(window.remark_config.components || ['embed']);
     })();
   </script>
