@@ -15,9 +15,9 @@
     </div>
 
     <div id="remark42" class="remark42-comments-embed"></div>
-    </section>
+  </section>
 
-    <script>
+  <script>
     var remark_config = {
       host: {{ remark_host | jsonify }},
       site_id: {{ remark_site_id | jsonify }},
@@ -119,7 +119,7 @@
           panel.appendChild(button);
         }
 
-        var container = mainForm && mainForm.parentNode ? mainForm.parentNode : root;
+        var container = (mainForm && mainForm.parentNode) ? mainForm.parentNode : root;
         if (mainForm && (panel.parentNode !== container || panel.nextSibling !== mainForm)) {
           container.insertBefore(panel, mainForm);
         } else if (!mainForm && panel.parentNode !== container) {
@@ -129,7 +129,6 @@
 
       function customizeRemarkUi() {
         syncNameSetupPanel();
-        // Additional UI tweaks like renaming controls can be added here
         var root = document.getElementById('remark42');
         if (!root) return;
 
@@ -147,12 +146,21 @@
         customizeRemarkUi();
       });
 
-      window.addEventListener('load', function() {
+      function startObserving() {
         var root = document.getElementById('remark42');
         if (root) {
           observer.observe(root, { childList: true, subtree: true });
+          customizeRemarkUi();
+        } else {
+          setTimeout(startObserving, 500);
         }
-      });
+      }
+
+      if (document.readyState === 'loading') {
+        document.addEventListener('DOMContentLoaded', startObserving);
+      } else {
+        startObserving();
+      }
     })();
 
     window.addEventListener('message', function (event) {
