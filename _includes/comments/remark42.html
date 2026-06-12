@@ -27,6 +27,71 @@
         }
       }
 
+      function watchThemeChanges() {
+        var mediaQuery;
+
+        if (!window.matchMedia) {
+          return;
+        }
+
+        mediaQuery = window.matchMedia('(prefers-color-scheme: dark)');
+
+        if (typeof mediaQuery.addEventListener === 'function') {
+          mediaQuery.addEventListener('change', syncRemarkTheme);
+        } else if (typeof mediaQuery.addListener === 'function') {
+          mediaQuery.addListener(syncRemarkTheme);
+        }
+      }
+
+      function hasRemarkFrame() {
+        var root = document.getElementById('remark42');
+
+        return !!(root && root.querySelector('iframe'));
+      }
+
+      function loadRemarkComponent(component, attempt) {
+        var script = document.createElement('script');
+        var extension = '.js';
+        var parent = document.head || document.body;
+        var cacheKey = {{ site.time | date: '%s' | jsonify }};
+
+        if ('noModule' in script) {
+          script.type = 'module';
+          extension = '.mjs';
+        } else {
+          script.defer = true;
+        }
+
+        script.async = true;
+        script.src =
+          window.remark_config.host +
+          '/web/' +
+          component +
+          extension +
+          '?v=' +
+          cacheKey +
+          (attempt > 0 ? '-' + attempt + '-' + Date.now() : '');
+        script.onerror = function () {
+          if (attempt < 2) {
+            loadRemarkComponent(component, attempt + 1);
+          }
+        };
+        parent.appendChild(script);
+      }
+
+      function retryRemarkEmbed() {
+        if (hasRemarkFrame()) {
+          return;
+        }
+
+        if (window.REMARK42 && typeof window.REMARK42.destroy === 'function') {
+          window.REMARK42.destroy();
+        }
+
+        window.REMARK42 = undefined;
+        loadRemarkComponent('embed', 1);
+      }
+
       window.remark_config = {
         host: {{ remark_host | jsonify }},
         site_id: {{ remark_site_id | jsonify }},
@@ -46,28 +111,16 @@
         }
       });
 
-      if (window.matchMedia) {
-        window.matchMedia('(prefers-color-scheme: dark)').addEventListener('change', syncRemarkTheme);
-      }
+      watchThemeChanges();
 
-      (function (components, document) {
+      (function (components) {
         for (var index = 0; index < components.length; index += 1) {
-          var script = document.createElement('script');
-          var extension = '.js';
-          var parent = document.head || document.body;
-
-          if ('noModule' in script) {
-            script.type = 'module';
-            extension = '.mjs';
-          } else {
-            script.async = true;
-            script.defer = true;
-          }
-
-          script.src = window.remark_config.host + '/web/' + components[index] + extension;
-          parent.appendChild(script);
+          loadRemarkComponent(components[index], 0);
         }
-      })(window.remark_config.components || ['embed'], document);
+
+        window.setTimeout(retryRemarkEmbed, 3000);
+        window.setTimeout(retryRemarkEmbed, 8000);
+      })(window.remark_config.components || ['embed']);
     })();
   </script>
 {% endif %}
