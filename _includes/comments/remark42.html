@@ -185,8 +185,7 @@
         simple_view: {{ site.comments.remark42.simple_view | default: true | jsonify }},
         show_email_subscription: {{ site.comments.remark42.show_email_subscription | default: false | jsonify }},
         show_rss_subscription: {{ site.comments.remark42.show_rss_subscription | default: false | jsonify }},
-        no_footer: {{ site.comments.remark42.no_footer | default: true | jsonify }},
-        auth_redirect: true
+        no_footer: {{ site.comments.remark42.no_footer | default: true | jsonify }}
       };
 
       window.addEventListener('message', function (event) {
