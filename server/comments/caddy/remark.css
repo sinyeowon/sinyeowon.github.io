@@ -9,3 +9,12 @@
   content: "이 이름으로 남기기";
   font-size: 16px;
 }
+
+/* Hide per-comment voting score and reclaim its reserved space. */
+.N_A {
+  display: none !important;
+}
+
+.G_I {
+  padding-right: 0 !important;
+}
