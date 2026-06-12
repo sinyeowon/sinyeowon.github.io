@@ -16,7 +16,7 @@
           } catch (o) {}
         }()
     </script>
-    <link href="remark.css" rel="stylesheet">
+    <link href="remark.css?v=20260612-name-flow" rel="stylesheet">
   </head>
   <body>
     <div id="remark42">
@@ -216,9 +216,12 @@
 
           if (authButton.isAnonymous) {
             console.log("[SYW-Debug] Anonymous mode detected, focusing input directly");
+            document.body.classList.add("syw-name-setup-open");
             focusUsernameInput();
             return;
           }
+
+          document.body.classList.add("syw-name-setup-open");
 
           if (!dropdown) {
             console.log("[SYW-Debug] Clicking auth button");
@@ -262,6 +265,7 @@
               console.log("[SYW-Debug] Removing panel because user seems logged in (no auth triggers)");
               panel.remove();
             }
+            document.body.classList.remove("syw-name-setup-open");
             if (mainForm) {
               mainForm.classList.remove("syw-comment-form-awaiting-name");
             }
