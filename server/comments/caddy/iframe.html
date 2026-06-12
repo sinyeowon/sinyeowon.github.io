@@ -165,6 +165,8 @@
           document.querySelectorAll(".auth-input-username").forEach(function (input) {
             input.setAttribute("placeholder", "표시할 이름");
             input.setAttribute("aria-label", "표시할 이름");
+            input.setAttribute("name", "username");
+            input.setAttribute("autocomplete", "username");
           });
         }
 
