@@ -34,6 +34,8 @@
         components: ['embed'],
         theme: getRemarkTheme(),
         locale: {{ site.comments.remark42.locale | default: 'ko' | jsonify }},
+        show_email_subscription: {{ site.comments.remark42.show_email_subscription | default: false | jsonify }},
+        show_rss_subscription: {{ site.comments.remark42.show_rss_subscription | default: false | jsonify }},
         no_footer: {{ site.comments.remark42.no_footer | default: true | jsonify }}
       };
 

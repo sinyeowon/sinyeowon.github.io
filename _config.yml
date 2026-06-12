@@ -138,6 +138,8 @@ comments:
     host: https://sinyeowon-comments.duckdns.org
     site_id: sinyeowon
     locale: ko
+    show_email_subscription: false
+    show_rss_subscription: false
     no_footer: true
 
 # Post like button backed by a small API server.
