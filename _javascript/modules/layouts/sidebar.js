@@ -2,10 +2,11 @@ const ATTR_DISPLAY = 'sidebar-display';
 const $sidebar = document.getElementById('sidebar');
 const $trigger = document.getElementById('sidebar-trigger');
 const $mask = document.getElementById('mask');
-const $viewStats = document.querySelector('[data-view-stats-endpoint]');
+const $visitorStats = document.querySelector('[data-visitor-stats-endpoint]');
 const $totalViews = document.querySelector('[data-view-total]');
 const $todayViews = document.querySelector('[data-view-today]');
-const VIEW_STATS_CACHE_KEY = 'sinyeowon:view-stats';
+const VISITOR_STATS_CACHE_KEY = 'sinyeowon:visitor-stats';
+const VISITOR_ID_KEY = 'sinyeowon:visitor-id';
 const LOCAL_HOSTS = new Set(['', 'localhost', '127.0.0.1', '0.0.0.0']);
 
 class SidebarUtil {
@@ -21,7 +22,7 @@ class SidebarUtil {
 
 export function initSidebar() {
   $trigger.onclick = $mask.onclick = () => SidebarUtil.toggle();
-  initViewStats();
+  initVisitorStats();
 }
 
 function getKoreaDateString() {
@@ -44,7 +45,51 @@ function normalizeCount(value) {
   return Number(String(rawCount).replace(/\D/g, '')) || 0;
 }
 
-async function requestViewStats(endpoint, shouldIncrement) {
+function storageGet(key) {
+  try {
+    return localStorage.getItem(key) || sessionStorage.getItem(key);
+  } catch {
+    return null;
+  }
+}
+
+function storageSet(key, value) {
+  try {
+    localStorage.setItem(key, value);
+    return;
+  } catch {
+    // Fall through to session storage.
+  }
+
+  try {
+    sessionStorage.setItem(key, value);
+  } catch {
+    // Ignore browsers that block all storage.
+  }
+}
+
+function createVisitorId() {
+  if (window.crypto && typeof window.crypto.randomUUID === 'function') {
+    return window.crypto.randomUUID();
+  }
+
+  const randomPart = Math.random().toString(36).slice(2);
+  return `${Date.now().toString(36)}-${randomPart}`;
+}
+
+function getVisitorId() {
+  const saved = storageGet(VISITOR_ID_KEY);
+
+  if (saved) {
+    return saved;
+  }
+
+  const next = createVisitorId();
+  storageSet(VISITOR_ID_KEY, next);
+  return next;
+}
+
+async function requestVisitorStats(endpoint, shouldRecordVisit) {
   const requestUrl = new URL(endpoint, window.location.origin);
   const postUrl = window.location.pathname;
   const options = {
@@ -54,11 +99,14 @@ async function requestViewStats(endpoint, shouldIncrement) {
     }
   };
 
-  if (shouldIncrement) {
+  if (shouldRecordVisit) {
     options.method = 'POST';
     options.keepalive = true;
     options.headers['Content-Type'] = 'application/json';
-    options.body = JSON.stringify({ url: postUrl });
+    options.body = JSON.stringify({
+      url: postUrl,
+      visitor_id: getVisitorId()
+    });
   } else {
     requestUrl.searchParams.set('url', postUrl);
   }
@@ -66,7 +114,7 @@ async function requestViewStats(endpoint, shouldIncrement) {
   const response = await fetch(requestUrl.toString(), options);
 
   if (!response.ok) {
-    throw new Error('Failed to fetch view stats');
+    throw new Error('Failed to fetch visitor stats');
   }
 
   const data = await response.json();
@@ -87,7 +135,9 @@ function displayUnavailable(element) {
 
 function getCachedViewStats(today) {
   try {
-    const cache = JSON.parse(localStorage.getItem(VIEW_STATS_CACHE_KEY) || '{}');
+    const cache = JSON.parse(
+      localStorage.getItem(VISITOR_STATS_CACHE_KEY) || '{}'
+    );
 
     return {
       total: Number.isFinite(cache.total) ? cache.total : null,
@@ -100,18 +150,18 @@ function getCachedViewStats(today) {
 
 function setCachedViewStats(stats) {
   try {
-    localStorage.setItem(VIEW_STATS_CACHE_KEY, JSON.stringify(stats));
+    localStorage.setItem(VISITOR_STATS_CACHE_KEY, JSON.stringify(stats));
   } catch {
     // Ignore private-mode or storage permission failures.
   }
 }
 
-async function initViewStats() {
-  if (!$viewStats || !$totalViews || !$todayViews) {
+async function initVisitorStats() {
+  if (!$visitorStats || !$totalViews || !$todayViews) {
     return;
   }
 
-  const endpoint = $viewStats.getAttribute('data-view-stats-endpoint');
+  const endpoint = $visitorStats.getAttribute('data-visitor-stats-endpoint');
 
   if (!endpoint) {
     return;
@@ -119,7 +169,7 @@ async function initViewStats() {
 
   const today = getKoreaDateString();
   const cachedStats = getCachedViewStats(today);
-  const shouldIncrement = !LOCAL_HOSTS.has(window.location.hostname);
+  const shouldRecordVisit = !LOCAL_HOSTS.has(window.location.hostname);
 
   if (cachedStats.total !== null) {
     displayCount($totalViews, cachedStats.total);
@@ -130,8 +180,8 @@ async function initViewStats() {
   }
 
   try {
-    const viewStats = await requestViewStats(endpoint, shouldIncrement);
-    const nextStats = { ...viewStats, todayDate: today };
+    const visitorStats = await requestVisitorStats(endpoint, shouldRecordVisit);
+    const nextStats = { ...visitorStats, todayDate: today };
 
     displayCount($totalViews, nextStats.total);
     displayCount($todayViews, nextStats.today);

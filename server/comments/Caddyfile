@@ -27,7 +27,7 @@
   @remark_web path /web/*
   header @remark_web Cache-Control "no-store, no-cache, must-revalidate, max-age=0"
 
-  @stats_api path /api/likes /api/likes/* /api/views /api/views/*
+  @stats_api path /api/likes /api/likes/* /api/visitors /api/visitors/* /api/views /api/views/*
   reverse_proxy @stats_api likes-api:8090
 
   reverse_proxy remark42:8080

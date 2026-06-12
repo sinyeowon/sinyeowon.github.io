@@ -3,6 +3,7 @@ from http.server import BaseHTTPRequestHandler, ThreadingHTTPServer
 from urllib.parse import parse_qs, urlparse
 import json
 import os
+import re
 import sqlite3
 
 
@@ -17,8 +18,13 @@ DB_PATH = os.environ.get("LIKES_DB", "/data/likes.db")
 PORT = int(os.environ.get("PORT", "8090"))
 MAX_BODY_BYTES = 4096
 KST = timezone(timedelta(hours=9))
-VIEW_TOTAL_OFFSET = read_int_env("VIEW_TOTAL_OFFSET")
-VIEW_TODAY_OFFSET = read_int_env("VIEW_TODAY_OFFSET")
+VISITOR_ID_RE = re.compile(r"^[A-Za-z0-9._:-]{8,128}$")
+VISITOR_TOTAL_OFFSET = read_int_env(
+    "VISITOR_TOTAL_OFFSET", read_int_env("VIEW_TOTAL_OFFSET")
+)
+VISITOR_TODAY_OFFSET = read_int_env(
+    "VISITOR_TODAY_OFFSET", read_int_env("VIEW_TODAY_OFFSET")
+)
 ALLOWED_ORIGINS = [
     origin.strip()
     for origin in os.environ.get("ALLOWED_ORIGINS", "").split(",")
@@ -51,6 +57,13 @@ def normalize_post_url(value):
     return path
 
 
+def normalize_visitor_id(value):
+    if not isinstance(value, str) or not VISITOR_ID_RE.fullmatch(value):
+        raise ValueError("visitor_id must be a stable anonymous id")
+
+    return value
+
+
 def ensure_schema():
     directory = os.path.dirname(DB_PATH)
 
@@ -66,6 +79,49 @@ def ensure_schema():
               count INTEGER NOT NULL DEFAULT 0,
               created_at TEXT NOT NULL,
               updated_at TEXT NOT NULL
+            )
+            """
+        )
+        db.execute(
+            """
+            CREATE TABLE IF NOT EXISTS site_visitors (
+              visitor_id TEXT PRIMARY KEY,
+              first_seen_at TEXT NOT NULL,
+              last_seen_at TEXT NOT NULL
+            )
+            """
+        )
+        db.execute(
+            """
+            CREATE TABLE IF NOT EXISTS site_visitor_days (
+              visitor_id TEXT NOT NULL,
+              day TEXT NOT NULL,
+              first_seen_at TEXT NOT NULL,
+              last_seen_at TEXT NOT NULL,
+              PRIMARY KEY (visitor_id, day)
+            )
+            """
+        )
+        db.execute(
+            """
+            CREATE TABLE IF NOT EXISTS post_visitors (
+              url TEXT NOT NULL,
+              visitor_id TEXT NOT NULL,
+              first_seen_at TEXT NOT NULL,
+              last_seen_at TEXT NOT NULL,
+              PRIMARY KEY (url, visitor_id)
+            )
+            """
+        )
+        db.execute(
+            """
+            CREATE TABLE IF NOT EXISTS post_visitor_days (
+              url TEXT NOT NULL,
+              visitor_id TEXT NOT NULL,
+              day TEXT NOT NULL,
+              first_seen_at TEXT NOT NULL,
+              last_seen_at TEXT NOT NULL,
+              PRIMARY KEY (url, visitor_id, day)
             )
             """
         )
@@ -145,59 +201,70 @@ def update_count(post_url, action):
     return int(row[0]) if row else 0
 
 
-def get_view_stats(post_url, day=None):
+def get_visitor_stats(post_url, day=None):
     with connect() as db:
-        return read_view_stats(db, post_url, day or today_kst())
+        return read_visitor_stats(db, post_url, day or today_kst())
 
 
-def increment_view(post_url):
+def record_visit(post_url, visitor_id):
     timestamp = now_iso()
     day = today_kst()
 
     with connect() as db:
         db.execute(
             """
-            INSERT OR IGNORE INTO post_views (url, count, created_at, updated_at)
-            VALUES (?, 0, ?, ?)
+            INSERT INTO site_visitors (visitor_id, first_seen_at, last_seen_at)
+            VALUES (?, ?, ?)
+            ON CONFLICT(visitor_id) DO UPDATE SET
+              last_seen_at = excluded.last_seen_at
             """,
-            (post_url, timestamp, timestamp),
+            (visitor_id, timestamp, timestamp),
         )
         db.execute(
             """
-            UPDATE post_views
-            SET count = count + 1, updated_at = ?
-            WHERE url = ?
+            INSERT INTO site_visitor_days (visitor_id, day, first_seen_at, last_seen_at)
+            VALUES (?, ?, ?, ?)
+            ON CONFLICT(visitor_id, day) DO UPDATE SET
+              last_seen_at = excluded.last_seen_at
             """,
-            (timestamp, post_url),
+            (visitor_id, day, timestamp, timestamp),
         )
         db.execute(
             """
-            INSERT INTO post_view_days (url, day, count, created_at, updated_at)
-            VALUES (?, ?, 1, ?, ?)
-            ON CONFLICT(url, day) DO UPDATE SET
-              count = count + 1,
-              updated_at = excluded.updated_at
+            INSERT INTO post_visitors (url, visitor_id, first_seen_at, last_seen_at)
+            VALUES (?, ?, ?, ?)
+            ON CONFLICT(url, visitor_id) DO UPDATE SET
+              last_seen_at = excluded.last_seen_at
             """,
-            (post_url, day, timestamp, timestamp),
+            (post_url, visitor_id, timestamp, timestamp),
+        )
+        db.execute(
+            """
+            INSERT INTO post_visitor_days (url, visitor_id, day, first_seen_at, last_seen_at)
+            VALUES (?, ?, ?, ?, ?)
+            ON CONFLICT(url, visitor_id, day) DO UPDATE SET
+              last_seen_at = excluded.last_seen_at
+            """,
+            (post_url, visitor_id, day, timestamp, timestamp),
         )
 
-        return read_view_stats(db, post_url, day)
+        return read_visitor_stats(db, post_url, day)
 
 
-def read_view_stats(db, post_url, day):
+def read_visitor_stats(db, post_url, day):
     url_total = db.execute(
-        "SELECT count FROM post_views WHERE url = ?",
+        "SELECT COUNT(*) FROM post_visitors WHERE url = ?",
         (post_url,),
     ).fetchone()
     url_today = db.execute(
-        "SELECT count FROM post_view_days WHERE url = ? AND day = ?",
+        "SELECT COUNT(*) FROM post_visitor_days WHERE url = ? AND day = ?",
         (post_url, day),
     ).fetchone()
     site_total = db.execute(
-        "SELECT COALESCE(SUM(count), 0) FROM post_views"
+        "SELECT COUNT(*) FROM site_visitors"
     ).fetchone()
     site_today = db.execute(
-        "SELECT COALESCE(SUM(count), 0) FROM post_view_days WHERE day = ?",
+        "SELECT COUNT(*) FROM site_visitor_days WHERE day = ?",
         (day,),
     ).fetchone()
 
@@ -206,8 +273,8 @@ def read_view_stats(db, post_url, day):
         "date": day,
         "url_total": int(url_total[0]) if url_total else 0,
         "url_today": int(url_today[0]) if url_today else 0,
-        "total": VIEW_TOTAL_OFFSET + (int(site_total[0]) if site_total else 0),
-        "today": VIEW_TODAY_OFFSET + (int(site_today[0]) if site_today else 0),
+        "total": VISITOR_TOTAL_OFFSET + (int(site_total[0]) if site_total else 0),
+        "today": VISITOR_TODAY_OFFSET + (int(site_today[0]) if site_today else 0),
     }
 
 
@@ -236,10 +303,15 @@ class LikesHandler(BaseHTTPRequestHandler):
                 self.send_json(200, {"url": post_url, "count": get_count(post_url)})
                 return
 
-            if parsed.path in ("/api/views", "/api/views/"):
+            if parsed.path in (
+                "/api/visitors",
+                "/api/visitors/",
+                "/api/views",
+                "/api/views/",
+            ):
                 params = parse_qs(parsed.query)
                 post_url = normalize_post_url(params.get("url", [""])[0])
-                self.send_json(200, get_view_stats(post_url))
+                self.send_json(200, get_visitor_stats(post_url))
                 return
 
             self.send_json(404, {"error": "not found"})
@@ -259,9 +331,15 @@ class LikesHandler(BaseHTTPRequestHandler):
                 self.send_json(200, {"url": post_url, "count": count})
                 return
 
-            if parsed.path in ("/api/views", "/api/views/"):
+            if parsed.path in (
+                "/api/visitors",
+                "/api/visitors/",
+                "/api/views",
+                "/api/views/",
+            ):
                 post_url = normalize_post_url(payload.get("url"))
-                self.send_json(200, increment_view(post_url))
+                visitor_id = normalize_visitor_id(payload.get("visitor_id"))
+                self.send_json(200, record_visit(post_url, visitor_id))
                 return
 
             self.send_json(404, {"error": "not found"})

@@ -148,10 +148,10 @@ post_likes:
   enabled: true
   endpoint: # optional, defaults to comments.remark42.host + /api/likes
 
-# Immediate view counter backed by the same small API server.
-view_stats:
+# Unique visitor counter backed by the same small API server.
+visitor_stats:
   enabled: true
-  endpoint: # optional, defaults to comments.remark42.host + /api/views
+  endpoint: # optional, defaults to comments.remark42.host + /api/visitors
 
 # Self-hosted static assets, optional › https://github.com/cotes2020/chirpy-static-assets
 assets:
