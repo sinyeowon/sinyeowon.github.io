@@ -1,5 +1,14 @@
 {% assign remark_host = site.comments.remark42.host | default: '' %}
 {% assign remark_site_id = site.comments.remark42.site_id | default: site.github.username | default: site.title %}
+{% assign remark_locale = site.comments.remark42.locale | default: 'ko' %}
+{% assign remark_simple_view = site.comments.remark42.simple_view | default: true %}
+{% assign remark_show_email_subscription = site.comments.remark42.show_email_subscription | default: false %}
+{% assign remark_show_rss_subscription = site.comments.remark42.show_rss_subscription | default: false %}
+{% assign remark_no_footer = site.comments.remark42.no_footer | default: true %}
+{% assign remark_page_url = page.url | absolute_url %}
+{% capture remark_frame_src -%}
+  {{- remark_host -}}/web/iframe.html?host={{ remark_host | url_encode }}&site_id={{ remark_site_id | url_encode }}&url={{ remark_page_url | url_encode }}&components=embed&theme=light&locale={{ remark_locale | url_encode }}&simple_view={{ remark_simple_view }}&show_email_subscription={{ remark_show_email_subscription }}&show_rss_subscription={{ remark_show_rss_subscription }}&no_footer={{ remark_no_footer }}
+{%- endcapture %}
 
 {% if remark_host != empty %}
   <section class="remark42-comments" aria-labelledby="remark42-comments-title">
@@ -8,12 +17,20 @@
       <p>궁금한 점, 피드백, 오류 제보를 남겨 주세요.</p>
     </div>
 
-    <div id="remark42" class="remark42-comments-embed">댓글을 불러오는 중입니다.</div>
+    <div id="remark42" class="remark42-comments-embed">
+      <iframe
+        src="{{ remark_frame_src }}"
+        name="{}"
+        tabindex="0"
+        title="Comments | Remark42"
+        style="width: 100%; min-height: 420px; border: none; padding: 0; margin: 0; overflow: hidden;"
+      ></iframe>
+    </div>
   </section>
 
   <script>
     (function () {
-      var remarkFallbackFrame = null;
+      var remarkFallbackFrame = document.querySelector('#remark42 iframe');
 
       function getRemarkTheme() {
         if (window.Theme && Theme.visualState) {
@@ -100,6 +117,8 @@
         var root = document.getElementById('remark42');
 
         if (!root || hasRemarkFrame()) {
+          remarkFallbackFrame = root ? root.querySelector('iframe') : remarkFallbackFrame;
+          installFallbackMessageHandler();
           return;
         }
 
