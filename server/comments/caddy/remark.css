@@ -87,10 +87,18 @@
   display: none !important;
 }
 
+.syw-name-setup-open .syw-comment-form-awaiting-name .K_I {
+  align-items: flex-start !important;
+  background: transparent !important;
+  display: block !important;
+  min-height: 0 !important;
+  padding: 0 !important;
+}
+
 .syw-name-setup-open .syw-comment-form-awaiting-name .auth {
   display: block !important;
-  margin: 0 0 18px;
-  width: min(100%, 22rem);
+  margin: 0 0 18px 1rem;
+  width: min(calc(100% - 1rem), 22rem);
 }
 
 .syw-name-setup-open .syw-comment-form-awaiting-name .auth-button {
@@ -130,6 +138,13 @@
 
 .syw-name-setup-open .syw-comment-form-awaiting-name .auth-input-username {
   box-sizing: border-box;
+}
+
+@media (max-width: 480px) {
+  .syw-name-setup-open .syw-comment-form-awaiting-name .auth {
+    margin-left: 0;
+    width: 100%;
+  }
 }
 
 .syw-markdown-toolbar {
