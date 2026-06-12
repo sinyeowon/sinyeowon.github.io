@@ -16,7 +16,7 @@
           } catch (o) {}
         }()
     </script>
-    <link href="remark.css?v=20260612-submit-flow" rel="stylesheet">
+    <link href="remark.css?v=20260612-preview-reset" rel="stylesheet">
   </head>
   <body>
     <div id="remark42">
@@ -508,6 +508,29 @@
           });
         }
 
+        function getMarkdownPreview(textarea) {
+          var node = textarea.nextElementSibling;
+
+          while (node) {
+            if (node.classList && node.classList.contains("syw-markdown-preview")) {
+              return node;
+            }
+            node = node.nextElementSibling;
+          }
+
+          return textarea.parentNode ? textarea.parentNode.querySelector(".syw-markdown-preview") : null;
+        }
+
+        function syncMarkdownPreviews() {
+          document.querySelectorAll("textarea[data-syw-markdown-enhanced='true']").forEach(function (textarea) {
+            var preview = getMarkdownPreview(textarea);
+
+            if (preview) {
+              updatePreview(textarea, preview, false);
+            }
+          });
+        }
+
         function getActiveCommentText() {
           var active = document.activeElement;
           if (active && active.tagName === "TEXTAREA" && active.value.trim()) {
@@ -607,6 +630,7 @@
           renameAnonymousTitle();
           syncNameSetupPanel();
           enhanceMarkdownEditors();
+          syncMarkdownPreviews();
           installSubmitFlow();
           restorePendingComment();
         }
