@@ -86,6 +86,7 @@
       <div class="post-nav-label">{{ previous_label }}</div>
       <a href="{{ site.baseurl }}{{ previous_post.url }}" class="post-preview card h-100">
         <div class="card-body">
+          {% include datetime.html date=previous_post.date lang=include.lang %}
           <h4 class="pt-0 my-2">{{ previous_post.title }}</h4>
           <div class="text-muted">
             <p>{% include post-summary.html post=previous_post %}</p>
@@ -100,6 +101,7 @@
       <div class="post-nav-label">{{ next_label }}</div>
       <a href="{{ site.baseurl }}{{ next_post.url }}" class="post-preview card h-100">
         <div class="card-body">
+          {% include datetime.html date=next_post.date lang=include.lang %}
           <h4 class="pt-0 my-2">{{ next_post.title }}</h4>
           <div class="text-muted">
             <p>{% include post-summary.html post=next_post %}</p>

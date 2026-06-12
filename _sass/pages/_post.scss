@@ -347,30 +347,6 @@ html[data-mode='dark'] {
     font-weight: 600;
   }
 
-  .card {
-    border-color: var(--main-border-color);
-    transition: transform 0.2s ease-in-out, border-color 0.2s ease-in-out;
-    background: var(--card-bg);
-
-    &:hover {
-      border-color: var(--link-color);
-      transform: translateY(-2px);
-    }
-
-    .card-body {
-      padding: 1rem 1.25rem;
-    }
-
-    h4 {
-      font-size: 1rem;
-      margin: 0;
-      color: var(--text-color);
-      line-height: 1.4;
-
-      @extend %text-clip;
-    }
-  }
-
   .nav-prev {
     text-align: left;
   }
