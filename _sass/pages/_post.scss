@@ -103,17 +103,17 @@ header {
   .notion-mention {
     display: inline-flex;
     align-items: center;
-    gap: 0.5rem;
+    gap: 0.4rem;
     max-width: 100%;
-    min-height: 2.15rem;
+    min-height: 1.85rem;
     min-width: 2rem;
-    padding: 0.2rem 0.8rem;
+    padding: 0.1rem 0.65rem;
     border: 1px solid var(--btn-border-color);
     border-radius: v.$radius-lg;
     background: var(--button-bg);
     color: var(--text-muted-color);
-    font-family: v.$font-family-heading;
-    font-weight: 600;
+    font-size: 0.92rem;
+    font-weight: 500;
     line-height: 1.3;
     margin: 0.15rem 0.15rem !important;
     overflow-wrap: anywhere;
@@ -126,7 +126,8 @@ header {
       content: '>';
       flex: 0 0 auto;
       color: inherit;
-      font-weight: 700;
+      font-size: 0.85rem;
+      font-weight: 600;
     }
 
     &:hover {
