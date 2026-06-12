@@ -120,6 +120,14 @@
           });
         }
 
+        function hidePreviewButtons() {
+          document.querySelectorAll("button").forEach(function (button) {
+            if ((button.textContent || "").trim() === "미리보기") {
+              button.classList.add("syw-hidden");
+            }
+          });
+        }
+
         function escapeHtml(value) {
           return String(value || "")
             .replace(/&/g, "&amp;")
@@ -291,18 +299,6 @@
             toolbar.appendChild(button);
           });
 
-          var previewButton = document.createElement("button");
-          previewButton.type = "button";
-          previewButton.className = "syw-preview-toggle";
-          previewButton.textContent = "미리보기";
-          previewButton.title = "미리보기";
-          previewButton.addEventListener("click", function () {
-            preview.classList.toggle("is-visible");
-            previewButton.classList.toggle("is-active", preview.classList.contains("is-visible"));
-            updatePreview(textarea, preview, true);
-          });
-          toolbar.appendChild(previewButton);
-
           return toolbar;
         }
 
@@ -410,18 +406,11 @@
             var button = event.target.closest("button");
             var text;
 
-            if (!button || button.classList.contains("syw-preview-toggle")) {
+            if (!button) {
               return;
             }
 
             text = (button.textContent || "").trim();
-
-            if (text === "미리보기") {
-              event.preventDefault();
-              event.stopPropagation();
-              button.classList.add("syw-hidden");
-              return;
-            }
 
             if (text === "보내기") {
               var comment = getActiveCommentText();
@@ -440,6 +429,7 @@
           trimTimeSuffix();
           updateCommentPlaceholder();
           hideMarkdownNotice();
+          hidePreviewButtons();
           enhanceMarkdownEditors();
           installSubmitFlow();
           restorePendingComment();
