@@ -6,3 +6,13 @@
 .K_I > div:first-child > .K_J:first-child {
   display: none !important;
 }
+
+/* Make the anonymous nickname step clearer. */
+.S_O {
+  font-size: 0 !important;
+}
+
+.S_O::after {
+  content: "이 이름으로 남기기";
+  font-size: 16px;
+}
