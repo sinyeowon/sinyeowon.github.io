@@ -251,9 +251,9 @@ html[data-mode='dark'] {
     align-items: center;
     justify-content: center;
     gap: 0.55rem;
-    min-width: 8rem;
+    min-width: 0;
     min-height: 2.75rem;
-    padding: 0.55rem 1.15rem;
+    padding: 0.55rem 1rem;
     border: 1px solid var(--btn-border-color);
     border-radius: v.$radius-lg;
     color: var(--text-muted-color);
@@ -285,8 +285,8 @@ html[data-mode='dark'] {
     }
 
     strong {
-      min-width: 1.5rem;
-      text-align: left;
+      min-width: 0;
+      text-align: center;
       color: inherit;
       font-weight: 700;
     }

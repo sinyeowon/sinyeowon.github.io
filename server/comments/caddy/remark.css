@@ -87,6 +87,10 @@
   display: none !important;
 }
 
+.syw-comment-form-awaiting-name .K_I {
+  display: none !important;
+}
+
 .syw-name-setup-open .syw-comment-form-awaiting-name .K_I {
   align-items: flex-start !important;
   background: transparent !important;
