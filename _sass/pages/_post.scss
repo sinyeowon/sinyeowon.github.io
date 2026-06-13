@@ -365,7 +365,11 @@ html[data-mode='dark'] {
   }
 
   .nav-next {
-    text-align: left;
+    text-align: right;
+
+    .post-preview {
+      text-align: left;
+    }
   }
 }
 

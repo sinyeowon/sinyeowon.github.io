@@ -37,14 +37,19 @@
   }
 
   .post-tag {
-    line-height: 1.05rem;
-    font-size: 0.85rem;
+    border-color: var(--btn-border-color) !important;
     border-radius: 0.8rem;
-    padding: 0.3rem 0.5rem;
+    font-size: 0.85rem;
+    line-height: 1.05rem;
     margin: 0 0.35rem 0.5rem 0;
+    padding: 0.3rem 0.5rem;
 
-    &:hover {
-      transition: all 0.3s ease-in;
+    &:hover,
+    &:focus-visible {
+      border-color: var(--btn-border-color) !important;
+      box-shadow: none !important;
+      color: var(--link-color);
+      transition: background 0.3s ease-in, color 0.3s ease-in;
     }
   }
 
