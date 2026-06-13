@@ -21,6 +21,24 @@
     width: 100%;
   }
 
+  .post-tags {
+    line-height: 1.8rem;
+  }
+
+  .post-tag {
+    border-radius: 0.55rem;
+    font-size: 0.92rem;
+    line-height: 1.2;
+    margin: 0 0.42rem 0.5rem 0;
+    padding: 0.22rem 0.5rem;
+    vertical-align: middle;
+  }
+
+  .tag-count {
+    font-size: 0.78em;
+    margin-left: 0.18rem;
+  }
+
   @include bp.lt(bp.get(lg)) {
     justify-content: stretch !important;
   }

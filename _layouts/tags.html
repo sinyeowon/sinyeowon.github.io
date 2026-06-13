@@ -17,12 +17,12 @@ layout: page
     {% for t in sorted_tags %}
       {% assign posts = site.tags[t] %}
       {% capture tag_url %}/tags/{{ t | slugify | url_encode }}/{% endcapture %}
-      
+
       <a
         href="{{ tag_url | relative_url }}"
         class="post-tag no-text-decoration"
       >
-        {{ t }} <span class="text-muted" style="font-size: 0.8em; margin-left: 2px;">({{ posts | size }})</span>
+        {{ t }} <span class="tag-count text-muted">({{ posts | size }})</span>
       </a>
     {% endfor %}
   </div>
