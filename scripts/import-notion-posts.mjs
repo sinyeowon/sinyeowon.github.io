@@ -429,6 +429,10 @@ function isPublished(page) {
 }
 
 function formatDateForJekyll(value) {
+  if (typeof value === 'string' && /^\d{4}-\d{2}-\d{2}$/.test(value)) {
+    return `${value} 00:00:00 +0900`;
+  }
+
   const date = value ? new Date(value) : new Date();
   if (Number.isNaN(date.getTime())) {
     throw new Error(`Invalid Notion date: ${value}`);

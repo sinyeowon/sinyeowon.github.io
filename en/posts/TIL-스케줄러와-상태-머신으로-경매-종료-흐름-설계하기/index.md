@@ -1,7 +1,7 @@
 ---
 layout: "post"
 title: "[TIL] Designing auction termination flow with scheduler and state machine"
-date: 2026-06-14 09:00:00 +0900
+date: 2026-06-14 00:00:00 +0900
 last_modified_at: 2026-06-14 01:14:00 +0900
 categories: ["Spring 단기 심화", "심화 프로젝트"]
 tags: ["Scheduler", "상태 머신"]
