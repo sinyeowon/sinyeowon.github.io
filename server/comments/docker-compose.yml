@@ -26,7 +26,7 @@ services:
       SMTP_STARTTLS: ${SMTP_STARTTLS:-true}
       SMTP_USERNAME: ${SMTP_USERNAME:-}
       SMTP_PASSWORD: ${SMTP_PASSWORD:-}
-      SMTP_TIMEOUT: ${SMTP_TIMEOUT:-10}
+      SMTP_TIMEOUT: ${SMTP_TIMEOUT:-10s}
       TELEGRAM_TOKEN: ${TELEGRAM_TOKEN:-}
       NOTIFY_TELEGRAM_CHAN: ${NOTIFY_TELEGRAM_CHAN:-}
       STORE_BOLT_PATH: /srv/var
@@ -57,7 +57,7 @@ services:
       SMTP_STARTTLS: ${SMTP_STARTTLS:-true}
       SMTP_USERNAME: ${SMTP_USERNAME:-}
       SMTP_PASSWORD: ${SMTP_PASSWORD:-}
-      SMTP_TIMEOUT: ${SMTP_TIMEOUT:-10}
+      SMTP_TIMEOUT: ${SMTP_TIMEOUT:-10s}
     volumes:
       - ./likes_app:/app:ro
       - ./likes_data:/data

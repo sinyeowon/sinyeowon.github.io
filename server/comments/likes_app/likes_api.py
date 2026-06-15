@@ -27,6 +27,22 @@ def read_bool_env(name, default=False):
     return value.strip().lower() in ("1", "true", "yes", "on")
 
 
+def read_seconds_env(name, default=10):
+    value = os.environ.get(name)
+
+    if value is None or value.strip() == "":
+        return default
+
+    value = value.strip().lower()
+    if value.endswith("s"):
+        value = value[:-1]
+
+    try:
+        return float(value)
+    except ValueError:
+        return default
+
+
 DB_PATH = os.environ.get("LIKES_DB", "/data/likes.db")
 PORT = int(os.environ.get("PORT", "8090"))
 MAX_BODY_BYTES = 4096
@@ -62,7 +78,7 @@ SMTP_TLS = read_bool_env("SMTP_TLS")
 SMTP_STARTTLS = read_bool_env("SMTP_STARTTLS", not SMTP_TLS)
 SMTP_USERNAME = os.environ.get("SMTP_USERNAME", "")
 SMTP_PASSWORD = os.environ.get("SMTP_PASSWORD", "")
-SMTP_TIMEOUT = read_int_env("SMTP_TIMEOUT", 10)
+SMTP_TIMEOUT = read_seconds_env("SMTP_TIMEOUT", 10)
 
 
 def now_iso():

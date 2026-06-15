@@ -54,6 +54,7 @@ SMTP_TLS=false
 SMTP_STARTTLS=true
 SMTP_USERNAME=1oohyou@gmail.com
 SMTP_PASSWORD=replace-with-gmail-app-password
+SMTP_TIMEOUT=10s
 NOTIFICATION_LIKES=true
 NOTIFICATION_EMAIL_TO=1oohyou@gmail.com
 NOTIFICATION_EMAIL_FROM=1oohyou@gmail.com
