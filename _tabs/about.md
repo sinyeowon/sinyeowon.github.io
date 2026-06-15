@@ -13,7 +13,7 @@ hide_title: true
     <div class="about-me-contact-card">
       <p><i class="fas fa-map-marker-alt"></i> Daegu, Korea</p>
       <p><i class="fab fa-github"></i> <a href="https://github.com/sinyeowon">github.com/sinyeowon</a></p>
-      <p><i class="fas fa-envelope"></i> <a href="mailto:ioohyou@knu.ac.kr">ioohyou@knu.ac.kr</a></p>
+      <p><i class="fas fa-envelope"></i> <a href="mailto:1oohyou@gmail.com">1oohyou@gmail.com</a></p>
     </div>
   </section>
 

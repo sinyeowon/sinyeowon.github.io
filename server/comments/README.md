@@ -36,6 +36,29 @@ If `post_likes.endpoint` is empty, the blog uses `comments.remark42.host` plus `
 If `visitor_stats.endpoint` is empty, the blog uses `comments.remark42.host` plus `/api/visitors`.
 Set `VISITOR_TOTAL_OFFSET` in `.env` to carry over an existing public visitor total.
 
+## Email Notifications
+
+Comments use Remark42's admin notification settings. Likes use the local
+`likes-api` notification settings. Both share the same SMTP connection.
+
+For Gmail, create a Google app password and set it as `SMTP_PASSWORD` in the
+server `.env`; your normal Google password will not work.
+
+```env
+NOTIFY_ADMINS=email
+ADMIN_SHARED_EMAIL=1oohyou@gmail.com
+NOTIFY_EMAIL_FROM=1oohyou@gmail.com
+SMTP_HOST=smtp.gmail.com
+SMTP_PORT=587
+SMTP_TLS=false
+SMTP_STARTTLS=true
+SMTP_USERNAME=1oohyou@gmail.com
+SMTP_PASSWORD=replace-with-gmail-app-password
+NOTIFICATION_LIKES=true
+NOTIFICATION_EMAIL_TO=1oohyou@gmail.com
+NOTIFICATION_EMAIL_FROM=1oohyou@gmail.com
+```
+
 ## Test Likes and Views API
 
 ```sh

@@ -1,10 +1,14 @@
 from datetime import datetime, timedelta, timezone
+from email.message import EmailMessage
 from http.server import BaseHTTPRequestHandler, ThreadingHTTPServer
 from urllib.parse import parse_qs, urlparse
 import json
 import os
 import re
+import smtplib
+import ssl
 import sqlite3
+import threading
 
 
 def read_int_env(name, default=0):
@@ -12,6 +16,15 @@ def read_int_env(name, default=0):
         return int(os.environ.get(name, str(default)))
     except ValueError:
         return default
+
+
+def read_bool_env(name, default=False):
+    value = os.environ.get(name)
+
+    if value is None or value.strip() == "":
+        return default
+
+    return value.strip().lower() in ("1", "true", "yes", "on")
 
 
 DB_PATH = os.environ.get("LIKES_DB", "/data/likes.db")
@@ -30,6 +43,26 @@ ALLOWED_ORIGINS = [
     for origin in os.environ.get("ALLOWED_ORIGINS", "").split(",")
     if origin.strip()
 ]
+SITE_URL = os.environ.get("SITE_URL", "https://sinyeowon.github.io").rstrip("/")
+NOTIFICATION_LIKES = read_bool_env("NOTIFICATION_LIKES")
+NOTIFICATION_EMAIL_TO = (
+    os.environ.get("NOTIFICATION_EMAIL_TO")
+    or os.environ.get("ADMIN_SHARED_EMAIL")
+    or ""
+)
+NOTIFICATION_EMAIL_FROM = (
+    os.environ.get("NOTIFICATION_EMAIL_FROM")
+    or os.environ.get("NOTIFY_EMAIL_FROM")
+    or os.environ.get("SMTP_USERNAME")
+    or ""
+)
+SMTP_HOST = os.environ.get("SMTP_HOST", "")
+SMTP_PORT = read_int_env("SMTP_PORT", 587)
+SMTP_TLS = read_bool_env("SMTP_TLS")
+SMTP_STARTTLS = read_bool_env("SMTP_STARTTLS", not SMTP_TLS)
+SMTP_USERNAME = os.environ.get("SMTP_USERNAME", "")
+SMTP_PASSWORD = os.environ.get("SMTP_PASSWORD", "")
+SMTP_TIMEOUT = read_int_env("SMTP_TIMEOUT", 10)
 
 
 def now_iso():
@@ -201,6 +234,84 @@ def update_count(post_url, action):
     return int(row[0]) if row else 0
 
 
+def should_send_like_notification():
+    return all(
+        (
+            NOTIFICATION_LIKES,
+            NOTIFICATION_EMAIL_TO,
+            NOTIFICATION_EMAIL_FROM,
+            SMTP_HOST,
+        )
+    )
+
+
+def post_url_to_absolute_url(post_url):
+    if SITE_URL:
+        return f"{SITE_URL}{post_url}"
+
+    return post_url
+
+
+def send_email_notification(subject, body):
+    if not should_send_like_notification():
+        return
+
+    message = EmailMessage()
+    message["Subject"] = subject
+    message["From"] = NOTIFICATION_EMAIL_FROM
+    message["To"] = NOTIFICATION_EMAIL_TO
+    message.set_content(body)
+
+    context = ssl.create_default_context()
+
+    try:
+        if SMTP_TLS:
+            with smtplib.SMTP_SSL(
+                SMTP_HOST,
+                SMTP_PORT,
+                timeout=SMTP_TIMEOUT,
+                context=context,
+            ) as smtp:
+                if SMTP_USERNAME or SMTP_PASSWORD:
+                    smtp.login(SMTP_USERNAME, SMTP_PASSWORD)
+
+                smtp.send_message(message)
+        else:
+            with smtplib.SMTP(
+                SMTP_HOST,
+                SMTP_PORT,
+                timeout=SMTP_TIMEOUT,
+            ) as smtp:
+                if SMTP_STARTTLS:
+                    smtp.starttls(context=context)
+
+                if SMTP_USERNAME or SMTP_PASSWORD:
+                    smtp.login(SMTP_USERNAME, SMTP_PASSWORD)
+
+                smtp.send_message(message)
+    except Exception as error:
+        print(f"email notification failed: {error}", flush=True)
+
+
+def notify_like(post_url, count):
+    subject = f"[sinyeowon blog] 새 좋아요 {count}"
+    absolute_url = post_url_to_absolute_url(post_url)
+    body = "\n".join(
+        (
+            "블로그 글에 좋아요가 눌렸습니다.",
+            "",
+            f"글 주소: {absolute_url}",
+            f"현재 좋아요 수: {count}",
+        )
+    )
+
+    threading.Thread(
+        target=send_email_notification,
+        args=(subject, body),
+        daemon=True,
+    ).start()
+
+
 def get_visitor_stats(post_url, day=None):
     with connect() as db:
         return read_visitor_stats(db, post_url, day or today_kst())
@@ -328,6 +439,10 @@ class LikesHandler(BaseHTTPRequestHandler):
                 post_url = normalize_post_url(payload.get("url"))
                 action = payload.get("action")
                 count = update_count(post_url, action)
+
+                if action == "like":
+                    notify_like(post_url, count)
+
                 self.send_json(200, {"url": post_url, "count": count})
                 return
 
