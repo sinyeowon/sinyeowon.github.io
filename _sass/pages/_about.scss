@@ -163,19 +163,21 @@
   }
 
   .about-me-proof-note {
-    margin-top: 3rem;
+    margin-top: 3.25rem;
     padding-top: 0.75rem;
-    font-size: 0.8rem;
+    font-size: 0.72rem;
     color: var(--text-muted);
     line-height: 1.6;
+    letter-spacing: -0.01em;
   }
 
   .about-me-proof-note a {
     margin-left: 0.35rem;
     color: var(--text-muted);
-    font-size: 0.75rem;
+    font-size: 0.68rem;
     opacity: 0.8;
-    text-decoration: none;
+    text-decoration: underline;
+    text-underline-offset: 0.12rem;
   }
 
   .about-me-table {
