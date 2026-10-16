@@ -102,6 +102,9 @@ hide_title: true
     </ul>
   </section>
 
-  <p style="margin-top: 1rem; font-size: 0.8rem; color: var(--text-muted);">각 항목의 증빙 서류는 GitHub 저장소에서 확인할 수 있습니다.</p>
+  <p style="margin-top: 1.5rem; font-size: 0.8rem; color: var(--text-muted); line-height: 1.6;">
+    각 항목의 증빙 서류는 GitHub 저장소에서 확인할 수 있습니다.
+    <a href="https://github.com/sinyeowon/sinyeowon/tree/main/certificates" target="_blank" rel="noreferrer noopener" style="margin-left: 0.35rem; color: var(--text-muted); font-size: 0.75rem; opacity: 0.8; text-decoration: none;">GitHub</a>
+  </p>
 </div>
 
