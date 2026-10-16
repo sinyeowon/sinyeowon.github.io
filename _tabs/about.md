@@ -9,8 +9,11 @@ hide_title: true
 
   <section class="about-me-hero">
     <div class="about-me-hero-head">
-      <h1>신여원</h1>
-      <p style="margin: 0; font-size: 1.1rem; color: var(--text-color);">Backend Developer</p>
+      <h1 class="about-me-name-line">
+        <span class="about-me-name">신여원</span>
+        <span class="about-me-role-separator">|</span>
+        <span class="about-me-role">Backend Developer</span>
+      </h1>
     </div>
   </section>
 

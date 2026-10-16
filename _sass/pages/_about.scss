@@ -29,6 +29,35 @@
     margin-bottom: 1rem;
   }
 
+  .about-me-name-line {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: baseline;
+    gap: 0.6rem;
+    margin-bottom: 0;
+    color: var(--heading-color);
+    font-size: 3rem;
+    font-weight: 800;
+    letter-spacing: -0.04em;
+    line-height: 1.1;
+  }
+
+  .about-me-name {
+    color: var(--heading-color);
+  }
+
+  .about-me-role-separator {
+    color: rgba(0, 0, 0, 0.38);
+    font-weight: 400;
+  }
+
+  .about-me-role {
+    color: var(--heading-color);
+    font-size: clamp(1.7rem, 2.2vw, 2.4rem);
+    font-weight: 600;
+    letter-spacing: -0.03em;
+  }
+
   .about-me-badge {
     display: inline-flex;
     align-items: center;
@@ -118,35 +147,6 @@
     font-weight: 700;
     line-height: 1.8;
     color: var(--heading-color);
-  }
-
-  .about-me-highlight-grid {
-    display: grid;
-    grid-template-columns: repeat(3, minmax(0, 1fr));
-    gap: 1rem;
-    margin: 1.5rem 0 1.8rem;
-  }
-
-  .about-me-highlight-card {
-    display: flex;
-    flex-direction: column;
-    gap: 0.5rem;
-    min-height: 150px;
-    padding: 1rem 1rem 1.1rem;
-    border: 1px solid var(--main-border-color);
-    border-radius: 14px;
-    background: linear-gradient(180deg, rgba(255, 255, 255, 0.02), rgba(59, 130, 246, 0.04));
-    box-shadow: 0 6px 18px rgba(0, 0, 0, 0.04);
-  }
-
-  .about-me-highlight-card strong {
-    color: var(--heading-color);
-    font-size: 1rem;
-  }
-
-  .about-me-highlight-card span {
-    color: var(--text-color);
-    line-height: 1.7;
   }
 
   .about-me-list {
