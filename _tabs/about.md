@@ -79,7 +79,7 @@ hide_title: true
   <br>
 
   <section class="about-me-section">
-    <h2>Activity</h2>
+    <h2>Activities</h2>
     <ul class="about-me-list">
       <li>GET IT 5기 (SW&amp;창업 동아리) <code>2024.03 - 2024.06</code></li>
       <li>멋쟁이사자처럼 KNU 13기 (개발 동아리) · Backend 트랙 <code>2025.01 - 2025.12</code></li>
@@ -102,6 +102,8 @@ hide_title: true
     </ul>
   </section>
 
+  <br>
+  <br>
   <p class="about-me-proof-note">
     각 항목의 증빙 서류는 GitHub 저장소에서 확인할 수 있습니다.
     <a href="https://github.com/sinyeowon/sinyeowon/tree/main/certificates" target="_blank" rel="noreferrer noopener">GitHub</a>
