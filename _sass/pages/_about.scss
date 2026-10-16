@@ -162,6 +162,22 @@
     color: var(--heading-color);
   }
 
+  .about-me-proof-note {
+    margin-top: 3rem;
+    padding-top: 0.75rem;
+    font-size: 0.8rem;
+    color: var(--text-muted);
+    line-height: 1.6;
+  }
+
+  .about-me-proof-note a {
+    margin-left: 0.35rem;
+    color: var(--text-muted);
+    font-size: 0.75rem;
+    opacity: 0.8;
+    text-decoration: none;
+  }
+
   .about-me-table {
     width: 100%;
     border-collapse: collapse;
