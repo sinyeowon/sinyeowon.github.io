@@ -11,7 +11,7 @@
   <section class="remark42-comments guestbook-section" aria-labelledby="guestbook-title">
     <div class="remark42-comments-header">
       <h2 id="guestbook-title" class="panel-heading">방명록</h2>
-      <a href="/guestbook/" class="guestbook-link">전체 보기</a>
+      <a href="/guestbook/" class="guestbook-link">오늘의 생각이나 한마디를 남겨주세요.</a>
     </div>
 
     <div id="remark42" class="remark42-comments-embed"></div>
@@ -24,7 +24,7 @@
       window.remark_config = {
         host: {{ remark_host | jsonify }},
         site_id: {{ remark_site_id | jsonify }},
-        components: ['embed'],
+        components: ['comments'],
         url: '{{ site.url | default: "https://sinyeowon.github.io" }}/guestbook/',
         theme: (function () {
           if (window.Theme && Theme.visualState) {
