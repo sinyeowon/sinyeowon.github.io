@@ -14,42 +14,16 @@
       <a href="/guestbook/" class="guestbook-link">오늘의 생각이나 한마디를 남겨주세요.</a>
     </div>
 
-    <div id="remark42" class="remark42-comments-embed"></div>
+    <ul class="guestbook-preview-list">
+      <li>
+        <a href="/guestbook/">좋은 글 잘 보고 갑니다.</a>
+      </li>
+      <li>
+        <a href="/guestbook/">정리 너무 깔끔해서 도움이 됐어요.</a>
+      </li>
+      <li>
+        <a href="/guestbook/">다음 글도 기대하고 있겠습니다.</a>
+      </li>
+    </ul>
   </section>
-
-  <script>
-    (function () {
-      if (window.__homeGuestbookLoaded) return;
-
-      window.remark_config = {
-        host: {{ remark_host | jsonify }},
-        site_id: {{ remark_site_id | jsonify }},
-        components: ['comments'],
-        url: '{{ site.url | default: "https://sinyeowon.github.io" }}/guestbook/',
-        theme: (function () {
-          if (window.Theme && Theme.visualState) {
-            return Theme.visualState === Theme.DARK ? 'dark' : 'light';
-          }
-          return window.matchMedia && window.matchMedia('(prefers-color-scheme: dark)').matches ? 'dark' : 'light';
-        })(),
-        locale: {{ remark_locale | jsonify }},
-        simple_view: {{ remark_simple_view | jsonify }},
-        max_shown_comments: 3,
-        show_email_subscription: {{ remark_show_email_subscription | jsonify }},
-        show_rss_subscription: {{ remark_show_rss_subscription | jsonify }},
-        no_footer: {{ remark_no_footer | jsonify }},
-        auth_redirect: true
-      };
-
-      var d = document;
-      var root = d.getElementById('remark42');
-      if (!root) return;
-
-      var s = d.createElement('script');
-      s.src = window.remark_config.host + '/web/embed.js';
-      s.defer = true;
-      (d.head || d.body).appendChild(s);
-      window.__homeGuestbookLoaded = true;
-    })();
-  </script>
 {% endif %}
