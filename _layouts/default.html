@@ -37,6 +37,10 @@ layout: compress
             <div class="access">
               {% include_cached update-list.html lang=lang %}
               {% include_cached trending-tags.html lang=lang %}
+
+              {% if page.layout == 'home' or page.url == '/' or page.url == '/index.html' %}
+                {% include guestbook.html %}
+              {% endif %}
             </div>
 
             {% for _include in layout.panel_includes %}

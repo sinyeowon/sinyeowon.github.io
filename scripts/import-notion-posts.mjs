@@ -686,23 +686,10 @@ function linkLabel(text, href, context = {}) {
     return label;
   }
 
-  if (
-    /^https:\/\/school\.programmers\.co\.kr\/learn\/courses\/\d+\/lessons\/\d+/i.test(
-      url
-    )
-  ) {
-    return `Programmers ${problemTitleFromPostTitle(context.title) || '문제'}`;
-  }
-
+  // Preserve the raw URL when the Notion link text is just the URL itself.
+  // Rewriting it to the current post title makes every external link in the
+  // same article render with the same visible name.
   return label;
-}
-
-function problemTitleFromPostTitle(title = '') {
-  return String(title || '')
-    .replace(/^\[[^\]]+]\s*/, '')
-    .replace(/^(?:프로그래머스|Programmers)\s*-+\s*/i, '')
-    .replace(/\s+/g, ' ')
-    .trim();
 }
 
 function splitInlineWhitespace(text) {
