@@ -11,7 +11,7 @@
   <section class="remark42-comments guestbook-section" aria-labelledby="guestbook-title">
     <div class="remark42-comments-header">
       <h2 id="guestbook-title" class="panel-heading">방명록</h2>
-      <p>오늘의 생각이나 한마디를 남겨주세요.</p>
+      <a href="/guestbook/" class="guestbook-link">전체 보기</a>
     </div>
 
     <div id="remark42" class="remark42-comments-embed"></div>
@@ -25,7 +25,7 @@
         host: {{ remark_host | jsonify }},
         site_id: {{ remark_site_id | jsonify }},
         components: ['embed'],
-        url: {{ remark_page_url | jsonify }},
+        url: '{{ site.url | default: "https://sinyeowon.github.io" }}/guestbook/',
         theme: (function () {
           if (window.Theme && Theme.visualState) {
             return Theme.visualState === Theme.DARK ? 'dark' : 'light';
@@ -34,6 +34,7 @@
         })(),
         locale: {{ remark_locale | jsonify }},
         simple_view: {{ remark_simple_view | jsonify }},
+        max_shown_comments: 3,
         show_email_subscription: {{ remark_show_email_subscription | jsonify }},
         show_rss_subscription: {{ remark_show_rss_subscription | jsonify }},
         no_footer: {{ remark_no_footer | jsonify }},
@@ -41,6 +42,9 @@
       };
 
       var d = document;
+      var root = d.getElementById('remark42');
+      if (!root) return;
+
       var s = d.createElement('script');
       s.src = window.remark_config.host + '/web/embed.js';
       s.defer = true;
