@@ -14,14 +14,7 @@ permalink: /guestbook/
 {% assign remark_page_url = page.url | absolute_url %}
 
 {% if remark_host != empty %}
-  <section class="remark42-comments" aria-labelledby="remark42-comments-title">
-    <div class="remark42-comments-header">
-      <h2 id="remark42-comments-title">방명록</h2>
-      <p>오늘의 생각이나 한마디를 남겨주세요.</p>
-    </div>
-
-    <div id="remark42" class="remark42-comments-embed"></div>
-  </section>
+  <div class="remark42-comments-embed" id="remark42"></div>
 
   <script>
     var remark_config = {
