@@ -16,6 +16,12 @@ permalink: /guestbook/
 {% if remark_host != empty %}
   <div class="remark42-comments-embed" id="remark42"></div>
 
+  <style>
+    .remark42-comments-header {
+      display: none !important;
+    }
+  </style>
+
   <script>
     var remark_config = {
       host: {{ remark_host | jsonify }},
