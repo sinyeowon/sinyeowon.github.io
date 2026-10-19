@@ -991,15 +991,13 @@ function notionCalloutIcon(block) {
 
 function calloutMarkdown(markdown, icon = '💡') {
   const content = normalizeCalloutContent(markdown);
-  const { title, body } = splitCalloutContent(content);
-  const normalizedTitle = normalizeCalloutTitle(title);
+  const body = content.trim();
 
   const lines = [
     '<div class="notion-callout" markdown="1">',
     '',
     '<div class="notion-callout-heading">',
-    `<span class="notion-callout-icon">${escapeHtml(icon)}</span>` +
-      (normalizedTitle ? ` <span class="notion-callout-title">${normalizedTitle}</span>` : ''),
+    `<span class="notion-callout-icon">${escapeHtml(icon)}</span>`,
     '</div>',
     '',
     body,
@@ -1053,39 +1051,6 @@ function trimEmptyLines(lines) {
   return lines.slice(start, end);
 }
 
-function splitCalloutContent(markdown) {
-  const lines = String(markdown || '').split('\n');
-  const titleIndex = lines.findIndex((line) => line.trim());
-
-  if (titleIndex === -1) {
-    return { title: '', body: '' };
-  }
-
-  return {
-    title: lines[titleIndex].trim(),
-    body: [...lines.slice(0, titleIndex), ...lines.slice(titleIndex + 1)]
-      .join('\n')
-      .trim()
-  };
-}
-
-function normalizeCalloutTitle(title) {
-  let t = String(title || '').trim();
-
-  // strip surrounding backticks or fences
-  t = t.replace(/^`+|`+$/g, '');
-
-  // common markdown wrappers
-  t = t.replace(/\*\*([^*]+)\*\*/g, '$1');
-  t = t.replace(/\*([^*]+)\*/g, '$1');
-  t = t.replace(/__([^_]+)__/g, '$1');
-  t = t.replace(/_([^_]+)_/g, '$1');
-
-  // remove accidental leftover literal markers at edges
-  t = t.replace(/^\*+|\*+$/g, '').replace(/^_+|_+$/g, '').trim();
-
-  return t;
-}
 
 function unwrapAccidentalCalloutPlaintextBlocks(markdown) {
   const text = String(markdown || '').trim();
