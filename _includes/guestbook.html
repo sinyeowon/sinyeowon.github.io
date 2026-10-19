@@ -21,7 +21,7 @@
     (function () {
       if (window.__homeGuestbookLoaded) return;
 
-      var remark_config = {
+      window.remark_config = {
         host: {{ remark_host | jsonify }},
         site_id: {{ remark_site_id | jsonify }},
         components: ['embed'],
@@ -42,7 +42,7 @@
 
       var d = document;
       var s = d.createElement('script');
-      s.src = remark_config.host + '/web/embed.js';
+      s.src = window.remark_config.host + '/web/embed.js';
       s.defer = true;
       (d.head || d.body).appendChild(s);
       window.__homeGuestbookLoaded = true;
