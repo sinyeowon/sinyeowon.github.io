@@ -2,7 +2,7 @@
 layout: "post"
 title: "[TIL] MSA Transaction Consistency and Saga Pattern"
 title_source: "manual"
-date: 2026-06-04 09:00:00 +0900
+date: 2026-06-04 00:00:00 +0900
 last_modified_at: 2026-06-09 01:42:00 +0900
 categories: ["Spring 단기 심화", "심화 주차"]
 tags: ["TIL", "Saga", "2PC", "MSA"]
@@ -34,7 +34,7 @@ An important issue at this time is how to maintain data consistency across multi
 
 2PC stands for Two-Phase Commit, and is literally a distributed transaction method that commits in two stages.
 
-When multiple services or databases participate in one transaction, it first checks whether all participants are ready to perform the task, and then performs the final commit only when all are ready.
+When multiple services or databases participate in a transaction, it first checks whether all participants are ready to perform the task, and then performs the final commit only when all are ready.
 
 - How it works
     1. Preparation stage
@@ -101,7 +101,7 @@ Each service commits its work independently, but if a failure occurs in the midd
 2. High availability<br>
     There is no need to wait for all services to be ready at the same time like 2PC.
 
-    Therefore, it is possible to reduce situations where delays in specific services block the entire system for a long time.
+    Therefore, it is possible to reduce situations where a delay in a specific service blocks the entire system for a long time.
 
 3. Advantageous for scalability<br>
     Because the services operate independently, it is good for flexible expansion in large-scale systems.
@@ -127,6 +127,6 @@ Each service commits its work independently, but if a failure occurs in the midd
 
 ## What I felt
 
-We learned that in MSA, we need to consider not only the success of transactions, but also the degree of connectivity between services and failure situations.
+In MSA, we learned that it is important to not only ensure successful transactions, but also consider the degree of connectivity between services and failure situations.
 
 2PC may be appropriate when strong consistency is required, but the Saga pattern may be used more often in MSA that values ​​service independence and scalability.

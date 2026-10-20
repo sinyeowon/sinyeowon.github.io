@@ -1,6 +1,6 @@
 ---
 title: "Docker와 컨테이너 관리 능력"
-date: 2026-06-05 09:00:00 +0900
+date: 2026-06-05 00:00:00 +0900
 last_modified_at: 2026-06-09 14:50:00 +0900
 categories: ["Spring 단기 심화", "심화 주차"]
 tags: ["TIL", "Docker"]

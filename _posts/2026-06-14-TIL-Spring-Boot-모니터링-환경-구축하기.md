@@ -5,7 +5,7 @@ last_modified_at: 2026-06-14 22:56:00 +0900
 categories: ["Spring 단기 심화", "심화 주차"]
 tags: ["Prometheus", "Grafana", "Loki"]
 description: "Spring Boot 모니터링 환경 구축하기에 대한 학습 내용을 정리한 글입니다."
-description_source: "excerpt"
+description_source: "manual"
 english_url: "/en/posts/TIL-Spring-Boot-모니터링-환경-구축하기/"
 notion_id: "37f7788a-fc66-80c9-b9c9-ce2dfa3d9bc4"
 notion_lang: "ko"

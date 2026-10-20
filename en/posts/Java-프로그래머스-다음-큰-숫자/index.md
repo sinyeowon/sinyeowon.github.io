@@ -2,7 +2,7 @@
 layout: "post"
 title: "[Java] Programmers - Next Big Number"
 title_source: "manual"
-date: 2026-05-12 09:00:00 +0900
+date: 2026-05-12 00:00:00 +0900
 last_modified_at: 2026-06-09 01:30:00 +0900
 categories: ["Programmers", "Java"]
 tags: ["Java", "programmers"]
@@ -16,7 +16,7 @@ original_url: "/posts/Java-프로그래머스-다음-큰-숫자/"
 notion_id: "35e7788a-fc66-807f-8539-df0b5c2248e2"
 notion_lang: "en"
 ---
-<a class="notion-mention" href="https://school.programmers.co.kr/learn/courses/30/lessons/12911?language=java">Programmers' next big number</a>
+<a class="notion-mention" href="https://school.programmers.co.kr/learn/courses/30/lessons/12911?language=java">https://school.programmers.co.kr/learn/courses/30/lessons/12911?language=java</a>
 
 ## Solution
 

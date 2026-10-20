@@ -1,6 +1,6 @@
 ---
 title: "[TIL] PATCH 요청에서 null과 미전달을 구분하는 방법"
-date: 2026-06-03 09:00:00 +0900
+date: 2026-06-03 00:00:00 +0900
 last_modified_at: 2026-06-09 14:50:00 +0900
 categories: ["GDGoC KNU", "0 to Product"]
 tags: ["project"]

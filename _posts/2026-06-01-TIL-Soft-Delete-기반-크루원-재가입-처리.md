@@ -1,11 +1,11 @@
 ---
 title: "[TIL] Soft Delete 기반 크루원 재가입 처리"
-date: 2026-06-01 09:00:00 +0900
+date: 2026-06-01 00:00:00 +0900
 last_modified_at: 2026-06-05 15:23:00 +0900
 categories: ["GDGoC KNU", "0 to Product"]
 tags: ["project"]
 description: "JPA Soft Delete 환경의 유니크 제약 조건 충돌 문제, 탈퇴 사용자 데이터 복구 로직 및 @SQLRestriction 주의사항"
-description_source: "notion"
+description_source: "manual"
 english_url: "/en/posts/TIL-Soft-Delete-기반-크루원-재가입-처리/"
 notion_id: "3767788a-fc66-8030-8e55-cf4ae4a7b3ce"
 notion_lang: "ko"

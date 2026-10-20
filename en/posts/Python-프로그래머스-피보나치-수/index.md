@@ -2,7 +2,7 @@
 layout: "post"
 title: "[Python] Programmers - Fibonacci numbers"
 title_source: "manual"
-date: 2026-05-13 09:00:00 +0900
+date: 2026-05-13 00:00:00 +0900
 last_modified_at: 2026-06-09 01:31:00 +0900
 categories: ["Programmers", "Python"]
 tags: ["Python", "programmers"]
@@ -16,7 +16,7 @@ original_url: "/posts/Python-프로그래머스-피보나치-수/"
 notion_id: "35f7788a-fc66-8064-8cdf-ef83dd3a90dc"
 notion_lang: "en"
 ---
-<a class="notion-mention" href="https://school.programmers.co.kr/learn/courses/30/lessons/12945?language=python3">Programmers Fibonacci numbers</a>
+<a class="notion-mention" href="https://school.programmers.co.kr/learn/courses/30/lessons/12945?language=python3">https://school.programmers.co.kr/learn/courses/30/lessons/12945?language=python3</a>
 
 ## Solution
 

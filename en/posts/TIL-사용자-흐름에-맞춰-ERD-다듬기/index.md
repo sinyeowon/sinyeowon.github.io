@@ -2,7 +2,7 @@
 layout: "post"
 title: "[TIL] Refining the ERD around the user flow"
 title_source: "manual"
-date: 2026-05-12 09:00:00 +0900
+date: 2026-05-12 00:00:00 +0900
 last_modified_at: 2026-06-09 01:35:00 +0900
 categories: ["GDGoC KNU", "0 to Product"]
 tags: ["project"]
@@ -70,7 +70,7 @@ notion_lang: "en"
   | **Change Items** | **Existing structure** | **Change structure** | **Reason for change** |
   | --- | --- | --- | --- |
   | Add ranking type | There is no ranking type distinction in RANKING_RESULT | Add ranking_type | Added to distinguish between date-based ranking results and random topic-based ranking results |
-  | Ranking type enum definition | doesn't exist | DAILY, RANDOM_TOPIC | Front wireframe shows both daily and random topic results to clearly distinguish between result types |
+  | Ranking type enum definition | doesn't exist | DAILY, RANDOM_TOPIC | Front wireframe shows both daily and random topic results, clearly distinguishing between result types |
   | Add consent to member information | No consent to USER | Add is_agreeed | Added to store personal information and consent regarding service use when registering as a member |
   | Add AI mode for each crew | AI mode exists only in result table | Add CREW.ai_mode | Added to allow setting AI feedback mood/intensity for each crew |
   | Stay in AI Results Mode | AI_RESULT.mode exists | stay the same | Maintain a record of what mode the AI ​​results were created in |
@@ -92,4 +92,4 @@ notion_lang: "en"
 
 - We found that a proper ERD can be created by not only drawing tables, but also considering actual user flow, FE screen structure, data responsibility, AI result management, operation and debugging, and future expansion possibilities.- At first, it seemed like the more tables you created, the better, but I felt that a clear structure with clear responsibility and flow of data was more important.
 
-- Based on what we discussed today, we will have to think about connecting API design and actual service flow in the future.
+- Based on what we discussed today, we will have to consider connecting API design and actual service flow in the future.

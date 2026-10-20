@@ -1,12 +1,12 @@
 ---
 title: "[TIL] Spring 숙련 - 필터와 Spring Security"
 title_source: "manual"
-date: 2026-05-12 09:00:00 +0900
+date: 2026-05-12 00:00:00 +0900
 last_modified_at: 2026-06-09 01:31:00 +0900
 categories: ["Spring 단기 심화", "Spring 강의"]
 tags: ["Spring", "TIL", "내일배움캠프"]
 description: "Spring Filter 요청 전후 처리, JWT 인증/인가 흐름, Spring Security Filter Chain 및 Authentication 구조"
-description_source: "notion"
+description_source: "manual"
 permalink: "/posts/TIL-Spring-숙련-2026-05-12/"
 english_url: "/en/posts/TIL-Spring-숙련-2026-05-12/"
 notion_id: "35e7788a-fc66-8066-8baa-faa5874b47ea"

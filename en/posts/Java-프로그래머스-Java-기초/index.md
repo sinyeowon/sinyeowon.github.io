@@ -17,19 +17,19 @@ notion_lang: "en"
 ---
 ### Find the quotient
 
-<a class="notion-mention" href="https://school.programmers.co.kr/learn/courses/30/lessons/120805">Programmers Java Basics</a>
+<a class="notion-mention" href="https://school.programmers.co.kr/learn/courses/30/lessons/120805">https://school.programmers.co.kr/learn/courses/30/lessons/120805</a>
 
 To get the quotient in Java, you must use `/`.
 
 Integer / Integer → Returns the quotient of an integer value.
 
-Real number / Integer → If at least one of the numbers is a real number, it provides the quotient of the real number.
+Real number / Integer → If at least one of the numbers is a real number, the quotient of the real number is provided.
 
 In Java, the `//` symbol means a comment, so the quotient cannot be obtained with `//` like in Python.
 
 ### Addition of fractions
 
-<a class="notion-mention" href="https://school.programmers.co.kr/learn/courses/30/lessons/120808">Programmers Java Basics</a>
+<a class="notion-mention" href="https://school.programmers.co.kr/learn/courses/30/lessons/120808">https://school.programmers.co.kr/learn/courses/30/lessons/120808</a>
 
 ```java
 class Solution {
@@ -55,7 +55,7 @@ class Solution {
 ```
 
 - Error in the first code
-    - Just because it is an irreducible fraction does not mean that the numerators are all 1.
+    - Just because it is an irreducible fraction does not mean that all numerators are 1.
         - Even if the numerator is not 1, the repetition must end when it becomes an irreducible fraction.
 
     - To reduce, the priority is to find the smaller value between the numerator and the denominator.
@@ -84,19 +84,19 @@ class Solution {
     ```
 
 - Code after modification
-    - **If you divide by the greatest common divisor once, it becomes an irreducible fraction** → There is no need for the `while` statement.
+    - **If you divide by the greatest common divisor, it becomes an irreducible fraction** → There is no need for the `while` statement.
 
     - Use `Math.min()` → Returns the smaller of the numerator and denominator
 
 ### Find median
 
-<a class="notion-mention" href="https://school.programmers.co.kr/learn/courses/30/lessons/120811">Programmers Java Basics</a>
+<a class="notion-mention" href="https://school.programmers.co.kr/learn/courses/30/lessons/120811">https://school.programmers.co.kr/learn/courses/30/lessons/120811</a>
 
 - Arrays in Java
 
     - Array declaration
 
-        ```java
+```java
         int[] arr;
         ```
 
@@ -114,7 +114,7 @@ class Solution {
 
     - Check array length
 
-```java
+        ```java
         len = arr.length;
         System.out.println(arr.length);
         ```
@@ -165,14 +165,15 @@ class Solution {
                 <div class="notion-callout" markdown="1">
 
                 <div class="notion-callout-heading">
-                <span class="notion-callout-icon">💡</span> <span class="notion-callout-title">int[]` is a basic data type array</span>
+                <span class="notion-callout-icon">💡</span>
                 </div>
 
+                `int[]` is a basic data type array.
                 `Integer[]` is a reference type array.
 
-                <div class="notion-indent" markdown="1">
+                <div class="notion-indent" markdown="1">- `Integer` is a wrapper class to handle `int` as an object.
 
-                - `Integer` is a wrapper class to handle `int` as an object.- `Integer[]` is an array that stores references to `Integer` objects
+                - `Integer[]` is an array that stores references to `Integer` objects
 
                 </div>
 
@@ -182,7 +183,7 @@ class Solution {
 
 ### Find the mode
 
-<a class="notion-mention" href="https://school.programmers.co.kr/learn/courses/30/lessons/120812">Programmers Java Basics</a>
+<a class="notion-mention" href="https://school.programmers.co.kr/learn/courses/30/lessons/120812">https://school.programmers.co.kr/learn/courses/30/lessons/120812</a>
 
 #### My solution
 
@@ -291,11 +292,10 @@ class Solution {
 
     `map.put(num, map.getOrDerfault(num, 0) + 1);` → `getOrDefault(num, 0)` retrieves the number of existing appearances if the number is already stored, and returns 0 if not.
 
-### I hate even numbers
-
-<a class="notion-mention" href="https://school.programmers.co.kr/learn/courses/30/lessons/120813">Programmers Java Basics</a>
+### I hate even numbers<a class="notion-mention" href="https://school.programmers.co.kr/learn/courses/30/lessons/120813">https://school.programmers.co.kr/learn/courses/30/lessons/120813</a>
 
 #### Solution
+
 ```java
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -333,24 +333,25 @@ An array must be returned in the answer, but since I did not know how many value
 - `int[] answer = array.stream().mapToInt(Integer::intValue).toArray();`
     - `stream()` → Create `Strem` so that the elements of the list can be processed in order.
 
-    - `mapToInt(Integer::intValue)` → Convert `Integer` objects to basic data type `int` values.
+    - Convert `mapToInt(Integer::intValue)` → `Integer` objects to basic data type `int` values.
 
-    - `toArray()` → Returns the converted values in an array
+    - `toArray()` → Return the converted values in an array
 
     <div class="notion-callout" markdown="1">
 
     <div class="notion-callout-heading">
-    <span class="notion-callout-icon">💡</span> <span class="notion-callout-title">- Declared as ArrayList<br></span>
+    <span class="notion-callout-icon">💡</span>
     </div>
 
-    `ArrayList<Integer> array = new ArrayList<>();`
-
-    → Variable type: `ArrayList`, actual created object: `ArrayList`
+    - Declare as ArrayList<br>
+    `ArrayList<Integer> array = new ArrayList<>();`→ Variable type: `ArrayList`, actual created object: `ArrayList`
 
     - Declare as List<br>
     `List<Integer> array = new ArrayList<>();`
 
-    → Variable type: `List`, actual created object: `ArrayList`⇒ `List` is an interface, and `ArrayList` is a class that implements the List interface.
+    → Variable type: `List`, actual created object: `ArrayList`
+
+    ⇒ `List` is an interface, and `ArrayList` is a class that implements the List interface.
 
     ![image](/assets/img/notion/Java-프로그래머스-Java-기초/01-7720afa881.png)
 
@@ -364,7 +365,7 @@ An array must be returned in the answer, but since I did not know how many value
 
 ### Flipped string
 
-<a class="notion-mention" href="https://school.programmers.co.kr/learn/courses/30/lessons/120822">Programmers Java Basics</a>
+<a class="notion-mention" href="https://school.programmers.co.kr/learn/courses/30/lessons/120822">https://school.programmers.co.kr/learn/courses/30/lessons/120822</a>
 
 #### Java string
 
@@ -383,9 +384,7 @@ An array must be returned in the answer, but since I did not know how many value
 - String comparison<br>
     When comparing the contents of strings, `equals()` must be used.
 
-    The reason why `==` cannot be used → Because the addresses are compared to see if the two variables refer to the same object.
-
-- Strings are immutable objects<br>
+    The reason why `==` cannot be used → Because the addresses are compared to see if the two variables refer to the same object.- Strings are immutable objects<br>
     Once Java's `String` is created, the contents of the object cannot be changed.
 
     ```java
@@ -406,11 +405,11 @@ An array must be returned in the answer, but since I did not know how many value
         System.out.println(str); // Jello
         ```
 
-</div>
+    </div>
 
 ### Age of exoplanets
 
-<a class="notion-mention" href="https://school.programmers.co.kr/learn/courses/30/lessons/120834">Programmers Java Basics</a>
+<a class="notion-mention" href="https://school.programmers.co.kr/learn/courses/30/lessons/120834">https://school.programmers.co.kr/learn/courses/30/lessons/120834</a>
 
 #### Solution
 
@@ -438,4 +437,4 @@ class Solution {
 
 - Convert letters to numbers<br>
     `int num = str.charAt(i) - '0';` → `charAt()` returns type `char`
-    ⇒ What you need is an integer number index! → **If you perform a subtraction operation between characters in Java, it is calculated based on the Unicode value, so numeric characters are converted to integers like `‘2’ - ‘0’`.
+    ⇒ What you need is an integer number index! → **If you perform a subtraction operation between characters in Java, the calculation is based on the Unicode value, so numeric characters are converted to integers like `‘2’ - ‘0’`.

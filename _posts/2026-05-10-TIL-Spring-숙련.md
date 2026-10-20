@@ -1,12 +1,12 @@
 ---
 title: "[TIL] 스프링 숙련 - JWT 인증과 권한 관리"
 title_source: "manual"
-date: 2026-05-10 09:00:00 +0900
+date: 2026-05-10 00:00:00 +0900
 last_modified_at: 2026-06-09 01:27:00 +0900
 categories: ["Spring 단기 심화", "Spring 강의"]
 tags: ["Spring", "TIL", "내일배움캠프"]
 description: "Spring JWT 인증 구현, JwtUtil 토큰 생성 및 검증, Bearer 토큰 처리, UserRoleEnum 권한 관리"
-description_source: "notion"
+description_source: "manual"
 english_url: "/en/posts/TIL-Spring-숙련/"
 notion_id: "35c7788a-fc66-805b-b95d-efebac969913"
 notion_lang: "ko"
@@ -84,155 +84,157 @@ JWT 관련 기능들을 가진 JwtUtil이라는 클래스를 만들어 JWT 관�
     - 로깅이란 애플리케이션이 동작하는 동안 프로젝트의 상태나 동작 정보를 시간순으로 기록하는 것을 의미합니다.
         - 우리는 Logback 로깅 프레임워크를 사용해서 로깅을 진행하도록 하겠습니다.
 
-<div class="notion-callout" markdown="1">
+    <div class="notion-callout" markdown="1">
 
-<div class="notion-callout-heading">
-<span class="notion-callout-icon">📍</span> <span class="notion-callout-title">사용자의 권한의 종류는 Enum을 사용해서 관리함</span>
-</div>
+    <div class="notion-callout-heading">
+    <span class="notion-callout-icon">📍</span>
+    </div>
 
-- JWT를 생성할 때 사용자의 정보로 해당 사용자의 권한을 넣어줄 때 사용함
+    사용자의 권한의 종류는 Enum을 사용해서 관리함
 
-```java
-public enum UserRoleEnum {
-USER(Authority.USER),  // 사용자 권한
-ADMIN(Authority.ADMIN);  // 관리자 권한
+    - JWT를 생성할 때 사용자의 정보로 해당 사용자의 권한을 넣어줄 때 사용함
 
-private final String authority;
+    ```java
+    public enum UserRoleEnum {
+    USER(Authority.USER),  // 사용자 권한
+    ADMIN(Authority.ADMIN);  // 관리자 권한
 
-UserRoleEnum(String authority) {
-this.authority = authority;
-}
+    private final String authority;
 
-public String getAuthority() {
-return this.authority;
-}
+    UserRoleEnum(String authority) {
+    this.authority = authority;
+    }
 
-public static class Authority {
-public static final String USER = "ROLE_USER";
-public static final String ADMIN = "ROLE_ADMIN";
-}
-}
-```
+    public String getAuthority() {
+    return this.authority;
+    }
 
-<details markdown="1">
-<summary>코드 설명</summary>
+    public static class Authority {
+    public static final String USER = "ROLE_USER";
+    public static final String ADMIN = "ROLE_ADMIN";
+    }
+    }
+    ```
 
-- `UserRoleEnum`은 사용자 권한(Role)을 enum으로 관리하는 클래스입니다.
+    <details markdown="1">
+    <summary>코드 설명</summary>
 
-- enum을 사용하면 권한 값을 문자열로 직접 작성하지 않아도 되어 오타를 방지할 수 있습니다.
+    - `UserRoleEnum`은 사용자 권한(Role)을 enum으로 관리하는 클래스입니다.
 
-- 현재 권한은 `USER`, `ADMIN` 두 가지로 정의되어 있습니다.
+    - enum을 사용하면 권한 값을 문자열로 직접 작성하지 않아도 되어 오타를 방지할 수 있습니다.
 
-```java
-USER(Authority.USER),
-ADMIN(Authority.ADMIN);
-```
+    - 현재 권한은 `USER`, `ADMIN` 두 가지로 정의되어 있습니다.
 
-- `USER`는 일반 사용자 권한입니다.
+    ```java
+    USER(Authority.USER),
+    ADMIN(Authority.ADMIN);
+    ```
 
-- `ADMIN`은 관리자 권한입니다.
+    - `USER`는 일반 사용자 권한입니다.
 
-- `authority` 필드는 실제 Spring Security에서 사용하는 권한 문자열을 저장합니다.
+    - `ADMIN`은 관리자 권한입니다.
 
-```java
-private final String authority;
-```
+    - `authority` 필드는 실제 Spring Security에서 사용하는 권한 문자열을 저장합니다.
 
-- Spring Security는 일반적으로 `ROLE_` prefix가 포함된 권한 값을 사용합니다.
+    ```java
+    private final String authority;
+    ```
 
-```plaintext
-ROLE_USER
-ROLE_ADMIN
-```
+    - Spring Security는 일반적으로 `ROLE_` prefix가 포함된 권한 값을 사용합니다.
 
-- enum 생성자를 통해 권한 문자열을 저장합니다.
+    ```plaintext
+    ROLE_USER
+    ROLE_ADMIN
+    ```
 
-```java
-UserRoleEnum(String authority) {
-this.authority = authority;
-}
-```
+    - enum 생성자를 통해 권한 문자열을 저장합니다.
 
-- enum 생성 시 전달된 권한 문자열이 `authority` 필드에 저장됩니다.
+    ```java
+    UserRoleEnum(String authority) {
+    this.authority = authority;
+    }
+    ```
 
-```java
-USER("ROLE_USER")
-ADMIN("ROLE_ADMIN")
-```
+    - enum 생성 시 전달된 권한 문자열이 `authority` 필드에 저장됩니다.
 
-- `getAuthority()` 메서드는 저장된 권한 문자열을 반환합니다.
+    ```java
+    USER("ROLE_USER")
+    ADMIN("ROLE_ADMIN")
+    ```
 
-```java
-public String getAuthority() {
-return this.authority;
-}
-```
+    - `getAuthority()` 메서드는 저장된 권한 문자열을 반환합니다.
 
-- 예시
+    ```java
+    public String getAuthority() {
+    return this.authority;
+    }
+    ```
 
-```java
-UserRoleEnum.USER.getAuthority()
-```
+    - 예시
 
-```plaintext
-ROLE_USER
-```
+    ```java
+    UserRoleEnum.USER.getAuthority()
+    ```
 
-- `Authority` 내부 클래스는 권한 문자열 상수를 관리합니다.
+    ```plaintext
+    ROLE_USER
+    ```
 
-```java
-public static class Authority {
-public static final String USER = "ROLE_USER";
-public static final String ADMIN = "ROLE_ADMIN";
-}
-```
+    - `Authority` 내부 클래스는 권한 문자열 상수를 관리합니다.
 
-- 권한 문자열을 상수로 관리하면 문자열을 직접 작성하지 않아도 됩니다.
+    ```java
+    public static class Authority {
+    public static final String USER = "ROLE_USER";
+    public static final String ADMIN = "ROLE_ADMIN";
+    }
+    ```
 
-- 오타를 방지하고 유지보수성을 높일 수 있습니다.
+    - 권한 문자열을 상수로 관리하면 문자열을 직접 작성하지 않아도 됩니다.
 
-```java
-"ROLE_USRE" // 오타 발생 가능
-```
+    - 오타를 방지하고 유지보수성을 높일 수 있습니다.
 
-- 전체 흐름
+    ```java
+    "ROLE_USRE" // 오타 발생 가능
+    ```
 
-- enum 이름
+    - 전체 흐름
 
-```java
-UserRoleEnum.USER
-```
+    - enum 이름
 
-→ 코드에서 사용하는 권한 타입
+    ```java
+    UserRoleEnum.USER
+    ```
 
-- 실제 권한 문자열
+    → 코드에서 사용하는 권한 타입
 
-```java
-UserRoleEnum.USER.getAuthority()
-```
+    - 실제 권한 문자열
 
-→ Spring Security가 인식하는 권한 값
+    ```java
+    UserRoleEnum.USER.getAuthority()
+    ```
 
-```plaintext
-ROLE_USER
-```
+    → Spring Security가 인식하는 권한 값
 
-- 정리
-- `UserRoleEnum`
-- 사용자 권한 종류를 enum으로 관리
+    ```plaintext
+    ROLE_USER
+    ```
 
-- `Authority`
-- 실제 권한 문자열 상수 관리
+    - 정리
+    - `UserRoleEnum`
+    - 사용자 권한 종류를 enum으로 관리
 
-- `getAuthority()`
-- Spring Security에서 사용할 권한 문자열 반환
+    - `Authority`
+    - 실제 권한 문자열 상수 관리
 
-- 목적
-- 권한을 안전하고 일관성 있게 관리하기 위함입니다.
+    - `getAuthority()`
+    - Spring Security에서 사용할 권한 문자열 반환
 
-</details>
+    - 목적
+    - 권한을 안전하고 일관성 있게 관리하기 위함입니다.
 
-</div>
+    </details>
+
+    </div>
 
 1. JWT 생성
 

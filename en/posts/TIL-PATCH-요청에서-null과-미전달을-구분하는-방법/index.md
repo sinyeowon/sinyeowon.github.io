@@ -1,7 +1,7 @@
 ---
 layout: "post"
 title: "[TIL] How to distinguish between null and undelivered in PATCH requests"
-date: 2026-06-03 09:00:00 +0900
+date: 2026-06-03 00:00:00 +0900
 last_modified_at: 2026-06-09 14:50:00 +0900
 categories: ["GDGoC KNU", "0 to Product"]
 tags: ["project"]
@@ -71,7 +71,7 @@ In this case, both of the following situations appear to be null in Java objects
 
 The first means that the description will not be modified at all, and the second means that the description will be changed to null.
 
-However, since both come in as the same `null`, the two situations cannot be distinguished using only the general `String` type.
+However, since both come in as the same `null`, the two situations cannot be distinguished using the general `String` type alone.
 
 ## 3 states of PATCH request
 
@@ -85,7 +85,7 @@ In a PATCH request, one field can have three states.
 
 In particular, nullable fields such as `description` must distinguish between these three states.On the other hand, `name`, `maxMemberCount`, and `aiMode` are required values, so they are not allowed to be modified to `null`.
 
-Therefore, there is no need to use `JsonNullable` in all fields, and in this implementation, `JsonNullable<String>` was applied only to `description`.
+Therefore, it is not necessary to use `JsonNullable` in all fields, and in this implementation, `JsonNullable<String>` was applied only to `description`.
 
 ## Use JsonNullable
 
@@ -150,7 +150,7 @@ Since this policy must be shared with the front desk, the corresponding content 
 
 If you have not modified the description on the front page, you should not send the `description` field at all, and if you want to delete the description, you must explicitly send `"description": null`.
 
-## Example of modification logicSince `description` uses `JsonNullable`, it first checks whether it is included in the request and then reflects the value.
+## Modification logic exampleSince `description` uses `JsonNullable`, it first checks whether it is included in the request and then reflects the value.
 
 ```java
 String description = crew.getDescription();

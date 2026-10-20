@@ -1,12 +1,12 @@
 ---
 title: "[TIL] 스프링 숙련 - 회원가입 구현"
 title_source: "manual"
-date: 2026-05-11 09:00:00 +0900
+date: 2026-05-11 00:00:00 +0900
 last_modified_at: 2026-06-09 01:28:00 +0900
 categories: ["Spring 단기 심화", "Spring 강의"]
 tags: ["Spring", "TIL", "내일배움캠프"]
 description: "Spring 회원가입 및 로그인 기능 구현, 계층별 역할, PasswordEncoder 암호화, JWT 발급 및 쿠키 저장 흐름"
-description_source: "notion"
+description_source: "manual"
 permalink: "/posts/TIL-Spring-숙련-2026-05-11/"
 english_url: "/en/posts/TIL-Spring-숙련-2026-05-11/"
 notion_id: "35d7788a-fc66-8010-8d47-c4452137ba98"
@@ -77,15 +77,16 @@ notion_lang: "ko"
                 처럼 구현하게 됨
 
 - **패스워드 암호화 이해**<br>
-<div class="notion-callout" markdown="1">
+    <div class="notion-callout" markdown="1">
 
-<div class="notion-callout-heading">
-<span class="notion-callout-icon">📍</span> <span class="notion-callout-title">회원 등록 시, ‘비밀번호’는 사용자가 입력한 문자 그대로 DB에 등록하면 안됨</span>
-</div>
+    <div class="notion-callout-heading">
+    <span class="notion-callout-icon">📍</span>
+    </div>
 
-‘정보통신망법, 개인정보보호법’에 의해 비밀번호 암호화(Encryption)가 의무임
+    회원 등록 시, ‘비밀번호’는 사용자가 입력한 문자 그대로 DB에 등록하면 안됨
+    ‘정보통신망법, 개인정보보호법’에 의해 비밀번호 암호화(Encryption)가 의무임
 
-</div>
+    </div>
 
     - 암호화 후, 패스워드 저장이 필요함
         - 평문 → (암호화 알고리즘) → 암호문
@@ -109,17 +110,18 @@ ex) “nobodynobody” → “$2a$10$..”
                         2. **DB에 저장된 “아이디, 패스워드(암호문)”와 일치 여부 확인**
 
     - Password Matching<br>
-<div class="notion-callout" markdown="1">
+        <div class="notion-callout" markdown="1">
 
-<div class="notion-callout-heading">
-<span class="notion-callout-icon">📍</span> <span class="notion-callout-title">Spring Security라는 프레임워크에서 제공하는 비밀번호 암호화 기능을 사용</span>
-</div>
+        <div class="notion-callout-heading">
+        <span class="notion-callout-icon">📍</span>
+        </div>
 
-Bean 수동등록 예제로 봤던 PasswordEncoder가 해당 Security에서 제공하는 비밀번호 암호화 메서드임
+        Spring Security라는 프레임워크에서 제공하는 비밀번호 암호화 기능을 사용
+        Bean 수동등록 예제로 봤던 PasswordEncoder가 해당 Security에서 제공하는 비밀번호 암호화 메서드임
 
-사용자가 입력한 비밀번호가 암호화되어 저장된 비밀번호와 비교하여 일치여부를 확인해주는 기능도 가지고 있어 많이 사용됨
+        사용자가 입력한 비밀번호가 암호화되어 저장된 비밀번호와 비교하여 일치여부를 확인해주는 기능도 가지고 있어 많이 사용됨
 
-</div>
+        </div>
 
         ```java
         // 사용예시

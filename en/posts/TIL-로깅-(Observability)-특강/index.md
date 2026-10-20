@@ -1,7 +1,7 @@
 ---
 layout: "post"
 title: "[TIL] Special Lecture on Logging (Observability)"
-date: 2026-05-15 09:00:00 +0900
+date: 2026-05-15 00:00:00 +0900
 last_modified_at: 2026-06-12 00:49:00 +0900
 categories: ["Spring 단기 심화", "특강"]
 tags: ["Observability"]
@@ -102,7 +102,7 @@ In operations, logs are our eyes, and after an accident occurs, we look at photo
 
   | **Field** | **meaning** |
   | --- | --- |
-  | level | Severity (ERROR so should be checked immediately) |
+  | level | Severity (ERROR so needs to be checked immediately) |
   | service | Occurs in payment-service |
   | traceId | Connect to other service logs with this ID |
   | orderId | Order ORD-1004 |
@@ -125,10 +125,10 @@ In operations, logs are our eyes, and after an accident occurs, we look at photo
 
 - **Log level - when and what to use**
 
-  | **Level** | **When to use** | **example** | **Is this an alarm?** |
+  | **Level** | **When to use** | **example** | **Is this an alarm target?** |
   | --- | --- | --- | --- |
   | ERROR | User request failed | Payment failed, DB connection disconnected | Yes, required for operation |
-  | WARN | Not a failure, but abnormal | Success after retry, close to threshold | There are some, but most of them are turned off except for critical parts in operation. |
+  | WARN | Not a failure but abnormal | Success after retry, close to threshold | There are some, but most of them are turned off except for critical parts in operation. |
   | INFO | important business event | Create order, payment successful | No, turn it off from operation |
   | DEBUG | For flow confirmation during development | Check internal value | Turn off operation |
 
@@ -193,7 +193,7 @@ The most important thing in failure analysis is order → tracking requests and 
 
     → A structure that secures the observability of the system by visualizing and analyzing data generated through OpenTelemetry in backends such as Datadog, Prometheus, Grafana, AWS X-Ray, etc.
 
-- The order of finding and analyzing causes in practice - from top to bottom
+- Order of finding and analyzing causes in practice - from top to bottom
 
     ![image](/assets/img/notion/TIL-로깅-(Observability)-Special Lecture/04-a674fc00ef.png)
 
@@ -238,7 +238,7 @@ If Metrics is ‘detection of abnormalities through numbers’, Logs are ‘iden
 
 - Logs: "ORD-1004 External PG API timeout occurred when ordering" (You can decide what to fix)
 
-→ The problem is the amount of logs (thousands of lines per minute, millions of lines per day). So you have to hit **search key**
+→ The problem is the amount of logs (thousands of lines per minute, millions of lines per day). So you have to hit the **search key**
 
 | **Search Key** | **When to use** |
 | --- | --- |
@@ -254,7 +254,7 @@ If Metrics is ‘detection of abnormalities through numbers’, Logs are ‘iden
 
 Questions that Logs can't answer: "Why was **this request** slow?"
 
-- A payment request goes through several steps: order inquiry → coupon verification → payment request → communication with credit card company → saving results → notification
+- A payment request goes through several stages: Order inquiry → Coupon verification → Payment request → Communication with credit card company → Save results → Notification
 
 - With logs alone, you have to manually calculate and add the time for each step (difficult at 2 a.m.)
 
@@ -298,7 +298,7 @@ Questions that Logs can't answer: "Why was **this request** slow?"
 
 ### Span - At what ‘step’ was it slow?
 
-- We know ‘which request’ it is based on traceId alone, but we don’t know ‘which step** of that request’ it is.
+- We know ‘which request’ just by traceId, but we don’t know ‘which step** of that request’ is.
 
 - ID attached to each step = **spanId**
 
@@ -347,8 +347,8 @@ Questions that Logs can't answer: "Why was **this request** slow?"
 
     - However, it is better to first create MDC yourself to understand its principles.
 
-### Practical Case - Toss Payments (SLASH)- **GlobalTrace ID**: Parent ID placed on top of Trace ID
-    - Problem with a new Trace ID occurring at each screen transition → Bundle all user scenarios (payment information → progress → completion) into one
+### Practical Case - Toss Payments (SLASH)- **GlobalTrace ID**: Parent ID on top of Trace ID
+    - Problem with a new Trace ID occurring at each screen transition → All user scenarios (payment information → progress → completion) are bundled into one
 
   | **ID Type** | **Binding range** |
   | --- | --- |
@@ -401,13 +401,13 @@ Questions that Logs can't answer: "Why was **this request** slow?"
   | medium size | Sentry + integrated SaaS |
   | Kubernetes | Prometheus + Grafana + Loki + Tempo |
   | ELK-based | Elasticsearch + Logstash + Kibana + Beats |
-  | Korean conglomerate/finance | Pinpoint or Jennifer + own log system |
+  | Korean large corporations/finance | Pinpoint or Jennifer + own log system |
 
 → Even if the tools change, **the location remains the same**. Bottom line: **There is an ID that groups the same requests, and multiple tools connect to that ID**
 
 ### 6 steps to respond to failures
 
-1. **Check the access log to see if the request has been received** → If not, suspect Gateway/LB/Authentication/Network (Need to see code)
+1. **Check the access log to see if the request has been received** → If not, suspect Gateway/LB/Authentication/Network (Need to see the code
 
 2. **Understanding the scale** (Metrics): Error rate/p95 change, is it only a specific API or all, one instance or the entire cluster?
 
@@ -423,7 +423,7 @@ Questions that Logs can't answer: "Why was **this request** slow?"
 
 ### Entire flow at once (payment timeout scenario)
 
-1. **Metrics**: Payment-service only error rate 0.1%→8%, p95 250ms→3,200ms (order/coupon normal) → Suspected external dependency
+1. **Metrics**: Payment-service only error rate 0.1% → 8%, p95 250ms → 3,200ms (order/coupon normal) → Suspected external dependency
 
 2. **Select one request and check traceId**: `orderId=ORD-1004 → traceId=trc-001`3. **Collect all service logs by traceId**: Timeout after 3.2 seconds of external PG call from payment-service
 

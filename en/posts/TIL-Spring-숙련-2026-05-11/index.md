@@ -2,7 +2,7 @@
 layout: "post"
 title: "[TIL] Spring Skills - Membership Registration Implementation"
 title_source: "manual"
-date: 2026-05-11 09:00:00 +0900
+date: 2026-05-11 00:00:00 +0900
 last_modified_at: 2026-06-09 01:28:00 +0900
 categories: ["Spring 단기 심화", "Spring 강의"]
 tags: ["Spring", "TIL", "내일배움캠프"]
@@ -81,19 +81,20 @@ notion_lang: "en"
                 Implemented like this:
 
 - **Understanding Password Encryption**<br>
-<div class="notion-callout" markdown="1">
+    <div class="notion-callout" markdown="1">
 
-<div class="notion-callout-heading">
-<span class="notion-callout-icon">📍</span> <span class="notion-callout-title">When registering as a member, the ‘password’ must not be registered in the DB exactly as it is entered by the user.</span>
-</div>
+    <div class="notion-callout-heading">
+    <span class="notion-callout-icon">📍</span>
+    </div>
 
-Password encryption is mandatory under the ‘Information and Communications Network Act and Personal Information Protection Act’.
+    When registering as a member, the ‘password’ must not be registered in the DB exactly as it is entered by the user.
+    Password encryption is mandatory under the ‘Information and Communications Network Act and Personal Information Protection Act’.
 
-</div>- After encryption, password storage is required.
+    </div>
+
+    - After encryption, password storage is required.
         - Plaintext → (Encryption algorithm) → Ciphertext
-ex) “nobodynobody” → “$2a$10$..”
-
-        - Even if a hacker steals Alice’s password information in the DB, the actual password cannot be known.
+ex) “nobodynobody” → “$2a$10$..”- Even if a hacker steals Alice’s password information in the DB, the actual password cannot be known.
 
         - Therefore, decryption is impossible **one-way algorithm must be used**
             - **One-way encryption algorithm**
@@ -111,15 +112,18 @@ ex) “nobodynobody” → “$2a$10$..”
                         2. **Check whether it matches the “ID, password (ciphertext)” stored in the DB**
 
     - Password Matching<br>
-<div class="notion-callout" markdown="1">
+        <div class="notion-callout" markdown="1">
 
-<div class="notion-callout-heading">
-<span class="notion-callout-icon">📍</span> <span class="notion-callout-title">Use the password encryption function provided by a framework called Spring Security.</span>
-</div>
+        <div class="notion-callout-heading">
+        <span class="notion-callout-icon">📍</span>
+        </div>
 
-PasswordEncoder, which we saw as an example of manual bean registration, is a password encryption method provided by the security.It is also widely used as it has a function that compares the password entered by the user with the encrypted and stored password to check whether it matches.
+        Use the password encryption function provided by a framework called Spring Security.
+        PasswordEncoder, which we saw as an example of manual bean registration, is a password encryption method provided by the security.
 
-</div>
+        It is also widely used as it has a function that compares the password entered by the user with the encrypted and stored password to check whether it matches.
+
+        </div>
 
         ```java
         // 사용예시
@@ -132,9 +136,7 @@ PasswordEncoder, which we saw as an example of manual bean registration, is a pa
         - boolean matches(CharSequence rawPassword, String encodedPassword);
             - rawPassword: Password entered by the user
 
-            - encodedPassword: Password encrypted and stored in DB
-
-- **Implementation of membership registration API**
+            - encodedPassword: Password encrypted and stored in DB- **Implementation of membership registration API**
 
     ![image](/assets/img/notion/TIL-Spring-숙련/02-e63d1094c7.png)
 

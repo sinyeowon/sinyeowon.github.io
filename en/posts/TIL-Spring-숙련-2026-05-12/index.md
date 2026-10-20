@@ -2,7 +2,7 @@
 layout: "post"
 title: "[TIL] Spring Skills - Filters and Spring Security"
 title_source: "manual"
-date: 2026-05-12 09:00:00 +0900
+date: 2026-05-12 00:00:00 +0900
 last_modified_at: 2026-06-09 01:31:00 +0900
 categories: ["Spring 단기 심화", "Spring 강의"]
 tags: ["Spring", "TIL", "내일배움캠프"]
@@ -315,7 +315,7 @@ notion_lang: "en"
             - The reason for disabling `@Component` is that **if the filter is auto-registered, it may run first outside of the Spring Security flow**- CSRF<br>
 > **CSRF (Cross-site request forgery)**
 
-        - An attacker uses the session information of cookies stored in an authenticated browser to send a request that the user did not intend to the web server.<br>
+        - An attacker uses session information from cookies stored in an authenticated browser to send a request that the user did not intend to make to the web server.<br>
             = **“An attack that pretends to be a logged in user and secretly sends unsolicited requests”**
 
         - If CSRF is set, the CSRF token value must be passed in html to receive the request.
@@ -326,7 +326,7 @@ notion_lang: "en"
 
                 → The attacker can automatically use the user's cookies, but the attack is blocked because the attacker does not know the CSRF token value contained in the HTML.
 
-        - Since this is an attack using a cookie-based vulnerability, it can be disabled in the REST-based API.
+        - Since this is an attack using a cookie-based vulnerability, it can be disabled in the REST-type API.
 
             - In REST API, the login status is usually managed not by **session cookie**, but by sending a token directly to the front desk for each request.
 

@@ -1,7 +1,7 @@
 ---
 layout: "post"
 title: "[Python] Programmers - On the way to school"
-date: 2026-06-09 09:00:00 +0900
+date: 2026-06-09 00:00:00 +0900
 last_modified_at: 2026-06-09 11:53:00 +0900
 categories: ["Programmers", "Python"]
 tags: ["Python", "programmers"]
@@ -15,7 +15,7 @@ original_url: "/posts/Python-프로그래머스-등굣길/"
 notion_id: "37a7788a-fc66-800d-8e13-f357a16b20e4"
 notion_lang: "en"
 ---
-<a class="notion-mention" href="https://school.programmers.co.kr/learn/courses/30/lessons/42898">Programmers on their way to school</a>
+<a class="notion-mention" href="https://school.programmers.co.kr/learn/courses/30/lessons/42898">https://school.programmers.co.kr/learn/courses/30/lessons/42898</a>
 
 ## code
 

@@ -1,7 +1,7 @@
 ---
 layout: "post"
 title: "[Python] Programmer - Integer Triangle"
-date: 2026-05-18 09:00:00 +0900
+date: 2026-05-18 00:00:00 +0900
 last_modified_at: 2026-06-09 01:43:00 +0900
 categories: ["Programmers", "Python"]
 tags: ["Python", "programmers"]
@@ -15,7 +15,7 @@ original_url: "/posts/Python-프로그래머스-정수-삼각형/"
 notion_id: "3757788a-fc66-809a-885c-cacfc67bfc8e"
 notion_lang: "en"
 ---
-<a class="notion-mention" href="https://school.programmers.co.kr/learn/courses/30/lessons/43105">Programmers Integer Triangle</a>
+<a class="notion-mention" href="https://school.programmers.co.kr/learn/courses/30/lessons/43105">https://school.programmers.co.kr/learn/courses/30/lessons/43105</a>
 
 ## Solution
 

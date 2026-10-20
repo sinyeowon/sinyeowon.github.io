@@ -2,7 +2,7 @@
 layout: "post"
 title: "[TIL] Spring Basics - Quiz Review"
 title_source: "manual"
-date: 2026-04-17 09:00:00 +0900
+date: 2026-04-17 00:00:00 +0900
 last_modified_at: 2026-06-09 01:30:00 +0900
 categories: ["Spring 단기 심화", "특강"]
 tags: ["Spring"]
@@ -94,7 +94,7 @@ notion_lang: "en"
 
     9. Controller generates response data.
 
-    10. DispatcherServlet returns an HTTP response (JSON, etc.) to the client.
+    10. DispatcherServlet returns to the client as an HTTP response (JSON, etc.).
 
 - What it means to say that the annotation ‘does nothing on its own’
     - Annotations are just metadata attached to code, and they themselves do not directly execute logic.

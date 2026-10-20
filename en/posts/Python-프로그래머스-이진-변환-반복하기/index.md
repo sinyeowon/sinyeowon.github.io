@@ -1,7 +1,7 @@
 ---
 layout: "post"
-title: "[Python] Programmer - Repeating binary conversion"
-date: 2026-05-08 09:00:00 +0900
+title: "[Python] Programmers - Repeating binary conversion"
+date: 2026-05-08 00:00:00 +0900
 last_modified_at: 2026-06-09 01:24:00 +0900
 categories: ["Programmers", "Python"]
 tags: ["Python", "programmers"]
@@ -15,7 +15,7 @@ original_url: "/posts/Python-프로그래머스-이진-변환-반복하기/"
 notion_id: "35a7788a-fc66-8045-8f62-e6e85d9187eb"
 notion_lang: "en"
 ---
-<a class="notion-mention" href="https://school.programmers.co.kr/learn/courses/30/lessons/70129">Programmers Binary Conversion Repeat</a>
+<a class="notion-mention" href="https://school.programmers.co.kr/learn/courses/30/lessons/70129">https://school.programmers.co.kr/learn/courses/30/lessons/70129</a>
 
 ## Solution
 
@@ -94,4 +94,4 @@ It can also be written in the same way as above.
 - `bin()` function
     - Python function that converts a number into a string in binary form ex) `bin(10)` -> Changes to `'0b1010'` (`0b` in front indicates a binary number)
 
-    - In the code above, only the binary part is needed, so cut out the part that indicates a binary number, such as `bin(10)[2:]`.
+    - In the above code, only the binary part is needed, so cut out the part that indicates binary number, such as `bin(10)[2:]`.

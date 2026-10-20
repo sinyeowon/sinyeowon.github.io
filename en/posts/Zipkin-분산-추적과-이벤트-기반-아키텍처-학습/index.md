@@ -1,7 +1,7 @@
 ---
 layout: "post"
-title: "Zipkin distributed tracing and event-based architecture learning"
-date: 2026-06-08 09:00:00 +0900
+title: "Learning Zipkin distributed tracing and event-based architecture"
+date: 2026-06-08 00:00:00 +0900
 last_modified_at: 2026-06-09 14:50:00 +0900
 categories: ["Spring 단기 심화", "심화 주차"]
 tags: ["TIL", "Zipkin"]
@@ -47,7 +47,7 @@ Through this, you can quickly determine which service is experiencing a bottlene
 
 ## Event-based architecture and message queues
 
-Event-based architecture works by publishing events and subscribing to them, rather than having services directly call each other.
+Event-based architecture works by issuing events and subscribing to them by services, rather than having services directly call each other.
 
 For example, when an order is created, the order service issues an “order created” event, and the notification service or inventory service can receive this event and perform their own actions.
 
@@ -69,7 +69,7 @@ Using message queues has the following advantages:
 
 In distributed tracing, I felt it was important to understand the difference between Trace and Span.
 
-In addition, we confirmed again that in event-based architecture, the key point is not simply exchanging messages, but **reducing dependency between services and mitigating failure propagation**.
+In addition, we confirmed again that the key point in event-based architecture is not simply exchanging messages, but **reducing dependency between services and mitigating failure propagation**.
 
 ## Retrospective
 
@@ -95,7 +95,7 @@ In the future, as the number of calls between services increases in the project,
 
 By analogy, calling a friend directly and waiting for them to hear back is synchronous processing, while sending a messenger and then doing something else is asynchronous processing.
 
-**What does Q traffic buffering mean?**
+**Q Meaning of traffic buffering**
 
 A sudden surge in traffic may exceed the amount the service can handle at one time.
 
@@ -103,7 +103,7 @@ For example, a payment service can only process 100 transactions per second, but
 
 If there is a message queue, requests can be piled up in the queue instead of being immediately pushed to the payment service.
 
-- 1,000 requests arrive → stored in queue → processed one by one at a speed that the payment service can process
+- 1,000 requests arrive → stored in queue → processed one by one at a speed that the payment service can handle
 
 Because the cue absorbs shock in the middle, it is said to ‘buffer’.
 

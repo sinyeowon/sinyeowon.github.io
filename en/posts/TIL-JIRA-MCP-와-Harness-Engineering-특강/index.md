@@ -2,7 +2,7 @@
 layout: "post"
 title: "[TIL] Special Lecture on JIRA MCP and Harness Engineering"
 title_source: "manual"
-date: 2026-05-08 09:00:00 +0900
+date: 2026-05-08 00:00:00 +0900
 last_modified_at: 2026-06-09 01:25:00 +0900
 categories: ["Spring 단기 심화", "특강"]
 tags: ["MCP", "GitOps", "Harness Engineering"]
@@ -46,7 +46,7 @@ LLM is smart, but can't do anything alone
   | --- | --- |
   | **MCP Host** | Environment where AI operates (e.g. Claude Desktop, Cursor IDE) |
   | **MCP Client** | Module that resides in the host and communicates with the server |
-  | **MCP Server** | Gateway exposing external systems (Jira, GitHub, etc.) to MCP standards |
+  | **MCP Server** | Gateway to expose external systems (Jira, GitHub, etc.) to MCP standards |
 
 - **Three basic units exposed by MCP**
 
@@ -82,7 +82,7 @@ LLM is smart, but can't do anything alone
 ### Harness Engineering - Designing the work environment of AI agents
 
 > **Harness**
-> : Refers to the entire system of constraints and feedback surrounding the AI agent, like a device that controls the power of speech and guides it in the desired direction.This concept was formalized in Harness Engineering published by OpenAI in 2025.
+> : Refers to the entire system of constraints and feedback surrounding the AI agent, like a device that controls the power of words and guides them in the desired direction.This concept was formalized in Harness Engineering published by OpenAI in 2025.
 
 Previously, discussions on AI utilization focused on ‘what model to use’ and ‘how to use prompts,’ but Harness Engineering moved the focus one level higher to ‘how to design the environment in which agents work.’
 
@@ -92,7 +92,7 @@ Previously, discussions on AI utilization focused on ‘what model to use’ and
 
 > **We needed to understand what happens when a software engineering team's primary job is no longer writing code, but rather designing the environment, specifying intent, and building a feedback loop to ensure Codex agents can do their work reliably.**
 
-> **The most difficult challenge today is to design environments, feedback loops, and control systems that help agents achieve our goal of building and maintaining complex, reliable software at scale**.
+> **The most difficult challenge today is to design environments, feedback loops, and control systems that help agents achieve our goal of building and maintaining complex and reliable software at scale**.
 
 </div>
 
@@ -187,7 +187,7 @@ Previously, discussions on AI utilization focused on ‘what model to use’ and
         - From the agent's perspective, information that is not in the context is the same as not existing<br>
             ex) Design documents organized in Google Docs? → The agent cannot see / Decisions shared by Slcak? → I can’t see
 
-        - **Project rules and knowledge must be transferred into a machine-readable format in the repository**  | scattered knowledge | In the form of a repo |
+        - **Project rules and knowledge must be transferred to a machine-readable format in the repository**  | scattered knowledge | In the form of a repo |
 
   | --- | --- |
   | Guide to Slack’s build process | Build command section for `AGENTS.md` |
@@ -285,7 +285,7 @@ Previously, discussions on AI utilization focused on ‘what model to use’ and
 
         - Repeat until criteria are met
 
-    - It can already be implemented with tools such as GitHub Actions, and an example is a workflow in which an automatic code review is performed when a PR is posted, and an agent creates a modified PR when a mention such as `@Claude` is added to the issue.
+    - It can already be implemented with tools such as GitHub Actions, and an example is a workflow in which an automatic code review is run when a PR is posted, and an agent creates a modified PR when a mention such as `@Claude` is added to the issue.
 
 - **Observability - Agents must also see logs**
 
@@ -304,12 +304,12 @@ Previously, discussions on AI utilization focused on ‘what model to use’ and
   | mistake | why is it a problem | what should i do |
   | --- | --- | --- |
   | Write AGENTS.md ambiguously | “Maintain code quality” → Agent does not know what to do | **Testable rules** such as “Functions must have less than 50 lines, JSDoc required for public functions” |
-  | No feedback loop | The agent assumes he is correct and proceeds. | Test/linter/type checker automation required |
+  | No feedback loop | The agent assumes that he is correct and proceeds. | Test/linter/type checker automation required |
   | Neglecting tacit knowledge | As “you know it all” piles up, agent mistakes increase dramatically. | State the rules in your head as code/documentation |
   | Control all actions with scripts | If you kill too much autonomy, the agent's strengths disappear. | **Only provide direction** and delegate execution |
   | Harness made once and left unattended | The model/project evolves, but only the harness remains static. | Regularly inspected and updated |
 
-### GitOps - A source of truth shared between humans and AI
+### GitOps - A source of truth shared between people and AI
 
 > GitOps
 > : A Git repository is used as the Single Source of Truth (SSOT) of the system state, and an automated controller continuously reconciles the declarative definition of Git with the actual environment.
@@ -410,7 +410,7 @@ All settings in the operating environment must be in Git, and when Git changes, 
   | **See people and see AI** | All infrastructure status is exposed by simply reading Git |
   | **Change people and change AI** | Same procedure for both with a unified interface called PR |
   | **Change tracking is automatic** | Who (Human/AI), when, and what changed remains in Git history |
-  | **Rollback is unified** | Whether it is a human-made accident or an AI-made accident, recovery is the same with `git revert`. |
+  | **Rollback is unified** | Regardless of whether it is a human-made accident or an AI-made accident, recovery is the same with `git revert`. |
 
 ### Visibility - An environment for both people and AI
 
@@ -437,7 +437,7 @@ All settings in the operating environment must be in Git, and when Git changes, 
   | --- | --- |
   | **Onboarding Speed** | New team members can self-learn by following the code/document/issue/deployment flow |
   | **Incident Response Time** | From occurrence of failure → trace cause → rollback reduced to minutes |
-  | **AI Utilization** | Enhances quality of results by allowing agents to take context |
+  | **AI Utilization** | Agents can take context, improving quality of results |
   | **Decision-making speed** | No need to agree on “where are we now” every time we meet. |
 
 ### The most important thing

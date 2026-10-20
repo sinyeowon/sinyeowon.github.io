@@ -2,7 +2,7 @@
 layout: "post"
 title: "[TIL] Turning TodayPoor toward shared spending"
 title_source: "manual"
-date: 2026-05-11 09:00:00 +0900
+date: 2026-05-11 00:00:00 +0900
 last_modified_at: 2026-06-09 01:35:00 +0900
 categories: ["GDGoC KNU", "0 to Product"]
 tags: ["project"]
@@ -86,7 +86,7 @@ notion_lang: "en"
 
 ### What I learned about ERD
 
-- Currently, AI functions have two main roles, but it was not clear in ERD where personal feedback connects.
+- Currently, AI functions have two main roles, but in ERD it was not clear where personal feedback connects.
     1. AI results for MVP selection
 
     2. AI feedback on personal consumption history
@@ -95,7 +95,7 @@ notion_lang: "en"
 
 - We also decided that it would be a good idea to add the `mode` column to `AI_RESULT` to distinguish between good AI and bad AI modes.
 
-## Team discussion results
+## Results of team discussion
 
 - Based on feedback, we defined TodayPoor as closer to a **consumption-based social game/SNS** than a **consumption habit improvement app**.
 

@@ -1,11 +1,11 @@
 ---
 title: "[TIL] 단순 CRUD가 아니라 구조를 고민하는 API 설계"
-date: 2026-05-15 09:00:00 +0900
+date: 2026-05-15 00:00:00 +0900
 last_modified_at: 2026-05-15 19:29:00 +0900
 categories: ["Spring 단기 심화", "숙련 프로젝트"]
 tags: ["project"]
 description: "데이터 생성 시점 및 책임 범위 고려 API 명세서 작성, MSA 도메인 서비스 분리 및 트랜잭션 범위 결정"
-description_source: "notion"
+description_source: "manual"
 english_url: "/en/posts/TIL-단순-CRUD가-아니라-구조를-고민하는-API-설계/"
 notion_id: "3617788a-fc66-80dc-b5b8-ec836e895c06"
 notion_lang: "ko"

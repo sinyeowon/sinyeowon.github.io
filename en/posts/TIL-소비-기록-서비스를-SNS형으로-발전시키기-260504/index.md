@@ -2,7 +2,7 @@
 layout: "post"
 title: "[TIL] Developing a consumption record service into an SNS-style service"
 title_source: "manual"
-date: 2026-05-04 09:00:00 +0900
+date: 2026-05-04 00:00:00 +0900
 last_modified_at: 2026-06-09 01:25:00 +0900
 categories: ["GDGoC KNU", "0 to Product"]
 tags: ["project"]
@@ -28,7 +28,7 @@ notion_lang: "en"
 ## Meeting
 
 - Final decision and materialization of idea
-    - The idea I had in mind was too similar to other services, so I needed something different.
+    - The idea I had before was too similar to other services, so I needed something different.
 
     - We want to add a lot of fun elements so that it can go viral among users.
 

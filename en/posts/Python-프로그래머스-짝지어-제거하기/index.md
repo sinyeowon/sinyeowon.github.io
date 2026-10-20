@@ -2,7 +2,7 @@
 layout: "post"
 title: "[Python] Programmers - Pair Removal"
 title_source: "manual"
-date: 2026-05-14 09:00:00 +0900
+date: 2026-05-14 00:00:00 +0900
 last_modified_at: 2026-06-09 01:33:00 +0900
 categories: ["Programmers", "Python"]
 tags: ["Python", "programmers"]
@@ -16,7 +16,7 @@ original_url: "/posts/Python-프로그래머스-짝지어-제거하기/"
 notion_id: "3607788a-fc66-80b8-aed9-d90b25d0091c"
 notion_lang: "en"
 ---
-<a class="notion-mention" href="https://school.programmers.co.kr/learn/courses/30/lessons/12973">Programmers pairing and eliminating</a>
+<a class="notion-mention" href="https://school.programmers.co.kr/learn/courses/30/lessons/12973">https://school.programmers.co.kr/learn/courses/30/lessons/12973</a>
 
 ## Solution
 

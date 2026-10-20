@@ -1,7 +1,7 @@
 ---
 layout: "post"
 title: "[TIL] Entity design standards organized by implementing Crew and CrewMember"
-date: 2026-05-29 09:00:00 +0900
+date: 2026-05-29 00:00:00 +0900
 last_modified_at: 2026-06-05 15:13:00 +0900
 categories: ["GDGoC KNU", "0 to Product"]
 tags: ["project"]
@@ -79,11 +79,11 @@ When saving the crew leader in Crew, the actual reference target is User, so I w
 
 However, the role of this column is not simply the ‘user ID’ but rather the ‘owner of this crew’.
 
-Because the column name can express what the relationship means in the domain, owner_id is more appropriate for the column side.
+Since the column name can express what the relationship means in the domain, owner_id is more appropriate for the column side.
 
 ## Do not save currentMemberCount
 
-A crew requires maxMemberCount, which means the maximum number of people. This value is a setting that the user directly selects when creating a crew, so it must be saved in the DB.On the other hand, the current member count, currentMemberCount, can be calculated by counting the number of active members in the CrewMember table.
+A crew requires maxMemberCount, which means the maximum number of people. This value is a setting value that the user directly selects when creating a crew, so it must be saved in the DB.On the other hand, the current member count, currentMemberCount, can be calculated by counting the number of active members in the CrewMember table.
 
 ```sql
 SELECT COUNT(*)

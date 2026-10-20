@@ -1,7 +1,7 @@
 ---
 layout: "post"
 title: "Docker and container management capabilities"
-date: 2026-06-05 09:00:00 +0900
+date: 2026-06-05 00:00:00 +0900
 last_modified_at: 2026-06-09 14:50:00 +0900
 categories: ["Spring 단기 심화", "심화 주차"]
 tags: ["TIL", "Docker"]
@@ -45,15 +45,15 @@ On the other hand, a container is an instance that is actually executed based on
 
 To use an analogy, the image is a bungeoppang mold, and the container can be seen as a bungeoppang made with that mold. Multiple containers can be created from the same image, and each container runs independently. Therefore, even if you use the same application image, you can run containers with different settings by specifying different ports or environment variables.
 
-This concept was also important in problem solving. Deleting a container does not delete the image; the image remains, so you can create a container again with the same image. In other words, it is important to distinguish that a container is an execution unit and an image is the source for execution.
+This concept was also important in problem solving. Deleting a container does not delete the image; the image remains, so you can create a container again with the same image. In other words, it is important to distinguish that a container is an execution unit and an image is a source for execution.
 
 ## Why use Docker composeDocker compose is used to manage multiple containers as a single application bundle.
 
 For example, if there are Service A and Service B, and Service A needs to call Service B, it is not enough to run the two containers separately. The two containers must be on the same network, and they must also decide what names to call each other.
 
-You can also use the `docker run` command directly, but the more containers there are, the longer the command becomes and the easier it is to make mistakes. This is because port mapping, environment variables, network connections, execution order, etc. must be manually entered each time. Using Docker Compose, you can organize these settings in a single YAML file and run multiple containers with a single `docker compose up` command.
+You can use the `docker run` command directly, but the more containers there are, the longer the command becomes and the easier it is to make mistakes. This is because port mapping, environment variables, network connections, execution order, etc. must be manually entered each time. Using Docker Compose, you can organize these settings in a single YAML file and run multiple containers with a single `docker compose up` command.
 
-In this respect, I felt that Docker Compose is not simply a convenient execution tool, but a tool that documents and makes the development environment reproducible. If team members use the Compose file together, they can run containers under the same conditions, which is a great advantage for collaboration.
+In this respect, I felt that Docker Compose is not simply a convenient execution tool, but a tool that documents the development environment and makes it reproducible. If team members use the Compose file together, they can run containers under the same conditions, which is a great advantage for collaboration.
 
 ## Meaning of port mapping
 

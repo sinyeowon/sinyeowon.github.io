@@ -1,11 +1,11 @@
 ---
 title: "[TIL] 로깅 (Observability) 특강"
-date: 2026-05-15 09:00:00 +0900
+date: 2026-05-15 00:00:00 +0900
 last_modified_at: 2026-06-12 00:49:00 +0900
 categories: ["Spring 단기 심화", "특강"]
 tags: ["Observability"]
 description: "로깅 (Observability) 특강에 대한 학습 내용을 정리한 글입니다."
-description_source: "excerpt"
+description_source: "manual"
 english_url: "/en/posts/TIL-로깅-(Observability)-특강/"
 notion_id: "3617788a-fc66-80c0-95da-c45526f98815"
 notion_lang: "ko"

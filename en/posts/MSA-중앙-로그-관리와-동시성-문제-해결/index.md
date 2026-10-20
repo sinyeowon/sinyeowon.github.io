@@ -1,7 +1,7 @@
 ---
 layout: "post"
-title: "MSA central log management and concurrency issue resolution"
-date: 2026-06-09 09:00:00 +0900
+title: "MSA centralized log management and concurrency issue resolution"
+date: 2026-06-09 00:00:00 +0900
 last_modified_at: 2026-06-09 16:01:00 +0900
 categories: ["Spring 단기 심화", "심화 주차"]
 tags: ["MSA"]
@@ -96,6 +96,6 @@ In summary, the concurrency problem is not a simple code error, but a problem of
 
 ## Retrospective
 
-Because services are separated in MSA, we learned that log tracking and monitoring are important from an operational perspective, as well as simply dividing functions.
+In MSA, because services are separated, we learned that log tracking and monitoring are important from an operational perspective, as well as simply dividing functions.
 
-Additionally, it was understood that concurrency problems can frequently occur in functions such as inventory, coupons, points, and reservations in actual services, and that locks and transaction isolation levels must be appropriately used to maintain data consistency.
+Additionally, it was understood that concurrency problems can frequently occur in functions such as inventory, coupons, points, and reservations in actual services, and that locks and transaction isolation levels must be appropriately used to ensure data consistency.

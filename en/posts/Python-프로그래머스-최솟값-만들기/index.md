@@ -1,7 +1,7 @@
 ---
 layout: "post"
 title: "[Python] Programmers - Creating minimum value"
-date: 2026-05-07 09:00:00 +0900
+date: 2026-05-07 00:00:00 +0900
 last_modified_at: 2026-06-09 01:24:00 +0900
 categories: ["Programmers", "Python"]
 tags: ["Python", "programmers"]
@@ -15,7 +15,7 @@ original_url: "/posts/Python-프로그래머스-최솟값-만들기/"
 notion_id: "3597788a-fc66-8021-b2bb-e883d8047388"
 notion_lang: "en"
 ---
-<a class="notion-mention" href="https://school.programmers.co.kr/learn/courses/30/lessons/12941">Programmers Creating the Minimum</a>
+<a class="notion-mention" href="https://school.programmers.co.kr/learn/courses/30/lessons/12941">https://school.programmers.co.kr/learn/courses/30/lessons/12941</a>
 
 ## Solution
 

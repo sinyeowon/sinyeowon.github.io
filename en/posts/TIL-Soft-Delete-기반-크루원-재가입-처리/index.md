@@ -1,7 +1,7 @@
 ---
 layout: "post"
 title: "[TIL] Soft Delete-based crew member re-enrollment processing"
-date: 2026-06-01 09:00:00 +0900
+date: 2026-06-01 00:00:00 +0900
 last_modified_at: 2026-06-05 15:23:00 +0900
 categories: ["GDGoC KNU", "0 to Product"]
 tags: ["project"]
@@ -155,4 +155,4 @@ At first, I thought that if I unsubscribe, I would just have to recreate the row
 
 However, when we considered the unique constraint and soft delete policy together, we found that the method of restoring existing rows was more consistent.
 
-In the future, when implementing the delete function, we will need to consider not just “delete” but also subsequent recovery, re-subscription, and related data processing.
+In the future, when implementing the delete function, we will need to consider not just “delete” but also subsequent recovery, re-subscription, and processing of related data.

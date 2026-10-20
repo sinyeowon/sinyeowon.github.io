@@ -1,11 +1,11 @@
 ---
 title: "[TIL] Git & PR + CI/CD 특강"
-date: 2026-05-06 09:00:00 +0900
+date: 2026-05-06 00:00:00 +0900
 last_modified_at: 2026-06-09 01:21:00 +0900
 categories: ["Spring 단기 심화", "특강"]
 tags: ["Git", "CI/CD"]
 description: "Git 브랜치 전략, PR 기반 협업 흐름, Merge/Rebase 차이와 Github Actions를 활용한 CI/CD 개념"
-description_source: "notion"
+description_source: "manual"
 english_url: "/en/posts/TIL-Git-&-PR-+-CI-CD-특강/"
 notion_id: "3587788a-fc66-8089-892a-dad32b993e3a"
 notion_lang: "ko"
@@ -41,13 +41,15 @@ notion_lang: "ko"
   | 배포와의 궁합 | 빠른 배포(CD)와 궁합이 안 맞음 | PR 머지 = 즉시 배포 |
   | 전제 조건 | — | 자동화 테스트가 필수 전제 |
 
-<div class="notion-callout" markdown="1">
+    <div class="notion-callout" markdown="1">
 
-<div class="notion-callout-heading">
-<span class="notion-callout-icon">📍</span> <span class="notion-callout-title">대부분의 스타트업/웹 서비스는 Github Flow로 시작하고, 규모가 커지면 Git Flow로 확장함</span>
-</div>
+    <div class="notion-callout-heading">
+    <span class="notion-callout-icon">📍</span>
+    </div>
 
-</div>
+    대부분의 스타트업/웹 서비스는 Github Flow로 시작하고, 규모가 커지면 Git Flow로 확장함
+
+    </div>
 
 ### PR 워크플로우와 코드 리뷰
 
@@ -187,15 +189,16 @@ notion_lang: "ko"
 
         - 릴리즈 태그가 있는 브랜치
 
-<div class="notion-callout" markdown="1">
+    <div class="notion-callout" markdown="1">
 
-<div class="notion-callout-heading">
-<span class="notion-callout-icon">📍</span> <span class="notion-callout-title">git push --force-with-lease` 를 사용하면 원격이 내 예상과 다를 때 실패시킴</span>
-</div>
+    <div class="notion-callout-heading">
+    <span class="notion-callout-icon">📍</span>
+    </div>
 
-→ Force push가 필요하면 무조건 `--force-with-lease`
+    `git push --force-with-lease` 를 사용하면 원격이 내 예상과 다를 때 실패시킴
+    → Force push가 필요하면 무조건 `--force-with-lease`
 
-</div>
+    </div>
 
 ### 충돌(Conflict) 해결
 
@@ -273,19 +276,21 @@ notion_lang: "ko"
 
     → 한 단계라도 실패하면 즉시 중단 + 알림 / 깨진 빌드는 절대 다음 단계로 넘어가지 않음
 
-<div class="notion-callout" markdown="1">
+    <div class="notion-callout" markdown="1">
 
-<div class="notion-callout-heading">
-<span class="notion-callout-icon">📍</span> <span class="notion-callout-title">CI/CD 용어 정리</span>
-</div>
+    <div class="notion-callout-heading">
+    <span class="notion-callout-icon">📍</span>
+    </div>
 
-| 약자 | 풀네임 | 의미 |
-| --- | --- | --- |
-| CI | Continuous **Integration** | 코드를 자주 통합하고 자동 검증 |
-| CD | Continuous **Delivery** | 언제든 배포 가능한 상태 유지 (수동 승인) |
-| CD | Continuous **Deployment** | 통과하면 자동으로 운영까지 배포 |
+    **CI/CD 용어 정리**
 
-</div>
+  | 약자 | 풀네임 | 의미 |
+  | --- | --- | --- |
+  | CI | Continuous **Integration** | 코드를 자주 통합하고 자동 검증 |
+  | CD | Continuous **Delivery** | 언제든 배포 가능한 상태 유지 (수동 승인) |
+  | CD | Continuous **Deployment** | 통과하면 자동으로 운영까지 배포 |
+
+    </div>
 
 - Github Actions로 30줄 안에 시작하기<br>
     ### `.github/workflows/ci.yml`

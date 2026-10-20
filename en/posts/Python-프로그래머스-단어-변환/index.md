@@ -1,7 +1,7 @@
 ---
 layout: "post"
-title: "[Python] Programmers - Word Conversion"
-date: 2026-06-07 09:00:00 +0900
+title: "[Python] Programmer - Word Conversion"
+date: 2026-06-07 00:00:00 +0900
 last_modified_at: 2026-06-09 14:50:00 +0900
 categories: ["Programmers", "Python"]
 tags: ["Python", "programmers"]
@@ -15,7 +15,7 @@ original_url: "/posts/Python-프로그래머스-단어-변환/"
 notion_id: "3777788a-fc66-80ea-872b-d6b3d5e882c2"
 notion_lang: "en"
 ---
-<a class="notion-mention" href="https://school.programmers.co.kr/learn/courses/30/lessons/43163?language=python3">Programmers word conversion</a>
+<a class="notion-mention" href="https://school.programmers.co.kr/learn/courses/30/lessons/43163?language=python3">https://school.programmers.co.kr/learn/courses/30/lessons/43163?language=python3</a>
 
 ## code
 
@@ -85,10 +85,10 @@ I used zip() to compare two strings and check if they differ by just one alphabe
     `zip(word, current_word)` → `('h', 'h')`
 
 - `for c1, c2 in zip(word, current_word)`<br>
-    → Take out the zipped letter pairs one by one and write them
+    → Take out the zipped letter pairs one by one and write them- `diff_cnt = sum(c1 != c2 for c1, c2 in zip(word, current_word))`<br>
+    → Compare word and current_word one letter at a time to count the number of different letters
 
-- `diff_cnt = sum(c1 != c2 for c1, c2 in zip(word, current_word))`<br>
-    → Compare word and current_word one letter at a time to count the number of different letters`h == h` → `False -> 0`
+    `h == h` → `False -> 0`
 
     `o != i` → `True -> 1`
 

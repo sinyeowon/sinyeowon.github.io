@@ -5,7 +5,7 @@ last_modified_at: 2026-06-17 02:23:00 +0900
 categories: ["Spring 단기 심화", "심화 프로젝트"]
 tags: []
 description: "경매 서비스 Outbox 패턴 도입에 대한 학습 내용을 정리한 글입니다."
-description_source: "excerpt"
+description_source: "manual"
 english_url: "/en/posts/TIL-경매-서비스-Outbox-패턴-도입/"
 notion_id: "3817788a-fc66-8070-9f1b-c8d72e76e95c"
 notion_lang: "ko"

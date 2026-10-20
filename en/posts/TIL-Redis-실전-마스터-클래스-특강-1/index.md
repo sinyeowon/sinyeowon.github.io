@@ -2,7 +2,7 @@
 layout: "post"
 title: "[TIL] Redis Practical Master Class Lecture 1 - Core Architecture and Caching Strategies"
 title_source: "manual"
-date: 2026-05-12 09:00:00 +0900
+date: 2026-05-12 00:00:00 +0900
 last_modified_at: 2026-06-09 01:29:00 +0900
 categories: ["Spring 단기 심화", "특강"]
 tags: ["Redis"]
@@ -64,7 +64,7 @@ notion_lang: "en"
   | **speed** | Very fast (In-Memory) | Very fast (In-Memory) | Slow (Disk I/O) | **Fastest** (no network I/O) |
   | **Data structure support** | Rich collection of more than 5 types | Only String (Key-Value) | Tables, views, etc. | Object self storage |
   | **Data Persistence** | Support (RDB snapshot, AOF) | Not supported (will evaporate when the server is turned off) | Full support (ACID) | Not supported (will evaporate when the server is turned off) |
-  | **Support for distributed environments** | Clustering, replication, Sentinel | Third party dependency | Replication support (heavy) | Not supported |
+  | **Support for distributed environment** | Clustering, replication, Sentinel | Third party dependency | Replication support (heavy) | Not supported |
   | **Typical usage scenario** | Ranking, Queue, Session, Global Cache | Simple text/session caching | Data that requires permanent retention | Settings, static data from a single server |
 
 #### Deepening single-threaded architecture
@@ -112,7 +112,7 @@ _We will see a strategy for caching this 20%_
 - **When and how is cache invalidation performed?**
     ![image](/assets/img/notion/TIL-Redis-실전-마스터-클래스-특강-1/10-5ab95edce3.png)
 
-    1. **Passive Invalidation (TTL Utilization)**: The easiest way is to set the TTL and let it be erased over time.
+    1. **Passive Invalidation (Using TTL)**: The easiest way is to set the TTL and let it be erased over time.
 
     2. **Active Invalidation (manual invalidation)**: When an UPDATE or DELETE query occurs in the DB, the backend application code explicitly calls Redis' `DEL` command to blow the cache.
 
@@ -136,7 +136,7 @@ _We will see a strategy for caching this 20%_
 
         - At this time, if 10,000 users are connected per second, 10,000 requests rush into the DB with a cache miss at the same time → the DB goes down at that moment.
 
-    → Therefore, in practice, **when setting TTL for a large amount of data, a random number (Jitter) between 1 and 5 minutes must be added to the basic TTL value.**
+    → Therefore, in practice **when setting the TTL for a large amount of data, a random number (Jitter) between 1 and 5 minutes must be added to the basic TTL value.**
 
     <div class="notion-indent" markdown="1">
 
@@ -166,7 +166,7 @@ Assuming a popular shopping mall, we plan to map each data structure with comman
 
     - Insertion/deletion at both ends is fast, but insertion in the middle is slow.
 
-    - Example: Recently viewed product → Each time the user moves the page, the product is placed at the front of the list, and older items are cut out.
+    - Example: Recently viewed products → Whenever the user moves the page, products are placed at the front of the list, and older ones are cut out.
 
         ```bash
         # 유저(999)가 상품(123)을 최근에 봤습니다. 리스트 맨 앞에 밀어 넣습니다.
@@ -194,9 +194,9 @@ Assuming a popular shopping mall, we plan to map each data structure with comman
         (integer) 0
         ```
 
-        - Pitfall to watch out for: When millions of data are accumulated, if you lose `SMEMBERS`, which retrieves all items at once, the entire system stops → You must retrieve them separately as `SSCAN`.
+        - Pitfall to watch out for: When millions of data have accumulated, if you lose `SMEMBERS`, which retrieves all items at once, the entire system stops → You must retrieve them separately as `SSCAN`.
 
-4. Sorted Set (ZSET)- Core data structure that automatically sorts in score order by adding the concept of ‘Score’ to Set
+4. Sorted Set (ZSET)- A core data structure that automatically sorts in score order by adding the concept of ‘Score’ to Set.
 
     - Example: Real-time purchasing ranking → Real-time ranking is created using the user’s cumulative purchase amount as the score.
 
@@ -255,7 +255,7 @@ Assuming a popular shopping mall, we plan to map each data structure with comman
 
 #### Finalizing Redis core architecture and basics
 
-1. **Redis uses memory to eliminate disk operations and completely guarantees atomicity without context switching delay through an event loop-based single thread.**
+1. **Redis uses memory to eliminate disk operations and completely guarantees atomicity without context switching delays through an event loop-based single thread.**
 
 2. **You must set a TTL plus cache invalidation strategy and jitter according to traffic and requirements to prevent DB down due to Cache Stampede.**
 
@@ -265,9 +265,9 @@ Assuming a popular shopping mall, we plan to map each data structure with comman
 
 ## Questions & Errors
 
-**Q I heard that existing disk-based DBs require locks and are slow because they are multi-threaded, but why does Redis use distributed locks since it is single-threaded?**
+**Q I heard that existing disk-based DBs require locks and are slow because they are multi-threaded, but Redis is single-threaded, so why does it use distributed locks again?**
 
-- Redis' single thread refers to **Redis internally how commands are processed**
+- Redis’ single thread refers to **Redis** **internally** **how commands are processed**
     - In other words, because Redis processes only one command at a time in order, there are fewer conflicts that occur when multiple threads modify the same memory data at the same time.
 
     - Redis commands themselves are executed atomically.

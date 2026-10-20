@@ -1,7 +1,7 @@
 ---
 layout: "post"
 title: "[Python] Programmers - Network"
-date: 2026-05-21 09:00:00 +0900
+date: 2026-05-21 00:00:00 +0900
 last_modified_at: 2026-06-09 01:32:00 +0900
 categories: ["Programmers", "Python"]
 tags: ["programmers", "Python"]
@@ -15,7 +15,7 @@ original_url: "/posts/Python-프로그래머스-네트워크/"
 notion_id: "3677788a-fc66-805c-abdb-cbf869d5703e"
 notion_lang: "en"
 ---
-<a class="notion-mention" href="https://school.programmers.co.kr/learn/courses/30/lessons/43162">Programmers Network</a>
+<a class="notion-mention" href="https://school.programmers.co.kr/learn/courses/30/lessons/43162">https://school.programmers.co.kr/learn/courses/30/lessons/43162</a>
 
 ## Solution
 

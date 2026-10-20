@@ -1,7 +1,7 @@
 ---
 layout: "post"
 title: "[Python] Programmers - Overtime Index"
-date: 2026-06-08 09:00:00 +0900
+date: 2026-06-08 00:00:00 +0900
 last_modified_at: 2026-06-09 14:50:00 +0900
 categories: ["Programmers", "Python"]
 tags: ["Python", "programmers"]
@@ -15,7 +15,7 @@ original_url: "/posts/Python-프로그래머스-야근-지수/"
 notion_id: "3797788a-fc66-805f-bb7d-d87a0c00a5ee"
 notion_lang: "en"
 ---
-<a class="notion-mention" href="https://school.programmers.co.kr/learn/courses/30/lessons/12927">Programmers Overtime Index</a>
+<a class="notion-mention" href="https://school.programmers.co.kr/learn/courses/30/lessons/12927">https://school.programmers.co.kr/learn/courses/30/lessons/12927</a>
 
 ## code
 

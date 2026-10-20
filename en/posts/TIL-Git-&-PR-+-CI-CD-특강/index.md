@@ -1,7 +1,7 @@
 ---
 layout: "post"
-title: "[TIL] Special lecture on Git & PR + CI/CD"
-date: 2026-05-06 09:00:00 +0900
+title: "[TIL] Git & PR + CI/CD Special Lecture"
+date: 2026-05-06 00:00:00 +0900
 last_modified_at: 2026-06-09 01:21:00 +0900
 categories: ["Spring 단기 심화", "특강"]
 tags: ["Git", "CI/CD"]
@@ -17,9 +17,9 @@ notion_lang: "en"
 ---
 ## What I studied
 
-### Git Flow branching strategy
+### Git Flow branch strategy
 
-Without a branching strategy, accidents can occur, such as your work overwriting a colleague's work, unfinished code mixed in when you're about to deploy, or you wanting to roll back but having no reference point.
+Without a branching strategy, accidents may occur such as your work overwriting a colleague's work, unfinished code mixed in when you're about to deploy, or you wanting to roll back but having no reference point.
 
 → Branch strategy = accident prevention device
 
@@ -46,15 +46,17 @@ Without a branching strategy, accidents can occur, such as your work overwriting
   | Compatibility with distribution | Not compatible with rapid distribution (CD) | PR Merge = Immediate Deployment |
   | prerequisites | — | Automated testing is an essential premise |
 
-<div class="notion-callout" markdown="1">
+    <div class="notion-callout" markdown="1">
 
-<div class="notion-callout-heading">
-<span class="notion-callout-icon">📍</span> <span class="notion-callout-title">Most startups/web services start with Github Flow and expand to Git Flow as they grow.</span>
-</div>
+    <div class="notion-callout-heading">
+    <span class="notion-callout-icon">📍</span>
+    </div>
 
-</div>
+    Most startups/web services start with Github Flow and expand to Git Flow as they grow.
 
-### PR Workflow and Code Review
+    </div>
+
+### PR workflow and code review
 
 - Pull Request (PR): A formal request to merge my branch work into main (or develop)
 
@@ -68,7 +70,7 @@ Without a branching strategy, accidents can occur, such as your work overwriting
 
     - PR is a trigger that starts a code review and a change diary that I will read in the future.
 
-- PR life cycle
+- PR 라이프사이클
 
     ```bash
     1. Branch → feature/login 같은 작업 브랜치 생성
@@ -95,7 +97,7 @@ Without a branching strategy, accidents can occur, such as your work overwriting
     # 4~5. 여기서부터는 GitHub/GitLab 웹 UI에서 진행
     ```
 
-- How to write a good PR
+- 좋은 PR 작성법
 
     - Break it down into small pieces - 200 to 400 lines / single purpose
 
@@ -124,23 +126,23 @@ Without a branching strategy, accidents can occur, such as your work overwriting
     - Self-review first - Re-read self-PR immediately after push
 
 - Code review is not censorship
-    - As a reviewer,
+    - 리뷰어로서,
         - Criticize the code, but not the people
 
         - Ask questions first, no assumptions
 
         - Praise the things you did well
 
-    - As an author,
-        - Explain your intentions without being defensive.- If you agree, reflect, if you disagree, discuss based on the evidence.
+    - 작성자로서,
+        - Explain your intentions without being defensive.
+
+        - If you agree, reflect, if you disagree, discuss based on the evidence.
 
         - Reviews will be responded to within 24 hours
 
         - Thank you
 
-### Merge and Rebase
-
-- Merge: Merge commit to combine two histories
+### Merge와 Rebase- Merge: Merge commit to combine two histories
     ![image](/assets/img/notion/TIL-Git-&-PR-+-CI-CD-특강/02-ac94822e48.png)
 
     - Preservation of history - who worked on which branch remains intact
@@ -156,7 +158,7 @@ Without a branching strategy, accidents can occur, such as your work overwriting
 
     - No merge commits - remove noise
 
-    - Existing commits are replaced by new commits - Collaboration is destroyed if done on a shared branch
+    - Existing commits are replaced with new commits - Collaboration is destroyed if done on a shared branch.
 
 - When to use what (Merge & Rebase)
 
@@ -188,15 +190,18 @@ Without a branching strategy, accidents can occur, such as your work overwriting
 
         - Merged PR branch
 
-        - Branch with release tag<div class="notion-callout" markdown="1">
+        - Branch with release tag
 
-<div class="notion-callout-heading">
-<span class="notion-callout-icon">📍</span> <span class="notion-callout-title">Using git push --force-with-lease` causes it to fail when the remote is not what I expected.</span>
-</div>
+    <div class="notion-callout" markdown="1">
 
-→ If force push is required, always use `--force-with-lease`
+    <div class="notion-callout-heading">
+    <span class="notion-callout-icon">📍</span>
+    </div>
 
-</div>
+    Using `git push --force-with-lease` causes it to fail when the remote is not what I expected
+    → If force push is required, always use `--force-with-lease`
+
+    </div>
 
 ### Conflict resolution
 
@@ -212,7 +217,7 @@ Conflicts occur when two branches modify the same line in the same file differen
 >>>>>>> feature/api
     ```
 
-    → Conflicts are not errors, but Git is requesting my judgment.
+→ Conflicts are not errors, but Git is requesting my judgment.
 
 - 5 steps to conflict resolution
 
@@ -245,7 +250,7 @@ Conflicts occur when two branches modify the same line in the same file differen
         git rebase --abort  # rebase 중이면
         ```
 
-### CI/CD Pipeline Introduction
+### Introduction to CI/CD Pipeline
 
 - Difference between manual deployment and automation
     ![image](/assets/img/notion/TIL-Git-&-PR-+-CI-CD-특강/04-8f8d92b96d.png)
@@ -261,7 +266,9 @@ Conflicts occur when two branches modify the same line in the same file differen
 
         - Number of distributions ↑ / Accidents ↓
 
-- CI/CD pipeline flow![image](/assets/img/notion/TIL-Git-&-PR-+-CI-CD-특강/05-b54ee9d439.png)
+- CI/CD pipeline flow
+
+    ![image](/assets/img/notion/TIL-Git-&-PR-+-CI-CD-특강/05-b54ee9d439.png)
 
   | step | what to do |
   | --- | --- |
@@ -272,19 +279,21 @@ Conflicts occur when two branches modify the same line in the same file differen
 
     → If even one step fails, it stops immediately + notification / broken builds never advance to the next step
 
-<div class="notion-callout" markdown="1">
+    <div class="notion-callout" markdown="1">
 
-<div class="notion-callout-heading">
-<span class="notion-callout-icon">📍</span> <span class="notion-callout-title">CI/CD Glossary</span>
-</div>
+    <div class="notion-callout-heading">
+    <span class="notion-callout-icon">📍</span>
+    </div>
 
-| abbreviation | full name | meaning |
-| --- | --- | --- |
-| C.I. | Continuous **Integration** | Frequent code integration and automatic verification |
-| CD | Continuous **Delivery** | Stay deployable at any time (manual approval) |
-| CD | Continuous **Deployment** | If passed, automatically distributed to operation |
+    **CI/CD Terminology**
 
-</div>
+  | abbreviation | full name | meaning |
+  | --- | --- | --- |
+  | C.I. | Continuous **Integration** | Frequent code integration and automatic verification |
+  | CD | Continuous **Delivery** | Stay ready for deployment at any time (manual approval) |
+  | CD | Continuous **Deployment** | If passed, automatically distributed to operation |
+
+    </div>
 
 - Get started in 30 lines with Github Actions<br>
     ### `.github/workflows/ci.yml`
@@ -334,9 +343,7 @@ Conflicts occur when two branches modify the same line in the same file differen
     - What happens the moment it moves
         1. When you upload a PR, GitHub automatically executes the above sequence.
 
-        2. If even one step fails, mark x in PR
-
-        3. Merge button is automatically disabled (when Branch Protection is set)
+        2. If even one step fails, mark x in PR3. Merge button is automatically disabled (when Branch Protection is set)
 
         4. Merge is possible only if all checks pass.
 
@@ -373,7 +380,9 @@ Conflicts occur when two branches modify the same line in the same file differen
 
 ## Problems & Errors
 
-Q. Should I use Squash merge / Rebase merge / Merge commit?> There is no right answer. **The answer is to set a team convention and go consistently**
+Q. Should I use Squash merge / Rebase merge / Merge commit?
+
+> There is no right answer. **The answer is to set a team convention and go consistently**
 > - **Squash merge**: compresses PR into 1 commit / cleanest history (most used)
 >
 > - **Rebase merge**: Attach PR commits in a row to main / Enable track of commit units

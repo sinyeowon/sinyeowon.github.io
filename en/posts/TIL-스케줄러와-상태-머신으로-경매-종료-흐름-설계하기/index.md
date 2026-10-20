@@ -187,7 +187,7 @@ The important point here is the meaning of `FAIL`.`FAIL` should indicate a failu
 
 For example, if there are no bidders or the winning conditions are not met, it can be processed as `FAIL`.
 
-However, failure to check the highest price, failure to respond to the auction engine, network errors, etc. are closer to system processing failures rather than successful bid failures.
+However, failure to check the highest price, auction engine response failure, network error, etc. are not a successful bid failure but are closer to a system processing failure.
 
 Therefore, in this case, it is safer to maintain the `RESULT_PENDING` state without changing it to `FAIL`.
 
@@ -391,7 +391,7 @@ For example, I thought about a case where the primary scheduler operation takes 
 → 1차 작업이 아직 끝나지 않았는데 같은 경매를 다시 처리할 수 있음
 ```
 
-In this case, it was thought that closing processing for the same auction may overlap, or that successful bid confirmation and event issuance may overlap.
+In this case, it was thought that the closing process for the same auction may overlap, or the successful bid confirmation and event issuance may overlap.
 
 So, at first, we decided that `fixedDelay`, in which the next task is executed after the previous task is finished, was safer.However, when I later reconsidered the purpose of processing the end of the auction, a question arose.
 
@@ -430,7 +430,7 @@ However, this increases the likelihood that the scheduler work will become heavi
 
 Therefore, it was judged more appropriate to minimize the role of the scheduler at the MVP stage.
 
-The scheduler is not responsible for determining successful bidders or issuing events, and is only responsible for changing `ONGOING` auctions that have expired to `RESULT_PENDING`.
+The scheduler is not responsible for judging successful bidders or issuing events, and is only responsible for changing `ONGOING` auctions that have expired to `RESULT_PENDING`.
 
 ```plaintext
 스케줄러 역할:
@@ -446,7 +446,7 @@ And later, when the highest price and successful bid result is delivered from th
 
 If the roles are divided in this way, the scheduler task becomes relatively light because it is a simple DB state change.
 
-Therefore, it was judged that it was more important to check the auction target for termination every 60 seconds, and the decision was ultimately changed to use `fixedRate` rather than `fixedDelay`.
+Therefore, it was determined that it was more important to check the auction target for termination every 60 seconds, and the decision was ultimately changed to use `fixedRate` rather than `fixedDelay`.
 
 ```java
 @Scheduled(fixedRate = 60000)
@@ -702,7 +702,7 @@ Initially, `fixedDelay` was considered to avoid scheduler duplicate execution.
 
 If the previous scheduler task takes a long time, the next scheduler execution itself may be delayed, and newly completed auctions in the meantime may also be processed late.
 
-Therefore, rather than taking the scheduler's responsibility too seriously, at the MVP stage, the scheduler is only responsible for changing auctions whose end time has passed to the `RESULT_PENDING` state.
+Therefore, rather than taking the responsibility of the scheduler too seriously, in the MVP stage, the scheduler is only responsible for changing auctions whose end time has passed to the `RESULT_PENDING` state.
 
 Judging the successful bidder, confirming the successful bid, issuing events, sending notifications, etc. are not handled directly by the scheduler, but are processed in a separate flow after receiving the auction engine results.
 

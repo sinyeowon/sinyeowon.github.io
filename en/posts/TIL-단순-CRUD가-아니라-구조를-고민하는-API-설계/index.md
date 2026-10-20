@@ -1,7 +1,7 @@
 ---
 layout: "post"
 title: "[TIL] API design that considers structure rather than simple CRUD"
-date: 2026-05-15 09:00:00 +0900
+date: 2026-05-15 00:00:00 +0900
 last_modified_at: 2026-05-15 19:29:00 +0900
 categories: ["Spring 단기 심화", "숙련 프로젝트"]
 tags: ["project"]
@@ -90,7 +90,7 @@ In particular, I was most impressed by the reason for combining ordering and del
 
 One of the most confusing parts today was “Why not use FK?”
 
-In an MSA environment, in order to reduce DB dependency between services and maintain service independence, FK between tables of different services is not used, but UUID-based references and application logic verification methods are used.
+In the MSA environment, in order to reduce DB dependency between services and maintain service independence, FK between tables of different services is not used, but UUID-based references and application logic verification methods are used.
 
 For example, when creating an order:
 
@@ -105,7 +105,7 @@ For example, when creating an order:
 
 ```
 
-It was designed to operate in the same flow.
+It is designed to operate in the same flow.
 
 It was interesting that in practice, FK is not used unconditionally, but is used selectively, taking into account service independence, operating structure, and deployment environment.
 

@@ -2,7 +2,7 @@
 layout: "post"
 title: "[TIL] Redis Practical Master Class 2 - Distributed Locks and Async Processing"
 title_source: "manual"
-date: 2026-05-14 09:00:00 +0900
+date: 2026-05-14 00:00:00 +0900
 last_modified_at: 2026-06-09 01:32:00 +0900
 categories: ["Spring 단기 심화", "특강"]
 tags: ["Redis"]
@@ -44,7 +44,7 @@ In an MSA environment, multiple servers rush to read and modify inventory data i
 
             - If successful, 1 (lock acquired), if failed, 0 (lock acquired failed) is returned.
 
-> **Q Why `SET key value NX EX` format all at once? (Disaster Scenario)**
+> **Q Why** should I write it all at once in **`SET key value NX EX`** **format? (Disaster Scenario)**
 >![image](/assets/img/notion/TIL-Redis-실전-마스터-클래스-특강-2/02-49ecffa5dd.png)
 
     - In the past, a lock was set and an expiration time (TTL) was set separately to prevent the bathroom door from being permanently locked.
@@ -68,7 +68,7 @@ In an MSA environment, multiple servers rush to read and modify inventory data i
 
             - But the lock is already released in 1 second.
 
-            - At this time, server B comes in holding the lock and deducts the inventory.
+            - At this time, server B comes in holding the lock and deducts inventory.
 
             **→ Mutual Exclusion Collapse Disorder** Occurs
 
@@ -80,7 +80,7 @@ In an MSA environment, multiple servers rush to read and modify inventory data i
             - **Users will see a payment error window** for an entire minute
 
 > **Q If the TTL is 3 seconds, but the payment logic takes 5 seconds and the lock is released in the middle,
-> Even if you are lucky and no other server comes in, what kind of absurd thing will happen if the payment logic is completed and the lock is erased with `DEL lock:sneakers`**
+> Even if you are lucky and no other servers come in, what kind of absurd thing will happen if the payment logic is completed and the lock is erased with `DEL lock:sneakers`**
 > - Delete the newly acquired lock by another server, not your own lock.
 >
 > → After 3 seconds, my lock was already naturally destroyed, and after 4 seconds, server B acquired a new lock, and when I finished after 5 seconds, I erased server B's lock.
@@ -215,7 +215,7 @@ In an MSA environment, multiple servers rush to read and modify inventory data i
 
         - **③ Decision to introduce Redis**: This could have been solved with a MySQL DB lock, but locking the DB in a situation where thousands of inventory movements occur could cause the entire logistics system to stop due to connection pool depletion and deadlock, so we chose the lightweight Redis distributed lock.
 
-        - **④ Specific implementation method**: Distributed lock based on `SETNX` was applied and processed in units of ‘transfer request number’.
+        - **④ Specific implementation method**: Distributed lock based on `SETNX` was applied and processed in units of 'transfer request number'.
 
         - **⑤ Result after introduction**: Achieved 0 concurrency issues.
 
@@ -228,24 +228,24 @@ In an MSA environment, multiple servers rush to read and modify inventory data i
 
         - **③ Decision to introduce Redis**: Due to the nature of financial data, excessive withdrawal is fatal. DB lock alone was not enough to completely and quickly process distributed transactions in a multi-server environment.
 
-        - **④ Specific implementation method**: Using Redisson, concurrency was primarily controlled by placing a distributed lock on the basis of **'account number', and then secondary verification of whether transactions were possible through locking at the MySQL DB level was performed.- **⑤ Result after introduction**: Completely blocks balance discrepancies and negative bank accounts due to concurrency errors.
+        - **④ Specific implementation method**: Using Redisson, concurrency was primarily controlled by **distributing locks in units of ‘account number’**, and then secondary verification of whether transactions were possible through locking at the MySQL DB level was performed.- **⑤ Result after introduction**: Completely blocks balance discrepancies and negative bank accounts due to concurrency errors.
 
 - **Convert to asynchronous mode without data loss: Olive Young first-come, first-served coupon**
     - [Case 3] Olive Young: Issuance of coupons on a first-come, first-served basis (reverse idea of Pub/Sub)
-        - **① Business background**: During the All Young Sale period, coupons will be issued to the first 10,000 people on a first-come-first-served basis at 12 o'clock every night.
+        - **① Business background**: During the All Young Sale period, coupons will be issued to the first 10,000 people on a first-come, first-served basis at 12 o'clock every night.
 
         - **② Technical problem**: Hundreds of thousands of issuance requests were received at 12 o'clock sharp, occupying 100% of the main DB's connection pool, and a failure occurred that paralyzed the entire Olive Young site.
 
         - **③ Decision to introduce Redis**: We adopted the familiar Redis instead of the heavy Kafka and converted the synchronous method to an asynchronous method.
 
-        - **④ Specific implementation method (★Contradiction resolution point)**: Ask questions here! “Didn’t you say earlier that Pub/Sub should not be used for important logic because there is a risk of loss?” you're right! So, to prevent data loss, Olive Young safely loaded the issuance request data into the Redis List as **`RPUSH`**. And **Pub/Sub was only used as a light 'trigger' to tell asynchronous workers to "start processing!"** When the Worker receives the notification, it pulls out the data as `LPOP` from the List and records it in the Main DB.
+        - **④ Specific implementation method (★Contradiction resolution point)**: Ask questions here! “Didn’t you say earlier that Pub/Sub should not be used for important logic because there is a risk of loss?” you're right! So, Olive Young safely loaded the issuance request data into the Redis List as **`RPUSH`**** to prevent data loss. And **Pub/Sub was only used as a light 'trigger' to tell asynchronous workers to "start processing!"** When the Worker receives the notification, it pulls out the data as `LPOP` from the List and records it in the Main DB.
 
         - **⑤ Result after introduction**: The overall site processing speed improved by 2.2 times by isolating the main DB load.
 
 #### Pitfalls and alternatives to distributed locks
 
 > **Q The user pressed the button to reserve tickets for a popular concert, but it failed because it was already locked. At this time, should 1) keep loading in circles and retry, or 2) should an error be immediately displayed saying, “The seat has already been selected”**
-> - Since it is a concert ticket, it is correct to immediately display an error window and let you choose a different seat.
+> - Since this is a concert ticket, it is correct to immediately pop up an error window and let you choose a different seat.
 >
 > → Unconditional retry (Spin/Retry) is not the answer. The strategy must be completely different depending on the nature of the business.
 
@@ -255,22 +255,22 @@ In an MSA environment, multiple servers rush to read and modify inventory data i
     - For slightly more complex logic, if you throw the entire **Lua script**, which is supported starting from Redis 2.6, on the server, it will be executed atomically in a single-threaded environment, allowing perfect control without locking.
 
 2. **"The Redlock Algorithm Controversy" (Beyond the Limits of a Single Node)**<br>
-> **Q I set a lock on a single Redis Master node, but what happens if the Master dies right before the lock information is synchronized to the Slave?**
+> **Q I placed a lock on a single Redis Master node, but what happens if the Master dies right before the lock information is synchronized to the Slave?**
 > → Since there is no lock on the newly promoted Slave, a situation occurs where another client acquires the lock again.
 
     - To prevent this, the founder of Redis proposed an algorithm called **Redlock**.
         - A method that requests a lock from an odd number of independent Redis nodes of 5 or more and recognizes it only when a majority (3) or more is obtained.
 
-        - 🚨 **Academic Controversy**: For your information, Redlock has also been the subject of active debate in academic circles. Martin Kleppmann, a distributed systems researcher, criticized Redlock's strong dependence on system clock synchronization in an article titled 'How to do distributed locking' in 2016, and Salvatore Sanfilippo, the founder of Redis, immediately refuted this.
+        - 🚨 **Academic Controversy**: Please note that Redlock has also been the subject of active debate in academic circles. Martin Kleppmann, a distributed systems researcher, criticized Redlock's strong dependence on system clock synchronization in an article titled 'How to do distributed locking' in 2016, and Salvatore Sanfilippo, the founder of Redis, immediately refuted this.
 
-        - 💡 **Conclusion**: In areas where strict distributed consensus is required, such as financial transactions that must never be lost, database transactions or specialized consensus algorithms such as Zookeeper may be more secure than Redlock.
+        - 💡 **Conclusion**: In financial transactions that must never be lost or in areas that require strict distributed consensus, database transactions or specialized consensus algorithms such as Zookeeper may be more secure than Redlock.
 
 3. **‘Handling strategy when lock acquisition fails’ (harmony between business and UX)**
-    1. **Fail-Fast**: This method has the lowest system load as there is no waiting like in concert reservations.
+    1. **Fail-Fast**: This is the method with the lowest system load as there is no waiting like a concert ticket reservation.
 
     2. **Spin/Blocking Wait**: Used when it must be processed sequentially even if there is a delay, such as a bank transfer. (Maximum waiting time setting required!)
 
-    3. **Queuing**: Like taking orders during heavy rain in a delivery app, all requests are received, pushed into the queue, and processed sequentially asynchronously.<hr>
+    3. **Queuing**: Like taking orders during heavy rain in a delivery app, all requests are received and pushed into a queue and processed sequentially asynchronously.<hr>
 
 ## Questions & Errors
 
@@ -285,7 +285,7 @@ It is a “no one should access it until I finish the work” method. It locks t
 It is used in situations where consistency is most important, such as financial transactions.
 
 - **DB Optimistic Lock**
-The method is “Let’s edit together first and check for conflicts at the end.” Check for conflicts using the `version` column, and if there are few conflicts, the performance is good.
+It is the “let’s edit together first and check for conflicts at the end” approach. Check for conflicts using the `version` column, and if there are few conflicts, the performance is good.
 Used in cases where simultaneous modification is unlikely, such as modifying member information.
 
 - **Redis basic distributed locking**
@@ -325,7 +325,7 @@ Just as when someone sends a message to a group chat room, the people in the roo
 
 When the request holding the lock finishes its work and releases the lock, Redis notifies the waiting request that “the lock has been released.”
 
-In other words, Redis Pub/Sub is not a method that asks continuously, but a method that notifies you when it is resolved.
+In other words, Redis Pub/Sub is not a method of continuously asking, but a method of notifying you when it is resolved.
 
 </div>
 
@@ -399,7 +399,7 @@ For example:
 
 In this situation, because the new Master has no lock information, another client can acquire the same lock again.
 
-In other words, the lock was originally supposed to be held by only one person, but due to server failure, a problem arose where two people could act as if they had the lock at the same time.
+In other words, the lock was originally supposed to be held by only one person, but due to a server failure, a problem arose where two people could act as if they had the lock at the same time.
 
 To solve this problem, the founder of Redis proposed the Redlock algorithm.
 

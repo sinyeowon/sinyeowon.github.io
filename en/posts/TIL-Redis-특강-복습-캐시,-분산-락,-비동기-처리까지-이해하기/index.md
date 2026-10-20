@@ -1,7 +1,7 @@
 ---
 layout: "post"
 title: "[TIL] Review of Redis special lecture: Understanding cache, distributed locking, and asynchronous processing"
-date: 2026-06-05 09:00:00 +0900
+date: 2026-06-05 00:00:00 +0900
 last_modified_at: 2026-06-05 15:58:00 +0900
 categories: ["Spring 단기 심화", "심화 주차"]
 tags: ["Redis"]
@@ -76,9 +76,9 @@ Worker is a background worker that takes out tasks accumulated in a queue or mes
 
 ## Connection pool exhaustion
 
-Connection pool depletion refers to a state in which all connections made in advance by an application to connect to the DB are being used.
+Connection pool depletion refers to a state in which all connections created in advance by an application to connect to the DB are being used.
 
-A request borrows a connection from the connection pool to perform a DB operation, and returns it when the operation is completed. However, if a query takes a long time, a transaction remains long, or a lock wait occurs, connection release is delayed.
+A request borrows a connection from the connection pool to perform a DB operation, and returns it when the operation is complete. However, if a query takes a long time, a transaction remains long, or a lock wait occurs, connection release is delayed.
 
 As a result, new requests may wait or timeouts may occur because they cannot obtain a connection to use.
 
@@ -162,7 +162,7 @@ To improve this, you can switch to an asynchronous method.
 
 Redis is suitable for first-come-first-served quantity restrictions through fast atomic operations. For example, using Redis' DECR command, you can quickly reduce the quantity of coupons and create a structure that only allows up to 100 people to pass.
 
-Kafka has the advantage of stably storing large amounts of issuance request events, processing them in order for consumers, and reprocessing them in the event of a failure.
+Kafka has the advantage of reliably storing large amounts of issuance request events, processing them in order for consumers, and reprocessing them in the event of a failure.
 
 → Therefore, Redis and Kafka can be used together for first-come-first-served coupon issuance.
 
@@ -237,7 +237,7 @@ However, Redlock is not a perfect solution either. In distributed systems, netwo
 
 Redis is not simply a tool used as a cache, but is an in-memory storage that can implement distributed locks, first-come-first-served event processing, and even queue-like structures using various data structures and atomic operations.
 
-However, Redis does not solve all problems. Since Redis Pub/Sub does not store messages, there is a risk of loss when used to transmit important data, and Redis-based distributed locks also have limitations in situations of master failure or replication delay.
+However, Redis does not solve all problems. Since Redis Pub/Sub does not store messages, there is a risk of loss if used to transmit important data, and Redis-based distributed locks also have limitations in situations of master failure or replication delay.
 
 Although Kafka is heavier than Redis, it can reliably store and reprocess messages, making it suitable for event-based asynchronous processing. On the other hand, Redis is suitable for situations that require fast atomic operations and lightweight structures.
 

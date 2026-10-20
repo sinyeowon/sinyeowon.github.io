@@ -1,7 +1,7 @@
 ---
 layout: "post"
 title: "Understand caching and API performance optimization"
-date: 2026-06-06 09:00:00 +0900
+date: 2026-06-06 00:00:00 +0900
 last_modified_at: 2026-06-09 14:50:00 +0900
 categories: ["Spring 단기 심화", "심화 주차"]
 tags: ["TIL", "Cache"]
@@ -21,7 +21,7 @@ notion_lang: "en"
 
     <hr>
 
-In web services, the basic method is to always access the database whenever a user requests it. However, if all requests reach the DB every time, the larger the number of requests, the greater the burden on the DB. In particular, it is more efficient to temporarily store and reuse data that is repeatedly viewed by multiple users, such as notices, popular product lists, main page banners, and frequently viewed posts, in faster storage than to retrieve it from the DB each time.
+In web services, the basic method is to always access the database whenever a user requests it. However, if all requests reach the DB every time, the larger the number of requests, the greater the burden on the DB. In particular, it is more efficient to temporarily store and reuse data that is repeatedly viewed by multiple users, such as announcements, popular product lists, main page banners, and frequently viewed posts, in faster storage than to retrieve it from the DB each time.
 
 The method used at this time is **caching**. Caching is a strategy that stores frequently used data in a space where it can be accessed more quickly, and retrieves data from the cache rather than the DB of the original storage from the next request.
 
@@ -147,7 +147,7 @@ Conversely, you should be careful about caching the following data:
 
 </div>
 
-I felt that it was important that caching should not be applied unconditionally to all APIs, but that application should be judged based on reading frequency and change frequency.
+I felt that it was important that caching should not be applied unconditionally to all APIs, but that caching should be judged based on the reading frequency and change frequency.
 
 <hr>
 

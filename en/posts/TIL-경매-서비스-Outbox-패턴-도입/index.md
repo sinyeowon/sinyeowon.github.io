@@ -17,13 +17,13 @@ notion_lang: "en"
 ---
 ## The Big Picture — What We Create
 
-This is a service that sells agricultural and marine products through real-time auctions. A seller posts ‘5kg of Wando abalone’, people compete to bid in real time at a set time, and the person who bids the highest price wins the bid and pays.
+This is a service that sells agricultural and marine products through real-time auctions. A seller posts ‘5 kg of Wando abalone’, people compete to bid in real time at a set time, and the person who bids the highest price wins the bid and pays.
 
 ## MSA — Why split the service into multiple services?
 
 It can be made into one huge program, but it is divided into several small services for each function.
 
-Because — if one part breaks down in one piece, everything stops, and to prevent 6 people from touching the same code and crashing, the service is divided so that each person is in charge of his own service and can develop/deploy it separately.
+Because — if one part breaks down in one piece, everything stops, and to prevent 6 people from touching the same code and crashing, the service is divided so that each person is in charge of his or her own service and can develop/deploy it separately.
 
 The downside to implementing it this way is that the services cannot see data directly between services. The auction service cannot directly look into the payment service's DB. So we need a way to ‘talk’ to each other, and that is the next concept.
 
@@ -55,7 +55,7 @@ The status of each auction changes one after another. This is called a state mac
 
 - **FAIL**: No one bids (failed) or the successful bidder does not pay.
 
-The core job of the auction service is to automatically transfer these states in a timely manner. ‘It’s time to start, so READY → PROGRESS’, ‘It’s time to end, let’s get it all sorted out.’ The program does this automatically, not people.
+The core job of the auction service is to automatically transfer these states in a timely manner. ‘It’s time to start, so READY → PROGRESS’ and ‘It’s time to end, let’s get it all sorted out.’ The program does this automatically, not people.
 
 ## Scheduler — Alarm clock that automatically works on time
 
@@ -65,7 +65,7 @@ The auction has a set time, such as ‘starts at 2 p.m., closes at 3 p.m.’ But
 
 ### Problem 1 — If there are multiple servers, alarms sound repeatedly. (→ ShedLock)
 
-If the number of customers increases, the number of auction servers is increased to 2-3. But then there will be 2 to 3 alarm clocks (schedulers). When the auction closes at 3 o'clock, three auctions wake up to 'close' at the same time, causing an accident to close one auction three times. So, ShedLock is a device that prevents only the one person who catches the flag first, saying, ‘I will finish this deadline.’ (distributed lock)
+When the number of customers increases, the number of auction servers is increased to 2-3. But then there will be 2 to 3 alarm clocks (schedulers). When the auction closes at 3 o'clock, three auctions wake up to 'close' at the same time, causing an accident to close one auction three times. So, ShedLock is a device that prevents only the one person who catches the flag first, saying, ‘I will finish this deadline.’ (distributed lock)
 
 ### Problem 2 — Deadline keeps changing (→ Anti-Sniping)
 
@@ -73,6 +73,6 @@ If someone makes a sneaky bid and walks away right before the auction ends, it's
 
 ### Problem 3 — What if I change the status but the bulletin board post doesn’t go up? (→ Outbox)
 
-I need to change the status to WON in the DB and post a message on the Kafka bulletin board saying, ‘I won the bid.’ — What if the DB is successful, but there is a problem while uploading the bulletin board? There are accidents where the auction is successful, but the ordering service is unaware of it. So, Outbox is a method in which status changes and ‘posts to be posted’ are stored together in the DB as a bundle, and a separate employee (Relay) takes out the posts and posts them on the bulletin board. It guarantees that ‘either both will happen, or neither will happen’.## The whole thing in one sentence
+I have to change the status to WON in the DB and post a message on the Kafka bulletin board saying, ‘I won the bid.’ — What if the DB is successful, but there is a problem while uploading the bulletin board? There are accidents where the auction is successful, but the ordering service is unaware of it. So, Outbox is a method in which status changes and ‘posts to be posted’ are stored together in the DB as a bundle, and a separate employee (Relay) takes out the posts and posts them on the bulletin board. It guarantees that ‘either both will happen, or neither will happen’.## The whole thing in one sentence
 
 The auction service — creates an auction room (CRUD), automatically opens and closes the auction at the right time (scheduler), determines the winning bidder (state machine), and safely posts ‘I won the bid’ on the bulletin board (Kafka + Outbox). In the process, it handles difficult situations such as multiple server crashes (ShedLock) and last-minute bidding extensions (Anti-Sniping).

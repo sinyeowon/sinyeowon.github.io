@@ -2,7 +2,7 @@
 layout: "post"
 title: "[TIL] Checking the service flow through surveys and API discussion"
 title_source: "manual"
-date: 2026-05-13 09:00:00 +0900
+date: 2026-05-13 00:00:00 +0900
 last_modified_at: 2026-06-09 01:43:00 +0900
 categories: ["GDGoC KNU", "0 to Product"]
 tags: ["project"]
@@ -19,7 +19,7 @@ notion_lang: "en"
 ## What I did today
 
 - Create and distribute pre-survey Google form
-    - We reflected the feedback that it would be good to conduct a preliminary survey to check whether the actual targeted users are willing to use this service and whether they have any objection to disclosing their spending habits to others.
+    - We reflected the feedback that it would be good to conduct a preliminary survey to check whether the actual users we are targeting are willing to use this service and whether they have any objection to disclosing their spending habits to others.
 
 - Draft API specification
 
@@ -69,7 +69,7 @@ notion_lang: "en"
 
 - We also talk about the structure of creating a personal page to accumulate and display daily consumption details.
 
-## Lessons learned- During the discussion, I felt that ERD and API should not be viewed only from a simple data structure perspective, but that we should also look at the flow in which actual users use the service.
+## Lessons learned- During the discussion, I felt that ERD and API should not be viewed only from a simple data structure perspective, but should also be viewed in conjunction with the flow in which actual users use the service.
     - In particular, it was impressive that one policy, such as who can see AI results, affects everything from API, DB structure, and screen design.
 
 - Initially, it was designed with a focus on functionality, but now it seems that we are increasingly thinking with a focus on user experience.

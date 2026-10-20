@@ -1,6 +1,6 @@
 ---
 title: "[TIL] Spring AI 활용 - RAG 구현 특강"
-date: 2026-06-10 09:00:00 +0900
+date: 2026-06-10 00:00:00 +0900
 last_modified_at: 2026-06-11 00:56:00 +0900
 categories: ["Spring 단기 심화", "특강"]
 tags: ["Spring AI", "RAG"]

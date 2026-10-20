@@ -1,7 +1,7 @@
 ---
 layout: "post"
 title: "[TIL] DB separation and collaboration structure concerns faced when starting the MSA project"
-date: 2026-05-18 09:00:00 +0900
+date: 2026-05-18 00:00:00 +0900
 last_modified_at: 2026-05-21 01:22:00 +0900
 categories: ["Spring 단기 심화", "숙련 프로젝트"]
 tags: ["project", "MSA"]
@@ -77,7 +77,7 @@ Even if you divide the schema, you can directly query or join tables in other sc
 
 - In this way, the ordering service directly knows the table structure of the user service.
 
-- If the column or structure of the user table changes, the order service may be affected, ultimately increasing the degree of coupling between services.
+- If the columns or structure of the user table are changed, the order service may be affected, ultimately increasing the degree of coupling between services.
 
 → On the other hand, if you divide it into logical DBs, you can make each service access only its own DB.
 
@@ -91,13 +91,13 @@ Order Service → order_db만 접근
 Slack Service → slack_db만 접근
 ```
 
-- If you do this, it becomes difficult to directly join tables from other services, and each service becomes responsible only for its own data.
+- This makes it difficult to directly join tables from other services, and each service becomes responsible only for its own data.
 
 </div>
 
 ### UUID is only an identifier and does not separate the DB structure.
 
-At first, there was a question, “Isn’t it okay to refer to it by UUID even if it is in the same DB or schema?”
+At first, there was a question: “Isn’t it okay to refer to it by UUID even if it is in the same DB or schema?”
 
 - Functionally it is possible.
 
@@ -112,13 +112,13 @@ UUID = 데이터를 식별하는 방법
 논리 DB = 서비스별 데이터 공간을 분리하는 방법
 ```
 
-- Even in the schema separation method, it is possible to set rules such as “No direct JOIN to other schemas” and “Search for other service data through API.”
+- Even in the schema separation method, it is possible to set rules such as “Prohibit direct JOIN to other schemas” and “Search other service data through API.”
 
 - But in the end, this is a method that relies on promises.
 
 </div>
 
-### Tables within the same service can be referenced
+### Internal tables within the same service can be referenced.
 
 Logical DB separation is intended to prevent direct references to DBs of other services, but does not prevent references between tables within the same service.
 
@@ -166,7 +166,7 @@ Therefore, we decided that using the Gradle multi-module structure was a natural
 
 ### 1. I kept getting confused about schema separation and logical DB separation.
 
-At first, I thought it would be enough to split the schema and refer to it only by UUID. However, because schema separation only divides sections within the same DB, the problem was that it was possible to directly join tables from different schemas.
+At first, I thought it would be enough to split the schema and refer to it only by UUID. However, because schema separation only divides sections within the same DB, the problem was that tables in different schemas could be directly joined.
 
 In the end, the key was not “whether UUID should be used,” but “how much DB access between services can be structurally separated?” Because logical DB separation allows each service to access only its own DB, data ownership of the MSA can be expressed more clearly.
 
@@ -204,4 +204,4 @@ In particular, the biggest benefit was understanding the difference between sche
 
 I also experienced the process of setting up an initial collaboration environment in a team project by creating a GitHub repo, setting up a dev branch, creating a folder structure, setting up a PR/Issue template, and GitHub Ruleset.
 
-What I felt today is that the initial setup is not simply “creating a folder,” but is an important task that determines how team members will develop and collaborate in the future. If you set good standards in the beginning, you will be able to reduce conflicts and confusion during the later development process.
+What I felt today is that the initial setup is not simply “creating a folder,” but is an important task that determines how team members will develop and collaborate in the future. If you set good standards early on, you will be able to reduce conflicts and confusion during the development process.

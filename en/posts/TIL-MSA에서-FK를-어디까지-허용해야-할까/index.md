@@ -1,7 +1,7 @@
 ---
 layout: "post"
 title: "[TIL] How far should FK be allowed in MSA?"
-date: 2026-05-14 09:00:00 +0900
+date: 2026-05-14 00:00:00 +0900
 last_modified_at: 2026-05-15 19:18:00 +0900
 categories: ["Spring 단기 심화", "숙련 프로젝트"]
 tags: ["project"]
@@ -155,6 +155,6 @@ I understand it as a way to separate roles.
 
 Today was not a simple CRUD design day, but a day where I kept thinking about “how far to divide the service.”
 
-In particular, it was impressive that in MSA, rather than simply connecting ERDs, we had to consider how to own and reference data based on service boundaries.
+In particular, it was impressive that in MSA, rather than simply connecting ERDs, you had to think about how to own and reference data based on service boundaries.
 
 For the first time, I felt that drawing an ERD line was strongly connected to service responsibility.

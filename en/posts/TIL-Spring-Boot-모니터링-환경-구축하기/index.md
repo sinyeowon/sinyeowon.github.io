@@ -21,7 +21,7 @@ As important as developing an application is operating it stably after deploymen
 
 A monitoring environment is needed to check whether the service operates normally, whether memory or CPU usage is excessive, and whether a failure can be quickly recognized.
 
-In this lesson, we practiced the process of using Actuator to check the status of a Spring Boot application, collecting metrics with Prometheus, and visualizing them with Grafana.
+In this lesson, we practiced using Actuator to check the status of a Spring Boot application, collecting metrics with Prometheus, and visualizing them with Grafana.
 
 In addition, we learned the flow of receiving application failure status through Slack notifications and checking application logs in Grafana using Loki.
 
@@ -119,9 +119,9 @@ Prometheus is an open source tool for system monitoring and alerting.
 Metric data provided by applications or servers is periodically collected and stored.
 
 <div class="notion-indent" markdown="1">> Metric data
-> : Data recording the system status in numbers
+> : System status recorded in numbers
 >
-> ex)
+>ex)
 >
 > | **Metrics** | **Meaning** |
 > | --- | --- |
@@ -134,7 +134,7 @@ Metric data provided by applications or servers is periodically collected and st
 
 Prometheus operates by pulling data directly.
 
-In other words, when the Spring Boot application provides metrics, Prometheus accesses the address at regular intervals and collects data.
+In other words, when a Spring Boot application provides metrics, Prometheus accesses the address at regular intervals and collects data.
 
 ### Why Prometheus?
 
@@ -248,7 +248,7 @@ While Prometheus collects and stores metric data, Grafana displays the data in g
 
 You can run queries and view metrics in Prometheus, but the dashboard form is much more convenient for continuously observing the operating system.
 
-Using Grafana, you can check CPU usage, memory usage, number of requests, number of errors, etc. in graphs and charts, and can also send notifications when certain conditions occur.
+Using Grafana, you can check CPU usage, memory usage, number of requests, number of errors, etc. in graphs and charts, and can also send notifications when specific conditions occur.
 
 In other words, Grafana “makes monitoring data easier to view.”
 
@@ -418,7 +418,7 @@ Pending period: 1m
 
 This setting means that Grafana evaluates the condition every minute, and changes to the Firing state if the condition holds for one minute.
 
-In other words, a Slack notification does not come immediately as soon as the application is stopped, but a notification occurs only when the condition is maintained for a certain period of time.
+In other words, the Slack notification does not come immediately as soon as the application is stopped, but the notification occurs only when the condition is maintained for a certain period of time.
 
 ### Alert state change
 
@@ -642,7 +642,7 @@ Additionally, you must save the Alert rule after creating it, and check whether 
 
 ### `up{job="spring-boot"}`** **What the values mean
 
-At first, I was confused about what exactly the `up` metric meant.If the `up{job="spring-boot"}` value is 1, it means that Prometheus is normally collecting the metrics of the Spring Boot application, and if it is 0, it means that the collection failed.
+At first, I was confused about what exactly the `up` metric meant.If the `up{job="spring-boot"}` value is 1, it means that Prometheus is normally collecting the metrics of the Spring Boot application. If it is 0, it means that the collection failed.
 
 Therefore, when the application is stopped, the failure situation can be detected by using the `up < 1` condition.
 
@@ -654,12 +654,12 @@ Through this exercise, I learned that monitoring is not simply “checking wheth
 
 In particular, the roles of Actuator, Prometheus, and Grafana felt similar at first, but as the practice progressed, I was able to understand that each had different responsibilities.
 
-Actuator exposes the state and metrics of the Spring Boot application to the outside, and Prometheus periodically collects and stores the metrics. Grafana visualizes Prometheus data to make it easier for people to view, and the Alert function can notify failure situations through Slack. Loki collects application logs to help analyze the cause when a failure occurs.
+Actuator exposes the state and metrics of the Spring Boot application to the outside, and Prometheus periodically collects and stores the metrics. Grafana visualizes Prometheus data to make it easier for people to view, and through the Alert function, failure situations can be notified to Slack. Loki collects application logs to help analyze the cause when a failure occurs.
 
 The most impressive part of this lab was Slack Alert.
 
-I felt connected to the actual operating environment by being able to receive notifications through Slack when the application stopped even if I wasn't looking at the dashboard directly. I learned that it's not enough to simply write code, but also to consider how to recognize and respond when a service dies.
+I felt connected to the actual operating environment by being able to receive notifications through Slack when the application stopped even if I wasn't looking at the dashboard directly. I learned that it's not enough to simply write code, but to also consider how to recognize and respond when a service dies.
 
-Additionally, depending on the Grafana version, the UI was different, so there were situations that were different from what was expected, such as not seeing the same button as in the lecture, or not receiving a notification right away after setting up the alert. During this process, I felt that I had to solve problems by understanding the current settings and how the tools work, rather than simply following the lecture screens.
+Additionally, depending on the Grafana version, the UI was different, so there were situations that were different from what was expected, such as not seeing the same button as in the lecture, or not receiving a notification immediately after setting the alert. During this process, I felt that I had to solve problems by understanding the current settings and how the tools work, rather than simply following the lecture screens.
 
-In conclusion, through this study, I was able to experience looking at Spring Boot applications from an operational perspective. When working on future projects, I felt that I needed to become a back-end developer who not only implemented functions but also considered status checks, error detection, and log analysis.
+In conclusion, through this study, I was able to experience looking at Spring Boot applications from an operational perspective. When working on future projects, I felt that I should become a back-end developer who not only implements functions but also considers status checking, error detection, and log analysis.
