@@ -96,7 +96,7 @@ class Solution {
 
     - Array declaration
 
-```java
+        ```java
         int[] arr;
         ```
 
@@ -171,7 +171,9 @@ class Solution {
                 `int[]` is a basic data type array.
                 `Integer[]` is a reference type array.
 
-                <div class="notion-indent" markdown="1">- `Integer` is a wrapper class to handle `int` as an object.
+                <div class="notion-indent" markdown="1">
+
+                - `Integer` is a wrapper class to handle `int` as an object.
 
                 - `Integer[]` is an array that stores references to `Integer` objects
 
@@ -292,7 +294,9 @@ class Solution {
 
     `map.put(num, map.getOrDerfault(num, 0) + 1);` → `getOrDefault(num, 0)` retrieves the number of existing appearances if the number is already stored, and returns 0 if not.
 
-### I hate even numbers<a class="notion-mention" href="https://school.programmers.co.kr/learn/courses/30/lessons/120813">https://school.programmers.co.kr/learn/courses/30/lessons/120813</a>
+### I hate even numbers
+
+<a class="notion-mention" href="https://school.programmers.co.kr/learn/courses/30/lessons/120813">https://school.programmers.co.kr/learn/courses/30/lessons/120813</a>
 
 #### Solution
 
@@ -344,7 +348,9 @@ An array must be returned in the answer, but since I did not know how many value
     </div>
 
     - Declare as ArrayList<br>
-    `ArrayList<Integer> array = new ArrayList<>();`→ Variable type: `ArrayList`, actual created object: `ArrayList`
+    `ArrayList<Integer> array = new ArrayList<>();`
+
+    → Variable type: `ArrayList`, actual created object: `ArrayList`
 
     - Declare as List<br>
     `List<Integer> array = new ArrayList<>();`
@@ -384,7 +390,9 @@ An array must be returned in the answer, but since I did not know how many value
 - String comparison<br>
     When comparing the contents of strings, `equals()` must be used.
 
-    The reason why `==` cannot be used → Because the addresses are compared to see if the two variables refer to the same object.- Strings are immutable objects<br>
+    The reason why `==` cannot be used → Because the addresses are compared to see if the two variables refer to the same object.
+
+- Strings are immutable objects<br>
     Once Java's `String` is created, the contents of the object cannot be changed.
 
     ```java
@@ -400,10 +408,10 @@ An array must be returned in the answer, but since I did not know how many value
     <div class="notion-indent" markdown="1">
 
     ```java
-        str = str.replace("H", "J");
+    str = str.replace("H", "J");
 
-        System.out.println(str); // Jello
-        ```
+    System.out.println(str); // Jello
+    ```
 
     </div>
 

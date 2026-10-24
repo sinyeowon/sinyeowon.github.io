@@ -1,5 +1,6 @@
 import { mkdir, readFile, readdir, writeFile } from 'node:fs/promises';
 import path from 'node:path';
+import { translateMarkdownLayout } from './translate-markdown.mjs';
 
 const ROOT = process.cwd();
 const POSTS_DIR = path.join(ROOT, '_posts');
@@ -246,29 +247,7 @@ async function requestTranslation(value, targetLanguage) {
 }
 
 async function translateMarkdown(markdown) {
-  const protectedSegments = [];
-  const protectedMarkdown = markdown.replace(
-    /```[\s\S]*?```|`[^`\n]+`|!\[[^\]]*]\([^)]*\)|\[[^\]]+]\([^)]*\)/g,
-    (match) => {
-      const token = `ZXCVBSTATICSEGMENT${protectedSegments.length}TOKEN`;
-      protectedSegments.push({ token, value: match });
-      return token;
-    }
-  );
-
-  const chunks = splitTranslationChunks(protectedMarkdown);
-  const translatedChunks = [];
-
-  for (const chunk of chunks) {
-    translatedChunks.push(await translateText(chunk));
-  }
-
-  let translated = translatedChunks.join('');
-  for (const segment of protectedSegments) {
-    translated = translated.replaceAll(segment.token, segment.value);
-  }
-
-  return translated;
+  return translateMarkdownLayout(markdown, translateText);
 }
 
 function normalizeMarkdown(markdown) {
@@ -339,31 +318,6 @@ function isMarkdownTable(lines) {
     lines.every((line) => /^\|.*\|$/.test(line)) &&
     lines.some((line) => /^\|\s*:?-{3,}:?\s*(\|\s*:?-{3,}:?\s*)+\|$/.test(line))
   );
-}
-
-function splitTranslationChunks(text, maxLength = TRANSLATE_CHUNK_SIZE) {
-  const paragraphs = text.split(/(\n{2,})/);
-  const chunks = [];
-  let current = '';
-
-  for (const paragraph of paragraphs) {
-    if (current.length + paragraph.length > maxLength && current) {
-      chunks.push(current);
-      current = '';
-    }
-
-    if (paragraph.length > maxLength) {
-      chunks.push(...splitLongText(paragraph, maxLength));
-    } else {
-      current += paragraph;
-    }
-  }
-
-  if (current) {
-    chunks.push(current);
-  }
-
-  return chunks;
 }
 
 function splitLongText(text, maxLength = TRANSLATE_CHUNK_SIZE) {

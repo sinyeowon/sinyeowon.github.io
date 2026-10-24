@@ -1,6 +1,7 @@
 import { mkdir, readFile, readdir, rm, writeFile } from 'node:fs/promises';
 import { createHash } from 'node:crypto';
 import path from 'node:path';
+import { translateMarkdownInline, translateMarkdownLayout } from './translate-markdown.mjs';
 
 const NOTION_VERSION = process.env.NOTION_VERSION || '2022-06-28';
 const ROOT = process.cwd();
@@ -809,7 +810,7 @@ async function renderBlock(block, context, depth = 0, listNumber = 1) {
       const summaryText = markdownInline(value.rich_text, context) || '상세 내용';
       const summary = summaryText.replace(/\*\*([^*]+)\*\*/g, '<strong>$1</strong>');
       const children = block.has_children
-        ? await renderBlocks(await getBlockChildren(block.id), context, depth)
+        ? await renderBlocks(await getBlockChildren(block.id), context, 0)
         : '';
       const details = `<details markdown="1">\n<summary>${summary}</summary>\n\n${children}\n\n</details>`;
       return depth > 0 ? indentMarkdown(details, depth) : details;
@@ -838,14 +839,15 @@ async function renderBlock(block, context, depth = 0, listNumber = 1) {
   if (block.has_children && type !== 'toggle' && type !== 'table') {
     const wrapNestedChildren = shouldWrapNestedChildren(type);
     const childDepth =
-      wrapNestedChildren ||
-      layoutBlockTypes.has(type) ||
-      type === 'quote' ||
-      type === 'callout'
-        ? depth
-        : listBlockTypes.has(type)
-          ? depth + 2
-          : depth + 1;
+      wrapNestedChildren
+        ? 0
+        : layoutBlockTypes.has(type) ||
+            type === 'quote' ||
+            type === 'callout'
+          ? depth
+          : listBlockTypes.has(type)
+            ? depth + 2
+            : depth + 1;
     const children = await renderBlocks(
       await getBlockChildren(block.id),
       context,
@@ -1746,73 +1748,7 @@ function wait(milliseconds) {
 }
 
 async function translateMarkdown(markdown) {
-  const protectedSegments = [];
-  const tableProtectedMarkdown = await protectMarkdownTables(
-    markdown,
-    protectedSegments
-  );
-  const protectedMarkdown = tableProtectedMarkdown.replace(
-    /```[\s\S]*?```|`[^`\n]+`|!\[[^\]]*]\([^)]*\)|\[[^\]]+]\([^)]*\)/g,
-    (match) => {
-      const token = `ZXCVBNOTIONSEGMENT${protectedSegments.length}TOKEN`;
-      protectedSegments.push({ token, value: match });
-      return token;
-    }
-  );
-
-  const chunks = splitTranslationChunks(protectedMarkdown);
-  const translatedChunks = [];
-
-  for (const chunk of chunks) {
-    translatedChunks.push(await translateText(chunk));
-  }
-
-  let translated = translatedChunks.join('');
-  for (const segment of protectedSegments) {
-    translated = translated.replaceAll(segment.token, segment.value);
-  }
-
-  return translated;
-}
-
-async function protectMarkdownTables(markdown, protectedSegments) {
-  const lines = String(markdown || '').split('\n');
-  const output = [];
-
-  for (let index = 0; index < lines.length; index += 1) {
-    const line = lines[index];
-
-    if (
-      isMarkdownTableLine(line) &&
-      isMarkdownTableSeparatorLine(lines[index + 1] || '')
-    ) {
-      const tableLines = [line, lines[index + 1]];
-      index += 2;
-
-      while (index < lines.length && isMarkdownTableLine(lines[index])) {
-        tableLines.push(lines[index]);
-        index += 1;
-      }
-
-      index -= 1;
-
-      const token = `ZXCVBNOTIONSEGMENT${protectedSegments.length}TOKEN`;
-      protectedSegments.push({
-        token,
-        value: await translateMarkdownTable(tableLines.join('\n'))
-      });
-      output.push(token);
-      continue;
-    }
-
-    output.push(line);
-  }
-
-  return output.join('\n');
-}
-
-function isMarkdownTableLine(line = '') {
-  return /^\s*\|.*\|\s*$/.test(line);
+  return translateMarkdownLayout(markdown, translateText, translateMarkdownTable);
 }
 
 function isMarkdownTableSeparatorLine(line = '') {
@@ -1872,47 +1808,8 @@ function splitMarkdownTableCells(row) {
 }
 
 async function translateInlineMarkdown(markdown) {
-  const protectedSegments = [];
-  const protectedMarkdown = String(markdown || '').replace(
-    /`[^`\n]+`|!\[[^\]]*]\([^)]*\)|\[[^\]]+]\([^)]*\)/g,
-    (match) => {
-      const token = `ZXCVBNOTIONINLINE${protectedSegments.length}TOKEN`;
-      protectedSegments.push({ token, value: match });
-      return token;
-    }
-  );
-
-  let translated = await translateText(protectedMarkdown);
-  for (const segment of protectedSegments) {
-    translated = translated.replaceAll(segment.token, segment.value);
-  }
-
+  const translated = await translateMarkdownInline(markdown, translateText);
   return translated.replace(/\|/g, '\\|').trim();
-}
-
-function splitTranslationChunks(text, maxLength = TRANSLATE_CHUNK_SIZE) {
-  const paragraphs = text.split(/(\n{2,})/);
-  const chunks = [];
-  let current = '';
-
-  for (const paragraph of paragraphs) {
-    if (current.length + paragraph.length > maxLength && current) {
-      chunks.push(current);
-      current = '';
-    }
-
-    if (paragraph.length > maxLength) {
-      chunks.push(...splitLongText(paragraph, maxLength));
-    } else {
-      current += paragraph;
-    }
-  }
-
-  if (current) {
-    chunks.push(current);
-  }
-
-  return chunks;
 }
 
 function splitLongText(text, maxLength = TRANSLATE_CHUNK_SIZE) {

@@ -25,6 +25,7 @@
     "lint:scss": "stylelint _sass/**/*.scss",
     "lint:fix:scss": "npm run lint:scss -- --fix",
     "test": "npm run lint:js && npm run lint:scss",
+    "test:translation": "node --test scripts/translate-markdown.test.mjs",
     "prepare": "husky"
   },
   "dependencies": {
